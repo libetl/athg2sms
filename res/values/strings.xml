@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">"Import from File" Done !</string>
+    <string name="app_name">Athg2Sms V1.2</string>
+
+    <string name="app_title">Athg2Sms (Freeware)</string>
+    <string name="help_title">Athg2Sms (Freeware) &gt; Help</string>
+    <string name="cs_title">Athg2Sms (Freeware) &gt; Conversion Sets</string>
+    <string name="csedit_title">Athg2Sms (Freeware) &gt; C.S. &gt; Edit</string>
+    <string name="cf_title">Athg2Sms (Freeware) &gt; Conversion Form</string>
+    <string name="cfoifm_title">Athg2Sms (Freeware) &gt; Conversion Form &gt; OI FM</string>
+    <string name="proceed_title">Athg2Sms (Freeware) &gt; In Progress !</string>
+    <string name="done_title">Athg2Sms (Freeware) &gt; Finished &gt; Done</string>
+    <string name="error_title">Athg2Sms (Freeware) &gt; Finished &gt; Error</string>
+
+    <string name="descr">Import SMS from CSV, XML, SQL Files ! </string>
+    <string name="file_name">File Name</string>
+    <string name="helpheader">How to convert your SMS messages :</string>
+    <string name="failed_retry">Failed ! Retry ?</string>
+    <string name="sucessful">Sucessful</string>
+    <string name="path">Path : </string>
+    <string name="touchonetoeditit">Touch one to edit it.</string>
+    <string name="editcsname">Conversion set for : </string>
+    <string name="edityourPatterns">Edit your conversion patterns below :</string>
+    <string name="inbox">Inbox </string>
+    <string name="sent">Sent </string>
+    <string name="really_delete">This will delete this set permanently (excepted for Pre-defined sets)</string>
+    <string name="delete_yes">Delete</string>
+    
+    <string name="proceed_button">Proceed</string>
+    <string name="addone">Add a new Conversion Set</string>
+    <string name="convsets">Manage Conversion sets</string>
+    <string name="convert">Begin Conversion</string>
+    <string name="helpme">Quick Help</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
+    <string name="selectfile">Choose</string>
+    <string name="start">Start Conversion now !</string>
+    <string name="again">Again</string>
+    <string name="cancel">Cancel</string>
+    <string name="backtomainmenu">Back to Main menu</string>
+    <string name="backtoconvform">Back to conversion form</string>
+    <string name="exit">Exit</string>
+</resources>

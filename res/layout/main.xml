@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+<ImageView android:src="@drawable/iconl"
+ android:id="@+id/ImageView01"
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content"></ImageView>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textSize="30sp"
+		android:text="@string/app_name" />
+     <TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:textSize="10sp"
+    android:text="@string/descr"/>    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <Button android:text="@+string/convert" 
+            android:id="@+id/conversionform" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"></Button>
+    <Button android:text="@+string/helpme" 
+            android:id="@+id/helpme" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <Button android:text="@+string/convsets" 
+            android:id="@+id/manageconvsets" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"></Button>
+    <Button android:text="@+string/exit" 
+            android:id="@+id/exit" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:scrollbars="vertical"
+    android:background="@drawable/bg">
+        <TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:textSize="15sp"
+    android:text="@string/touchonetoeditit"/>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal">
+    
+<ListView android:id="@android:id/list" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:layout_weight="1"
+	android:drawSelectorOnTop="true"/>
+	<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="bottom">
+	<Button
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+    android:text="@string/addone"
+    android:id="@+id/addone"/>
+	<Button
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+    android:text="@string/backtomainmenu"
+    android:id="@+id/backtomainmenu"/>
+    </LinearLayout>
+	</LinearLayout>
+</LinearLayout>
