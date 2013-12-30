@@ -11,30 +11,30 @@ import android.widget.TextView;
 
 public class Error extends Activity {
 
-    private static Exception lastError;
+	private static Exception	lastError;
 
-    public static Exception getLastError () {
-        return Error.lastError;
-    }
+	public static Exception getLastError () {
+		return Error.lastError;
+	}
 
-    public static void setLastError (Object object) {
-        Error.lastError = (Exception) object;
-    }
+	public static void setLastError (Object object) {
+		Error.lastError = (Exception) object;
+	}
 
-    @Override
-    public void onCreate (Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        this.setContentView (R.layout.error);
-        ((TextView) this.findViewById (R.id.exception)).setText (Error
-                .getLastError ().toString ());
+	@Override
+	public void onCreate (Bundle savedInstanceState) {
+		super.onCreate (savedInstanceState);
+		this.setContentView (R.layout.error);
+		((TextView) this.findViewById (R.id.exception)).setText (Error
+		        .getLastError ().toString ());
 
-        ((Button) this.findViewById (R.id.backtoconvform))
-                .setOnClickListener (new OnClickListener () {
+		((Button) this.findViewById (R.id.backtoconvform))
+		        .setOnClickListener (new OnClickListener () {
 
-                    public void onClick (View v) {
-                        Error.this.finish ();
-                    }
+			        public void onClick (View v) {
+				        Error.this.finish ();
+			        }
 
-                });
-    }
+		        });
+	}
 }

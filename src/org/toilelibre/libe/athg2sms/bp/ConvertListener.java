@@ -4,16 +4,16 @@ import android.content.ContentResolver;
 
 public interface ConvertListener {
 
-    void displayInserted (int inserted);
+	void displayInserted (int inserted);
 
-    void end ();
+	void end ();
 
-    ContentResolver getContentResolver ();
+	ContentResolver getContentResolver ();
 
-    void sayIPrepareTheList (int size);
+	void sayIPrepareTheList (int size);
 
-    void setMax (int nb2);
+	void setMax (int nb2);
 
-    void updateProgress (int i2, int nb2);
+	void updateProgress (int i2, int nb2);
 
 }

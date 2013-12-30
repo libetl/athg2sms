@@ -1,6 +1,5 @@
 package org.toilelibre.libe.athg2sms.help;
 
-
 import org.toilelibre.libe.athg2sms.R;
 
 import android.app.Activity;
@@ -10,23 +9,23 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class HelpActivity extends Activity {
-    
-    @Override
-    protected void onCreate (Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        this.setContentView (R.layout.help);
 
-        this.findViewById (R.id.backtomainmenu).setOnClickListener (
-                new OnClickListener () {
+	@Override
+	protected void onCreate (Bundle savedInstanceState) {
+		super.onCreate (savedInstanceState);
+		this.setContentView (R.layout.help);
 
-                    public void onClick (View v) {
-                        HelpActivity.this.finish ();
-                    }
+		this.findViewById (R.id.backtomainmenu).setOnClickListener (
+		        new OnClickListener () {
 
-                });
-        
-        ((TextView)this.findViewById (R.id.helpcontent)).setText (
-                this.getString (R.string.helpcontent));
-    }
-    
+			        public void onClick (View v) {
+				        HelpActivity.this.finish ();
+			        }
+
+		        });
+
+		((TextView) this.findViewById (R.id.helpcontent)).setText (this
+		        .getString (R.string.helpcontent));
+	}
+
 }
