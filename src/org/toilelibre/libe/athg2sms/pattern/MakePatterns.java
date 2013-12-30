@@ -84,7 +84,7 @@ public class MakePatterns {
 		valPatterns.put (key, rs.getValue ().toString ());
 
 		if (format != null) {
-			final String del = format.substring (rs.getAfterLastVar ());
+			format.substring (rs.getAfterLastVar ());
 		}
 
 	}

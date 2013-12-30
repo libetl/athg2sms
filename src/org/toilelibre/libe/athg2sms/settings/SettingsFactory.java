@@ -12,6 +12,7 @@ public class SettingsFactory {
 		                                       }
 	                                       };
 
+	private static SettingsV1	settingsV1	= new SettingsV1 ();
 	private static SettingsV2	settingsV2	= new Settings () {
 		                                       public ConvertThread getConvertThread () {
 			                                       return new ConvertV2 ();
@@ -23,6 +24,10 @@ public class SettingsFactory {
 			                                       throw new UnsupportedOperationException ();
 		                                       }
 	                                       };
+
+	public static SettingsV1 asV1 () {
+		return SettingsFactory.settingsV1;
+	}
 
 	public static SettingsV2 asV2 () {
 		return SettingsFactory.settingsV2;
