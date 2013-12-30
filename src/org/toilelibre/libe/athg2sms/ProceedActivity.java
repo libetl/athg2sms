@@ -64,7 +64,7 @@ public class ProceedActivity extends Activity implements ConvertListener {
 		        + ProceedActivity.filename);
 		this.handler = new Handler ();
 		final File f = new File (ProceedActivity.filename);
-		this.convert = SettingsFactory.common ().getConvertThreadInstance ();
+		this.convert = SettingsFactory.asV3 ().getConvertThreadInstance ();
 		this.convert.setFile (f);
 		this.convert.setConvertListener (this);
 		this.convert.setHandler (this.handler);

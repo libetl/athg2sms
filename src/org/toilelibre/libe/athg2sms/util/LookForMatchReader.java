@@ -49,7 +49,7 @@ public class LookForMatchReader extends Reader {
 		for (String key : this.settings.getValPatternsKeySet ()){
 			String pattern = this.settings.getValPattern (key);
 			Matcher m = Pattern.compile (pattern).matcher (value);
-			if (m != null){
+			if (m.find ()){
 				return new SmsResult (m, key, value);
 			}
 		}
