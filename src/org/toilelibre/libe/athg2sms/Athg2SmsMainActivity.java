@@ -6,9 +6,12 @@ import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -69,7 +72,11 @@ public class Athg2SmsMainActivity extends Activity {
 			        public void onClick (View v) {
 				        DefaultSettings.save (SettingsFactory.common ()
 				                .getSets ());
-				        Athg2SmsMainActivity.this.finish ();
+                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+                            startActivity(intent);
+                            Athg2SmsMainActivity.this.finish ();
+                        }
 			        }
 		        });
 
@@ -84,5 +91,12 @@ public class Athg2SmsMainActivity extends Activity {
 			this.missingOIFMDialog ();
 			this.findViewById (R.id.conversionform).setEnabled (false);
 		}
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+          String defaultSmsApp = Telephony.Sms.getDefaultSmsPackage(this);
+          Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+          intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, this.getPackageName());
+          this.startActivity(intent);
+        }
 	}
 }

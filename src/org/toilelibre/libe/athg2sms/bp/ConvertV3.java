@@ -17,7 +17,9 @@ import org.toilelibre.libe.athg2sms.settings.SettingsV3;
 import org.toilelibre.libe.athg2sms.util.LookForMatchReader;
 
 import android.content.ContentValues;
+import android.content.SyncRequest;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 
 public class ConvertV3 extends Thread implements ConvertThread {
@@ -118,7 +120,9 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				}
 			});
 
-			for (int i = 0; i < matcher.size (); i++) {
+            Object requestSync = null;
+
+            for (int i = 0; i < matcher.size (); i++) {
 				final int ins = this.inserted;
 				sms = matcher.get (i);
 				final int i2 = i;
