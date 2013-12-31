@@ -4,9 +4,9 @@ import org.toilelibre.libe.athg2sms.help.HelpActivity;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -35,6 +35,7 @@ public class Athg2SmsMainActivity extends Activity {
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate (savedInstanceState);
+
 		this.setContentView (R.layout.main);
 		this.findViewById (R.id.manageconvsets).setOnClickListener (
 		        new OnClickListener () {
@@ -72,15 +73,51 @@ public class Athg2SmsMainActivity extends Activity {
 			        public void onClick (View v) {
 				        DefaultSettings.save (SettingsFactory.common ()
 				                .getSets ());
-                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-                            startActivity(intent);
-                            Athg2SmsMainActivity.this.finish ();
-                        }
+				        Athg2SmsMainActivity.this.finish ();
+				        Intent intent = new Intent(Intent.ACTION_MAIN);
+				        intent.addCategory(Intent.CATEGORY_HOME);
+				        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				        startActivity(intent);
 			        }
 		        });
+		this.findViewById (R.id.toggledefaultapp).setOnClickListener (
+		        new OnClickListener () {
 
-		DefaultSettings.setSp (this.getSharedPreferences ("athg2sms", 0));
+			        @SuppressLint ("NewApi")
+			        public void onClick (View v) {
+				        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+					        final String myPackageName = Athg2SmsMainActivity.this
+					                .getPackageName ();
+					        if (!Telephony.Sms.getDefaultSmsPackage (
+					                Athg2SmsMainActivity.this).equals (
+					                myPackageName)) {
+						        DefaultSettings.saveDefaultSmsApp (Telephony.Sms
+						                .getDefaultSmsPackage (Athg2SmsMainActivity.this));
+						        final Intent intentSetDefault = new Intent (
+						                Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+						        intentSetDefault
+						                .putExtra (
+						                        Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+						                        myPackageName);
+						        Athg2SmsMainActivity.this
+						                .startActivity (intentSetDefault);
+					        } else {
+						        final String packageName = DefaultSettings
+						                .getDefaultSmsApp ();
+						        final Intent intentSetDefault = new Intent (
+						                Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+						        intentSetDefault
+						                .putExtra (
+						                        Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+						                        packageName);
+						        Athg2SmsMainActivity.this
+						                .startActivity (intentSetDefault);
+
+					        }
+				        }
+
+			        }
+		        });
 
 		try {
 			final Intent intent = new Intent (
@@ -91,12 +128,5 @@ public class Athg2SmsMainActivity extends Activity {
 			this.missingOIFMDialog ();
 			this.findViewById (R.id.conversionform).setEnabled (false);
 		}
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-          String defaultSmsApp = Telephony.Sms.getDefaultSmsPackage(this);
-          Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
-          intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, this.getPackageName());
-          this.startActivity(intent);
-        }
 	}
 }

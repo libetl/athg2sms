@@ -25,8 +25,15 @@ public class Error extends Activity {
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate (savedInstanceState);
 		this.setContentView (R.layout.error);
-		((TextView) this.findViewById (R.id.exception)).setText (Error
-		        .getLastError ().toString ());
+		final Exception e = Error.getLastError ();
+		((TextView) this.findViewById (R.id.exception)).setText (e.toString ());
+		if (e.getCause () != null) {
+			((TextView) this.findViewById (R.id.exception2)).setText (e
+			        .getCause ().toString ());
+		} else {
+			((TextView) this.findViewById (R.id.exception2))
+			        .setText ("That's all we know.");
+		}
 
 		((Button) this.findViewById (R.id.backtoconvform))
 		        .setOnClickListener (new OnClickListener () {

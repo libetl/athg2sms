@@ -44,8 +44,7 @@ public class ProceedActivity extends Activity implements ConvertListener {
 		if (this.convert.getException () != null) {
 			Error.setLastError (this.convert.getException ());
 			resultIntent = new Intent (this, Error.class);
-		}
-		if (this.convert.getInserted () == 0) {
+		} else if (this.convert.getInserted () == 0) {
 			Error.setLastError (new Exception ("No SMS Imported !"));
 			resultIntent = new Intent (this, Error.class);
 		}

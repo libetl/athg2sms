@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">Athg2Sms V1.2</string>
+    <string name="app_name">Athg2Sms V1.4.4</string>
 
     <string name="app_title">Athg2Sms (Freeware)</string>
     <string name="help_title">Athg2Sms (Freeware) &gt; Help</string>
@@ -41,4 +41,8 @@
     <string name="backtomainmenu">Back to Main menu</string>
     <string name="backtoconvform">Back to conversion form</string>
     <string name="exit">Exit</string>
+    <string name="toggledefaultapp">Toggle Default App (>=4.4)</string>
+    
+    <string name="not_default_app">Dear KitKat user, The Android Platform requires you consent to become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
+    <string name="oic">Oh, I see !</string>
 </resources>

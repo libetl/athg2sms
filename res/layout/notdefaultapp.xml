@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/not_default_app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:textSize="20sp"
+  android:text="@string/not_default_app"/>
+  <LinearLayout 
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal">
+    <Button
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+    android:text="@string/oic"
+    android:id="@+id/oic"/>
+    <Button
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+    android:text="@string/exit"
+    android:id="@+id/exit"/>
+    </LinearLayout>
+</LinearLayout>

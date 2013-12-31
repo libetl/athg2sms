@@ -10,11 +10,11 @@ import org.toilelibre.libe.athg2sms.settings.SettingsCommon;
 
 public class LookForMatchReader extends Reader {
 
-	private final Reader	   reader;
+	private final Reader	     reader;
 
-	private final StringBuffer	sb;
+	private final StringBuffer	 sb;
 
-	private SettingsCommon	   settings;
+	private final SettingsCommon	settings;
 
 	public LookForMatchReader (Reader reader, SettingsCommon settings1) {
 		super ();
@@ -37,23 +37,12 @@ public class LookForMatchReader extends Reader {
 		this.sb.delete (0, this.sb.length ());
 		int firstChar = 0;
 		SmsResult found = null;
-		while (found == null && firstChar != -1) {
+		while ( (found == null) && (firstChar != -1)) {
 			firstChar = this.safeRead ();
 			this.sb.append ((char) firstChar);
 			found = this.tryMatch (this.sb.toString ());
 		}
 		return found;
-	}
-
-	private SmsResult tryMatch (String value) {
-		for (String key : this.settings.getValPatternsKeySet ()){
-			String pattern = this.settings.getValPattern (key);
-			Matcher m = Pattern.compile (pattern).matcher (value);
-			if (m.find ()){
-				return new SmsResult (m, key, value);
-			}
-		}
-		return null;
 	}
 
 	private int safeRead () {
@@ -63,6 +52,17 @@ public class LookForMatchReader extends Reader {
 			e.printStackTrace ();
 		}
 		return -1;
+	}
+
+	private SmsResult tryMatch (String value) {
+		for (final String key : this.settings.getValPatternsKeySet ()) {
+			final String pattern = this.settings.getValPattern (key);
+			final Matcher m = Pattern.compile (pattern).matcher (value);
+			if (m.find ()) {
+				return new SmsResult (m, key, value);
+			}
+		}
+		return null;
 	}
 
 }

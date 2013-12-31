@@ -10,6 +10,11 @@ public class DefaultSettings {
 
 	private static SharedPreferences	sp;
 
+	public static String getDefaultSmsApp () {
+		return DefaultSettings.sp
+		        .getString ("defaultSmsApp", "com.android.mms");
+	}
+
 	public static void load (Map<String, Map<String, String>> sets) {
 		if ( (DefaultSettings.sp == null)
 		        || (DefaultSettings.sp.getAll ().size () == 0)) {
@@ -51,10 +56,13 @@ public class DefaultSettings {
 		final Map<String, ?> map = DefaultSettings.sp.getAll ();
 		for (final String key : map.keySet ()) {
 			final String [] location = key.split ("#");
-			if (sets.get (location [0]) == null) {
-				sets.put (location [0], new HashMap<String, String> ());
+			if (location.length > 1) {
+				if (sets.get (location [0]) == null) {
+					sets.put (location [0], new HashMap<String, String> ());
+				}
+				sets.get (location [0]).put (location [1],
+				        (String) map.get (key));
 			}
-			sets.get (location [0]).put (location [1], (String) map.get (key));
 		}
 
 	}
@@ -68,6 +76,13 @@ public class DefaultSettings {
 				editor.putString (key1 + "#" + key2, map.get (key2));
 			}
 		}
+		editor.commit ();
+	}
+
+	public static void saveDefaultSmsApp (String packageName) {
+		final Editor editor = DefaultSettings.sp.edit ();
+		editor.clear ();
+		editor.putString ("defaultSmsApp", packageName);
 		editor.commit ();
 	}
 

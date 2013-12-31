@@ -19,7 +19,7 @@
   android:layout_height="wrap_content"
   android:textSize="10sp"
     android:text="@string/descr"/>    
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout 
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"></Button>
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -44,6 +44,16 @@
             android:layout_height="wrap_content"></Button>
     <Button android:text="@+string/exit" 
             android:id="@+id/exit" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+    <LinearLayout 
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <Button android:text="@+string/toggledefaultapp" 
+            android:id="@+id/toggledefaultapp" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"></Button>
     </LinearLayout>

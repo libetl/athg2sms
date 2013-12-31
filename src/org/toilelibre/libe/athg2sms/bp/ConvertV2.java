@@ -76,7 +76,8 @@ public class ConvertV2 extends Thread implements ConvertThread {
 
 	private String determineSubFolder (String line) {
 		boolean found = false;
-		final Iterator<String> it = this.settings.getValPatternsKeySet ().iterator ();
+		final Iterator<String> it = this.settings.getValPatternsKeySet ()
+		        .iterator ();
 		String patternKey = null;
 
 		while (it.hasNext () && !found) {

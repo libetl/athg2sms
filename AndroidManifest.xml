@@ -1,64 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.toilelibre.libe.athg2sms"
-      android:versionCode="4"
-      android:versionName="1.2.1"
-      android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    package="org.toilelibre.libe.athg2sms"
+    android:theme="@android:style/Theme.Holo"
+    android:versionCode="5"
+    android:versionName="1.4.4" >
+    
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS"/>
-    <application android:icon="@drawable/icon" 
-                 android:label="@string/app_name"
-                 android:debuggable="false">
-        <activity android:name=".Athg2SmsMainActivity"
-                  android:label="@string/app_title">
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <receiver android:name=".SmsReceiver" android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".MmsReceiver" android:permission="android.permission.BROADCAST_WAP_PUSH">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+                <data android:mimeType="application/vnd.wap.mms-message" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".HeadlessSmsSendService" android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
+        
+            
+        <activity
+            android:name=".Athg2SmsStartActivity"
+            android:label="@string/app_title"
+            android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".ConvSetEditActivity"
-                  android:label="@string/csedit_title">
+        <activity
+            android:name=".Athg2SmsMainActivity"
+            android:label="@string/app_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConvSetsListActivity"
-                  android:label="@string/cs_title">
+        <activity
+            android:name=".ConvSetEditActivity"
+            android:label="@string/csedit_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConversionFormActivity"
-                  android:label="@string/cf_title">
+        <activity
+            android:name=".ConvSetsListActivity"
+            android:label="@string/cs_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProceedActivity"
-                  android:label="@string/proceed_title">
+        <activity
+            android:name=".ConversionFormActivity"
+            android:label="@string/cf_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
-        <activity android:name=".status.Done"
-                  android:label="@string/done_title">
+        <activity
+            android:name=".ProceedActivity"
+            android:label="@string/proceed_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+                
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".status.Done"
+            android:label="@string/done_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
-        <activity android:name=".status.Error"
-                  android:label="@string/error_title">
+        <activity
+            android:name=".status.Error"
+            android:label="@string/error_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
-        <activity android:name=".help.HelpActivity"
-                  android:label="@string/help_title">
+        <activity
+            android:name=".help.HelpActivity"
+            android:label="@string/help_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
     </application>
-    <uses-sdk android:minSdkVersion="3" />
 
-</manifest> 
+</manifest>

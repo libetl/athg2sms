@@ -80,8 +80,8 @@ public class MakePatterns {
 		while (rs.index () < format.length ()) {
 			MakePatterns.atIndex (rs);
 		}
-		patterns.put (key, rs.getPattern ().toString ().trim());
-		valPatterns.put (key, rs.getValue ().toString ().trim());
+		patterns.put (key, rs.getPattern ().toString ().trim ());
+		valPatterns.put (key, rs.getValue ().toString ().trim ());
 
 		if (format != null) {
 			format.substring (rs.getAfterLastVar ());

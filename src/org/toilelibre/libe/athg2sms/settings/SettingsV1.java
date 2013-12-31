@@ -36,6 +36,10 @@ public class SettingsV1 implements SettingsCommon {
 		SettingsV1.formats = SettingsV1.sets.get (set);
 	}
 
+	public ConvertThread getConvertThread () {
+		return new ConvertV1 ();
+	}
+
 	public ConvertThread getConvertThreadInstance () {
 		try {
 			SettingsV1.instance = (ConvertThread) Class.forName (
@@ -169,9 +173,5 @@ public class SettingsV1 implements SettingsCommon {
 	public void putSet (String setName, Map<String, String> data) {
 		SettingsV1.sets.put (setName, data);
 	}
-
-	public ConvertThread getConvertThread () {
-	    return new ConvertV1 ();
-    }
 
 }

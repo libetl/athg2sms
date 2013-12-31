@@ -99,21 +99,21 @@ public class ConvertV1 extends Thread implements ConvertThread {
 			}
 		} catch (final Exception e) {
 			this.exception = e;
-		}finally{
-			if (br != null){
-			  try {
-	            br.close ();
-            } catch (IOException e) {
-	            e.printStackTrace();
-            }
+		} finally {
+			if (br != null) {
+				try {
+					br.close ();
+				} catch (final IOException e) {
+					e.printStackTrace ();
+				}
 			}
-			if (fr != null){
-			  try {
-	            fr.close ();
-            } catch (IOException e) {
-	            e.printStackTrace();
-            }
-		    }
+			if (fr != null) {
+				try {
+					fr.close ();
+				} catch (final IOException e) {
+					e.printStackTrace ();
+				}
+			}
 		}
 		this.handler.post (new Runnable () {
 
