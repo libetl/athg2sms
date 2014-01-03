@@ -1,13 +1,13 @@
 package org.toilelibre.libe.athg2sms;
 
+import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
+import org.toilelibre.libe.athg2sms.settings.SettingsV3;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,9 +17,10 @@ public class Athg2SmsStartActivity extends Activity {
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate (savedInstanceState);
+		SettingsV3.class.hashCode ();
+		DefaultSettings.setSp (this.getSharedPreferences ("athg2sms", 0));
 		this.setContentView (R.layout.notdefaultapp);
 
-		DefaultSettings.setSp (this.getSharedPreferences ("athg2sms", 0));
 
 	}
 
@@ -27,13 +28,13 @@ public class Athg2SmsStartActivity extends Activity {
 	@SuppressLint ("InlinedApi")
 	protected void onResume () {
 		super.onResume ();
-		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+		if (android.os.Build.VERSION.SDK_INT >= 19) {
 			final String myPackageName = this.getPackageName ();
-			if (!Telephony.Sms.getDefaultSmsPackage (this).equals (
+			if (!Sms.getDefaultSmsPackage (this).equals (
 			        myPackageName)) {
 				// App is not default.
 				// Show the "not currently set as the default SMS app" interface
-				DefaultSettings.saveDefaultSmsApp (Telephony.Sms
+				DefaultSettings.saveDefaultSmsApp (Sms
 				        .getDefaultSmsPackage (this));
 				final View viewGroup = this.findViewById (R.id.not_default_app);
 				viewGroup.setVisibility (View.VISIBLE);

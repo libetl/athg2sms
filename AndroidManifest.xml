@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.toilelibre.libe.athg2sms"
-    android:theme="@android:style/Theme.Holo"
+    android:theme="@android:style/Theme.Black"
     android:versionCode="5"
     android:versionName="1.4.4" >
     

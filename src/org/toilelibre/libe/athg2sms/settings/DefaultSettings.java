@@ -8,7 +8,7 @@ import android.content.SharedPreferences.Editor;
 
 public class DefaultSettings {
 
-	private static SharedPreferences	sp;
+	private static SharedPreferences sp;
 
 	public static String getDefaultSmsApp () {
 		return DefaultSettings.sp
@@ -17,7 +17,7 @@ public class DefaultSettings {
 
 	public static void load (Map<String, Map<String, String>> sets) {
 		if ( (DefaultSettings.sp == null)
-		        || (DefaultSettings.sp.getAll ().size () == 0)) {
+		        || (DefaultSettings.sp.getAll ().size () <= 1)) {
 			DefaultSettings.loadDefaults (sets);
 		} else {
 			DefaultSettings.loadFromSettings (sets);
@@ -68,8 +68,10 @@ public class DefaultSettings {
 	}
 
 	public static void save (Map<String, Map<String, String>> sets) {
+		String smsApp = DefaultSettings.getDefaultSmsApp ();
 		final Editor editor = DefaultSettings.sp.edit ();
 		editor.clear ();
+		DefaultSettings.saveDefaultSmsApp (smsApp);
 		for (final String key1 : sets.keySet ()) {
 			final Map<String, String> map = sets.get (key1);
 			for (final String key2 : map.keySet ()) {
@@ -81,7 +83,6 @@ public class DefaultSettings {
 
 	public static void saveDefaultSmsApp (String packageName) {
 		final Editor editor = DefaultSettings.sp.edit ();
-		editor.clear ();
 		editor.putString ("defaultSmsApp", packageName);
 		editor.commit ();
 	}

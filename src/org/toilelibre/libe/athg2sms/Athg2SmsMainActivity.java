@@ -1,6 +1,7 @@
 package org.toilelibre.libe.athg2sms;
 
 import org.toilelibre.libe.athg2sms.help.HelpActivity;
+import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
@@ -9,9 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -85,19 +84,19 @@ public class Athg2SmsMainActivity extends Activity {
 
 			        @SuppressLint ("NewApi")
 			        public void onClick (View v) {
-				        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+				        if (android.os.Build.VERSION.SDK_INT >= 19) {
 					        final String myPackageName = Athg2SmsMainActivity.this
 					                .getPackageName ();
-					        if (!Telephony.Sms.getDefaultSmsPackage (
+					        if (!Sms.getDefaultSmsPackage (
 					                Athg2SmsMainActivity.this).equals (
 					                myPackageName)) {
-						        DefaultSettings.saveDefaultSmsApp (Telephony.Sms
+						        DefaultSettings.saveDefaultSmsApp (Sms
 						                .getDefaultSmsPackage (Athg2SmsMainActivity.this));
 						        final Intent intentSetDefault = new Intent (
-						                Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+						        		Sms.Intents.ACTION_CHANGE_DEFAULT);
 						        intentSetDefault
 						                .putExtra (
-						                        Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+						                		Sms.Intents.EXTRA_PACKAGE_NAME,
 						                        myPackageName);
 						        Athg2SmsMainActivity.this
 						                .startActivity (intentSetDefault);
@@ -105,10 +104,10 @@ public class Athg2SmsMainActivity extends Activity {
 						        final String packageName = DefaultSettings
 						                .getDefaultSmsApp ();
 						        final Intent intentSetDefault = new Intent (
-						                Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+						        		Sms.Intents.ACTION_CHANGE_DEFAULT);
 						        intentSetDefault
 						                .putExtra (
-						                        Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+						                		Sms.Intents.EXTRA_PACKAGE_NAME,
 						                        packageName);
 						        Athg2SmsMainActivity.this
 						                .startActivity (intentSetDefault);
