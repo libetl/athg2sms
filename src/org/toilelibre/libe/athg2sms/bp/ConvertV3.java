@@ -119,8 +119,6 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				}
 			});
 
-			final Object requestSync = null;
-
 			for (int i = 0; i < matcher.size (); i++) {
 				final int ins = this.inserted;
 				sms = matcher.get (i);

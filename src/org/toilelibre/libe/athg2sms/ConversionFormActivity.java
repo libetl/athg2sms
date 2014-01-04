@@ -19,9 +19,8 @@ public class ConversionFormActivity extends Activity {
 	protected void onActivityResult (int requestCode, int resultCode,
 	        Intent data) {
 		super.onActivityResult (requestCode, resultCode, data);
-		if ( (data != null) && (data.getDataString () != null)) {
-			((EditText) this.findViewById (R.id.filename)).setText (data
-			        .getDataString ().substring (7));
+		if ( (data != null) && (data.getData () != null) && (data.getData ().getPath () != null)) {
+			((EditText) this.findViewById (R.id.filename)).setText (data.getData ().getPath ());
 		}
 	}
 
@@ -41,11 +40,9 @@ public class ConversionFormActivity extends Activity {
 		        new OnClickListener () {
 
 			        public void onClick (View v) {
-				        final Intent intent = new Intent (
-				                "org.openintents.action.PICK_FILE");
-				        intent.putExtra ("org.openintents.extra.TITLE",
-				                ConversionFormActivity.this
-				                        .getString (R.string.cfoifm_title));
+			        	
+				        final Intent intent = new Intent (Intent.ACTION_GET_CONTENT);
+				        intent.setType ("*/*");
 				        intent.putExtra ("org.openintents.extra.BUTTON_TEXT",
 				                ConversionFormActivity.this
 				                        .getString (R.string.selectfile));

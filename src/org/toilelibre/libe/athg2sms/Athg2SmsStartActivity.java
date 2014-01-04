@@ -21,7 +21,6 @@ public class Athg2SmsStartActivity extends Activity {
 		DefaultSettings.setSp (this.getSharedPreferences ("athg2sms", 0));
 		this.setContentView (R.layout.notdefaultapp);
 
-
 	}
 
 	@Override
@@ -30,8 +29,7 @@ public class Athg2SmsStartActivity extends Activity {
 		super.onResume ();
 		if (android.os.Build.VERSION.SDK_INT >= 19) {
 			final String myPackageName = this.getPackageName ();
-			if (!Sms.getDefaultSmsPackage (this).equals (
-			        myPackageName)) {
+			if (!Sms.getDefaultSmsPackage (this).equals (myPackageName)) {
 				// App is not default.
 				// Show the "not currently set as the default SMS app" interface
 				DefaultSettings.saveDefaultSmsApp (Sms

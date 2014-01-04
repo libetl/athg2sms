@@ -7,28 +7,12 @@ import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 public class Athg2SmsMainActivity extends Activity {
-
-	private void missingOIFMDialog () {
-		final AlertDialog.Builder builder = new AlertDialog.Builder (this);
-		builder.setMessage ("Please install OI File Manager first.")
-		        .setIcon (android.R.drawable.ic_dialog_alert)
-		        .setCancelable (false)
-		        .setPositiveButton ("Ok",
-		                new DialogInterface.OnClickListener () {
-			                public void onClick (DialogInterface dialog, int id) {
-				                dialog.dismiss ();
-			                }
-		                }).show ();
-		builder.create ();
-	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -73,10 +57,10 @@ public class Athg2SmsMainActivity extends Activity {
 				        DefaultSettings.save (SettingsFactory.common ()
 				                .getSets ());
 				        Athg2SmsMainActivity.this.finish ();
-				        Intent intent = new Intent(Intent.ACTION_MAIN);
-				        intent.addCategory(Intent.CATEGORY_HOME);
-				        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				        startActivity(intent);
+				        final Intent intent = new Intent (Intent.ACTION_MAIN);
+				        intent.addCategory (Intent.CATEGORY_HOME);
+				        intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+				        Athg2SmsMainActivity.this.startActivity (intent);
 			        }
 		        });
 		this.findViewById (R.id.toggledefaultapp).setOnClickListener (
@@ -93,22 +77,20 @@ public class Athg2SmsMainActivity extends Activity {
 						        DefaultSettings.saveDefaultSmsApp (Sms
 						                .getDefaultSmsPackage (Athg2SmsMainActivity.this));
 						        final Intent intentSetDefault = new Intent (
-						        		Sms.Intents.ACTION_CHANGE_DEFAULT);
-						        intentSetDefault
-						                .putExtra (
-						                		Sms.Intents.EXTRA_PACKAGE_NAME,
-						                        myPackageName);
+						                Sms.Intents.ACTION_CHANGE_DEFAULT);
+						        intentSetDefault.putExtra (
+						                Sms.Intents.EXTRA_PACKAGE_NAME,
+						                myPackageName);
 						        Athg2SmsMainActivity.this
 						                .startActivity (intentSetDefault);
 					        } else {
 						        final String packageName = DefaultSettings
 						                .getDefaultSmsApp ();
 						        final Intent intentSetDefault = new Intent (
-						        		Sms.Intents.ACTION_CHANGE_DEFAULT);
-						        intentSetDefault
-						                .putExtra (
-						                		Sms.Intents.EXTRA_PACKAGE_NAME,
-						                        packageName);
+						                Sms.Intents.ACTION_CHANGE_DEFAULT);
+						        intentSetDefault.putExtra (
+						                Sms.Intents.EXTRA_PACKAGE_NAME,
+						                packageName);
 						        Athg2SmsMainActivity.this
 						                .startActivity (intentSetDefault);
 
@@ -117,15 +99,5 @@ public class Athg2SmsMainActivity extends Activity {
 
 			        }
 		        });
-
-		try {
-			final Intent intent = new Intent (
-			        "org.openintents.action.PICK_FILE");
-			this.startActivityForResult (intent, 10);
-			this.finishActivity (10);
-		} catch (final RuntimeException e) {
-			this.missingOIFMDialog ();
-			this.findViewById (R.id.conversionform).setEnabled (false);
-		}
 	}
 }

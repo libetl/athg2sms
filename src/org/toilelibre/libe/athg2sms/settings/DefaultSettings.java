@@ -8,7 +8,7 @@ import android.content.SharedPreferences.Editor;
 
 public class DefaultSettings {
 
-	private static SharedPreferences sp;
+	private static SharedPreferences	sp;
 
 	public static String getDefaultSmsApp () {
 		return DefaultSettings.sp
@@ -68,7 +68,7 @@ public class DefaultSettings {
 	}
 
 	public static void save (Map<String, Map<String, String>> sets) {
-		String smsApp = DefaultSettings.getDefaultSmsApp ();
+		final String smsApp = DefaultSettings.getDefaultSmsApp ();
 		final Editor editor = DefaultSettings.sp.edit ();
 		editor.clear ();
 		DefaultSettings.saveDefaultSmsApp (smsApp);
