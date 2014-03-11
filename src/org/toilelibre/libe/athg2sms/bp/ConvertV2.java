@@ -137,7 +137,7 @@ public class ConvertV2 extends Thread implements ConvertThread {
 
 					public void run () {
 						ConvertV2.this.convertListener.updateProgress (i2, nb);
-						ConvertV2.this.convertListener.displayInserted (ins);
+						ConvertV2.this.convertListener.displayInserted (ins, 0);
 					}
 
 				});

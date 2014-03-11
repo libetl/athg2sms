@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,6 +112,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				});
 			}
 			final int nb = matcher.size ();
+			int nbDuplicate = 0;
 
 			this.handler.post (new Runnable () {
 
@@ -120,6 +122,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
 			});
 
 			for (int i = 0; i < matcher.size (); i++) {
+				final int dupl = nbDuplicate;
 				final int ins = this.inserted;
 				sms = matcher.get (i);
 				final int i2 = i;
@@ -127,7 +130,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
 
 					public void run () {
 						ConvertV3.this.convertListener.updateProgress (i2, nb);
-						ConvertV3.this.convertListener.displayInserted (ins);
+						ConvertV3.this.convertListener.displayInserted (ins, dupl);
 					}
 
 				});
@@ -135,20 +138,24 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				final String suffix = this.determineSubFolder (sms);
 				if (suffix != null) {
 					this.inserted++;
-					final String folderMsg = ConvertV3.folder + suffix;
+					final Uri uri = Uri.parse (ConvertV3.folder + suffix + "/");
+					final Uri uriDelete = Uri.parse (ConvertV3.folder);
 					try {
 						final ContentValues values = this
 						        .buildMessageFromString (suffix, sms);
-
-						this.convertListener.getContentResolver ().insert (
-						        Uri.parse (folderMsg), values);
+						
+						String where = this.getWhere (values);
+						nbDuplicate +=
+								this.convertListener.getContentResolver ().delete (
+										uriDelete, where, new String[0]);
+						this.convertListener.getContentResolver ().insert (uri, values);
 					} catch (final IllegalStateException ise) {
 						this.exception = ise;
 					}
 				}
 			}
 			lfsr.close ();
-		} catch (final Exception e) {
+			} catch (final Exception e) {
 			this.exception = e;
 		}
 		this.handler.post (new Runnable () {
@@ -159,6 +166,23 @@ public class ConvertV3 extends Thread implements ConvertThread {
 
 		});
 	}
+
+	private String getWhere (ContentValues values) {
+		StringBuffer sb = new StringBuffer ();
+		for (Entry<String, Object> entry : values.valueSet ()){
+			sb.append (entry.getKey ());
+			sb.append (" = ");
+			if (entry.getValue () instanceof String){
+				sb.append ("'");
+				sb.append (entry.getValue ().toString ().replace ("'", "''"));
+				sb.append ("'");
+			}else{
+				sb.append (entry.getValue ());
+			}
+			sb.append (" and ");
+		}
+	    return sb.substring (0, sb.length () - " and ".length ());
+    }
 
 	public void setConvertListener (ConvertListener cl) {
 		this.convertListener = cl;

@@ -35,8 +35,8 @@ public class ProceedActivity extends Activity implements ConvertListener {
 	private TextView	  current;
 	private TextView	  inserted;
 
-	public void displayInserted (int inserted) {
-		this.inserted.setText ("Inserted SMS : " + inserted);
+	public void displayInserted (int inserted, int dupl) {
+		this.inserted.setText ("Inserted SMS : " + inserted + " (" + dupl + " duplicate(s))");
 	}
 
 	public void end () {

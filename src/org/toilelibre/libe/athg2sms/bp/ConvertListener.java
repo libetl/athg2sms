@@ -4,7 +4,7 @@ import android.content.ContentResolver;
 
 public interface ConvertListener {
 
-	void displayInserted (int inserted);
+	void displayInserted (int inserted, int dupl);
 
 	void end ();
 
