@@ -1,13 +1,16 @@
 package org.toilelibre.libe.athg2sms.bp;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,17 +20,14 @@ import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 import org.toilelibre.libe.athg2sms.settings.SettingsV3;
 import org.toilelibre.libe.athg2sms.util.LookForMatchReader;
 
-import android.content.ContentValues;
-import android.net.Uri;
-import android.os.Handler;
 
 public class ConvertV3 extends Thread implements ConvertThread {
 	private static String	 folder	= "content://sms/";
 
-	private File	         f;
+	private InputStream	         f;
 	private ConvertListener	 convertListener;
 	private Exception	     exception;
-	private Handler	         handler;
+	private Object	         handler;
 	private int	             inserted;
 	private final SettingsV3	settings;
 
@@ -38,8 +38,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
 		this.settings = SettingsFactory.asV3 ();
 	}
 
-	private ContentValues buildMessageFromString (String key, SmsResult sms) {
-		final ContentValues values = new ContentValues ();
+	private Map<String, Object> buildMessageFromString (String key, SmsResult sms) {
+		final Map<String, Object> values = new HashMap<String, Object> ();
 		final String format = this.settings.getFormat (key);
 		final String pattern = this.settings.getPattern (key);
 		final String valPattern = this.settings.getValPattern (key);
@@ -64,7 +64,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
 					if (values.get ("date") == null) {
 						values.put ("date", df.parse (val).getTime ());
 					} else {
-						long l = values.getAsLong ("date");
+						long l = Long.parseLong ("" + values.get ("date"));
 						l += df.parse (val).getTime ();
 						values.put ("date", l);
 					}
@@ -92,7 +92,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
 	public void run () {
 		try {
 			this.settings.makePatterns ();
-			final FileReader fr = new FileReader (this.f);
+			final InputStreamReader fr = new InputStreamReader (this.f);
 			final LookForMatchReader lfsr = new LookForMatchReader (fr,
 			        this.settings);
 			final List<SmsResult> matcher = new LinkedList<SmsResult> ();
@@ -102,7 +102,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				if (sms != null) {
 					matcher.add (sms);
 				}
-				this.handler.post (new Runnable () {
+				if (this.handler instanceof android.os.Handler)
+				((android.os.Handler)this.handler).post (new Runnable () {
 
 					public void run () {
 						ConvertV3.this.convertListener
@@ -114,7 +115,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
 			final int nb = matcher.size ();
 			int nbDuplicate = 0;
 
-			this.handler.post (new Runnable () {
+			if (this.handler instanceof android.os.Handler)
+                ((android.os.Handler)this.handler).post (new Runnable () {
 
 				public void run () {
 					ConvertV3.this.convertListener.setMax (nb);
@@ -126,7 +128,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				final int ins = this.inserted;
 				sms = matcher.get (i);
 				final int i2 = i;
-				this.handler.post (new Runnable () {
+				if (this.handler instanceof android.os.Handler)
+	                ((android.os.Handler)this.handler).post (new Runnable () {
 
 					public void run () {
 						ConvertV3.this.convertListener.updateProgress (i2, nb);
@@ -138,17 +141,17 @@ public class ConvertV3 extends Thread implements ConvertThread {
 				final String suffix = this.determineSubFolder (sms);
 				if (suffix != null) {
 					this.inserted++;
-					final Uri uri = Uri.parse (ConvertV3.folder + suffix + "/");
-					final Uri uriDelete = Uri.parse (ConvertV3.folder);
+					final URI uri = new URI (ConvertV3.folder + suffix + "/");
+					final URI uriDelete = new URI (ConvertV3.folder);
 					try {
-						final ContentValues values = this
+						final Map<String, Object> values = this
 						        .buildMessageFromString (suffix, sms);
 						
 						String where = this.getWhere (values);
 						nbDuplicate +=
-								this.convertListener.getContentResolver ().delete (
+								this.convertListener.delete (
 										uriDelete, where, new String[0]);
-						this.convertListener.getContentResolver ().insert (uri, values);
+						this.convertListener.insert (uri, values);
 					} catch (final IllegalStateException ise) {
 						this.exception = ise;
 					}
@@ -158,7 +161,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
 			} catch (final Exception e) {
 			this.exception = e;
 		}
-		this.handler.post (new Runnable () {
+		if (this.handler instanceof android.os.Handler)
+            ((android.os.Handler)this.handler).post (new Runnable () {
 
 			public void run () {
 				ConvertV3.this.convertListener.end ();
@@ -167,9 +171,9 @@ public class ConvertV3 extends Thread implements ConvertThread {
 		});
 	}
 
-	private String getWhere (ContentValues values) {
+	private String getWhere (Map<String, Object> values) {
 		StringBuffer sb = new StringBuffer ();
-		for (Entry<String, Object> entry : values.valueSet ()){
+		for (Entry<String, Object> entry : values.entrySet ()){
 			sb.append (entry.getKey ());
 			sb.append (" = ");
 			if (entry.getValue () instanceof String){
@@ -188,11 +192,11 @@ public class ConvertV3 extends Thread implements ConvertThread {
 		this.convertListener = cl;
 	}
 
-	public void setFile (File f) {
+	public void setInputStream (InputStream f) {
 		this.f = f;
 	}
 
-	public void setHandler (Handler handler) {
+	public void setHandler (Object handler) {
 		this.handler = handler;
 	}
 

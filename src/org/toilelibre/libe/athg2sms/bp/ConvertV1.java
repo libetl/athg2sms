@@ -1,19 +1,20 @@
 package org.toilelibre.libe.athg2sms.bp;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
-import android.content.ContentValues;
-import android.net.Uri;
 import android.os.Handler;
 
 public class ConvertV1 extends Thread implements ConvertThread {
 
-	private File	        f;
+	private InputStream     f;
 	private ConvertListener	activity;
 	private Exception	    exception;
 	private Handler	        handler;
@@ -34,11 +35,11 @@ public class ConvertV1 extends Thread implements ConvertThread {
 	@Override
 	public void run () {
 
-		FileReader fr = null;
+		InputStreamReader fr = null;
 		BufferedReader br = null;
 		try {
 
-			fr = new FileReader (this.f);
+			fr = new InputStreamReader (this.f);
 			br = new BufferedReader (fr);
 			int i = 0;
 			int nb = 0;
@@ -57,7 +58,7 @@ public class ConvertV1 extends Thread implements ConvertThread {
 			br = new BufferedReader (fr);
 			final SimpleDateFormat df = new SimpleDateFormat (
 			        "yyyy.MM.dd hh:mm", Locale.US);
-			fr = new FileReader (this.f);
+			fr = new InputStreamReader (this.f);
 			br = new BufferedReader (fr);
 			String line = br.readLine ();
 			while (line != null) {
@@ -84,13 +85,13 @@ public class ConvertV1 extends Thread implements ConvertThread {
 				if ( (message.length > 0)
 				        && (message [0].startsWith ("0") || message [0]
 				                .startsWith ("+"))) {
-					final ContentValues values = new ContentValues ();
+					final Map<String, Object> values = new HashMap<String, Object> ();
 					values.put ("address", message [0]);
 					values.put ("date", df.parse (message [3]).getTime ());
 					values.put ("body", message [5].substring (0,
 					        message [5].length () - 1));
-					this.activity.getContentResolver ().insert (
-					        Uri.parse (folder), values);
+					this.activity.insert (
+					        new URI (folder), values);
 				}
 
 				line = br.readLine ();
@@ -128,11 +129,11 @@ public class ConvertV1 extends Thread implements ConvertThread {
 		this.activity = activity;
 	}
 
-	public void setFile (File f) {
+	public void setInputStream (InputStream f) {
 		this.f = f;
 	}
 
-	public void setHandler (Handler handler) {
-		this.handler = handler;
+	public void setHandler (Object handler) {
+		this.handler = (android.os.Handler) handler;
 	}
 }

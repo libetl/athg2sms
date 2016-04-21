@@ -1,14 +1,17 @@
 package org.toilelibre.libe.athg2sms.bp;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,17 +19,14 @@ import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 import org.toilelibre.libe.athg2sms.settings.SettingsV2;
 import org.toilelibre.libe.athg2sms.util.LookForStringReader;
 
-import android.content.ContentValues;
-import android.net.Uri;
-import android.os.Handler;
 
 public class ConvertV2 extends Thread implements ConvertThread {
 	private static String	 folder	= "content://sms/";
 
-	private File	         f;
+	private InputStream	         f;
 	private ConvertListener	 convertListener;
 	private Exception	     exception;
-	private Handler	         handler;
+	private android.os.Handler  handler;
 	private int	             inserted;
 	private final SettingsV2	settings;
 
@@ -37,8 +37,8 @@ public class ConvertV2 extends Thread implements ConvertThread {
 		this.settings = SettingsFactory.asV2 ();
 	}
 
-	private ContentValues buildMessageFromString (String key, String line) {
-		final ContentValues values = new ContentValues ();
+	private Map<String, Object> buildMessageFromString (String key, String line) {
+		final Map<String, Object> values = new HashMap<String, Object> ();
 		final String format = this.settings.getFormat (key);
 		final String pattern = this.settings.getPattern (key);
 		final String valPattern = this.settings.getValPattern (key);
@@ -62,7 +62,7 @@ public class ConvertV2 extends Thread implements ConvertThread {
 					if (values.get ("date") == null) {
 						values.put ("date", df.parse (val).getTime ());
 					} else {
-						long l = values.getAsLong ("date");
+						long l = Long.parseLong ("" + values.get ("date"));
 						l += df.parse (val).getTime ();
 						values.put ("date", l);
 					}
@@ -101,7 +101,7 @@ public class ConvertV2 extends Thread implements ConvertThread {
 	public void run () {
 		try {
 			this.settings.makePatterns ();
-			final FileReader fr = new FileReader (this.f);
+			final InputStreamReader fr = new InputStreamReader (this.f);
 			final LookForStringReader lfsr = new LookForStringReader (fr,
 			        this.settings.getDelimiter ());
 			final List<String> texts = new LinkedList<String> ();
@@ -147,11 +147,11 @@ public class ConvertV2 extends Thread implements ConvertThread {
 					this.inserted++;
 					final String folderMsg = ConvertV2.folder + suffix;
 					try {
-						final ContentValues values = this
+						final Map<String, Object> values = this
 						        .buildMessageFromString (suffix, text);
 
-						this.convertListener.getContentResolver ().insert (
-						        Uri.parse (folderMsg), values);
+						this.convertListener.insert (
+						        new URI (folderMsg), values);
 					} catch (final IllegalStateException ise) {
 						this.exception = ise;
 					}
@@ -174,12 +174,12 @@ public class ConvertV2 extends Thread implements ConvertThread {
 		this.convertListener = cl;
 	}
 
-	public void setFile (File f) {
+	public void setInputStream (InputStream f) {
 		this.f = f;
 	}
 
-	public void setHandler (Handler handler) {
-		this.handler = handler;
+	public void setHandler (Object handler) {
+		this.handler = (android.os.Handler)handler;
 	}
 
 }

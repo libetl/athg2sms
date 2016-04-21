@@ -1,8 +1,6 @@
 package org.toilelibre.libe.athg2sms.bp;
 
-import java.io.File;
-
-import android.os.Handler;
+import java.io.InputStream;
 
 public interface ConvertThread {
 
@@ -16,9 +14,9 @@ public interface ConvertThread {
 
 	public void setConvertListener (ConvertListener cl);
 
-	public void setFile (File f);
+	public void setInputStream (InputStream is);
 
-	public void setHandler (Handler handler);
+	public void setHandler (Object handler);
 
 	public void start ();
 }

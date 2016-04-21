@@ -50,6 +50,19 @@ public class DefaultSettings {
 		        .put ("sent",
 		                "[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),[^,]*,true,$(address),\"$(body)\"\n");
 		sets.put ("Blackberry Csv", blackberryCsv);
+		final Map<String, String> additionalCsv20161 = new HashMap<String, String> ();
+        additionalCsv20161
+        .put ("inbox","[\r\n]*$(dateM/d/yy HH:mm:ss a);from;$(address);\"\";\"$(body)\"[\r\n]+");
+        additionalCsv20161
+        .put ("sent",
+                "[\r\n]*$(dateM/d/yy hh:mm:ss a);to;$(address);\"\";\"$(body)\"[\r\n]+");
+        sets.put ("Date+'from'+address+body", additionalCsv20161);
+        final Map<String, String> additionalCsv20162 = new HashMap<String, String> ();
+        additionalCsv20162
+        .put ("inbox","[\r\n]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"INBOX\"[\r\n]+");
+        additionalCsv20162
+        .put ("sent","[\r\n]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"SENT\"[\r\n]+");
+        sets.put ("Date+address+body+INBOX", additionalCsv20162);
 	}
 
 	private static void loadFromSettings (Map<String, Map<String, String>> sets) {

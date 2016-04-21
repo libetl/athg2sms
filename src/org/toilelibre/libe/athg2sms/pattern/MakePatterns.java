@@ -17,7 +17,7 @@ public class MakePatterns {
 		if (rs.index () < rs.length ()) {
 			rs.getPattern ().append (MakePatterns.varPattern);
 			if (expectedChar >= 0) {
-				rs.getValue ().append ("([^" + expectedChar + "]*)");
+				rs.getValue ().append ("((?:[^" + expectedChar + "]" + (expectedChar == '"' ? "|\"\"" : (expectedChar == '\'' ? "|''" : "")) + ")*)");
 			}
 		}
 
