@@ -74,7 +74,7 @@ public class ProceedActivity extends Activity implements ConvertListener {
 		this.convert = SettingsFactory.asV3 ().getConvertThreadInstance ();
         try {
             Scanner scan = new Scanner(f);
-            scan.useDelimiter("\\Z");  
+            scan.useDelimiter("\\A");  
             String content = scan.next(); 
             this.convert.setInputStream (new ByteArrayInputStream (content.getBytes ()));
             this.convert.setConvertListener (this);
