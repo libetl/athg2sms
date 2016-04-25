@@ -61,9 +61,7 @@ public class LookForMatchReader extends Reader {
 
 	private SmsResult tryMatch (String value) {
 	    char lastChar = value.length () == 0 ? 'A' : value.charAt (value.length () - 1);
-	    if ((lastChar >= 'A' && lastChar <= 'Z') ||
-                (lastChar >= 'a' && lastChar <= 'z') ||
-                (lastChar >= '0' && lastChar <= '9')) {
+	    if (lastCharIsAlphaNum(lastChar)) {
 	        return null;
 	    }
 		for (final String key : this.settings.getValPatternsKeySet ()) {
@@ -75,6 +73,12 @@ public class LookForMatchReader extends Reader {
 		}
 		return null;
 	}
+
+    private boolean lastCharIsAlphaNum (char lastChar) {
+        return (lastChar >= 'A' && lastChar <= 'Z') ||
+                (lastChar >= 'a' && lastChar <= 'z') ||
+                (lastChar >= '0' && lastChar <= '9');
+    }
 
     private Pattern getPattern (String pattern) {
         if (this.patterns.get (pattern) == null) {
