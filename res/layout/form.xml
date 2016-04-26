@@ -1,61 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal">
-<ImageView android:src="@drawable/iconl"
- android:id="@+id/ImageView01"
- android:layout_width="wrap_content" 
- android:layout_height="wrap_content"></ImageView>
- <LinearLayout 
- xmlns:android="http://schemas.android.com/apk/res/android"
-     android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
-    <TextView
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-    android:text="@+string/path"/>
-    <EditText
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:width="200dip" android:singleLine="true"
-    android:id="@+id/filename"/>
-    <Button
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-    android:id="@+id/selectfile"
-    android:text="@+string/selectfile"/>
-</LinearLayout>    
-<LinearLayout 
- xmlns:android="http://schemas.android.com/apk/res/android"
-     android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"> 
-<Spinner android:id="@+id/conversionSet" 
-android:layout_width="wrap_content"
- android:layout_height="wrap_content"/>
-    <Button
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-    android:id="@+id/start"
-    android:text="@+string/start"/>
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/ImageView01"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="big picture"
+        android:src="@drawable/iconv3" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@+string/path" />
+
+            <EditText
+                android:id="@+id/filename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:width="200dip" />
+
+            <Button
+                android:id="@+id/selectfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@+string/selectfile" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Spinner
+                android:id="@+id/conversionSet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@+string/start" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/backtomainmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+string/backtomainmenu" />
     </LinearLayout>
-    <Button
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-    android:id="@+id/backtomainmenu"
-    android:text="@+string/backtomainmenu"/>
+
 </LinearLayout>
-</ScrollView>
