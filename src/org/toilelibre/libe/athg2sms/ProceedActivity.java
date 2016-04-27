@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import org.toilelibre.libe.athg2sms.bp.ConvertException;
 import org.toilelibre.libe.athg2sms.bp.ConvertListener;
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
@@ -17,9 +18,13 @@ import org.toilelibre.libe.athg2sms.status.Error;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.support.v4.provider.DocumentFile;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -81,7 +86,11 @@ public class ProceedActivity extends Activity implements ConvertListener {
         this.inserted = (TextView) this.findViewById (R.id.inserted);
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + ProceedActivity.filename);
         this.handler = new Handler ();
-        final File f = new File (ProceedActivity.filename);
+        
+        final File f = getFileFromFileName ();
+        if (f == null) {
+            throw new RuntimeException ("Failed to find this file, sorry. Send that to libe4@free.fr");
+        }
         this.convert = SettingsFactory.asV4 ().getConvertThreadInstance ();
         try {
             final Scanner scan = new Scanner (f);
@@ -95,6 +104,31 @@ public class ProceedActivity extends Activity implements ConvertListener {
             throw new RuntimeException (e);
         }
     }
+
+    private File getFileFromFileName () {
+        String realPath = null;
+        if (ProceedActivity.filename == null){
+            return null;
+        }else if (ProceedActivity.filename.indexOf (':') == -1) {
+            return new File (ProceedActivity.filename);
+        }
+        String id = ProceedActivity.filename.split(":")[1];
+
+        String[] column = { MediaStore.Images.Media.DATA };     
+
+        String where = MediaStore.Images.Media._ID + "=?";
+        Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, where, new String [] {id}, null);
+        if (cursor == null) {
+            return null;
+        }
+        if(cursor.moveToFirst()){
+            int columnIndex = cursor.getColumnIndex(column[0]);
+            realPath = cursor.getString(columnIndex);
+        }
+        cursor.close();
+        return new File (realPath);
+    }
+        
 
     private void putEntry (final ContentValues values, final Entry<String, Object> entry) {
         if (entry.getValue () instanceof Boolean) {

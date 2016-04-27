@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">Athg2Sms V1.4.5</string>
+    <string name="app_name">Athg2Sms V1.4.6</string>
 
     <string name="app_title">Athg2Sms (Freeware)</string>
     <string name="help_title">Athg2Sms (Freeware) &gt; Help</string>
     <string name="cs_title">Athg2Sms (Freeware) &gt; Conversion Sets</string>
-    <string name="csedit_title">Athg2Sms (Freeware) &gt; C.S. &gt; Edit</string>
+    <string name="csedit_title">Athg2Sms (Freeware) &gt; Conversion Sets &gt; Edit</string>
     <string name="cf_title">Athg2Sms (Freeware) &gt; Conversion Form</string>
     <string name="cfoifm_title">Athg2Sms (Freeware) &gt; Conversion Form &gt; OI FM</string>
     <string name="proceed_title">Athg2Sms (Freeware) &gt; In Progress !</string>
@@ -17,7 +17,7 @@
     <string name="file_name">File Name</string>
     <string name="helpheader">How to convert your SMS messages :</string>
     <string name="failed_retry">Failed ! Retry ?</string>
-    <string name="sucessful">Sucessful</string>
+    <string name="sucessful">Successful</string>
     <string name="path">Path : </string>
     <string name="touchonetoeditit">Touch one to edit it.</string>
     <string name="editcsname">Conversion set for : </string>
