@@ -22,22 +22,22 @@ import org.toilelibre.libe.athg2sms.util.LookForMatchReader;
 
 public class ConvertV3 extends Thread implements ConvertThread {
     private static String folder = "content://sms/";
-    
-    private String           f;
-    private ConvertListener  convertListener;
-    private ConvertException exception;
-    private Object           handler;
-    private int              inserted;
-    private final SettingsV3 settings;
-    
+
+    private String                 f;
+    private ConvertListener        convertListener;
+    private final ConvertException exception;
+    private Object                 handler;
+    private int                    inserted;
+    private final SettingsV3       settings;
+
     public ConvertV3 () {
         super ();
         this.inserted = 0;
         this.exception = null;
         this.settings = SettingsFactory.asV3 ();
     }
-    
-    private Map<String, Object> buildMessageFromString (String key, SmsResult sms) {
+
+    private Map<String, Object> buildMessageFromString (final String key, final SmsResult sms) {
         final Map<String, Object> values = new HashMap<String, Object> ();
         final String format = this.settings.getFormat (key);
         final String pattern = this.settings.getPattern (key);
@@ -73,120 +73,58 @@ public class ConvertV3 extends Thread implements ConvertThread {
         }
         return values;
     }
-    
-    private String determineSubFolder (SmsResult sms) {
+
+    private String determineSubFolder (final SmsResult sms) {
         return sms.getKey ();
     }
-    
-    public ConvertException getException () {
-        return this.exception;
-    }
-    
-    public int getInserted () {
-        return this.inserted;
-    }
-    
-    @Override
-    public void run () {
-            this.settings.makePatterns ();
-            final StringReader fr = new StringReader (this.f);
-            final LookForMatchReader lfsr = new LookForMatchReader (fr, this.settings);
-            final List<SmsResult> matcher = new LinkedList<SmsResult> ();
-            SmsResult sms = new SmsResult (null, null, null);
-            while (sms != null) {
-                sms = lfsr.readUntilNextResult ();
-                if (sms != null) {
-                    matcher.add (sms);
-                }
-                dispatchAnotherSmsFoundEvent (matcher);
-            }
-            final int nb = matcher.size ();
-            int nbDuplicate = 0;
-            
-            dispatchNumberOfSmsRowsKnownEvent (nb);
-            
-            for (int i = 0 ; i < matcher.size () ; i++) {
-                final int dupl = nbDuplicate;
-                final int ins = this.inserted;
-                sms = matcher.get (i);
-                final int i2 = i;
-                dispatchNewSmsInsertionEvent (nb, dupl, ins, i2);
-                
-                nbDuplicate += proceedToInsertion (sms);
-            }
-            lfsr.close ();
-        
-        if (this.handler instanceof android.os.Handler)
+
+    private void dispatchAnotherSmsFoundEvent (final List<SmsResult> matcher) {
+        if (this.handler instanceof android.os.Handler) {
             ((android.os.Handler) this.handler).post (new Runnable () {
-                
+
                 public void run () {
-                    ConvertV3.this.convertListener.end ();
+                    ConvertV3.this.convertListener.sayIPrepareTheList (matcher.size ());
                 }
-                
+
             });
-    }
-    
-    private int proceedToInsertion (SmsResult sms) {
-        int nbDuplicate = 0;
-        final String suffix = this.determineSubFolder (sms);
-        if (suffix != null) {
-            this.inserted++;
-            final URI uri;
-            final URI uriDelete;
-            try {
-                uri = new URI (ConvertV3.folder + suffix + "/");
-                uriDelete = new URI (ConvertV3.folder);
-            } catch (URISyntaxException e) {
-                throw new ConvertException ("Cannot happen", e);
-            }
-            try {
-                final Map<String, Object> values = this.buildMessageFromString (suffix, sms);
-                String where = this.getWhere (values);
-                nbDuplicate += this.convertListener.delete (uriDelete, where, new String [0]);
-                this.convertListener.insert (uri, values);
-            } catch (final IllegalStateException ise) {
-                throw new ConvertException ("Problem during one insertion", ise);
-            }
         }
-        return nbDuplicate;
     }
-    
+
     private void dispatchNewSmsInsertionEvent (final int nb, final int dupl, final int ins, final int i2) {
-        if (this.handler instanceof android.os.Handler)
+        if (this.handler instanceof android.os.Handler) {
             ((android.os.Handler) this.handler).post (new Runnable () {
-                
+
                 public void run () {
                     ConvertV3.this.convertListener.updateProgress (i2, nb);
                     ConvertV3.this.convertListener.displayInserted (ins, dupl);
                 }
-                
+
             });
+        }
     }
-    
+
     private void dispatchNumberOfSmsRowsKnownEvent (final int nb) {
-        if (this.handler instanceof android.os.Handler)
+        if (this.handler instanceof android.os.Handler) {
             ((android.os.Handler) this.handler).post (new Runnable () {
-                
+
                 public void run () {
                     ConvertV3.this.convertListener.setMax (nb);
                 }
             });
+        }
     }
-    
-    private void dispatchAnotherSmsFoundEvent (final List<SmsResult> matcher) {
-        if (this.handler instanceof android.os.Handler)
-            ((android.os.Handler) this.handler).post (new Runnable () {
-                
-                public void run () {
-                    ConvertV3.this.convertListener.sayIPrepareTheList (matcher.size ());
-                }
-                
-            });
+
+    public ConvertException getException () {
+        return this.exception;
     }
-    
-    private String getWhere (Map<String, Object> values) {
-        StringBuffer sb = new StringBuffer ();
-        for (Entry<String, Object> entry : values.entrySet ()) {
+
+    public int getInserted () {
+        return this.inserted;
+    }
+
+    private String getWhere (final Map<String, Object> values) {
+        final StringBuffer sb = new StringBuffer ();
+        for (final Entry<String, Object> entry : values.entrySet ()) {
             sb.append (entry.getKey ());
             sb.append (" = ");
             if (entry.getValue () instanceof String) {
@@ -200,17 +138,83 @@ public class ConvertV3 extends Thread implements ConvertThread {
         }
         return sb.substring (0, sb.length () - " and ".length ());
     }
-    
-    public void setConvertListener (ConvertListener cl) {
-        this.convertListener = cl;
+
+    private int proceedToInsertion (final SmsResult sms) {
+        int nbDuplicate = 0;
+        final String suffix = this.determineSubFolder (sms);
+        if (suffix != null) {
+            this.inserted++;
+            final URI uri;
+            final URI uriDelete;
+            try {
+                uri = new URI (ConvertV3.folder + suffix + "/");
+                uriDelete = new URI (ConvertV3.folder);
+            } catch (final URISyntaxException e) {
+                throw new ConvertException ("Cannot happen", e);
+            }
+            try {
+                final Map<String, Object> values = this.buildMessageFromString (suffix, sms);
+                final String where = this.getWhere (values);
+                nbDuplicate += this.convertListener.delete (uriDelete, where, new String [0]);
+                this.convertListener.insert (uri, values);
+            } catch (final IllegalStateException ise) {
+                throw new ConvertException ("Problem during one insertion", ise);
+            }
+        }
+        return nbDuplicate;
     }
-    
-    public void setContentToBeParsed (String f) {
+
+    @Override
+    public void run () {
+        this.settings.makePatterns ();
+        final StringReader fr = new StringReader (this.f);
+        final LookForMatchReader lfsr = new LookForMatchReader (fr, this.settings);
+        final List<SmsResult> matcher = new LinkedList<SmsResult> ();
+        SmsResult sms = new SmsResult (null, null, null);
+        while (sms != null) {
+            sms = lfsr.readUntilNextResult ();
+            if (sms != null) {
+                matcher.add (sms);
+            }
+            this.dispatchAnotherSmsFoundEvent (matcher);
+        }
+        final int nb = matcher.size ();
+        int nbDuplicate = 0;
+
+        this.dispatchNumberOfSmsRowsKnownEvent (nb);
+
+        for (int i = 0 ; i < matcher.size () ; i++) {
+            final int dupl = nbDuplicate;
+            final int ins = this.inserted;
+            sms = matcher.get (i);
+            final int i2 = i;
+            this.dispatchNewSmsInsertionEvent (nb, dupl, ins, i2);
+
+            nbDuplicate += this.proceedToInsertion (sms);
+        }
+        lfsr.close ();
+
+        if (this.handler instanceof android.os.Handler) {
+            ((android.os.Handler) this.handler).post (new Runnable () {
+
+                public void run () {
+                    ConvertV3.this.convertListener.end ();
+                }
+
+            });
+        }
+    }
+
+    public void setContentToBeParsed (final String f) {
         this.f = f;
     }
-    
-    public void setHandler (Object handler) {
+
+    public void setConvertListener (final ConvertListener cl) {
+        this.convertListener = cl;
+    }
+
+    public void setHandler (final Object handler) {
         this.handler = handler;
     }
-    
+
 }

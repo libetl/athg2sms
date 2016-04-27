@@ -10,19 +10,18 @@ import android.widget.Button;
 
 public class Done extends Activity {
 
-	@Override
-	public void onCreate (Bundle savedInstanceState) {
-		super.onCreate (savedInstanceState);
-		this.setContentView (R.layout.done);
+    @Override
+    public void onCreate (final Bundle savedInstanceState) {
+        super.onCreate (savedInstanceState);
+        this.setContentView (R.layout.done);
 
-		((Button) this.findViewById (R.id.backtoconvform))
-		        .setOnClickListener (new OnClickListener () {
+        ((Button) this.findViewById (R.id.backtoconvform)).setOnClickListener (new OnClickListener () {
 
-			        public void onClick (View v) {
-				        Done.this.finish ();
-			        }
+            public void onClick (final View v) {
+                Done.this.finish ();
+            }
 
-		        });
-	}
+        });
+    }
 
 }

@@ -14,57 +14,51 @@ import android.widget.ListView;
 
 public class ConvSetsListActivity extends ListActivity {
 
-	private String []	setsArray;
+    private String [] setsArray;
 
-	@Override
-	protected void onCreate (Bundle savedInstanceState) {
-		super.onCreate (savedInstanceState);
-		this.setContentView (R.layout.cslist);
-		this.reloadList ();
-		((ListView) this.findViewById (android.R.id.list)).setClickable (true);
-		this.findViewById (R.id.backtomainmenu).setOnClickListener (
-		        new OnClickListener () {
+    @Override
+    protected void onCreate (final Bundle savedInstanceState) {
+        super.onCreate (savedInstanceState);
+        this.setContentView (R.layout.cslist);
+        this.reloadList ();
+        ((ListView) this.findViewById (android.R.id.list)).setClickable (true);
+        this.findViewById (R.id.backtomainmenu).setOnClickListener (new OnClickListener () {
 
-			        public void onClick (View v) {
-				        ConvSetsListActivity.this.finish ();
-			        }
+            public void onClick (final View v) {
+                ConvSetsListActivity.this.finish ();
+            }
 
-		        });
-		this.findViewById (R.id.addone).setOnClickListener (
-		        new OnClickListener () {
+        });
+        this.findViewById (R.id.addone).setOnClickListener (new OnClickListener () {
 
-			        public void onClick (View v) {
-				        final Intent intent = new Intent (
-				                ConvSetsListActivity.this,
-				                ConvSetEditActivity.class);
-				        ConvSetsListActivity.this.startActivity (intent);
-			        }
+            public void onClick (final View v) {
+                final Intent intent = new Intent (ConvSetsListActivity.this, ConvSetEditActivity.class);
+                ConvSetsListActivity.this.startActivity (intent);
+            }
 
-		        });
-	}
+        });
+    }
 
-	@Override
-	protected void onListItemClick (ListView l, View v, int position, long id) {
-		super.onListItemClick (l, v, position, id);
-		final Intent intent = new Intent (this, ConvSetEditActivity.class);
-		intent.putExtra ("cs", this.setsArray [position]);
-		this.startActivity (intent);
+    @Override
+    protected void onListItemClick (final ListView l, final View v, final int position, final long id) {
+        super.onListItemClick (l, v, position, id);
+        final Intent intent = new Intent (this, ConvSetEditActivity.class);
+        intent.putExtra ("cs", this.setsArray [position]);
+        this.startActivity (intent);
 
-	}
+    }
 
-	@Override
-	protected void onResume () {
-		super.onResume ();
-		this.reloadList ();
-	}
+    @Override
+    protected void onResume () {
+        super.onResume ();
+        this.reloadList ();
+    }
 
-	private void reloadList () {
-		final Set<String> setsSet = SettingsFactory.common ().getSetsKeySet ();
-		this.setsArray = new String [setsSet.size ()];
-		setsSet.toArray (this.setsArray);
-		((ListView) this.findViewById (android.R.id.list))
-		        .setAdapter (new ArrayAdapter<String> (this,
-		                android.R.layout.simple_list_item_1, this.setsArray));
-	}
+    private void reloadList () {
+        final Set<String> setsSet = SettingsFactory.common ().getSetsKeySet ();
+        this.setsArray = new String [setsSet.size ()];
+        setsSet.toArray (this.setsArray);
+        ((ListView) this.findViewById (android.R.id.list)).setAdapter (new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, this.setsArray));
+    }
 
 }

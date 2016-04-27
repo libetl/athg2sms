@@ -10,22 +10,20 @@ import android.widget.TextView;
 
 public class HelpActivity extends Activity {
 
-	@Override
-	protected void onCreate (Bundle savedInstanceState) {
-		super.onCreate (savedInstanceState);
-		this.setContentView (R.layout.help);
+    @Override
+    protected void onCreate (final Bundle savedInstanceState) {
+        super.onCreate (savedInstanceState);
+        this.setContentView (R.layout.help);
 
-		this.findViewById (R.id.backtomainmenu).setOnClickListener (
-		        new OnClickListener () {
+        this.findViewById (R.id.backtomainmenu).setOnClickListener (new OnClickListener () {
 
-			        public void onClick (View v) {
-				        HelpActivity.this.finish ();
-			        }
+            public void onClick (final View v) {
+                HelpActivity.this.finish ();
+            }
 
-		        });
+        });
 
-		((TextView) this.findViewById (R.id.helpcontent)).setText (this
-		        .getString (R.string.helpcontent));
-	}
+        ((TextView) this.findViewById (R.id.helpcontent)).setText (this.getString (R.string.helpcontent));
+    }
 
 }

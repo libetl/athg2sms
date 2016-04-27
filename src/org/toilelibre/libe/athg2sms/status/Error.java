@@ -12,37 +12,34 @@ import android.widget.TextView;
 
 public class Error extends Activity {
 
-	private static ConvertException	lastError;
+    private static ConvertException lastError;
 
-	public static ConvertException getLastError () {
-		return Error.lastError;
-	}
+    public static ConvertException getLastError () {
+        return Error.lastError;
+    }
 
-	public static void setLastError (Object object) {
-		Error.lastError = (ConvertException) object;
-	}
+    public static void setLastError (final Object object) {
+        Error.lastError = (ConvertException) object;
+    }
 
-	@Override
-	public void onCreate (Bundle savedInstanceState) {
-		super.onCreate (savedInstanceState);
-		this.setContentView (R.layout.error);
-		final ConvertException e = Error.getLastError ();
-		((TextView) this.findViewById (R.id.exception)).setText (e.toString ());
-		if (e.getCause () != null) {
-			((TextView) this.findViewById (R.id.exception2)).setText (e
-			        .getCause ().toString ());
-		} else {
-			((TextView) this.findViewById (R.id.exception2))
-			        .setText ("That's all we know.");
-		}
+    @Override
+    public void onCreate (final Bundle savedInstanceState) {
+        super.onCreate (savedInstanceState);
+        this.setContentView (R.layout.error);
+        final ConvertException e = Error.getLastError ();
+        ((TextView) this.findViewById (R.id.exception)).setText (e.toString ());
+        if (e.getCause () != null) {
+            ((TextView) this.findViewById (R.id.exception2)).setText (e.getCause ().toString ());
+        } else {
+            ((TextView) this.findViewById (R.id.exception2)).setText ("That's all we know.");
+        }
 
-		((Button) this.findViewById (R.id.backtoconvform))
-		        .setOnClickListener (new OnClickListener () {
+        ((Button) this.findViewById (R.id.backtoconvform)).setOnClickListener (new OnClickListener () {
 
-			        public void onClick (View v) {
-				        Error.this.finish ();
-			        }
+            public void onClick (final View v) {
+                Error.this.finish ();
+            }
 
-		        });
-	}
+        });
+    }
 }
