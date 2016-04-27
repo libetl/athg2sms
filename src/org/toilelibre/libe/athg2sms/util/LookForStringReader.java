@@ -3,6 +3,8 @@ package org.toilelibre.libe.athg2sms.util;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.toilelibre.libe.athg2sms.bp.ConvertException;
+
 public class LookForStringReader extends Reader {
 
 	private final Reader	   reader;
@@ -26,8 +28,12 @@ public class LookForStringReader extends Reader {
 	}
 
 	@Override
-	public void close () throws IOException {
-		this.reader.close ();
+	public void close () {
+        try {
+            this.reader.close ();
+        } catch (IOException e) {
+            throw new ConvertException ("Cannot happen if the data to be read is a simple String, please change the impl of the Reader", e);
+        }
 	}
 
 	public String getSequence () {

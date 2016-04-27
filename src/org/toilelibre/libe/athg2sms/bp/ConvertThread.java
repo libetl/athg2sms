@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 public interface ConvertThread {
 
-	public Object getException ();
+	public ConvertException getException ();
 
 	public int getInserted ();
 
@@ -14,7 +14,7 @@ public interface ConvertThread {
 
 	public void setConvertListener (ConvertListener cl);
 
-	public void setInputStream (InputStream is);
+	public void setContentToBeParsed (String content);
 
 	public void setHandler (Object handler);
 

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -53,7 +54,7 @@ public class ProceedActivity extends Activity implements ConvertListener {
 			Error.setLastError (this.convert.getException ());
 			resultIntent = new Intent (this, Error.class);
 		} else if (this.convert.getInserted () == 0) {
-			Error.setLastError (new Exception ("No SMS Imported !"));
+			Error.setLastError (new ParseException ("No SMS Imported !\nThe selected conversion set does not match the input", 0));
 			resultIntent = new Intent (this, Error.class);
 		}
 		this.startActivity (resultIntent);
@@ -71,12 +72,12 @@ public class ProceedActivity extends Activity implements ConvertListener {
 		        + ProceedActivity.filename);
 		this.handler = new Handler ();
 		final File f = new File (ProceedActivity.filename);
-		this.convert = SettingsFactory.asV3 ().getConvertThreadInstance ();
+		this.convert = SettingsFactory.asV4 ().getConvertThreadInstance ();
         try {
             Scanner scan = new Scanner(f);
             scan.useDelimiter("\\A");  
             String content = scan.next(); 
-            this.convert.setInputStream (new ByteArrayInputStream (content.getBytes ()));
+            this.convert.setContentToBeParsed (content);
             this.convert.setConvertListener (this);
             this.convert.setHandler (this.handler);
             this.convert.start ();

@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.util;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.toilelibre.libe.athg2sms.bp.ConvertException;
 import org.toilelibre.libe.athg2sms.pattern.SmsResult;
 import org.toilelibre.libe.athg2sms.settings.SettingsCommon;
 
@@ -29,8 +31,12 @@ public class LookForMatchReader extends Reader {
 	}
 
 	@Override
-	public void close () throws IOException {
-		this.reader.close ();
+	public void close () {
+		try {
+            this.reader.close ();
+        } catch (IOException e) {
+            throw new ConvertException ("Cannot happen if the data to be read is a simple String, please change the impl of the Reader", e);
+        }
 	}
 
 	@Override
@@ -53,10 +59,11 @@ public class LookForMatchReader extends Reader {
 	private int safeRead () {
 		try {
 			return this.reader.read ();
+		} catch (final EOFException e) {
+	        return -1;
 		} catch (final IOException e) {
-			e.printStackTrace ();
+			throw new ConvertException ("Stream error while trying to read the file", e);
 		}
-		return -1;
 	}
 
 	private SmsResult tryMatch (String value) {

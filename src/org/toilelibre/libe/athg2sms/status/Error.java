@@ -1,6 +1,7 @@
 package org.toilelibre.libe.athg2sms.status;
 
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.bp.ConvertException;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,21 +12,21 @@ import android.widget.TextView;
 
 public class Error extends Activity {
 
-	private static Exception	lastError;
+	private static ConvertException	lastError;
 
-	public static Exception getLastError () {
+	public static ConvertException getLastError () {
 		return Error.lastError;
 	}
 
 	public static void setLastError (Object object) {
-		Error.lastError = (Exception) object;
+		Error.lastError = (ConvertException) object;
 	}
 
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate (savedInstanceState);
 		this.setContentView (R.layout.error);
-		final Exception e = Error.getLastError ();
+		final ConvertException e = Error.getLastError ();
 		((TextView) this.findViewById (R.id.exception)).setText (e.toString ());
 		if (e.getCause () != null) {
 			((TextView) this.findViewById (R.id.exception2)).setText (e

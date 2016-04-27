@@ -1,6 +1,5 @@
 package org.toilelibre.libe.athg2sms.bp;
 
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
@@ -17,24 +16,24 @@ import java.util.regex.Pattern;
 
 import org.toilelibre.libe.athg2sms.pattern.SmsResult;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
-import org.toilelibre.libe.athg2sms.settings.SettingsV3;
-import org.toilelibre.libe.athg2sms.util.LookForMatchReader;
+import org.toilelibre.libe.athg2sms.settings.SettingsV4;
+import org.toilelibre.libe.athg2sms.util.LookForAllMatches;
 
-public class ConvertV3 extends Thread implements ConvertThread {
+public class ConvertV4 extends Thread implements ConvertThread {
     private static String folder = "content://sms/";
     
-    private String           f;
+    private String           content;
     private ConvertListener  convertListener;
     private ConvertException exception;
     private Object           handler;
     private int              inserted;
-    private final SettingsV3 settings;
+    private final SettingsV4 settings;
     
-    public ConvertV3 () {
+    public ConvertV4 () {
         super ();
         this.inserted = 0;
         this.exception = null;
-        this.settings = SettingsFactory.asV3 ();
+        this.settings = SettingsFactory.asV4 ();
     }
     
     private Map<String, Object> buildMessageFromString (String key, SmsResult sms) {
@@ -89,38 +88,33 @@ public class ConvertV3 extends Thread implements ConvertThread {
     @Override
     public void run () {
             this.settings.makePatterns ();
-            final StringReader fr = new StringReader (this.f);
-            final LookForMatchReader lfsr = new LookForMatchReader (fr, this.settings);
-            final List<SmsResult> matcher = new LinkedList<SmsResult> ();
-            SmsResult sms = new SmsResult (null, null, null);
-            while (sms != null) {
-                sms = lfsr.readUntilNextResult ();
-                if (sms != null) {
-                    matcher.add (sms);
-                }
-                dispatchAnotherSmsFoundEvent (matcher);
+            final LookForAllMatches lfam = new LookForAllMatches (content, this.settings);
+            final List<SmsResult> matchedSms = new LinkedList<SmsResult> ();
+            Matcher matcher = lfam.matcher ();
+            while (matcher.find ()) {
+                matchedSms.add (new SmsResult (matcher, lfam.getCorrectPattern (), matcher.group ()));
+                dispatchAnotherSmsFoundEvent (matchedSms.size ());
             }
-            final int nb = matcher.size ();
+            final int nb = matchedSms.size ();
             int nbDuplicate = 0;
             
             dispatchNumberOfSmsRowsKnownEvent (nb);
             
-            for (int i = 0 ; i < matcher.size () ; i++) {
+            for (int i = 0 ; i < matchedSms.size () ; i++) {
                 final int dupl = nbDuplicate;
                 final int ins = this.inserted;
-                sms = matcher.get (i);
+                SmsResult sms = matchedSms.get (i);
                 final int i2 = i;
                 dispatchNewSmsInsertionEvent (nb, dupl, ins, i2);
                 
                 nbDuplicate += proceedToInsertion (sms);
             }
-            lfsr.close ();
         
         if (this.handler instanceof android.os.Handler)
             ((android.os.Handler) this.handler).post (new Runnable () {
                 
                 public void run () {
-                    ConvertV3.this.convertListener.end ();
+                    ConvertV4.this.convertListener.end ();
                 }
                 
             });
@@ -134,8 +128,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
             final URI uri;
             final URI uriDelete;
             try {
-                uri = new URI (ConvertV3.folder + suffix + "/");
-                uriDelete = new URI (ConvertV3.folder);
+                uri = new URI (ConvertV4.folder + suffix + "/");
+                uriDelete = new URI (ConvertV4.folder);
             } catch (URISyntaxException e) {
                 throw new ConvertException ("Cannot happen", e);
             }
@@ -156,8 +150,8 @@ public class ConvertV3 extends Thread implements ConvertThread {
             ((android.os.Handler) this.handler).post (new Runnable () {
                 
                 public void run () {
-                    ConvertV3.this.convertListener.updateProgress (i2, nb);
-                    ConvertV3.this.convertListener.displayInserted (ins, dupl);
+                    ConvertV4.this.convertListener.updateProgress (i2, nb);
+                    ConvertV4.this.convertListener.displayInserted (ins, dupl);
                 }
                 
             });
@@ -168,17 +162,17 @@ public class ConvertV3 extends Thread implements ConvertThread {
             ((android.os.Handler) this.handler).post (new Runnable () {
                 
                 public void run () {
-                    ConvertV3.this.convertListener.setMax (nb);
+                    ConvertV4.this.convertListener.setMax (nb);
                 }
             });
     }
     
-    private void dispatchAnotherSmsFoundEvent (final List<SmsResult> matcher) {
+    private void dispatchAnotherSmsFoundEvent (final int newSize) {
         if (this.handler instanceof android.os.Handler)
             ((android.os.Handler) this.handler).post (new Runnable () {
                 
                 public void run () {
-                    ConvertV3.this.convertListener.sayIPrepareTheList (matcher.size ());
+                    ConvertV4.this.convertListener.sayIPrepareTheList (newSize);
                 }
                 
             });
@@ -206,7 +200,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
     }
     
     public void setContentToBeParsed (String f) {
-        this.f = f;
+        this.content = f;
     }
     
     public void setHandler (Object handler) {

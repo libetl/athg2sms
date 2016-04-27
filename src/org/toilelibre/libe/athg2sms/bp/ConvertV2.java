@@ -1,7 +1,6 @@
 package org.toilelibre.libe.athg2sms.bp;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URI;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,7 +22,7 @@ import org.toilelibre.libe.athg2sms.util.LookForStringReader;
 public class ConvertV2 extends Thread implements ConvertThread {
 	private static String	 folder	= "content://sms/";
 
-	private InputStream	         f;
+	private String	         f;
 	private ConvertListener	 convertListener;
 	private Exception	     exception;
 	private android.os.Handler  handler;
@@ -89,8 +88,8 @@ public class ConvertV2 extends Thread implements ConvertThread {
 		return found ? patternKey : null;
 	}
 
-	public Exception getException () {
-		return this.exception;
+	public ConvertException getException () {
+        return new ConvertException ("exception", this.exception);
 	}
 
 	public int getInserted () {
@@ -101,7 +100,7 @@ public class ConvertV2 extends Thread implements ConvertThread {
 	public void run () {
 		try {
 			this.settings.makePatterns ();
-			final InputStreamReader fr = new InputStreamReader (this.f);
+			final StringReader fr = new StringReader (this.f);
 			final LookForStringReader lfsr = new LookForStringReader (fr,
 			        this.settings.getDelimiter ());
 			final List<String> texts = new LinkedList<String> ();
@@ -174,7 +173,7 @@ public class ConvertV2 extends Thread implements ConvertThread {
 		this.convertListener = cl;
 	}
 
-	public void setInputStream (InputStream f) {
+	public void setContentToBeParsed (String f) {
 		this.f = f;
 	}
 

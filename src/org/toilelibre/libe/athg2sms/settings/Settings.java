@@ -7,7 +7,7 @@ import java.util.Set;
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.pattern.MakePatterns;
 
-public abstract class Settings implements SettingsV2, SettingsV3 {
+public abstract class Settings implements SettingsV2, SettingsV3, SettingsV4 {
 
 	@Deprecated
 	private static String	                        delimiter	= "\n";

@@ -12,6 +12,7 @@ import java.util.Scanner;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.bp.ConvertListener;
 import org.toilelibre.libe.athg2sms.bp.ConvertV3;
+import org.toilelibre.libe.athg2sms.bp.ConvertV4;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
 public class ReadFileTest {
@@ -51,30 +52,30 @@ public class ReadFileTest {
     
     public void testFile (String classpathFile, String setName) throws URISyntaxException {
         //Given
-        ConvertV3 convertV3 = new ConvertV3 ();
+        ConvertV4 convertV4 = new ConvertV4 ();
         URL url = ReadFileTest.class.getClassLoader ().getResource (classpathFile);
         try {
             Scanner scan = new Scanner(new File (url.toURI ()));
             scan.useDelimiter("\\Z");  
             String content = scan.next(); 
-            convertV3.setInputStream (new ByteArrayInputStream (content.getBytes ()));
+            convertV4.setContentToBeParsed (content);
         } catch (FileNotFoundException e) {
             throw new RuntimeException (e);
         }  
-        convertV3.setConvertListener (convertListener );
+        convertV4.setConvertListener (convertListener );
         SettingsFactory.asV3 ().chooseSet (setName);
         
         //When
-        convertV3.run ();
+        convertV4.run ();
     }
 
     
     public void testString (String content, String setName) throws URISyntaxException {
         //Given
         ConvertV3 convertV3 = new ConvertV3 ();
-        convertV3.setInputStream (new ByteArrayInputStream (content.getBytes ()));
+        convertV3.setContentToBeParsed (content);
         convertV3.setConvertListener (convertListener );
-        SettingsFactory.asV3 ().chooseSet (setName);
+        SettingsFactory.asV4 ().chooseSet (setName);
         
         //When
         convertV3.run ();

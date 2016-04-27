@@ -2,8 +2,7 @@ package org.toilelibre.libe.athg2sms.bp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -14,7 +13,7 @@ import android.os.Handler;
 
 public class ConvertV1 extends Thread implements ConvertThread {
 
-	private InputStream     f;
+	private String          f;
 	private ConvertListener	activity;
 	private Exception	    exception;
 	private Handler	        handler;
@@ -24,8 +23,8 @@ public class ConvertV1 extends Thread implements ConvertThread {
 		this.exception = null;
 	}
 
-	public Exception getException () {
-		return this.exception;
+	public ConvertException getException () {
+		return new ConvertException ("exception", this.exception);
 	}
 
 	public int getInserted () {
@@ -35,11 +34,11 @@ public class ConvertV1 extends Thread implements ConvertThread {
 	@Override
 	public void run () {
 
-		InputStreamReader fr = null;
+	    StringReader fr = null;
 		BufferedReader br = null;
 		try {
 
-			fr = new InputStreamReader (this.f);
+			fr = new StringReader (this.f);
 			br = new BufferedReader (fr);
 			int i = 0;
 			int nb = 0;
@@ -58,7 +57,7 @@ public class ConvertV1 extends Thread implements ConvertThread {
 			br = new BufferedReader (fr);
 			final SimpleDateFormat df = new SimpleDateFormat (
 			        "yyyy.MM.dd hh:mm", Locale.US);
-			fr = new InputStreamReader (this.f);
+			fr = new StringReader (this.f);
 			br = new BufferedReader (fr);
 			String line = br.readLine ();
 			while (line != null) {
@@ -109,11 +108,7 @@ public class ConvertV1 extends Thread implements ConvertThread {
 				}
 			}
 			if (fr != null) {
-				try {
-					fr.close ();
-				} catch (final IOException e) {
-					e.printStackTrace ();
-				}
+				fr.close ();
 			}
 		}
 		this.handler.post (new Runnable () {
@@ -129,7 +124,7 @@ public class ConvertV1 extends Thread implements ConvertThread {
 		this.activity = activity;
 	}
 
-	public void setInputStream (InputStream f) {
+	public void setContentToBeParsed (String f) {
 		this.f = f;
 	}
 

@@ -44,7 +44,8 @@
         <activity
             android:name=".Athg2SmsStartActivity"
             android:label="@string/app_title"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,35 +55,40 @@
         </activity>
         <activity
             android:name=".Athg2SmsMainActivity"
-            android:label="@string/app_title" >
+            android:label="@string/app_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ConvSetEditActivity"
-            android:label="@string/csedit_title" >
+            android:label="@string/csedit_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ConvSetsListActivity"
-            android:label="@string/cs_title" >
+            android:label="@string/cs_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ConversionFormActivity"
-            android:label="@string/cf_title" >
+            android:label="@string/cf_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ProceedActivity"
-            android:label="@string/proceed_title" >
+            android:label="@string/proceed_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
                 <action android:name="android.intent.action.SEND" />
@@ -98,7 +104,8 @@
         </activity>
         <activity
             android:name=".status.Done"
-            android:label="@string/done_title" >
+            android:label="@string/done_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
@@ -112,7 +119,8 @@
         </activity>
         <activity
             android:name=".help.HelpActivity"
-            android:label="@string/help_title" >
+            android:label="@string/help_title"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
