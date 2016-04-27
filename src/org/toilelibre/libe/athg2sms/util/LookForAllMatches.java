@@ -42,10 +42,11 @@ public class LookForAllMatches {
     public Matcher matcher () {
         for (final String key : this.settings.getValPatternsKeySet ()) {
             final String pattern = this.settings.getValPattern (key);
-            final Matcher m = this.getPattern (pattern).matcher (this.content);
+            //sample it to test it
+            final Matcher m = this.getPattern (pattern).matcher (this.content.substring (0, 1000));
             if (m.find ()) {
                 this.correctPattern = key;
-                return m.reset ();
+                return this.getPattern (pattern).matcher (this.content);
             }
         }
         return null;

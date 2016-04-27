@@ -24,7 +24,7 @@ public class ConvertV4 extends Thread implements ConvertThread {
 
     private String                 content;
     private ConvertListener        convertListener;
-    private final ConvertException exception;
+    private ConvertException       exception;
     private Object                 handler;
     private int                    inserted;
     private final SettingsV4       settings;
@@ -165,10 +165,24 @@ public class ConvertV4 extends Thread implements ConvertThread {
 
     @Override
     public void run () {
+        try {
+            this.convertNow ();
+        } catch (ConvertException ce) {
+            this.exception = ce;
+        } finally {
+            this.end ();
+        }
+    }
+    
+
+    public void convertNow () {
         this.settings.makePatterns ();
         final LookForAllMatches lfam = new LookForAllMatches (this.content, this.settings);
         final List<SmsResult> matchedSms = new LinkedList<SmsResult> ();
         final Matcher matcher = lfam.matcher ();
+        if (matcher == null) {
+            throw new ConvertException ("The selected conversion set does not work, sorry", new IllegalArgumentException ());
+        }
         while (matcher.find ()) {
             matchedSms.add (new SmsResult (matcher, lfam.getCorrectPattern (), matcher.group ()));
             this.dispatchAnotherSmsFoundEvent (matchedSms.size ());
@@ -188,6 +202,9 @@ public class ConvertV4 extends Thread implements ConvertThread {
             nbDuplicate += this.proceedToInsertion (sms);
         }
 
+    }
+
+    private void end () {
         if (this.handler instanceof android.os.Handler) {
             ((android.os.Handler) this.handler).post (new Runnable () {
 
@@ -197,8 +214,9 @@ public class ConvertV4 extends Thread implements ConvertThread {
 
             });
         }
+        
     }
-
+    
     public void setContentToBeParsed (final String f) {
         this.content = f;
     }
