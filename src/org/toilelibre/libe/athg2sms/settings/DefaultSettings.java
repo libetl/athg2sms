@@ -2,11 +2,40 @@ package org.toilelibre.libe.athg2sms.settings;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.toilelibre.libe.athg2sms.util.StringUtils;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class DefaultSettings {
+    
+    public static final String SENT = "sent";
+    public static final String INBOX = "inbox";
+    public static final String COMMON = "common";
+    public static final String INBOX_KEYWORD = "inboxKeyword";
+    public static final String SENT_KEYWORD = "sentKeyword";
+    public static final String INDEX_OF_FOLDER_CAPTURING_GROUP = "indexOfFolderCapturingGroup";
+
+    public enum BuiltInConversionSets {
+        NokiaCsv("Nokia Csv"), 
+        IPhoneCsv("iPhone Csv"),
+        BlackberryCsv("Blackberry Csv"),
+        DateAndFromAndAddressAndbody("Date+'from'+address+body"),
+        DateAndAddressAndBodyAndINBOX("Date+address+body+INBOX");
+        
+        private String value;
+
+        BuiltInConversionSets (String value) {
+            this.value = value;
+        }
+        
+        public String getValue () {
+            return this.value;
+        }
+    }
 
     private static SharedPreferences sp;
 
@@ -22,28 +51,46 @@ public class DefaultSettings {
         }
 
     }
-
+    
     public static void loadDefaults (final Map<String, Map<String, String>> sets) {
-        final Map<String, String> nokiaCsv = new HashMap<String, String> ();
-        nokiaCsv.put ("inbox", "[\r\n\t]*sms;deliver;\"$(address)\";\"\";\"\";\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+");
-        nokiaCsv.put ("sent", "[\r\n\t]*sms;submit;\"\";\"$(address)\";\"\";\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+");
-        sets.put ("Nokia Csv", nokiaCsv);
-        final Map<String, String> iPhoneCsv = new HashMap<String, String> ();
-        iPhoneCsv.put ("inbox", "[\r\n\t]*\"Received\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+");
-        iPhoneCsv.put ("sent", "[\r\n\t]*\"Sent\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+");
-        sets.put ("iPhone Csv", iPhoneCsv);
-        final Map<String, String> blackberryCsv = new HashMap<String, String> ();
-        blackberryCsv.put ("inbox", "[\r\n\t]*[^,]*,[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),false,$(address),\"$(body)\"[\r\n\t]+");
-        blackberryCsv.put ("sent", "[\r\n\t]*[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),[^,]*,true,$(address),\"$(body)\"[\r\n\t]+");
-        sets.put ("Blackberry Csv", blackberryCsv);
-        final Map<String, String> additionalCsv20161 = new HashMap<String, String> ();
-        additionalCsv20161.put ("inbox", "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);from;$(address);\"\";\"$(body)\"[\r\n\t]+");
-        additionalCsv20161.put ("sent", "[\r\n\t]*$(dateM/d/yy hh:mm:ss a);to;$(address);\"\";\"$(body)\"[\r\n\t]+");
-        sets.put ("Date+'from'+address+body", additionalCsv20161);
-        final Map<String, String> additionalCsv20162 = new HashMap<String, String> ();
-        additionalCsv20162.put ("inbox", "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"INBOX\"[\r\n\t]+");
-        additionalCsv20162.put ("sent", "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"SENT\"[\r\n\t]+");
-        sets.put ("Date+address+body+INBOX", additionalCsv20162);
+        insertConversionSet (BuiltInConversionSets.NokiaCsv, 
+                sets, "[\r\n\t]*sms;deliver;\"$(address)\";\"\";\"\";\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+",
+                "[\r\n\t]*sms;submit;\"\";\"$(address)\";\"\";\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+");
+        insertConversionSet (BuiltInConversionSets.IPhoneCsv, 
+                sets, "[\r\n\t]*\"Received\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+",
+                "[\r\n\t]*\"Sent\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+");
+        insertConversionSet (BuiltInConversionSets.BlackberryCsv, 
+                sets, "[\r\n\t]*[^,]*,[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),false,$(address),\"$(body)\"[\r\n\t]+",
+                "[\r\n\t]*[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),[^,]*,true,$(address),\"$(body)\"[\r\n\t]+");
+        insertConversionSet (BuiltInConversionSets.DateAndFromAndAddressAndbody, 
+                sets, "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);from;$(address);\"\";\"$(body)\"[\r\n\t]+",
+                "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);to;$(address);\"\";\"$(body)\"[\r\n\t]+");
+        insertConversionSet (BuiltInConversionSets.DateAndAddressAndBodyAndINBOX, 
+                sets, "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"INBOX\"[\r\n\t]+",
+                "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"SENT\"[\r\n\t]+");
+    }
+
+    private static void insertConversionSet (BuiltInConversionSets conversionSetName, Map<String, Map<String, String>> sets, String inboxValue, String sentValue) {
+        int[] ranges = StringUtils.commonPartRanges (inboxValue, sentValue);
+        final Map<String, String> subSet = new HashMap<String, String> (5);
+        subSet.put (INBOX, inboxValue);
+        subSet.put (SENT, sentValue);
+        subSet.put (COMMON, inboxValue.substring (0, ranges [0]) + "$(folder)" + inboxValue.substring (ranges [1]));    
+        subSet.put (INBOX_KEYWORD, inboxValue.substring (ranges [0], ranges [1]));
+        subSet.put (SENT_KEYWORD, sentValue.substring (ranges [2], ranges [3]));
+        subSet.put (SENT_KEYWORD, sentValue.substring (ranges [2], ranges [3]));
+        
+        subSet.put (INDEX_OF_FOLDER_CAPTURING_GROUP, "" + numberOfMatches (Pattern.compile ("\\$\\([^)]+\\)").matcher (inboxValue.substring (0, ranges [0]))));
+        
+        sets.put (conversionSetName.getValue (), subSet);
+    }
+
+    private static int numberOfMatches (Matcher matcher) {
+        int count = 1;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
     }
 
     private static void loadFromSettings (final Map<String, Map<String, String>> sets) {

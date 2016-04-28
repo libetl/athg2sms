@@ -74,10 +74,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
         return values;
     }
 
-    private String determineSubFolder (final SmsResult sms) {
-        return sms.getKey ();
-    }
-
+    
     private void dispatchAnotherSmsFoundEvent (final List<SmsResult> matcher) {
         if (this.handler instanceof android.os.Handler) {
             ((android.os.Handler) this.handler).post (new Runnable () {
@@ -141,7 +138,7 @@ public class ConvertV3 extends Thread implements ConvertThread {
 
     private int proceedToInsertion (final SmsResult sms) {
         int nbDuplicate = 0;
-        final String suffix = this.determineSubFolder (sms);
+        final String suffix = "inbox";
         if (suffix != null) {
             this.inserted++;
             final URI uri;

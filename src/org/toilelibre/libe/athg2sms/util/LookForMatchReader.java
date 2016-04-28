@@ -86,7 +86,7 @@ public class LookForMatchReader extends Reader {
             final String pattern = this.settings.getValPattern (key);
             final Matcher m = this.getPattern (pattern).matcher (value);
             if (m.find ()) {
-                return new SmsResult (m, key, value);
+                return new SmsResult (this.settings, m, value);
             }
         }
         return null;

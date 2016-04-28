@@ -73,10 +73,6 @@ public class ConvertV4 extends Thread implements ConvertThread {
         return values;
     }
 
-    private String determineSubFolder (final SmsResult sms) {
-        return sms.getKey ();
-    }
-
     private void dispatchAnotherSmsFoundEvent (final int newSize) {
         if (this.handler instanceof android.os.Handler) {
             ((android.os.Handler) this.handler).post (new Runnable () {
@@ -140,7 +136,7 @@ public class ConvertV4 extends Thread implements ConvertThread {
 
     private int proceedToInsertion (final SmsResult sms) {
         int nbDuplicate = 0;
-        final String suffix = this.determineSubFolder (sms);
+        final String suffix = sms.getFolder ();
         if (suffix != null) {
             this.inserted++;
             final URI uri;
@@ -184,7 +180,8 @@ public class ConvertV4 extends Thread implements ConvertThread {
             throw new ConvertException ("The selected conversion set does not work, sorry", new IllegalArgumentException ());
         }
         while (matcher.find ()) {
-            matchedSms.add (new SmsResult (matcher, lfam.getCorrectPattern (), matcher.group ()));
+            String smsAsText = matcher.group ();
+            matchedSms.add (new SmsResult (this.settings, matcher, smsAsText));
             this.dispatchAnotherSmsFoundEvent (matchedSms.size ());
         }
         final int nb = matchedSms.size ();
