@@ -36,10 +36,11 @@ public class LookForAllMatches {
     
     public Matcher matcher () {
         final String pattern = this.settings.getValPattern (DefaultSettings.COMMON);
+        final String sampleOfTheContent = this.content.length () > 1000 ? this.content.substring (0, 1000) : this.content;
         // sample it to test it
-        final Matcher m = this.getPattern (pattern).matcher (this.content.length () > 1000 ? this.content.substring (0, 1000) : this.content);
+        final Matcher m = this.getPattern (pattern).matcher (sampleOfTheContent);
         if (m.find ()) {
-            return this.getPattern (pattern).matcher (this.content);
+            return this.getPattern (pattern).matcher (this.content + '\n');
         }
         return null;
     }

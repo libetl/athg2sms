@@ -2,7 +2,6 @@ package org.toilelibre.libe.athg2sms.bp;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.toilelibre.libe.athg2sms.pattern.SmsResult;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
@@ -20,14 +18,14 @@ import org.toilelibre.libe.athg2sms.settings.SettingsV4;
 import org.toilelibre.libe.athg2sms.util.LookForAllMatches;
 
 public class ConvertV4 extends Thread implements ConvertThread {
-    private static String folder = "content://sms/";
+    private static String    folder = "content://sms/";
 
-    private String                 content;
-    private ConvertListener        convertListener;
-    private ConvertException       exception;
-    private Object                 handler;
-    private int                    inserted;
-    private final SettingsV4       settings;
+    private String           content;
+    private ConvertListener  convertListener;
+    private ConvertException exception;
+    private Object           handler;
+    private int              inserted;
+    private final SettingsV4 settings;
 
     public ConvertV4 () {
         super ();
@@ -36,27 +34,16 @@ public class ConvertV4 extends Thread implements ConvertThread {
         this.settings = SettingsFactory.asV4 ();
     }
 
-    private Map<String, Object> buildMessageFromString (final String key, final SmsResult sms) {
-        final Map<String, Object> values = new HashMap<String, Object> ();
-        final String format = this.settings.getFormat (key);
-        final String pattern = this.settings.getPattern (key);
-        final String valPattern = this.settings.getValPattern (key);
-        final String value = sms.getCatched ();
-        final Pattern pVar = Pattern.compile (pattern);
-        final Matcher mVar = pVar.matcher (format);
-        final Pattern pVal = Pattern.compile (valPattern);
-        final Matcher mVal = pVal.matcher (value);
-        DateFormat df = null;
-        mVar.find ();
-        mVal.find ();
-        final int groupCount = mVar.groupCount ();
-        for (int i = 1 ; i <= groupCount ; i++) {
-            final String var = mVar.group (i);
-            final String val = mVal.group (i);
+    private Map<String, Object> buildMessageFromString (final String folder, final SmsResult sms) {
+        List<String> varNames = this.settings.getVarNamesForConvSet ();
+        Map<String, Object> values = new HashMap<String, Object> ();
+        for (int i = 0 ; i < varNames.size () ; i++) {
+            String var = varNames.get (i);
+            String val = sms.group (i);
             if (!var.startsWith ("date")) {
                 values.put (var, val);
             } else {
-                df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
+                SimpleDateFormat df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
                 try {
                     if (values.get ("date") == null) {
                         values.put ("date", df.parse (val).getTime ());
@@ -120,6 +107,9 @@ public class ConvertV4 extends Thread implements ConvertThread {
     private String getWhere (final Map<String, Object> values) {
         final StringBuffer sb = new StringBuffer ();
         for (final Entry<String, Object> entry : values.entrySet ()) {
+            if ("folder".equals (entry.getKey ())) {
+                continue;
+            }
             sb.append (entry.getKey ());
             sb.append (" = ");
             if (entry.getValue () instanceof String) {
@@ -169,7 +159,6 @@ public class ConvertV4 extends Thread implements ConvertThread {
             this.end ();
         }
     }
-    
 
     public void convertNow () {
         this.settings.makePatterns ();
@@ -211,9 +200,9 @@ public class ConvertV4 extends Thread implements ConvertThread {
 
             });
         }
-        
+
     }
-    
+
     public void setContentToBeParsed (final String f) {
         this.content = f;
     }

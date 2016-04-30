@@ -7,7 +7,7 @@ public class MakePatterns {
     private static String varPattern = "\\$\\(([^\\)]+)\\)";
 
     private static void addVariable (final ReadState rs) {
-        while ( (rs.index () < rs.length ()) && ( (rs.charAt (rs.index ()) != ')') || (rs.charAt (rs.index () - 1) == '\\'))) {
+        while ((rs.index () < rs.length ()) && ((rs.charAt (rs.index ()) != ')') || (rs.charAt (rs.index () - 1) == '\\'))) {
             rs.increment ();
         }
         rs.setAfterLastVar (rs.index () + 1);
@@ -24,35 +24,20 @@ public class MakePatterns {
     private static void atIndex (final ReadState rs) {
 
         switch (rs.charAt (rs.index ())) {
-        case '$' :
-            switch (rs.charAt (rs.index () + 1)) {
-            case '(' :
-                MakePatterns.addVariable (rs);
+            case '$' :
+                switch (rs.charAt (rs.index () + 1)) {
+                    case '(' :
+                        MakePatterns.addVariable (rs);
+                        break;
+                    default :
+                        MakePatterns.specialChar (rs);
+                        MakePatterns.defaultBehavior (rs);
+                        break;
+                }
                 break;
             default :
-                MakePatterns.specialChar (rs);
                 MakePatterns.defaultBehavior (rs);
                 break;
-            }
-            break;
-        case ']' :
-            MakePatterns.recognizePattern (rs);
-            break;
-        case '[' :
-            rs.setInBrackets (true);
-        case '\'' :
-        case '"' :
-        case '(' :
-        case ')' :
-        case '^' :
-        case '.' :
-        case '*' :
-        case '+' :
-        case '?' :
-            MakePatterns.specialChar (rs);
-        default :
-            MakePatterns.defaultBehavior (rs);
-            break;
         }
         rs.increment ();
 
@@ -63,6 +48,7 @@ public class MakePatterns {
         rs.getValue ().append (rs.charAt (rs.index ()));
 
     }
+
 
     public static void doAll (final Map<String, String> formats, final Map<String, String> patterns, final Map<String, String> valPatterns) {
         for (final String key : formats.keySet ()) {
@@ -78,24 +64,6 @@ public class MakePatterns {
         }
         patterns.put (key, rs.getPattern ().toString ().trim ());
         valPatterns.put (key, rs.getValue ().toString ().trim ());
-
-        if (format != null) {
-            format.substring (rs.getAfterLastVar ());
-        }
-
-    }
-
-    private static void recognizePattern (final ReadState rs) {
-        rs.setInBrackets (false);
-        rs.patternAppendEscape ();
-        MakePatterns.defaultBehavior (rs);
-        rs.increment ();
-        rs.setAfterLastVar (rs.index ());
-        if ( (rs.charAt (rs.index ()) == '+') || (rs.charAt (rs.index ()) == '*') || (rs.charAt (rs.index ()) == '?')) {
-            rs.patternAppendEscape ();
-            MakePatterns.defaultBehavior (rs);
-            rs.setAfterLastVar (rs.index () + 1);
-        }
 
     }
 

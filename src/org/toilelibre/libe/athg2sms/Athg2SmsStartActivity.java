@@ -2,9 +2,7 @@ package org.toilelibre.libe.athg2sms;
 
 import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
-import org.toilelibre.libe.athg2sms.settings.SettingsV3;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,14 +15,12 @@ public class Athg2SmsStartActivity extends Activity {
     @Override
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        SettingsV3.class.hashCode ();
         DefaultSettings.setSp (this.getSharedPreferences ("athg2sms", 0));
         this.setContentView (R.layout.notdefaultapp);
 
     }
 
     @Override
-    @SuppressLint ("InlinedApi")
     protected void onResume () {
         super.onResume ();
         if (android.os.Build.VERSION.SDK_INT >= 19) {

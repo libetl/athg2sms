@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import org.toilelibre.libe.athg2sms.bp.ConvertException;
 import org.toilelibre.libe.athg2sms.bp.ConvertListener;
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
@@ -21,10 +20,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.provider.DocumentFile;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 

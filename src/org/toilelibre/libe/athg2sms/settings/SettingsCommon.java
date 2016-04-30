@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.settings;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,6 +24,8 @@ public interface SettingsCommon {
 
     public Map<String, Map<String, String>> getSets ();
 
+    public List<String> getVarNames (String convSet);
+
     public Set<String> getSetsKeySet ();
 
     public String getValPattern (String key);
@@ -30,4 +33,6 @@ public interface SettingsCommon {
     public Set<String> getValPatternsKeySet ();
 
     public void putSet (String setName, Map<String, String> data);
+    
+    public List<String> getVarNamesForConvSet ();
 }

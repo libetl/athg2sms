@@ -71,5 +71,9 @@ public class ReadState {
     public StringBuffer valueAppendEscape () {
         return this.value.append ('\\');
     }
+    
+    public String toString () {
+        return this.value.toString ();
+    }
 
 }

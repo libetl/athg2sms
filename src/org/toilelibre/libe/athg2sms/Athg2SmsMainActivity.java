@@ -5,7 +5,6 @@ import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,7 +54,6 @@ public class Athg2SmsMainActivity extends Activity {
         });
         this.findViewById (R.id.toggledefaultapp).setOnClickListener (new OnClickListener () {
 
-            @SuppressLint ("NewApi")
             public void onClick (final View v) {
                 if (android.os.Build.VERSION.SDK_INT >= 19) {
                     final String myPackageName = Athg2SmsMainActivity.this.getPackageName ();

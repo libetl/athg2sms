@@ -4,4 +4,5 @@ public interface SettingsV4 extends SettingsCommon {
 
     public void makePatterns ();
 
+
 }

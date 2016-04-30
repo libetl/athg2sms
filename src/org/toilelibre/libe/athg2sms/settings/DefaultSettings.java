@@ -1,6 +1,8 @@
 package org.toilelibre.libe.athg2sms.settings;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +20,7 @@ public class DefaultSettings {
     public static final String INBOX_KEYWORD = "inboxKeyword";
     public static final String SENT_KEYWORD = "sentKeyword";
     public static final String INDEX_OF_FOLDER_CAPTURING_GROUP = "indexOfFolderCapturingGroup";
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile ("\\$\\(([^)]+)\\)");
 
     public enum BuiltInConversionSets {
         NokiaCsv("Nokia Csv"), 
@@ -43,45 +46,74 @@ public class DefaultSettings {
         return DefaultSettings.sp.getString ("defaultSmsApp", "com.android.mms");
     }
 
-    public static void load (final Map<String, Map<String, String>> sets) {
+    public static void load (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
         if ( (DefaultSettings.sp == null) || (DefaultSettings.sp.getAll ().size () <= 1)) {
-            DefaultSettings.loadDefaults (sets);
+            DefaultSettings.loadDefaults (sets, varNames);
         } else {
-            DefaultSettings.loadFromSettings (sets);
+            DefaultSettings.loadFromSettings (sets, varNames);
         }
 
     }
     
-    public static void loadDefaults (final Map<String, Map<String, String>> sets) {
-        insertConversionSet (BuiltInConversionSets.NokiaCsv, 
-                sets, "[\r\n\t]*sms;deliver;\"$(address)\";\"\";\"\";\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+",
-                "[\r\n\t]*sms;submit;\"\";\"$(address)\";\"\";\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+");
-        insertConversionSet (BuiltInConversionSets.IPhoneCsv, 
-                sets, "[\r\n\t]*\"Received\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+",
-                "[\r\n\t]*\"Sent\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+");
-        insertConversionSet (BuiltInConversionSets.BlackberryCsv, 
-                sets, "[\r\n\t]*[^,]*,[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),false,$(address),\"$(body)\"[\r\n\t]+",
-                "[\r\n\t]*[^,]*,$(dateEEE MMM d HH:mm:ss zzz yyyy),[^,]*,true,$(address),\"$(body)\"[\r\n\t]+");
-        insertConversionSet (BuiltInConversionSets.DateAndFromAndAddressAndbody, 
-                sets, "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);from;$(address);\"\";\"$(body)\"[\r\n\t]+",
-                "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);to;$(address);\"\";\"$(body)\"[\r\n\t]+");
-        insertConversionSet (BuiltInConversionSets.DateAndAddressAndBodyAndINBOX, 
-                sets, "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"INBOX\"[\r\n\t]+",
-                "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"SENT\"[\r\n\t]+");
+    public static void loadDefaults (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
+        insertConversionSet (BuiltInConversionSets.NokiaCsv, sets, varNames,
+               "[\r\n\t]*sms;$(folder);(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+",
+               "deliver", "submit");
+        insertConversionSet (BuiltInConversionSets.IPhoneCsv, sets, varNames,
+                "[\r\n\t]*\"$(folder)\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+",
+                "Received", "Sent");
+        insertConversionSet (BuiltInConversionSets.BlackberryCsv, sets, varNames,
+                "[\r\n\t]*[^,]*,(?:,)?$(dateEEE MMM d HH:mm:ss zzz yyyy),(?:,)?$(folder),$(address),\"$(body)\"[\r\n\t]+",
+                "false", "true");
+        insertConversionSet (BuiltInConversionSets.DateAndFromAndAddressAndbody, sets, varNames,
+                "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);$(folder);$(address);\"\";\"$(body)\"[\r\n\t]+",
+                "from", "to");
+        insertConversionSet (BuiltInConversionSets.DateAndAddressAndBodyAndINBOX, sets, varNames,
+                "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"$(folder)\"[\r\n\t]+",
+                "INBOX", "SENT");
     }
-
-    private static void insertConversionSet (BuiltInConversionSets conversionSetName, Map<String, Map<String, String>> sets, String inboxValue, String sentValue) {
+    
+    public static void insertConversionSet (BuiltInConversionSets conversionSetName, 
+            Map<String, Map<String, String>> sets, 
+            Map<String, List<String>> varNames, String inboxValue, String sentValue) {
         int[] ranges = StringUtils.commonPartRanges (inboxValue, sentValue);
         final Map<String, String> subSet = new HashMap<String, String> (5);
+        final String commonPattern = inboxValue.substring (0, ranges [0]) + "$(folder)" + inboxValue.substring (ranges [1]);
         subSet.put (INBOX, inboxValue);
         subSet.put (SENT, sentValue);
-        subSet.put (COMMON, inboxValue.substring (0, ranges [0]) + "$(folder)" + inboxValue.substring (ranges [1]));    
+        subSet.put (COMMON, commonPattern );    
         subSet.put (INBOX_KEYWORD, inboxValue.substring (ranges [0], ranges [1]));
         subSet.put (SENT_KEYWORD, sentValue.substring (ranges [2], ranges [3]));
-        subSet.put (SENT_KEYWORD, sentValue.substring (ranges [2], ranges [3]));
         
-        subSet.put (INDEX_OF_FOLDER_CAPTURING_GROUP, "" + numberOfMatches (Pattern.compile ("\\$\\([^)]+\\)").matcher (inboxValue.substring (0, ranges [0]))));
+        subSet.put (INDEX_OF_FOLDER_CAPTURING_GROUP, "" + numberOfMatches (VARIABLE_PATTERN.matcher (inboxValue.substring (0, ranges [0]))));
         
+        Matcher findVariablesNames = VARIABLE_PATTERN.matcher (commonPattern);
+        varNames.put (conversionSetName.value, new LinkedList<String> ());
+        while (findVariablesNames.find()) {
+            varNames.get (conversionSetName.value).add(findVariablesNames.group (1));
+        }
+        sets.put (conversionSetName.getValue (), subSet);
+    }
+
+    private static void insertConversionSet (BuiltInConversionSets conversionSetName, 
+            Map<String, Map<String, String>> sets, 
+            Map<String, List<String>> varNames, String regexp,
+            String inboxKeyword, String sentKeyword) {
+        final Map<String, String> subSet = new HashMap<String, String> (5);
+        subSet.put (COMMON, regexp);    
+        subSet.put (INBOX_KEYWORD, inboxKeyword);
+        subSet.put (SENT_KEYWORD, sentKeyword);
+        
+        Matcher findVariablesNames = VARIABLE_PATTERN.matcher (regexp);
+        varNames.put (conversionSetName.value, new LinkedList<String> ());
+        int index = 1;
+        while (findVariablesNames.find()) {
+            if ("folder".equals (findVariablesNames.group (1))) {
+                subSet.put (INDEX_OF_FOLDER_CAPTURING_GROUP, "" + index);
+            }
+            varNames.get (conversionSetName.value).add(findVariablesNames.group (1));
+            index++;
+        }
         sets.put (conversionSetName.getValue (), subSet);
     }
 
@@ -93,7 +125,7 @@ public class DefaultSettings {
         return count;
     }
 
-    private static void loadFromSettings (final Map<String, Map<String, String>> sets) {
+    private static void loadFromSettings (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
         final Map<String, ?> map = DefaultSettings.sp.getAll ();
         for (final String key : map.keySet ()) {
             final String [] location = key.split ("#");
@@ -102,6 +134,8 @@ public class DefaultSettings {
                     sets.put (location [0], new HashMap<String, String> ());
                 }
                 sets.get (location [0]).put (location [1], (String) map.get (key));
+                sets.get (location [0]).put (location [2], (String) map.get (key));
+                sets.get (location [0]).put (location [3], (String) map.get (key));
             }
         }
 

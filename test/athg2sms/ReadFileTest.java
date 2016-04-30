@@ -58,6 +58,7 @@ public class ReadFileTest {
                 "\"2016-04-19 01:04:34\",\"VM-FCHRGE\",\"\",\"Dear customer, You have made a Debit\",\"INBOX\"\n"
                         + "\"2016-04-19 17:24:11\",\"ID-IDEA\",\"\",\"UR BSNL a/c Topup with Rs. 10 by 2222\",\"INBOX\"\n",
                 BuiltInConversionSets.DateAndAddressAndBodyAndINBOX, false);
+        Assert.assertEquals (2, messagesInserted);
     }
 
     @Test
@@ -80,9 +81,17 @@ public class ReadFileTest {
     }
 
     @Test
+    public void nokiaCsv () throws URISyntaxException {
+        this.testString ("sms;deliver;\"+33612345678\";\"\";\"\";\"2016.03.22 15:46\";\"\";\"First message\"\n"
+                + "sms;submit;\"\";\"+33612345678\";\"\";\"2016.03.22 15:48\";\"\";\"Answer to the first message\"", BuiltInConversionSets.NokiaCsv, true);
+        Assert.assertEquals (2, messagesInserted);
+    }
+
+    @Test
     public void loremIpsum () throws URISyntaxException {
         this.testString ("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n"
                 + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInConversionSets.BlackberryCsv, false);
+        Assert.assertEquals (2, messagesInserted);
     }
 
     public void testFile (final String classpathFile, final BuiltInConversionSets conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {

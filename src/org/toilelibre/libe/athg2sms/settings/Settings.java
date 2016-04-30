@@ -1,18 +1,21 @@
 package org.toilelibre.libe.athg2sms.settings;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.pattern.MakePatterns;
 
-public abstract class Settings implements SettingsV2, SettingsV3, SettingsV4 {
+public abstract class Settings implements SettingsV4 {
 
     @Deprecated
     private static String delimiter = "\n";
 
     private static Map<String, String> formats = new HashMap<String, String> ();
+    
+    private static Map<String, List<String>> varNames = new HashMap<String, List<String>> ();
 
     private static ConvertThread thread = null;
 
@@ -22,12 +25,15 @@ public abstract class Settings implements SettingsV2, SettingsV3, SettingsV4 {
 
     private static Map<String, String> valPatterns = new HashMap<String, String> ();
 
+    private static List<String> varNamesForConvSet;
+
     static {
-        DefaultSettings.load (Settings.sets);
+        DefaultSettings.load (Settings.sets, Settings.varNames);
     }
 
     public void chooseSet (final String set) {
         Settings.formats = Settings.sets.get (set);
+        Settings.varNamesForConvSet = Settings.varNames.get (set);
     }
 
     public ConvertThread getConvertThreadInstance () {
@@ -38,6 +44,14 @@ public abstract class Settings implements SettingsV2, SettingsV3, SettingsV4 {
 
     public String getDelimiter () {
         return Settings.delimiter;
+    }
+
+    public List<String> getVarNames (String convSet) {
+        return Settings.varNames.get (convSet);
+    }
+
+    public List<String> getVarNamesForConvSet () {
+        return Settings.varNamesForConvSet;
     }
 
     public String getFormat (final String key) {
