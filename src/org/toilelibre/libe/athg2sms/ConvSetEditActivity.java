@@ -22,12 +22,11 @@ public class ConvSetEditActivity extends Activity {
 
     private void notAllowedChar () {
         final AlertDialog.Builder builder = new AlertDialog.Builder (this);
-        builder.setMessage ("No '#' in Conv Set name please.").setIcon (android.R.drawable.ic_dialog_alert).setCancelable (false)
-                .setPositiveButton ("Ok", new DialogInterface.OnClickListener () {
-                    public void onClick (final DialogInterface dialog, final int id) {
-                        dialog.dismiss ();
-                    }
-                }).show ();
+        builder.setMessage ("No '#' in Conv Set name please.").setIcon (android.R.drawable.ic_dialog_alert).setCancelable (false).setPositiveButton ("Ok", new DialogInterface.OnClickListener () {
+            public void onClick (final DialogInterface dialog, final int id) {
+                dialog.dismiss ();
+            }
+        }).show ();
         builder.create ();
 
     }
@@ -37,7 +36,7 @@ public class ConvSetEditActivity extends Activity {
         super.onCreate (savedInstanceState);
         this.setContentView (R.layout.csedit);
         final Bundle bundle = this.getIntent ().getExtras ();
-        if ( (bundle != null) && (bundle.getCharSequence ("cs") != null)) {
+        if (bundle != null && bundle.getCharSequence ("cs") != null) {
             this.cs = bundle.getCharSequence ("cs").toString ();
             ((TextView) this.findViewById (R.id.editcsname)).setText (this.cs);
             this.map = SettingsFactory.common ().getSet (this.cs);
@@ -59,8 +58,7 @@ public class ConvSetEditActivity extends Activity {
         this.findViewById (R.id.delete).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                new AlertDialog.Builder (ConvSetEditActivity.this).setIcon (android.R.drawable.ic_dialog_alert).setTitle (R.string.delete).setMessage (R.string.really_delete)
-                        .setPositiveButton (R.string.delete_yes, new DialogInterface.OnClickListener () {
+                new AlertDialog.Builder (ConvSetEditActivity.this).setIcon (android.R.drawable.ic_dialog_alert).setTitle (R.string.delete).setMessage (R.string.really_delete).setPositiveButton (R.string.delete_yes, new DialogInterface.OnClickListener () {
 
                     public void onClick (final DialogInterface dialog, final int which) {
                         SettingsFactory.common ().getSets ().remove (ConvSetEditActivity.this.cs);

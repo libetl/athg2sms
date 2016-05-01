@@ -43,6 +43,6 @@
     <string name="exit">Exit</string>
     <string name="toggledefaultapp">Toggle Default App (>=4.4)</string>
     
-    <string name="not_default_app">Dear KitKat user, The Android Platform requires your consent to let athg2sms become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
+    <string name="not_default_app">Dear KitKat (or +) user, The Android Platform requires your consent to let athg2sms become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
     <string name="oic">Oh, I see !</string>
 </resources>

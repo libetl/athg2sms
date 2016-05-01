@@ -21,7 +21,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,10 +42,10 @@ public class ProceedActivity extends Activity implements ConvertListener {
     private ConvertThread convert;
     private Handler       handler;
 
-    private ProgressBar progress;
+    private ProgressBar   progress;
 
-    private TextView current;
-    private TextView inserted;
+    private TextView      current;
+    private TextView      inserted;
 
     public int delete (final URI uriDelete, final String where, final String [] strings) {
         return this.getContentResolver ().delete (Uri.parse (uriDelete.toString ()), where, strings);
@@ -83,8 +85,8 @@ public class ProceedActivity extends Activity implements ConvertListener {
         this.inserted = (TextView) this.findViewById (R.id.inserted);
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + ProceedActivity.filename);
         this.handler = new Handler ();
-        
-        final File f = getFileFromFileName ();
+
+        final File f = this.getFileFromFileName ();
         if (f == null) {
             throw new RuntimeException ("Failed to find this file, sorry. Send that to libe4@free.fr");
         }
@@ -104,28 +106,27 @@ public class ProceedActivity extends Activity implements ConvertListener {
 
     private File getFileFromFileName () {
         String realPath = null;
-        if (ProceedActivity.filename == null){
+        if (ProceedActivity.filename == null) {
             return null;
-        }else if (ProceedActivity.filename.indexOf (':') == -1) {
+        } else if (ProceedActivity.filename.indexOf (':') == -1) {
             return new File (ProceedActivity.filename);
         }
-        String id = ProceedActivity.filename.split(":")[1];
+        final String id = ProceedActivity.filename.split (":") [1];
 
-        String[] column = { MediaStore.Images.Media.DATA };     
+        final String [] column = { MediaColumns.DATA };
 
-        String where = MediaStore.Images.Media._ID + "=?";
-        Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, where, new String [] {id}, null);
+        final String where = BaseColumns._ID + "=?";
+        final Cursor cursor = this.getContentResolver ().query (MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, where, new String [] { id }, null);
         if (cursor == null) {
             return null;
         }
-        if(cursor.moveToFirst()){
-            int columnIndex = cursor.getColumnIndex(column[0]);
-            realPath = cursor.getString(columnIndex);
+        if (cursor.moveToFirst ()) {
+            final int columnIndex = cursor.getColumnIndex (column [0]);
+            realPath = cursor.getString (columnIndex);
         }
-        cursor.close();
+        cursor.close ();
         return new File (realPath);
     }
-        
 
     private void putEntry (final ContentValues values, final Entry<String, Object> entry) {
         if (entry.getValue () instanceof Boolean) {

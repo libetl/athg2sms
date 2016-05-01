@@ -18,7 +18,7 @@ public class ConversionFormActivity extends Activity {
     @Override
     protected void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult (requestCode, resultCode, data);
-        if ( (data != null) && (data.getData () != null) && (data.getData ().getPath () != null)) {
+        if (data != null && data.getData () != null && data.getData ().getPath () != null) {
             ((EditText) this.findViewById (R.id.filename)).setText (data.getData ().getPath ());
         }
     }
@@ -48,9 +48,9 @@ public class ConversionFormActivity extends Activity {
 
             public void onClick (final View v) {
                 final ConversionFormActivity thiz = ConversionFormActivity.this;
-                SettingsFactory.common ().chooseSet ( ((Spinner) thiz.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
+                SettingsFactory.common ().chooseSet (((Spinner) thiz.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
                 final Intent proceedIntent = new Intent (thiz, ProceedActivity.class);
-                ProceedActivity.setFilename ( ((EditText) thiz.findViewById (R.id.filename)).getText ().toString ());
+                ProceedActivity.setFilename (((EditText) thiz.findViewById (R.id.filename)).getText ().toString ());
                 thiz.startActivity (proceedIntent);
             }
         });

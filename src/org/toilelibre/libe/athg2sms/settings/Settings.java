@@ -11,21 +11,21 @@ import org.toilelibre.libe.athg2sms.pattern.MakePatterns;
 public abstract class Settings implements SettingsV4 {
 
     @Deprecated
-    private static String delimiter = "\n";
+    private static String                           delimiter   = "\n";
 
-    private static Map<String, String> formats = new HashMap<String, String> ();
-    
-    private static Map<String, List<String>> varNames = new HashMap<String, List<String>> ();
+    private static Map<String, String>              formats     = new HashMap<String, String> ();
 
-    private static ConvertThread thread = null;
+    private static Map<String, List<String>>        varNames    = new HashMap<String, List<String>> ();
 
-    private static Map<String, String> patterns = new HashMap<String, String> ();
+    private static ConvertThread                    thread      = null;
 
-    private static Map<String, Map<String, String>> sets = new HashMap<String, Map<String, String>> ();
+    private static Map<String, String>              patterns    = new HashMap<String, String> ();
 
-    private static Map<String, String> valPatterns = new HashMap<String, String> ();
+    private static Map<String, Map<String, String>> sets        = new HashMap<String, Map<String, String>> ();
 
-    private static List<String> varNamesForConvSet;
+    private static Map<String, String>              valPatterns = new HashMap<String, String> ();
+
+    private static List<String>                     varNamesForConvSet;
 
     static {
         DefaultSettings.load (Settings.sets, Settings.varNames);
@@ -46,7 +46,7 @@ public abstract class Settings implements SettingsV4 {
         return Settings.delimiter;
     }
 
-    public List<String> getVarNames (String convSet) {
+    public List<String> getVarNames (final String convSet) {
         return Settings.varNames.get (convSet);
     }
 

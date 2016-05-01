@@ -33,6 +33,6 @@ public interface SettingsCommon {
     public Set<String> getValPatternsKeySet ();
 
     public void putSet (String setName, Map<String, String> data);
-    
+
     public List<String> getVarNamesForConvSet ();
 }

@@ -6,9 +6,9 @@ public class ReadState {
     private final StringBuffer value;
     private final String       format;
 
-    private boolean inBrackets;
-    private int     afterLastVar;
-    private int     index;
+    private boolean            inBrackets;
+    private int                afterLastVar;
+    private int                index;
 
     public ReadState (final String format) {
         super ();
@@ -21,7 +21,7 @@ public class ReadState {
     }
 
     public char charAt (final int i) {
-        return (i >= 0 ? (i < this.format.length () ? this.format.charAt (i) : 0) : 0);
+        return i >= 0 ? i < this.format.length () ? this.format.charAt (i) : 0 : 0;
     }
 
     public int getAfterLastVar () {
@@ -71,7 +71,8 @@ public class ReadState {
     public StringBuffer valueAppendEscape () {
         return this.value.append ('\\');
     }
-    
+
+    @Override
     public String toString () {
         return this.value.toString ();
     }

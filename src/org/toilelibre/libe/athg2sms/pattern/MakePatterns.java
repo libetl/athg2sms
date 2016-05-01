@@ -7,7 +7,7 @@ public class MakePatterns {
     private static String varPattern = "\\$\\(([^\\)]+)\\)";
 
     private static void addVariable (final ReadState rs) {
-        while ((rs.index () < rs.length ()) && ((rs.charAt (rs.index ()) != ')') || (rs.charAt (rs.index () - 1) == '\\'))) {
+        while (rs.index () < rs.length () && (rs.charAt (rs.index ()) != ')' || rs.charAt (rs.index () - 1) == '\\')) {
             rs.increment ();
         }
         rs.setAfterLastVar (rs.index () + 1);
@@ -15,7 +15,7 @@ public class MakePatterns {
         if (rs.index () < rs.length ()) {
             rs.getPattern ().append (MakePatterns.varPattern);
             if (expectedChar >= 0) {
-                rs.getValue ().append ("((?:[^" + expectedChar + "]" + (expectedChar == '"' ? "|\"\"" : (expectedChar == '\'' ? "|''" : "")) + ")*)");
+                rs.getValue ().append ("((?:[^" + expectedChar + "]" + (expectedChar == '"' ? "|\"\"" : expectedChar == '\'' ? "|''" : "") + ")*)");
             }
         }
 
@@ -48,7 +48,6 @@ public class MakePatterns {
         rs.getValue ().append (rs.charAt (rs.index ()));
 
     }
-
 
     public static void doAll (final Map<String, String> formats, final Map<String, String> patterns, final Map<String, String> valPatterns) {
         for (final String key : formats.keySet ()) {

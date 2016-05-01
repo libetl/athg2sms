@@ -35,15 +35,15 @@ public class ConvertV4 extends Thread implements ConvertThread {
     }
 
     private Map<String, Object> buildMessageFromString (final String folder, final SmsResult sms) {
-        List<String> varNames = this.settings.getVarNamesForConvSet ();
-        Map<String, Object> values = new HashMap<String, Object> ();
+        final List<String> varNames = this.settings.getVarNamesForConvSet ();
+        final Map<String, Object> values = new HashMap<String, Object> ();
         for (int i = 0 ; i < varNames.size () ; i++) {
-            String var = varNames.get (i);
-            String val = sms.group (i);
+            final String var = varNames.get (i);
+            final String val = sms.group (i);
             if (!var.startsWith ("date")) {
                 values.put (var, val);
             } else {
-                SimpleDateFormat df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
+                final SimpleDateFormat df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
                 try {
                     if (values.get ("date") == null) {
                         values.put ("date", df.parse (val).getTime ());
@@ -153,7 +153,7 @@ public class ConvertV4 extends Thread implements ConvertThread {
     public void run () {
         try {
             this.convertNow ();
-        } catch (ConvertException ce) {
+        } catch (final ConvertException ce) {
             this.exception = ce;
         } finally {
             this.end ();
@@ -169,7 +169,7 @@ public class ConvertV4 extends Thread implements ConvertThread {
             throw new ConvertException ("The selected conversion set does not work, sorry", new IllegalArgumentException ());
         }
         while (matcher.find ()) {
-            String smsAsText = matcher.group ();
+            final String smsAsText = matcher.group ();
             matchedSms.add (new SmsResult (this.settings, matcher, smsAsText));
             this.dispatchAnotherSmsFoundEvent (matchedSms.size ());
         }
