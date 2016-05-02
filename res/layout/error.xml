@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-<LinearLayout 
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
-<ImageView android:src="@drawable/iconko"
- android:id="@+id/ImageView01"
- android:layout_width="wrap_content" 
- android:layout_height="wrap_content"></ImageView>
-    <TextView
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:textSize="30sp"
-  android:text="@string/failed_retry"/>
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:contentDescription="@string/failed_retry"
+        android:id="@+id/ImageView01"
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:src="@drawable/iconko" >
+    </ImageView>
 
     <TextView
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:id="@+id/exception"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/failed_retry"
+        android:textSize="30sp" />
+
     <TextView
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:id="@+id/exception2"/>
+        android:id="@+id/exception"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/exception2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
     <Button
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-    android:text="@string/backtoconvform"
-    android:id="@+id/backtoconvform"/>
+        android:id="@+id/backtoconvform"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backtoconvform" />
+
 </LinearLayout>
-</ScrollView>

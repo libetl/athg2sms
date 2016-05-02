@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal">
-<ImageView android:src="@drawable/iconok"
- android:id="@+id/ImageView01"
- android:layout_width="wrap_content" 
- android:layout_height="wrap_content"></ImageView>
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:contentDescription="@string/sucessful"
+        android:id="@+id/ImageView01"
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:src="@drawable/iconok" />
+
     <TextView
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:textSize="30sp"
-    android:text="@string/sucessful"/>
-    
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sucessful"
+        android:textSize="30sp" />
+
     <Button
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-    android:text="@string/backtoconvform"
-    android:id="@+id/backtoconvform"/>
-    
+        android:id="@+id/backtoconvform"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backtoconvform" />
+
 </LinearLayout>
-</ScrollView>

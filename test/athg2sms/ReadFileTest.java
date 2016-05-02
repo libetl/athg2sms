@@ -85,6 +85,15 @@ public class ReadFileTest {
     }
 
     @Test
+    public void nokiaCsvWithCR () throws URISyntaxException {
+        this.testString (
+                "\"sms\";\"submit\";\"+498537215678\";\"\";\"\";\"2016.04.14 11:58\";\"\";\"How are you doing?\"\n"
+                        + "\"sms\";\"submit\";\"00434566400787\";\"\";\"\";\"2016.04.10 10:43\";\"\";\"Neue Info OS129: Die aktuelle Abflugzeit ist jetzt voraussichtlich 10Apr 11:10. Wir bitten um Entschuldigung.\"",
+                BuiltInConversionSets.NokiaCsvWithQuotes, false);
+        Assert.assertEquals (2, this.messagesInserted);
+    }
+    
+    @Test
     public void loremIpsum () throws URISyntaxException {
         this.testString ("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n" + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInConversionSets.BlackberryCsv, false);
         Assert.assertEquals (2, this.messagesInserted);

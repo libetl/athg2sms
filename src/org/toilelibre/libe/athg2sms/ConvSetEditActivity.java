@@ -3,6 +3,7 @@ package org.toilelibre.libe.athg2sms;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
 import android.app.Activity;
@@ -41,8 +42,9 @@ public class ConvSetEditActivity extends Activity {
             ((TextView) this.findViewById (R.id.editcsname)).setText (this.cs);
             this.map = SettingsFactory.common ().getSet (this.cs);
             ((EditText) this.findViewById (R.id.editcsname)).setEnabled (false);
-            ((TextView) this.findViewById (R.id.csinbox)).setText (this.map.get ("inbox"));
-            ((TextView) this.findViewById (R.id.cssent)).setText (this.map.get ("sent"));
+            ((TextView) this.findViewById (R.id.cspattern)).setText (this.map.get (DefaultSettings.COMMON));
+            ((TextView) this.findViewById (R.id.csinbox)).setText (this.map.get (DefaultSettings.INBOX_KEYWORD));
+            ((TextView) this.findViewById (R.id.cssent)).setText (this.map.get (DefaultSettings.SENT_KEYWORD));
         } else {
             this.map = new HashMap<String, String> ();
             this.cs = "?";
@@ -79,8 +81,9 @@ public class ConvSetEditActivity extends Activity {
                     thiz.notAllowedChar ();
                 } else {
                     thiz.cs = newCs;
-                    thiz.map.put ("inbox", ((TextView) thiz.findViewById (R.id.csinbox)).getText ().toString ());
-                    thiz.map.put ("sent", ((TextView) thiz.findViewById (R.id.cssent)).getText ().toString ());
+                    thiz.map.put (DefaultSettings.COMMON, ((TextView) thiz.findViewById (R.id.cspattern)).getText ().toString ());
+                    thiz.map.put (DefaultSettings.INBOX_KEYWORD, ((TextView) thiz.findViewById (R.id.csinbox)).getText ().toString ());
+                    thiz.map.put (DefaultSettings.SENT_KEYWORD, ((TextView) thiz.findViewById (R.id.cssent)).getText ().toString ());
                     SettingsFactory.common ().putSet (thiz.cs, thiz.map);
                     thiz.finish ();
                 }

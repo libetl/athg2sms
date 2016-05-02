@@ -1,9 +1,12 @@
 package org.toilelibre.libe.athg2sms.settings;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +24,7 @@ public class DefaultSettings {
     private static final Pattern VARIABLE_PATTERN                = Pattern.compile ("\\$\\(([^)]+)\\)");
 
     public enum BuiltInConversionSets {
-        NokiaCsv ("Nokia Csv"), IPhoneCsv ("iPhone Csv"), BlackberryCsv ("Blackberry Csv"), DateAndFromAndAddressAndbody ("Date+'from'+address+body"), DateAndAddressAndBodyAndINBOX ("Date+address+body+INBOX");
+        NokiaCsv ("Nokia Csv"), IPhoneCsv ("iPhone Csv"), BlackberryCsv ("Blackberry Csv"), DateAndFromAndAddressAndbody ("Date+'from'+address+body"), DateAndAddressAndBodyAndINBOX ("Date+address+body+INBOX"), NokiaCsvWithQuotes ("Nokia Csv with quotes");
 
         private final String value;
 
@@ -50,6 +53,7 @@ public class DefaultSettings {
 
     public static void loadDefaults (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
         DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsv.value, sets, varNames, "[\r\n\t]*sms;$(folder);(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+", "deliver", "submit");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsvWithQuotes.value, sets, varNames, "[\r\n\t]*\"sms\";\"$(folder)\";(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+", "deliver", "submit");
         DefaultSettings.insertConversionSet (BuiltInConversionSets.IPhoneCsv.value, sets, varNames, "[\r\n\t]*\"$(folder)\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+", "Received", "Sent");
         DefaultSettings.insertConversionSet (BuiltInConversionSets.BlackberryCsv.value, sets, varNames, "[\r\n\t]*[^,]*,(?:,)?$(dateEEE MMM d HH:mm:ss zzz yyyy),(?:,)?$(folder),$(address),\"$(body)\"[\r\n\t]+", "false", "true");
         DefaultSettings.insertConversionSet (BuiltInConversionSets.DateAndFromAndAddressAndbody.value, sets, varNames, "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);$(folder);$(address);\"\";\"$(body)\"[\r\n\t]+", "from", "to");
@@ -75,15 +79,13 @@ public class DefaultSettings {
         sets.put (conversionSetName, subSet);
     }
 
-    @SuppressWarnings ("unchecked")
     private static void loadFromSettings (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
-        final Map<String, ?> map = DefaultSettings.sp.getAll ();
-        for (final Map.Entry<String, ?> entry : map.entrySet ()) {
-            final String convSet = entry.getKey ();
-            final String pattern = ((List<String>)entry.getValue ()).get (0);
-            final String inboxKeyword = ((List<String>)entry.getValue ()).get (0);
-            final String sentKeyword = ((List<String>)entry.getValue ()).get (0);
-            DefaultSettings.insertConversionSet (convSet, sets, varNames, pattern, inboxKeyword, sentKeyword);
+        final Map<String, ?> prefs = DefaultSettings.sp.getAll ();
+        Set<String> convSetNames = new HashSet<String> ();
+        for (final String entry : prefs.keySet ()) {convSetNames.add(entry);}
+        for (final String convSetName : convSetNames) {
+            DefaultSettings.insertConversionSet (convSetName, sets, varNames, (String) prefs.get (convSetName + '#' + DefaultSettings.COMMON), 
+                    (String) prefs.get (convSetName + '#' + DefaultSettings.INBOX_KEYWORD), (String) prefs.get (convSetName + '#' + DefaultSettings.SENT_KEYWORD));
         }
     }
 
@@ -92,11 +94,10 @@ public class DefaultSettings {
         final Editor editor = DefaultSettings.sp.edit ();
         editor.clear ();
         DefaultSettings.saveDefaultSmsApp (smsApp);
-        for (final String key1 : sets.keySet ()) {
-            final Map<String, String> map = sets.get (key1);
-            for (final String key2 : map.keySet ()) {
-                editor.putString (key1 + "#" + key2, map.get (key2));
-            }
+        for (final Entry<String, Map<String,String>> entry : sets.entrySet ()) {
+            editor.putString (entry.getKey () + "#" + DefaultSettings.COMMON, entry.getValue ().get (DefaultSettings.COMMON));
+            editor.putString (entry.getKey () + "#" + DefaultSettings.INBOX_KEYWORD, entry.getValue ().get (DefaultSettings.INBOX_KEYWORD));
+            editor.putString (entry.getKey () + "#" + DefaultSettings.SENT_KEYWORD, entry.getValue ().get (DefaultSettings.SENT_KEYWORD));
         }
         editor.commit ();
     }

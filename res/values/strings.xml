@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">Athg2Sms V1.4.6</string>
+    <string name="app_name">Athg2Sms V1.4.7</string>
 
     <string name="app_title">Athg2Sms (Freeware)</string>
     <string name="help_title">Athg2Sms (Freeware) &gt; Help</string>
@@ -22,8 +22,9 @@
     <string name="touchonetoeditit">Touch one to edit it.</string>
     <string name="editcsname">Conversion set for : </string>
     <string name="edityourPatterns">Edit your conversion patterns below :</string>
-    <string name="inbox">Inbox </string>
-    <string name="sent">Sent </string>
+    <string name="pattern">Global pattern </string>
+    <string name="inbox">Inbox keyword</string>
+    <string name="sent">Sent keyword</string>
     <string name="really_delete">This will delete this set permanently (excepted for Pre-defined sets)</string>
     <string name="delete_yes">Delete</string>
     
@@ -32,7 +33,7 @@
     <string name="convsets">Manage Conversion sets</string>
     <string name="convert">Begin Conversion</string>
     <string name="helpme">Quick Help</string>
-    <string name="modify">Modify</string>
+    <string name="validate">Validate</string>
     <string name="delete">Delete</string>
     <string name="selectfile">Choose</string>
     <string name="start">Start Conversion now !</string>
