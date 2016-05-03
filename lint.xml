@@ -3,4 +3,5 @@
     <issue id="NewApi">
         <ignore path="src/org/toilelibre/libe/athg2sms/Athg2SmsStartActivity.java" />
     </issue>
+    <issue id="ProtectedPermissions" severity="ignore" />
 </lint>

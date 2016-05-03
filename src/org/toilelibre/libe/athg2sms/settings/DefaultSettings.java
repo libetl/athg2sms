@@ -52,12 +52,12 @@ public class DefaultSettings {
     }
 
     public static void loadDefaults (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
-        DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsv.value, sets, varNames, "[\r\n\t]*sms;$(folder);(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+", "deliver", "submit");
-        DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsvWithQuotes.value, sets, varNames, "[\r\n\t]*\"sms\";\"$(folder)\";(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\r\n\t]+", "deliver", "submit");
-        DefaultSettings.insertConversionSet (BuiltInConversionSets.IPhoneCsv.value, sets, varNames, "[\r\n\t]*\"$(folder)\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\r\n\t]+", "Received", "Sent");
-        DefaultSettings.insertConversionSet (BuiltInConversionSets.BlackberryCsv.value, sets, varNames, "[\r\n\t]*[^,]*,(?:,)?$(dateEEE MMM d HH:mm:ss zzz yyyy),(?:,)?$(folder),$(address),\"$(body)\"[\r\n\t]+", "false", "true");
-        DefaultSettings.insertConversionSet (BuiltInConversionSets.DateAndFromAndAddressAndbody.value, sets, varNames, "[\r\n\t]*$(dateM/d/yy HH:mm:ss a);$(folder);$(address);\"\";\"$(body)\"[\r\n\t]+", "from", "to");
-        DefaultSettings.insertConversionSet (BuiltInConversionSets.DateAndAddressAndBodyAndINBOX.value, sets, varNames, "[\r\n\t]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"$(folder)\"[\r\n\t]+", "INBOX", "SENT");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsv.value, sets, varNames, "[\\s]*sms;$(folder);(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\\s]+", "deliver", "submit");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsvWithQuotes.value, sets, varNames, "[\\s]*\"sms\";\"$(folder)\";(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd hh:mm)\";\"\";\"$(body)\"[\\s]+", "deliver", "submit");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.IPhoneCsv.value, sets, varNames, "[\\s]*\"$(folder)\",\"$(dateM/d/yy)\",\"$(dateh:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\\s]+", "Received", "Sent");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.BlackberryCsv.value, sets, varNames, "[\\s]*[^,]*,(?:,)?$(dateEEE MMM d HH:mm:ss zzz yyyy),(?:,)?$(folder),$(address),\"$(body)\"[\\s]+", "false", "true");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.DateAndFromAndAddressAndbody.value, sets, varNames, "[\\s]*$(dateM/d/yy HH:mm:ss a);$(folder);$(address);\"\";\"$(body)\"[\\s]+", "from", "to");
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.DateAndAddressAndBodyAndINBOX.value, sets, varNames, "[\\s]*\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"$(folder)\"[\\s]+", "INBOX", "SENT");
     }
 
     private static void insertConversionSet (final String conversionSetName, final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames, final String regexp, final String inboxKeyword, final String sentKeyword) {
@@ -82,7 +82,7 @@ public class DefaultSettings {
     private static void loadFromSettings (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
         final Map<String, ?> prefs = DefaultSettings.sp.getAll ();
         Set<String> convSetNames = new HashSet<String> ();
-        for (final String entry : prefs.keySet ()) {convSetNames.add(entry);}
+        for (final String entry : prefs.keySet ()) {convSetNames.add(entry.split ("#") [0]);}
         for (final String convSetName : convSetNames) {
             DefaultSettings.insertConversionSet (convSetName, sets, varNames, (String) prefs.get (convSetName + '#' + DefaultSettings.COMMON), 
                     (String) prefs.get (convSetName + '#' + DefaultSettings.INBOX_KEYWORD), (String) prefs.get (convSetName + '#' + DefaultSettings.SENT_KEYWORD));

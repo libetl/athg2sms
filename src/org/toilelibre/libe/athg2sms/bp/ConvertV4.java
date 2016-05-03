@@ -100,6 +100,10 @@ public class ConvertV4 extends Thread implements ConvertThread {
         return this.exception;
     }
 
+    public void setException (Exception e) {
+        this.exception = new ConvertException ("Problem outside the conversion process : " + e.getMessage (), e);
+    }
+
     public int getInserted () {
         return this.inserted;
     }

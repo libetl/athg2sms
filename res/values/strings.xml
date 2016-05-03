@@ -46,4 +46,6 @@
     
     <string name="not_default_app">Dear KitKat (or +) user, The Android Platform requires your consent to let athg2sms become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
     <string name="oic">Oh, I see !</string>
+    
+    <string name="carrier_service">Carrier Service for Athg2Sms</string>
 </resources>

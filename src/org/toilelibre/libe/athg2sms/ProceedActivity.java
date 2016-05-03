@@ -3,6 +3,7 @@ package org.toilelibre.libe.athg2sms;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,17 +14,20 @@ import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 import org.toilelibre.libe.athg2sms.status.Done;
 import org.toilelibre.libe.athg2sms.status.Error;
-
+import org.toilelibre.libe.athg2sms.util.SmsManagerProxy;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.provider.Telephony;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -68,12 +72,18 @@ public class ProceedActivity extends Activity implements ConvertListener {
         this.finish ();
     }
 
+    @SuppressLint ("NewApi")
     public void insert (final URI uri, final Map<String, Object> values) {
         final ContentValues values2 = new ContentValues ();
         for (final Entry<String, Object> entry : values.entrySet ()) {
             this.putEntry (values2, entry);
         }
-        this.getContentResolver ().insert (Uri.parse (uri.toString ()), values2);
+        this.getContentResolver ().insert (
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ?
+                        ("sent".equals (values.get ("folder")) ? Telephony.Sms.Sent.CONTENT_URI :
+                            Telephony.Sms.Inbox.CONTENT_URI)  : 
+                            Uri.parse (uri.toString ()), values2);
+        
     }
 
     @Override
@@ -88,19 +98,23 @@ public class ProceedActivity extends Activity implements ConvertListener {
 
         final File f = this.getFileFromFileName ();
         if (f == null) {
-            throw new RuntimeException ("Failed to find this file, sorry. Send that to libe4@free.fr");
+            this.convert.setException (new URISyntaxException (ProceedActivity.filename, "Failed to find this file, sorry. Send that to libe4@free.fr"));
+            this.end ();
+            return;
         }
         this.convert = SettingsFactory.asV4 ().getConvertThreadInstance ();
         try {
             final Scanner scan = new Scanner (f);
             scan.useDelimiter ("\\A");
             final String content = scan.next ();
+            scan.close ();
             this.convert.setContentToBeParsed (content);
             this.convert.setConvertListener (this);
             this.convert.setHandler (this.handler);
             this.convert.start ();
         } catch (final FileNotFoundException e) {
-            throw new RuntimeException (e);
+            this.convert.setException (e);
+            this.end ();
         }
     }
 
@@ -130,8 +144,6 @@ public class ProceedActivity extends Activity implements ConvertListener {
 
     private void putEntry (final ContentValues values, final Entry<String, Object> entry) {
         if (entry.getValue () instanceof Boolean) {
-
-        } else if (entry.getValue () instanceof Boolean) {
             values.put (entry.getKey (), (Boolean) entry.getValue ());
 
         } else if (entry.getValue () instanceof Byte) {
@@ -157,7 +169,6 @@ public class ProceedActivity extends Activity implements ConvertListener {
 
         } else if (entry.getValue () instanceof String) {
             values.put (entry.getKey (), (String) entry.getValue ());
-
         }
     }
 

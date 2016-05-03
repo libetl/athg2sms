@@ -5,6 +5,8 @@
     android:versionCode="14"
     android:versionName="1.4.7" >
 
+    <uses-permission android:name="android.permission.BROADCAST_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
@@ -19,11 +21,16 @@
         android:icon="@drawable/iconv3"
         android:label="@string/app_name" >
         <receiver
-            android:name=".SmsReceiver"
-            android:permission="android.permission.BROADCAST_SMS" >
+            android:name=".util.SmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS" 
+    		android:enabled="true"
+    		android:exported="true" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
+            <intent-filter android:priority="500">
+            <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+        </intent-filter>
         </receiver>
         <receiver
             android:name=".MmsReceiver"
@@ -48,6 +55,14 @@
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".util.Athg2SmsCarrierService"
+            android:label="@string/carrier_service"
+            android:permission="android.permission.BIND_CARRIER_SERVICES" >
+            <intent-filter>
+                <action android:name="android.service.carrier.ConfigService" />
             </intent-filter>
         </service>
 

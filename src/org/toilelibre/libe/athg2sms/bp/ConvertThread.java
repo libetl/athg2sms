@@ -17,4 +17,6 @@ public interface ConvertThread {
     public void setHandler (Object handler);
 
     public void start ();
+
+    public void setException (Exception e);
 }
