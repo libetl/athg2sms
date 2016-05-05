@@ -57,7 +57,7 @@ public class DefaultConvertListener implements ConvertListener {
     
     @SuppressLint ("NewApi")
     public void insert (final URI uri, final Map<String, Object> values) {
-        SmsInserter.insert (uri, values, this.sourceActivity.getContentResolver ());
+        SmsInserter.insert (uri, values, this.sourceActivity, this.sourceActivity.getContentResolver ());
     }
 
     public void sayIPrepareTheList (final int size) {

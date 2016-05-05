@@ -18,14 +18,14 @@ package org.toilelibre.libe.athg2sms.util;
 //19. Dec.  2002 - V 1, rw: initial runnable version
 //---------------------------------------------------------------------------------------
 
-class SMS2PDU {
+public class SMS2PDU {
     /**
      * Creates a PDU
      * 
      * @return PDU
      */
     public static byte [] getPDU (final String number, final String message,
-            final boolean numberType) {
+            final boolean nationalNumber) {
         byte [] pdu;
         byte [] no = convertDialNumber (number);
         byte [] msg = compress (convertUnicode2GSM (message));
@@ -41,7 +41,7 @@ class SMS2PDU {
         
         // destination address
         pdu [2] = (byte) number.length (); // set length of dialing number
-        if (numberType == true)
+        if (nationalNumber == true)
             pdu [3] = (byte) 0x81; // indicator for a national number
         else
             pdu [3] = (byte) 0x91; // indicator for a international number
