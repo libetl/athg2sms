@@ -82,7 +82,7 @@ public class DefaultSettings {
     private static void loadFromSettings (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
         final Map<String, ?> prefs = DefaultSettings.sp.getAll ();
         Set<String> convSetNames = new HashSet<String> ();
-        for (final String entry : prefs.keySet ()) {convSetNames.add(entry.split ("#") [0]);}
+        for (final String entry : prefs.keySet ()) {if (entry.indexOf ('#') != -1)convSetNames.add(entry.split ("#") [0]);}
         for (final String convSetName : convSetNames) {
             DefaultSettings.insertConversionSet (convSetName, sets, varNames, (String) prefs.get (convSetName + '#' + DefaultSettings.COMMON), 
                     (String) prefs.get (convSetName + '#' + DefaultSettings.INBOX_KEYWORD), (String) prefs.get (convSetName + '#' + DefaultSettings.SENT_KEYWORD));
