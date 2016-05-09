@@ -3,9 +3,11 @@ package org.toilelibre.libe.athg2sms;
 import java.util.Set;
 
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,13 +37,21 @@ public class ConversionFormActivity extends Activity {
         ((Spinner) this.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, setsArray));
         this.findViewById (R.id.selectfile).setOnClickListener (new OnClickListener () {
 
+            @SuppressLint ("InlinedApi")
             public void onClick (final View v) {
-
-                final Intent intent = new Intent (Intent.ACTION_GET_CONTENT);
-                intent.setType ("*/*");
-                intent.putExtra ("org.openintents.extra.BUTTON_TEXT", ConversionFormActivity.this.getString (R.string.selectfile));
-                ConversionFormActivity.this.startActivityForResult (intent, 1);
-
+                Intent intent = null;
+                if (Build.VERSION.SDK_INT <19){
+                    intent = new Intent (Intent.ACTION_GET_CONTENT);
+                    intent.setType ("*/*");
+                    intent.putExtra ("org.openintents.extra.BUTTON_TEXT", ConversionFormActivity.this.getString (R.string.selectfile));
+                    ConversionFormActivity.this.startActivityForResult (intent, 1);
+                } else {
+                    intent = new Intent(); 
+                    intent.setType("*/*");
+                    intent.addCategory (Intent.CATEGORY_OPENABLE);
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    ConversionFormActivity.this.startActivityForResult (intent, 0);
+                }
             }
         });
         this.findViewById (R.id.start).setOnClickListener (new OnClickListener () {
