@@ -79,7 +79,6 @@ public class FileRetriever {
      *
      * @param context The context.
      * @param uri The Uri to query.
-     * @author paulburke
      * @throws FileNotFoundException 
      */
     public static String readTextFromDocumentContract(final Activity activity, final String uriS) throws FileNotFoundException {
