@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.settings;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -106,6 +107,16 @@ public class DefaultSettings {
         final Editor editor = DefaultSettings.sp.edit ();
         editor.putString ("defaultSmsApp", packageName);
         editor.commit ();
+    }
+    
+    public static void saveAskedPermissions (final String... permissions) {
+        final Editor editor = DefaultSettings.sp.edit ();
+        editor.putStringSet ("permissions", new HashSet<String>(Arrays.asList (permissions)));
+        editor.commit ();
+    }
+    
+    public static Set<String> getAskedPermissions () {
+        return DefaultSettings.sp.getStringSet ("permissions", new HashSet<String>());
     }
 
     public static void setSp (final SharedPreferences sp) {
