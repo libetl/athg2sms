@@ -3,15 +3,15 @@
     <string name="hello">"Import from File" Done !</string>
     <string name="app_name">Athg2Sms V1.4.7</string>
 
-    <string name="app_title">Athg2Sms (Freeware)</string>
-    <string name="help_title">Athg2Sms (Freeware) &gt; Help</string>
-    <string name="cs_title">Athg2Sms (Freeware) &gt; Conversion Sets</string>
-    <string name="csedit_title">Athg2Sms (Freeware) &gt; Conversion Sets &gt; Edit</string>
-    <string name="cf_title">Athg2Sms (Freeware) &gt; Conversion Form</string>
-    <string name="cfoifm_title">Athg2Sms (Freeware) &gt; Conversion Form &gt; OI FM</string>
-    <string name="proceed_title">Athg2Sms (Freeware) &gt; In Progress !</string>
-    <string name="done_title">Athg2Sms (Freeware) &gt; Finished &gt; Done</string>
-    <string name="error_title">Athg2Sms (Freeware) &gt; Finished &gt; Error</string>
+    <string name="app_title">Athg2Sms</string>
+    <string name="help_title">Athg2Sms &gt; Help</string>
+    <string name="cs_title">Athg2Sms &gt; Conversion Sets</string>
+    <string name="csedit_title">Athg2Sms &gt; Conversion Sets &gt; Edit</string>
+    <string name="cf_title">Athg2Sms &gt; Conversion Form</string>
+    <string name="cfoifm_title">Athg2Sms &gt; Conversion Form &gt; OI FM</string>
+    <string name="proceed_title">Athg2Sms &gt; In Progress !</string>
+    <string name="done_title">Athg2Sms &gt; Finished &gt; Done</string>
+    <string name="error_title">Athg2Sms &gt; Finished &gt; Error</string>
 
     <string name="descr">Import SMS from CSV, XML, SQL Files ! </string>
     <string name="file_name">File Name</string>
