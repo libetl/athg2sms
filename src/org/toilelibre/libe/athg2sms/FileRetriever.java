@@ -218,14 +218,17 @@ public class FileRetriever {
     private static String readTextFromDocumentFile (Activity activity, String filename) throws FileNotFoundException {
         try {
             DocumentFile docFile = DocumentFile.fromTreeUri (activity, Uri.parse (filename));
-            return readTextFromUri (activity, docFile.getUri ().toString ());
+            return readTextFromUri (activity, docFile == null ? "" : docFile.getUri ().toString ());
         } catch (IllegalArgumentException iae) {
             DocumentFile docFile = DocumentFile.fromSingleUri (activity, Uri.parse (filename));
-            return readTextFromUri (activity, docFile.getUri ().toString ());
+            return readTextFromUri (activity, docFile == null ? "" : docFile.getUri ().toString ());
         }
     }
     
     private static String readTextFromUri (Activity activity, String filename) throws FileNotFoundException {
+        if ("".equals (filename)) {
+            throw new FileNotFoundException (filename);
+        }
         InputStream inputStream = activity.getContentResolver ().openInputStream (Uri.parse (filename));
         BufferedReader reader = new BufferedReader (new InputStreamReader (inputStream));
         StringBuilder stringBuilder = new StringBuilder ();
