@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.toilelibre.libe.athg2sms"
     android:theme="@android:style/Theme.Black"
-    android:versionCode="19"
-    android:versionName="1.4.7.5" >
+    android:versionCode="20"
+    android:versionName="1.4.7.6" >
 
     <!--uses-permission android:name="android.permission.BROADCAST_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS" /-->

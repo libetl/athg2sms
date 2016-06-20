@@ -69,6 +69,11 @@ public class ReadFileTest {
     }
 
     @Test
+    public void aleTxt () throws URISyntaxException {
+        this.testFile ("athg2sms/ale.txt", BuiltInConversionSets.NokiaCsvWithCommas, false);
+    }
+
+    @Test
     public void lionel () throws URISyntaxException {
         this.testFile ("/mnt/data/lionel/Documents/misc/NouvelOrdi/Msgs5200.csv", BuiltInConversionSets.NokiaCsv, false);
     }
@@ -107,6 +112,7 @@ public class ReadFileTest {
             final Scanner scan = new Scanner (url == null ? new File (classpathFile) : new File (url.toURI ()));
             scan.useDelimiter ("\\Z");
             final String content = scan.next ();
+            scan.close ();
             convertV4.setContentToBeParsed (content);
         } catch (final FileNotFoundException e) {
             throw new RuntimeException (e);
