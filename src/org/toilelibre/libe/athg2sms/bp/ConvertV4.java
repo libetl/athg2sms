@@ -57,6 +57,7 @@ public class ConvertV4 extends Thread implements ConvertThread {
                 }
             }
         }
+        values.put ("folder", sms.getFolder ());
         return values;
     }
 
