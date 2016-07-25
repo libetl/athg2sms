@@ -5,7 +5,6 @@ import java.util.Set;
 import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
