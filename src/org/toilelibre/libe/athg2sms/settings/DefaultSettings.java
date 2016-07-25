@@ -124,4 +124,11 @@ public class DefaultSettings {
         DefaultSettings.sp = sp;
     }
 
+    public static void ensureSpIsPresent (SharedPreferences sharedPreferences) {
+        if (DefaultSettings.sp == null) {
+            setSp (sharedPreferences);
+        }
+        
+    }
+
 }

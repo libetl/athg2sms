@@ -44,6 +44,7 @@ public class ProceedActivity extends Activity {
     protected void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         this.setContentView (R.layout.proceed);
+        DefaultSettings.ensureSpIsPresent (this.getSharedPreferences ("athg2sms", 0));
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + ProceedActivity.filename);
         this.handler = new Handler ();
         

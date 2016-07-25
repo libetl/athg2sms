@@ -15,7 +15,7 @@ public class Athg2SmsStartActivity extends Activity {
     @Override
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        DefaultSettings.setSp (this.getSharedPreferences ("athg2sms", 0));
+        DefaultSettings.ensureSpIsPresent (this.getSharedPreferences ("athg2sms", 0));
         this.setContentView (R.layout.notdefaultapp);
 
     }
