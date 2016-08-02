@@ -61,7 +61,11 @@ public class FileRetriever {
                                         try {
                                             return readTextFromDocumentContract (activity, filename);
                                         } catch (Exception e8) {
-                                            throw new FileNotFoundException (filename);
+                                            try {
+                                                return tryToReadTheFileAsExternalDataFile (activity, filename);
+                                            } catch (Exception e9) {
+                                                throw new FileNotFoundException (filename);
+                                            }
                                         }
                                     }
                                 }
@@ -69,6 +73,35 @@ public class FileRetriever {
                         }
                     }
                 }
+            }
+        }
+    }
+    private static String tryToReadTheFileAsExternalDataFile (Activity activity, String filename) throws FileNotFoundException {
+        final boolean isHC = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+        if (!isHC) {
+            throw new FileNotFoundException();
+        }
+
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Files.FileColumns.PARENT, MediaStore.Files.FileColumns.TITLE };
+            
+            cursor = activity.getContentResolver().query(Uri.parse (filename), null, null, null, null);
+            cursor.moveToFirst ();
+            for (String columnName : cursor.getColumnNames ()) {
+                try {
+                String value = columnName + " " + cursor.getString(cursor.getColumnIndexOrThrow(columnName));
+                System.out.println (value);
+                }catch (Exception e){}
+            }
+            int columnIndex = cursor.getColumnIndexOrThrow(proj [0]);
+            return cursor.getString(columnIndex);
+        } catch (RuntimeException re) {
+            re.printStackTrace ();
+            throw re;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
             }
         }
     }
