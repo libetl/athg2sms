@@ -20,7 +20,7 @@ public class ConversionFormActivity extends Activity {
     protected void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult (requestCode, resultCode, data);
         if (data != null && data.getData () != null && data.getData ().getPath () != null) {
-            ((EditText) this.findViewById (R.id.filename)).setText (data.getData ().getPath ());
+            ((EditText) this.findViewById (R.id.filename)).setText (Build.VERSION.SDK_INT <19 ? data.getData ().getPath () : data.getDataString ());
         }
     }
 
@@ -46,7 +46,7 @@ public class ConversionFormActivity extends Activity {
                     ConversionFormActivity.this.startActivityForResult (intent, 1);
                 } else {
                     intent = new Intent(); 
-                    intent.setType("*/*");
+                    intent.setType("text/plain");
                     intent.addCategory (Intent.CATEGORY_OPENABLE);
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     ConversionFormActivity.this.startActivityForResult (intent, 0);

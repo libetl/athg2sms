@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import android.annotation.SuppressLint;
@@ -85,14 +87,20 @@ public class FileRetriever {
         Cursor cursor = null;
         try {
             String[] proj = { MediaStore.Files.FileColumns.PARENT, MediaStore.Files.FileColumns.TITLE };
-            
-            cursor = activity.getContentResolver().query(Uri.parse (filename), null, null, null, null);
+            String id = DocumentsContract.getDocumentId (Uri.parse (filename));
+            Uri finalUri = Files.getContentUri (EXTERNAL_MEDIA).buildUpon ().build ();
+            cursor = activity.getContentResolver().query(finalUri , null, null, null, null);
             cursor.moveToFirst ();
+            boolean hasNext = true;
+            while (hasNext) {
+            Map<String,String> map = new HashMap<String, String> ();
             for (String columnName : cursor.getColumnNames ()) {
                 try {
-                String value = columnName + " " + cursor.getString(cursor.getColumnIndexOrThrow(columnName));
-                System.out.println (value);
+                    map.put (columnName, cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
                 }catch (Exception e){}
+            }
+            System.out.println (map);
+            hasNext = cursor.moveToNext ();
             }
             int columnIndex = cursor.getColumnIndexOrThrow(proj [0]);
             return cursor.getString(columnIndex);
