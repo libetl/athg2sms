@@ -6,20 +6,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
-import org.toilelibre.libe.athg2sms.settings.SettingsCommon;
+import org.toilelibre.libe.athg2sms.settings.PreparedPattern;
 
-public class LookForAllMatches {
+public class MatchesScanner {
 
     private final Map<String, Pattern> patterns;
 
     private final String               content;
 
-    private final SettingsCommon       settings;
+    private final PreparedPattern preparedPattern;
 
-    public LookForAllMatches (final String content, final SettingsCommon settings1) {
+    public MatchesScanner (PreparedPattern preparedPattern, final String content) {
         super ();
         this.content = content;
-        this.settings = settings1;
+        this.preparedPattern = preparedPattern;
         this.patterns = new HashMap<String, Pattern> ();
     }
 
@@ -35,14 +35,13 @@ public class LookForAllMatches {
     }
 
     public Matcher matcher () {
-        final String pattern = this.settings.getValPattern (DefaultSettings.COMMON);
-        final String sampleOfTheContent = this.content.length () > 65536 ? this.content.substring (0, 65536) : this.content;
+        final String pattern = preparedPattern.getValPattern ().get (DefaultSettings.COMMON);
+        final String sampleOfTheContent = this.content.length () > 2048 ? this.content.substring (0, 2048) : this.content;
         // sample it to test it
-        final Matcher m = this.getPattern (pattern).matcher (sampleOfTheContent);
-        if (m.find ()) {
-            return this.getPattern (pattern).matcher (this.content + '\n');
-        }
-        return null;
+        final Pattern patternObject = this.getPattern (pattern);
+        final Matcher m = patternObject.matcher (sampleOfTheContent);
+        
+        return m.find () ? patternObject.matcher (this.content + '\n') : null;
     }
 
 }

@@ -62,11 +62,24 @@
                 android:text="@+string/start" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/backtomainmenu"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@+string/backtomainmenu" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/guessconvset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@+string/guessconvset" />
+
+            <Button
+                android:id="@+id/backtomainmenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@+string/backtomainmenu" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

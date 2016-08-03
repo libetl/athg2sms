@@ -4,7 +4,7 @@
     Anything 2 Sms works with patterns and regular expressions.
     It is designed to support flexible conversion between an input format and your SMS messages.\n
     \n
-    First, if your format is not in a conversion set, it is needed to look to your exported file. Recognize the patterns used to build the file. You will have two patterns : one for sent messages, one for received messages.\n 
+    First, if your format is not in a pattern, it is needed to look to your exported file. Recognize the patterns used to build the file. You will have two patterns : one for sent messages, one for received messages.\n 
     \n
     For example, look at this Nokia Csv message :
     sms;submit;"0123456789";"";"";"2010.01.11 16:51";"";"Hope you're doing well."\n

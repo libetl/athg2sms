@@ -7,12 +7,13 @@ import org.toilelibre.libe.athg2sms.bp.ConvertListener;
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.bp.DefaultConvertListener;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
-import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
+import org.toilelibre.libe.athg2sms.settings.Settings;
 import org.toilelibre.libe.athg2sms.status.Done;
 import org.toilelibre.libe.athg2sms.status.Error;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 public class ProceedActivity extends Activity {
     
     private static String filename;
+    private static String pattern;
     
     public static String getFilename () {
         return ProceedActivity.filename;
@@ -33,6 +35,10 @@ public class ProceedActivity extends Activity {
     
     public static void setFilename (final String filename) {
         ProceedActivity.filename = filename;
+    }
+    
+    public static void setPattern (final String key) {
+        ProceedActivity.pattern = key;
     }
     
     private Handler handler;
@@ -48,7 +54,8 @@ public class ProceedActivity extends Activity {
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + ProceedActivity.filename);
         this.handler = new Handler ();
         
-        convert = SettingsFactory.asV4 ().getConvertThreadInstance ();
+        convert = Settings.getConvertThreadInstance ();
+        convert.setPatternName (pattern);
         convertListener = new DefaultConvertListener (this, Done.class, Error.class, convert, (ProgressBar) this.findViewById (R.id.progress),
                 (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -78,6 +85,7 @@ public class ProceedActivity extends Activity {
     
     
     
+    @TargetApi (23)
     @Override
     public void onRequestPermissionsResult (int requestCode, String [] permissions, int [] grantResults) {
         super.onRequestPermissionsResult (requestCode, permissions, grantResults);

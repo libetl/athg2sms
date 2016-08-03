@@ -2,7 +2,7 @@ package org.toilelibre.libe.athg2sms;
 
 import java.util.Set;
 
-import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
+import org.toilelibre.libe.athg2sms.settings.Settings;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -55,7 +55,7 @@ public class ConvSetsListActivity extends ListActivity {
     }
 
     private void reloadList () {
-        final Set<String> setsSet = SettingsFactory.common ().getSetsKeySet ();
+        final Set<String> setsSet = Settings.getSetsKeySet ();
         this.setsArray = new String [setsSet.size ()];
         setsSet.toArray (this.setsArray);
         ((ListView) this.findViewById (android.R.id.list)).setAdapter (new ArrayAdapter<String> (this, android.R.layout.simple_list_item_1, this.setsArray));

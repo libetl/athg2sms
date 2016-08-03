@@ -10,9 +10,8 @@ import java.util.Scanner;
 
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.bp.ConvertListener;
-import org.toilelibre.libe.athg2sms.bp.ConvertV4;
+import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings.BuiltInConversionSets;
-import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
 
 import junit.framework.Assert;
 
@@ -106,7 +105,7 @@ public class ReadFileTest {
 
     public void testFile (final String classpathFile, final BuiltInConversionSets conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
-        final ConvertV4 convertV4 = new ConvertV4 ();
+        final ConvertThread convertV4 = new ConvertThread ();
         final URL url = ReadFileTest.class.getClassLoader ().getResource (classpathFile);
         try {
             final Scanner scan = new Scanner (url == null ? new File (classpathFile) : new File (url.toURI ()));
@@ -118,7 +117,7 @@ public class ReadFileTest {
             throw new RuntimeException (e);
         }
         convertV4.setConvertListener (this.convertListener);
-        SettingsFactory.asV4 ().chooseSet (conversionSet.getValue ());
+        convertV4.setPatternName (conversionSet.getValue ());
 
         // When
         convertV4.run ();
@@ -131,10 +130,10 @@ public class ReadFileTest {
 
     public void testString (final String content, final BuiltInConversionSets conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
-        final ConvertV4 convertV4 = new ConvertV4 ();
+        final ConvertThread convertV4 = new ConvertThread ();
         convertV4.setContentToBeParsed (content);
         convertV4.setConvertListener (this.convertListener);
-        SettingsFactory.asV4 ().chooseSet (conversionSet.getValue ());
+        convertV4.setPatternName (conversionSet.getValue ());
 
         // When
         convertV4.run ();

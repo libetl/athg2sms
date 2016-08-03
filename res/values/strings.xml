@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">Athg2Sms V1.4.7</string>
+    <string name="app_name">Athg2Sms V1.4.8</string>
 
-    <string name="app_title">Athg2Sms</string>
+    <string name="app_title">Anything To Sms</string>
+    <string name="home_title">Athg2Sms</string>
     <string name="help_title">Athg2Sms &gt; Help</string>
-    <string name="cs_title">Athg2Sms &gt; Conversion Sets</string>
-    <string name="csedit_title">Athg2Sms &gt; Conversion Sets &gt; Edit</string>
+    <string name="cs_title">Athg2Sms &gt; patterns</string>
+    <string name="csedit_title">Athg2Sms &gt; patterns &gt; Edit</string>
     <string name="cf_title">Athg2Sms &gt; Conversion Form</string>
     <string name="cfoifm_title">Athg2Sms &gt; Conversion Form &gt; OI FM</string>
     <string name="proceed_title">Athg2Sms &gt; In Progress !</string>
@@ -20,25 +21,26 @@
     <string name="sucessful">Successful</string>
     <string name="path">Path : </string>
     <string name="touchonetoeditit">Touch one to edit it.</string>
-    <string name="editcsname">Conversion set for : </string>
+    <string name="editcsname">pattern for : </string>
     <string name="edityourPatterns">Edit your conversion patterns below :</string>
     <string name="pattern">Global pattern </string>
     <string name="inbox">Inbox keyword</string>
     <string name="sent">Sent keyword</string>
-    <string name="really_delete">This will delete this set permanently (excepted for Pre-defined sets)</string>
+    <string name="really_delete">This will delete this pattern permanently (except for Pre-defined patterns)</string>
     <string name="delete_yes">Delete</string>
     
     <string name="proceed_button">Proceed</string>
-    <string name="addone">Add a new Conversion Set</string>
-    <string name="convsets">Manage Conversion sets</string>
+    <string name="addone">Add a new pattern</string>
+    <string name="convsets">Manage patterns</string>
     <string name="convert">Begin Conversion</string>
     <string name="helpme">Quick Help</string>
     <string name="validate">Validate</string>
     <string name="delete">Delete</string>
     <string name="selectfile">Choose</string>
-    <string name="start">Start Conversion now !</string>
+    <string name="start">Start ></string>
     <string name="again">Again</string>
     <string name="cancel">Cancel</string>
+    <string name="guessconvset">Guess pattern</string>
     <string name="backtomainmenu">Back to Main menu</string>
     <string name="backtoconvform">Back to conversion form</string>
     <string name="exit">Exit</string>

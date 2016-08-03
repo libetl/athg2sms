@@ -6,92 +6,68 @@ import java.util.Map;
 import java.util.Set;
 
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
+import org.toilelibre.libe.athg2sms.bp.GuesserThread;
 import org.toilelibre.libe.athg2sms.pattern.MakePatterns;
 
-public abstract class Settings implements SettingsV4 {
+public class Settings {
 
+
+    
     @Deprecated
     private static String                           delimiter   = "\n";
-
-    private static Map<String, String>              formats     = new HashMap<String, String> ();
 
     private static Map<String, List<String>>        varNames    = new HashMap<String, List<String>> ();
 
     private static ConvertThread                    thread      = null;
 
-    private static Map<String, String>              patterns    = new HashMap<String, String> ();
-
     private static Map<String, Map<String, String>> sets        = new HashMap<String, Map<String, String>> ();
-
-    private static Map<String, String>              valPatterns = new HashMap<String, String> ();
-
-    private static List<String>                     varNamesForConvSet;
 
     static {
         DefaultSettings.load (Settings.sets, Settings.varNames);
     }
 
-    public void chooseSet (final String set) {
-        Settings.formats = Settings.sets.get (set);
-        Settings.varNamesForConvSet = Settings.varNames.get (set);
-    }
-
-    public ConvertThread getConvertThreadInstance () {
-        Settings.thread = this.getConvertThread ();
+    public static ConvertThread getConvertThreadInstance () {
+        Settings.thread = getConvertThread ();
         return Settings.thread;
 
     }
 
-    public String getDelimiter () {
+    public static String getDelimiter () {
         return Settings.delimiter;
     }
 
-    public List<String> getVarNames (final String convSet) {
+    public static List<String> getVarNames (final String convSet) {
         return Settings.varNames.get (convSet);
     }
 
-    public List<String> getVarNamesForConvSet () {
-        return Settings.varNamesForConvSet;
-    }
-
-    public String getFormat (final String key) {
-        return Settings.formats.get (key);
-    }
-
-    public String getPattern (final String key) {
-        return Settings.patterns.get (key);
-    }
-
-    public Set<String> getPatternsKeySet () {
-        return Settings.patterns.keySet ();
-    }
-
-    public Map<String, String> getSet (final String set) {
+    public static Map<String, String> getSet (final String set) {
         return Settings.sets.get (set);
     }
 
-    public Map<String, Map<String, String>> getSets () {
+    public static Map<String, Map<String, String>> getSets () {
         return Settings.sets;
     }
 
-    public Set<String> getSetsKeySet () {
+    public static Set<String> getSetsKeySet () {
         return Settings.sets.keySet ();
     }
 
-    public String getValPattern (final String key) {
-        return Settings.valPatterns.get (key);
+    public static PreparedPattern preparePattern (String key) {
+        PreparedPattern preparedPattern = new PreparedPattern (new HashMap<String, String> (), 
+                new HashMap<String, String> ());
+        MakePatterns.doAll (Settings.sets.get (key), 
+                preparedPattern.getPattern (), preparedPattern.getValPattern ());
+        return preparedPattern;
     }
 
-    public Set<String> getValPatternsKeySet () {
-        return Settings.valPatterns.keySet ();
-    }
-
-    public void makePatterns () {
-        MakePatterns.doAll (Settings.formats, Settings.patterns, Settings.valPatterns);
-    }
-
-    public void putSet (final String setName, final Map<String, String> data) {
+    public static void putSet (final String setName, final Map<String, String> data) {
         Settings.sets.put (setName, data);
+    }
+    public static ConvertThread getConvertThread () {
+        return new ConvertThread ();
+    }
+    public static GuesserThread getGuesserThread () {
+        return new GuesserThread ();
     }
 
 }

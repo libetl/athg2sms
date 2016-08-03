@@ -3,7 +3,7 @@ package org.toilelibre.libe.athg2sms;
 import org.toilelibre.libe.athg2sms.help.HelpActivity;
 import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
-import org.toilelibre.libe.athg2sms.settings.SettingsFactory;
+import org.toilelibre.libe.athg2sms.settings.Settings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -44,7 +44,7 @@ public class Athg2SmsMainActivity extends Activity {
         this.findViewById (R.id.exit).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                DefaultSettings.save (SettingsFactory.common ().getSets ());
+                DefaultSettings.save (Settings.getSets ());
                 Athg2SmsMainActivity.this.finish ();
                 final Intent intent = new Intent (Intent.ACTION_MAIN);
                 intent.addCategory (Intent.CATEGORY_HOME);

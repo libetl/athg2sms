@@ -3,7 +3,7 @@ package org.toilelibre.libe.athg2sms.pattern;
 import java.util.regex.Matcher;
 
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
-import org.toilelibre.libe.athg2sms.settings.SettingsCommon;
+import org.toilelibre.libe.athg2sms.settings.PreparedPattern;
 
 public class SmsResult {
 
@@ -12,12 +12,12 @@ public class SmsResult {
     private final String    catched;
     private final Matcher   matcher;
 
-    public SmsResult (final SettingsCommon settings, final Matcher matcher, final String catched) {
+    public SmsResult (final Matcher matcher, final PreparedPattern preparedPattern, final String catched) {
         this.groups = new String [matcher.groupCount ()];
         this.catched = catched;
         this.matcher = matcher;
-        final int correctGroupNumber = Integer.parseInt (settings.getPattern (DefaultSettings.INDEX_OF_FOLDER_CAPTURING_GROUP));
-        this.folder = settings.getPattern (DefaultSettings.INBOX_KEYWORD).equals (matcher.group (correctGroupNumber)) ? DefaultSettings.INBOX : DefaultSettings.SENT;
+        final int correctGroupNumber = Integer.parseInt (preparedPattern.getPattern ().get (DefaultSettings.INDEX_OF_FOLDER_CAPTURING_GROUP));
+        this.folder = preparedPattern.getPattern ().get (DefaultSettings.INBOX_KEYWORD).equals (matcher.group (correctGroupNumber)) ? DefaultSettings.INBOX : DefaultSettings.SENT;
         for (int i = 1 ; i <= matcher.groupCount () ; i++) {
             this.groups [i - 1] = matcher.group (i);
         }

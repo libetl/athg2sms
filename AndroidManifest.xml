@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.toilelibre.libe.athg2sms"
     android:theme="@android:style/Theme.Black"
-    android:versionCode="23"
-    android:versionName="1.4.7.10" >
+    android:versionCode="24"
+    android:versionName="1.4.8.0" >
 
     <!--uses-permission android:name="android.permission.BROADCAST_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS" /-->
@@ -79,7 +79,7 @@
         </activity>
         <activity
             android:name=".Athg2SmsMainActivity"
-            android:label="@string/app_title"
+            android:label="@string/home_title"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
