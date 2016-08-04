@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ConversionFormActivity extends Activity {
     private Handler handler = new Handler ();
@@ -72,15 +74,20 @@ public class ConversionFormActivity extends Activity {
 
             public void onClick (final View v) {
                 final ConversionFormActivity thiz = ConversionFormActivity.this;
+                final ProgressBar progressBar =  ((ProgressBar)thiz.findViewById (R.id.guessing));
                 GuesserThread guesserThread = Settings.getGuesserThread ();
                 try {
                     guesserThread.setContentToBeParsed (
                             FileRetriever.getFile (thiz, 
                                     ((EditText) thiz.findViewById (R.id.filename)).getText ().toString ()));
+                    progressBar.setVisibility(View.VISIBLE);
+                    guesserThread.setContext(thiz);
                     guesserThread.setHandler(thiz.handler);
+                    guesserThread.setProgressBar(progressBar);
                     guesserThread.setSpinner(((Spinner) thiz.findViewById (R.id.conversionSet)));
                     guesserThread.start ();
                 } catch (FileNotFoundException e) {
+                    Toast.makeText (thiz, "No file selected", Toast.LENGTH_SHORT).show ();
                 }
                 
             }

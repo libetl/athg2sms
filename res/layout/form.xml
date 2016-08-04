@@ -72,7 +72,14 @@
                 android:id="@+id/guessconvset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/guessconvset" />
+                android:text="@+string/guessconvset"/>
+
+            <ProgressBar
+                android:id="@+id/guessing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" 
+                android:visibility="invisible"/>
 
             <Button
                 android:id="@+id/backtomainmenu"
