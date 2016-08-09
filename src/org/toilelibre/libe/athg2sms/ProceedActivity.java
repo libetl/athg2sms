@@ -1,6 +1,7 @@
 package org.toilelibre.libe.athg2sms;
 
 import java.io.FileNotFoundException;
+import java.lang.Thread.State;
 import java.util.Arrays;
 
 import org.toilelibre.libe.athg2sms.bp.ConvertListener;
@@ -18,7 +19,6 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.ProgressBar;
@@ -41,9 +41,9 @@ public class ProceedActivity extends Activity {
         ProceedActivity.pattern = key;
     }
     
-    private Handler handler;
-    private ConvertThread convert;
-    private DefaultConvertListener convertListener;
+    private static ProceedHandler handler;
+    private static ConvertThread convert;
+    private static DefaultConvertListener convertListener;
     
     @SuppressLint ("InlinedApi")
     @Override
@@ -52,12 +52,23 @@ public class ProceedActivity extends Activity {
         this.setContentView (R.layout.proceed);
         DefaultSettings.ensureSpIsPresent (this.getSharedPreferences ("athg2sms", 0));
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + ProceedActivity.filename);
-        this.handler = new Handler ();
+        
+        if (convert != null && convert.getState() == State.RUNNABLE) {
+            handler.setProgressBar((ProgressBar) this.findViewById (R.id.progress));
+            handler.setCurrent((TextView) this.findViewById (R.id.current));
+            handler.setInserted((TextView) this.findViewById (R.id.inserted));
+            convert.setHandler (handler);
+            convertListener.setProceedHandler(handler);
+            ((ProgressBar) this.findViewById (R.id.progress)).setMax(convertListener.getMax());
+        	return;
+        }
+        
+        handler = new ProceedHandler ((ProgressBar) this.findViewById (R.id.progress),
+                (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
         
         convert = Settings.getConvertThreadInstance ();
         convert.setPatternName (pattern);
-        convertListener = new DefaultConvertListener (this, Done.class, Error.class, convert, (ProgressBar) this.findViewById (R.id.progress),
-                (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
+        convertListener = new DefaultConvertListener (this, Done.class, Error.class, convert, handler);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
             try {
                 this.checkPermissions (Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_SMS,
@@ -79,7 +90,7 @@ public class ProceedActivity extends Activity {
         }
         convert.setContentToBeParsed (content);
         convert.setConvertListener (convertListener);
-        convert.setHandler (this.handler);
+        convert.setHandler (handler);
         convert.start ();
     }
     

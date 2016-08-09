@@ -4,32 +4,28 @@ import java.net.URI;
 import java.text.ParseException;
 import java.util.Map;
 
+import org.toilelibre.libe.athg2sms.ProceedHandler;
 import org.toilelibre.libe.athg2sms.status.Error;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 public class DefaultConvertListener implements ConvertListener {
     
     private Activity sourceActivity;
     private ConvertThread convert;
-    private ProgressBar progressBar;
-    private TextView current;
-    private TextView inserted;
+    private ProceedHandler proceedHandler;
     private Class<? extends Activity> doneActivityClass;
     private Class<? extends Activity> errorActivityClass;
+    private int max;
 
     public DefaultConvertListener (Activity sourceActivity1, Class<? extends Activity> doneActivityClass1,
-            Class<? extends Activity> errorActivityClass1, ConvertThread convert1, ProgressBar progressBar1, TextView current1, TextView inserted1) {
+            Class<? extends Activity> errorActivityClass1, ConvertThread convert1, ProceedHandler proceedHandler) {
         this.sourceActivity = sourceActivity1;
         this.convert = convert1;
-        this.progressBar = progressBar1;
-        this.current = current1;
-        this.inserted = inserted1;
+        this.proceedHandler = proceedHandler;
         this.doneActivityClass = doneActivityClass1;
         this.errorActivityClass = errorActivityClass1;
     }
@@ -39,7 +35,7 @@ public class DefaultConvertListener implements ConvertListener {
     }
 
     public void displayInserted (final int inserted, final int dupl) {
-        this.inserted.setText ("Inserted SMS : " + inserted + " (" + dupl + " duplicate(s))");
+        this.proceedHandler.getInserted().setText ("Inserted SMS : " + inserted + " (" + dupl + " duplicate(s))");
     }
 
     public void end () {
@@ -61,20 +57,29 @@ public class DefaultConvertListener implements ConvertListener {
     }
 
     public void sayIPrepareTheList (final int size) {
-        this.progressBar.setIndeterminate (true);
-        this.current.setText ("Preparing write for sms # : " + size);
+    	this.proceedHandler.getProgressBar().setIndeterminate (true);
+    	this.proceedHandler.getCurrent().setText ("Preparing write for sms # : " + size);
 
     }
 
     public void setMax (final int nb) {
-        this.progressBar.setIndeterminate (false);
-        this.progressBar.setMax (nb);
+    	this.proceedHandler.getProgressBar().setIndeterminate (false);
+        this.proceedHandler.getProgressBar().setMax (nb);
+        this.max = nb;
     }
 
 
     public void updateProgress (final int i, final int nb) {
-        this.current.setText ("Writing sms # : " + i + " / " + nb);
-        this.progressBar.setProgress (i);
+        this.proceedHandler.getCurrent().setText ("Writing sms # : " + i + " / " + nb);
+        this.proceedHandler.getProgressBar().setProgress (i);
     }
+
+	public void setProceedHandler(ProceedHandler handler) {
+		this.proceedHandler = handler;
+	}
+
+	public int getMax() {
+		return max;
+	}
 
 }

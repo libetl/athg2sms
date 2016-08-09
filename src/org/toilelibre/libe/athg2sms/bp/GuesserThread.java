@@ -1,11 +1,13 @@
 package org.toilelibre.libe.athg2sms.bp;
 
+import java.io.FileNotFoundException;
 import java.util.regex.Matcher;
 
+import org.toilelibre.libe.athg2sms.FileRetriever;
 import org.toilelibre.libe.athg2sms.settings.Settings;
 import org.toilelibre.libe.athg2sms.util.MatchesScanner;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -14,11 +16,11 @@ import android.widget.Toast;
 
 public class GuesserThread extends Thread {
     
-    private String      content;
+    private String      file;
     private Handler     handler;
     private Spinner     spinner;
     private ProgressBar progressBar;
-    private Context     context;
+    private Activity    context;
     
     @Override
     public void run () {
@@ -30,11 +32,18 @@ public class GuesserThread extends Thread {
     }
     
     private void guessNow () {
+    	String content;
+		try {
+			content = FileRetriever.getFile (context, file);
+		} catch (FileNotFoundException e) {
+            Toast.makeText (context, "No compatible pattern", Toast.LENGTH_SHORT).show ();
+			throw new RuntimeException (e);
+		}
         Matcher matcher = null;
         String key = null;
         for (String pattern : Settings.getSets ().keySet ()) {
             key = pattern;
-            matcher = new MatchesScanner (Settings.preparePattern (pattern), this.content).matcher ();
+            matcher = new MatchesScanner (Settings.preparePattern (pattern), content).matcher ();
             if (matcher != null) {
                 break;
             }
@@ -69,8 +78,8 @@ public class GuesserThread extends Thread {
         
     }
     
-    public void setContentToBeParsed (final String f) {
-        this.content = f;
+    public void setFileToBeRead (final String f) {
+        this.file = f;
     }
     
     public void setHandler (Handler handler1) {
@@ -85,8 +94,8 @@ public class GuesserThread extends Thread {
         this.progressBar = progressBar1;
     }
 
-    public void setContext (Context context) {
-        this.    context = context;
+    public void setContext (Activity context) {
+        this.context = context;
     }
     
 }

@@ -77,16 +77,15 @@ public class ConversionFormActivity extends Activity {
                 final ProgressBar progressBar =  ((ProgressBar)thiz.findViewById (R.id.guessing));
                 GuesserThread guesserThread = Settings.getGuesserThread ();
                 try {
-                    guesserThread.setContentToBeParsed (
-                            FileRetriever.getFile (thiz, 
-                                    ((EditText) thiz.findViewById (R.id.filename)).getText ().toString ()));
                     progressBar.setVisibility(View.VISIBLE);
+                    guesserThread.setFileToBeRead (((EditText) thiz.findViewById (R.id.filename)).getText ().toString ());
                     guesserThread.setContext(thiz);
                     guesserThread.setHandler(thiz.handler);
                     guesserThread.setProgressBar(progressBar);
                     guesserThread.setSpinner(((Spinner) thiz.findViewById (R.id.conversionSet)));
                     guesserThread.start ();
-                } catch (FileNotFoundException e) {
+                } catch (RuntimeException e) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText (thiz, "No file selected", Toast.LENGTH_SHORT).show ();
                 }
                 

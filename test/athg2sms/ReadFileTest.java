@@ -102,6 +102,12 @@ public class ReadFileTest {
         this.testString ("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n" + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInConversionSets.BlackberryCsv, false);
         Assert.assertEquals (2, this.messagesInserted);
     }
+    
+    @Test
+    public void vmg () throws URISyntaxException {
+        this.testFile ("/mnt/data/lionel/Documents/workspace/athg2sms/test/athg2sms/test.vmg", BuiltInConversionSets.NokiaVmgInbox, false);
+        Assert.assertEquals (1, this.messagesInserted);
+    }
 
     public void testFile (final String classpathFile, final BuiltInConversionSets conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
