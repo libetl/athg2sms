@@ -39,7 +39,7 @@ public class GuesserThread extends Thread {
 			((android.os.Handler) this.handler).post (new Runnable () {
 				public void run () {
                     progressBar.setVisibility(View.INVISIBLE);
-		            Toast.makeText (context, "No compatible pattern (" + e.getMessage() + ")", Toast.LENGTH_SHORT).show ();
+		            Toast.makeText (context, "No file selected", Toast.LENGTH_SHORT).show ();
 				}
 			});
             return;
