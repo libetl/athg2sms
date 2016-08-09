@@ -35,9 +35,14 @@ public class GuesserThread extends Thread {
     	String content;
 		try {
 			content = FileRetriever.getFile (context, file);
-		} catch (FileNotFoundException e) {
-            Toast.makeText (context, "No compatible pattern", Toast.LENGTH_SHORT).show ();
-			throw new RuntimeException (e);
+		} catch (final FileNotFoundException e) {
+			((android.os.Handler) this.handler).post (new Runnable () {
+				public void run () {
+                    progressBar.setVisibility(View.INVISIBLE);
+		            Toast.makeText (context, "No compatible pattern (" + e.getMessage() + ")", Toast.LENGTH_SHORT).show ();
+				}
+			});
+            return;
 		}
         Matcher matcher = null;
         String key = null;

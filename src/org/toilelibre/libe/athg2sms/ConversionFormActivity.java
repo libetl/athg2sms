@@ -1,6 +1,5 @@
 package org.toilelibre.libe.athg2sms;
 
-import java.io.FileNotFoundException;
 import java.util.Set;
 
 import org.toilelibre.libe.athg2sms.bp.GuesserThread;
