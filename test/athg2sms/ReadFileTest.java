@@ -96,6 +96,17 @@ public class ReadFileTest {
                 BuiltInConversionSets.NokiaCsvWithQuotes, false);
         Assert.assertEquals (2, this.messagesInserted);
     }
+
+    @Test
+    public void nokiaSuite () throws URISyntaxException {
+
+        //"sms","$(folder)",(?:"",)?"$(address)",(?:"",)?"","$(dateyyyy.MM.dd hh:mm)","","$(body)"
+        this.testString (
+        		"\"sms\",\"READ,RECEIVED\",\"+33654321009\",\"\",\"\",\"2015.04.19 12:23\",\"\",\"Here is a received message\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+33634567811\",\"\",\"2015.04.20 18:49\",\"\",\"Here is a sent message\"\n",
+                BuiltInConversionSets.NokiaSuite, false);
+        Assert.assertEquals (2, this.messagesInserted);
+    }
     
     @Test
     public void loremIpsum () throws URISyntaxException {

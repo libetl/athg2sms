@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.toilelibre.libe.athg2sms.bp.ConvertListener;
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.bp.DefaultConvertListener;
+import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
 import org.toilelibre.libe.athg2sms.settings.Settings;
 import org.toilelibre.libe.athg2sms.status.Done;
@@ -23,6 +24,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProceedActivity extends Activity {
     
@@ -83,18 +85,24 @@ public class ProceedActivity extends Activity {
         }
     }
 
-    private void startConvertProcess () {
+	private void startConvertProcess () {
         final String content = this.getContentFromFileName (convert, convertListener);
         if (content == null) {
             return;
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT &&
+        		!Athg2SmsMainActivity.class.getPackage().getName().equals(
+        				Sms.getDefaultSmsPackage(this))) {
+        	Toast.makeText(this, 
+        			"BTW... this app is not toggled to insert SMS messages right now." +
+        			"This will be a dry run.", Toast.LENGTH_LONG).show();
+        	
         }
         convert.setContentToBeParsed (content);
         convert.setConvertListener (convertListener);
         convert.setHandler (handler);
         convert.start ();
     }
-    
-    
     
     @TargetApi (23)
     @Override
