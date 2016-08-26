@@ -83,6 +83,12 @@ public class ReadFileTest {
     }
 
     @Test
+    public void unknownSmsFormat () throws URISyntaxException {
+        this.testString ("\"+33682864563\",\"2015-07-10 21:53\",\"SMS\",\"0\",\"Bienvenue\"\n", BuiltInConversionSets.UnknownSmsFormat1, true);
+        Assert.assertEquals (1, this.messagesInserted);
+    }
+    
+    @Test
     public void nokiaCsv () throws URISyntaxException {
         this.testString ("sms;deliver;\"+33612345678\";\"\";\"\";\"2016.03.22 15:46\";\"\";\"First message\"\n" + "sms;submit;\"\";\"+33612345678\";\"\";\"2016.03.22 15:48\";\"\";\"Answer to the first message\"", BuiltInConversionSets.NokiaCsv, true);
         Assert.assertEquals (2, this.messagesInserted);
