@@ -63,6 +63,9 @@ public class ConversionFormActivity extends Activity {
 
             public void onClick (final View v) {
                 final ConversionFormActivity thiz = ConversionFormActivity.this;
+                if (((Spinner) thiz.findViewById (R.id.conversionSet)).getSelectedItem () == null) {
+                    return;
+                }
                 final Intent proceedIntent = new Intent (thiz, ProceedActivity.class);
                 ProceedActivity.setFilename (((EditText) thiz.findViewById (R.id.filename)).getText ().toString ());
                 ProceedActivity.setPattern (((Spinner) thiz.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
