@@ -11,8 +11,6 @@ import org.toilelibre.libe.athg2sms.pattern.MakePatterns;
 
 public class Settings {
 
-
-    
     @Deprecated
     private static String                           delimiter   = "\n";
 

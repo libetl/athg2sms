@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -16,7 +21,8 @@ import org.toilelibre.libe.athg2sms.settings.DefaultSettings.BuiltInConversionSe
 import junit.framework.Assert;
 
 public class ReadFileTest {
-    private int                   messagesInserted = 0;
+    private int                       messagesInserted = 0;
+    private List<Map<String, Object>> messages = new ArrayList<Map<String, Object>>();
 
     private final ConvertListener convertListener  = new ConvertListener () {
 
@@ -34,14 +40,15 @@ public class ReadFileTest {
 
                                                        public void insert (final URI uri, final Map<String, Object> values) {
                                                            System.out.println (values);
+                                                           messages.add (values);
                                                            ReadFileTest.this.messagesInserted++;
                                                        }
 
                                                        public void sayIPrepareTheList (final int size) {
-
                                                        }
 
                                                        public void setMax (final int nb2) {
+                                                           messages = new ArrayList<Map<String, Object>>(nb2);
                                                            ReadFileTest.this.messagesInserted = 0;
                                                        }
 
@@ -82,6 +89,30 @@ public class ReadFileTest {
         this.testFile ("/mnt/data/lionel/Documents/misc/NouvelOrdi/test.csv", BuiltInConversionSets.NokiaCsv, false);
     }
 
+    @Test
+    public void checkingTheDateFormat () throws URISyntaxException {
+        this.testString ("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 16:05\";\"\";\"Bonjour Ca va ?\"\n", BuiltInConversionSets.NokiaCsv, false);
+        Date d = new Date ((Long)messages.get (0).get ("date"));
+        Calendar c = new GregorianCalendar ();
+        c.setTime (d);
+        int hourOfDay = c.get (Calendar.HOUR_OF_DAY);
+        int minutes = c.get (Calendar.MINUTE);
+        Assert.assertTrue (hourOfDay == 16);
+        Assert.assertTrue (minutes == 05);
+    }
+
+    @Test
+    public void checkingTheDateFormat2 () throws URISyntaxException {
+        this.testString ("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 12:04\";\"\";\"C'est l'heure de manger\"\n", BuiltInConversionSets.NokiaCsv, false);
+        Date d = new Date ((Long)messages.get (0).get ("date"));
+        Calendar c = new GregorianCalendar ();
+        c.setTime (d);
+        int hourOfDay = c.get (Calendar.HOUR_OF_DAY);
+        int minutes = c.get (Calendar.MINUTE);
+        Assert.assertTrue (hourOfDay == 12);
+        Assert.assertTrue (minutes == 04);
+    }
+    
     @Test
     public void unknownSmsFormat () throws URISyntaxException {
         this.testString ("\"+33682864563\",\"2015-07-10 21:53\",\"SMS\",\"0\",\"Bienvenue\"\n", BuiltInConversionSets.UnknownSmsFormat1, true);
