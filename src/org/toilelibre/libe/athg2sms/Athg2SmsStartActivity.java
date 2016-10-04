@@ -28,7 +28,7 @@ public class Athg2SmsStartActivity extends Activity {
             if (!Sms.getDefaultSmsPackage (this).equals (myPackageName)) {
                 // App is not default.
                 // Show the "not currently set as the default SMS app" interface
-                DefaultSettings.saveDefaultSmsApp (Sms.getDefaultSmsPackage (this));
+                DefaultSettings.saveDefaultSmsApp (Athg2SmsStartActivity.this.getSharedPreferences ("athg2sms", 0), Sms.getDefaultSmsPackage (this));
                 final View viewGroup = this.findViewById (R.id.not_default_app);
                 viewGroup.setVisibility (View.VISIBLE);
 

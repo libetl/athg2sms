@@ -23,7 +23,7 @@ public class Settings {
     private static Map<String, Map<String, String>> sets        = new HashMap<String, Map<String, String>> ();
 
     static {
-        DefaultSettings.load (Settings.sets, Settings.varNames);
+        DefaultSettings.load (null, Settings.sets, Settings.varNames);
     }
 
     public static ConvertThread getConvertThreadInstance () {

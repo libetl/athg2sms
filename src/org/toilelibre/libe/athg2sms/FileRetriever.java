@@ -81,6 +81,7 @@ public class FileRetriever {
      * @param uri The Uri to query.
      * @throws FileNotFoundException 
      */
+    @SuppressLint ("NewApi")
     public static String readTextFromDocumentContract(final Activity activity, final String uriS) throws FileNotFoundException {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -262,9 +263,13 @@ public class FileRetriever {
             realPath = cursor.getString (columnIndex);
         }
         cursor.close ();
+        if (realPath == null) {
+            throw new FileNotFoundException (filename);
+        }
         return tryToOpenWithAsASimpleFile (realPath);
     }
     
+    @SuppressLint ("NewApi")
     private static String readFileFromFilesContentUri (Activity activity, String filename) throws FileNotFoundException {
         if (filename.indexOf ('/') == -1) {
             throw new FileNotFoundException (filename);
@@ -276,6 +281,7 @@ public class FileRetriever {
         return tryToOpenWithContentProvider (activity, Files.getContentUri (EXTERNAL_MEDIA, parseLong (path [2])).toString ());
     }
     
+    @SuppressLint ("NewApi")
     private static Uri getCompleteUriPath (String fileName) throws FileNotFoundException {
         if (fileName.indexOf ('/') == -1) {
             throw new FileNotFoundException (fileName);

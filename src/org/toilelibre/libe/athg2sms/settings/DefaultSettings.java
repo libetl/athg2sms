@@ -1,6 +1,7 @@
 package org.toilelibre.libe.athg2sms.settings;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -41,16 +43,18 @@ public class DefaultSettings {
 
     private static SharedPreferences sp;
 
-    public static String getDefaultSmsApp () {
+    public static String getDefaultSmsApp (SharedPreferences sharedPreferences) {
+        ensureSpIsPresent (sharedPreferences);
+        if (DefaultSettings.sp == null)return "com.android.mms";
         return DefaultSettings.sp.getString ("defaultSmsApp", "com.android.mms");
     }
 
-    public static void load (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
-        if (DefaultSettings.sp == null || DefaultSettings.sp.getAll ().size () <= 1) {
-            DefaultSettings.loadDefaults (sets, varNames);
-        } else {
-            DefaultSettings.loadFromSettings (sets, varNames);
+    public static void load (SharedPreferences sharedPreferences, final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
+        if (sharedPreferences == null) {
+            DefaultSettings.loadFromSettings (sharedPreferences, sets, varNames);
+            return;
         }
+        DefaultSettings.loadDefaults (sets, varNames);
     }
 
     public static void loadDefaults (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
@@ -86,7 +90,9 @@ public class DefaultSettings {
         sets.put (conversionSetName, subSet);
     }
 
-    private static void loadFromSettings (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
+    private static void loadFromSettings (SharedPreferences sharedPreferences, final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
+        ensureSpIsPresent (sharedPreferences);
+        if (DefaultSettings.sp == null)return;
         final Map<String, ?> prefs = DefaultSettings.sp.getAll ();
         Set<String> convSetNames = new HashSet<String> ();
         for (final String entry : prefs.keySet ()) {if (entry.indexOf ('#') != -1)convSetNames.add(entry.split ("#") [0]);}
@@ -96,11 +102,13 @@ public class DefaultSettings {
         }
     }
 
-    public static void save (final Map<String, Map<String, String>> sets) {
-        final String smsApp = DefaultSettings.getDefaultSmsApp ();
+    public static void save (SharedPreferences sharedPreferences, final Map<String, Map<String, String>> sets) {
+        ensureSpIsPresent (sharedPreferences);
+        if (DefaultSettings.sp == null)return;
+        final String smsApp = DefaultSettings.getDefaultSmsApp (sharedPreferences);
         final Editor editor = DefaultSettings.sp.edit ();
         editor.clear ();
-        DefaultSettings.saveDefaultSmsApp (smsApp);
+        DefaultSettings.saveDefaultSmsApp (sharedPreferences, smsApp);
         for (final Entry<String, Map<String,String>> entry : sets.entrySet ()) {
             editor.putString (entry.getKey () + "#" + DefaultSettings.COMMON, entry.getValue ().get (DefaultSettings.COMMON));
             editor.putString (entry.getKey () + "#" + DefaultSettings.INBOX_KEYWORD, entry.getValue ().get (DefaultSettings.INBOX_KEYWORD));
@@ -109,21 +117,27 @@ public class DefaultSettings {
         editor.commit ();
     }
 
-    public static void saveDefaultSmsApp (final String packageName) {
+    public static void saveDefaultSmsApp (SharedPreferences sharedPreferences, final String packageName) {
+        ensureSpIsPresent (sharedPreferences);
+        if (DefaultSettings.sp == null)return;
         final Editor editor = DefaultSettings.sp.edit ();
         editor.putString ("defaultSmsApp", packageName);
         editor.commit ();
     }
     
     @SuppressLint("NewApi")
-	public static void saveAskedPermissions (final String... permissions) {
+	public static void saveAskedPermissions (SharedPreferences sharedPreferences, final String... permissions) {
+        ensureSpIsPresent (sharedPreferences);
+        if (DefaultSettings.sp == null)return;
         final Editor editor = DefaultSettings.sp.edit ();
         editor.putStringSet ("permissions", new HashSet<String>(Arrays.asList (permissions)));
         editor.commit ();
     }
     
     @SuppressLint("NewApi")
-	public static Set<String> getAskedPermissions () {
+	public static Set<String> getAskedPermissions (SharedPreferences sharedPreferences) {
+        ensureSpIsPresent (sharedPreferences);
+        if (DefaultSettings.sp == null)return Collections.emptySet ();
         return DefaultSettings.sp.getStringSet ("permissions", new HashSet<String>());
     }
 
@@ -132,8 +146,9 @@ public class DefaultSettings {
     }
 
     public static void ensureSpIsPresent (SharedPreferences sharedPreferences) {
-        if (DefaultSettings.sp == null) {
+        if (DefaultSettings.sp == null || DefaultSettings.sp.getAll ().isEmpty ()) {
             setSp (sharedPreferences);
+            return;
         }
         
     }

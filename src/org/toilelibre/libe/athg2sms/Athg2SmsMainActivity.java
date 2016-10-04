@@ -44,7 +44,7 @@ public class Athg2SmsMainActivity extends Activity {
         this.findViewById (R.id.exit).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                DefaultSettings.save (Settings.getSets ());
+                DefaultSettings.save (Athg2SmsMainActivity.this.getSharedPreferences ("athg2sms", 0), Settings.getSets ());
                 Athg2SmsMainActivity.this.finish ();
                 final Intent intent = new Intent (Intent.ACTION_MAIN);
                 intent.addCategory (Intent.CATEGORY_HOME);
@@ -58,12 +58,14 @@ public class Athg2SmsMainActivity extends Activity {
                 if (android.os.Build.VERSION.SDK_INT >= 19) {
                     final String myPackageName = Athg2SmsMainActivity.this.getPackageName ();
                     if (!Sms.getDefaultSmsPackage (Athg2SmsMainActivity.this).equals (myPackageName)) {
-                        DefaultSettings.saveDefaultSmsApp (Sms.getDefaultSmsPackage (Athg2SmsMainActivity.this));
+                        DefaultSettings.saveDefaultSmsApp (Athg2SmsMainActivity.this.getSharedPreferences ("athg2sms", 0), 
+                                Sms.getDefaultSmsPackage (Athg2SmsMainActivity.this));
                         final Intent intentSetDefault = new Intent (Sms.Intents.ACTION_CHANGE_DEFAULT);
                         intentSetDefault.putExtra (Sms.Intents.EXTRA_PACKAGE_NAME, myPackageName);
                         Athg2SmsMainActivity.this.startActivity (intentSetDefault);
                     } else {
-                        final String packageName = DefaultSettings.getDefaultSmsApp ();
+                        final String packageName = DefaultSettings.getDefaultSmsApp (
+                                Athg2SmsMainActivity.this.getSharedPreferences ("athg2sms", 0));
                         final Intent intentSetDefault = new Intent (Sms.Intents.ACTION_CHANGE_DEFAULT);
                         intentSetDefault.putExtra (Sms.Intents.EXTRA_PACKAGE_NAME, packageName);
                         Athg2SmsMainActivity.this.startActivity (intentSetDefault);

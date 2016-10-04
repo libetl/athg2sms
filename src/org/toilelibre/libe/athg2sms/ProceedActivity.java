@@ -113,12 +113,12 @@ public class ProceedActivity extends Activity {
                 throw new SecurityException ("Permission Denied : " + permission);
             }
         }
-        DefaultSettings.saveAskedPermissions (permissions);
+        DefaultSettings.saveAskedPermissions (ProceedActivity.this.getSharedPreferences ("athg2sms", 0), permissions);
         this.startConvertProcess ();
     }
 
     private void checkPermissions (String... permissions) {
-        if (DefaultSettings.getAskedPermissions ().containsAll (Arrays.asList (permissions))) {
+        if (DefaultSettings.getAskedPermissions (ProceedActivity.this.getSharedPreferences ("athg2sms", 0)).containsAll (Arrays.asList (permissions))) {
             return;
         }
         ActivityCompat.requestPermissions(this,permissions, 0);
