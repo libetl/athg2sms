@@ -7,15 +7,24 @@ public class MakePatterns {
     private static String varPattern = "\\$\\(([^\\)]+)\\)";
 
     private static void addVariable (final ReadState rs) {
+        int startOfVarName = rs.index() + 2;
         while (rs.index () < rs.length () && (rs.charAt (rs.index ()) != ')' || rs.charAt (rs.index () - 1) == '\\')) {
             rs.increment ();
         }
+        String varName = rs.substring (startOfVarName, rs.index ());
+        String endToken = varName.indexOf ("..") == -1 ? "" : varName.substring (varName.indexOf ("..") + 2);
         rs.setAfterLastVar (rs.index () + 1);
-        final char expectedChar = rs.charAt (rs.getAfterLastVar ());
+        final char firstExpectedChar = rs.charAt (rs.getAfterLastVar ());
+        String expectedChar = "" + (firstExpectedChar == 0 ? "" : firstExpectedChar);
+        if (expectedChar.charAt (0) == '\\') {
+            expectedChar += rs.charAt (rs.getAfterLastVar () + 1);
+        }
         if (rs.index () < rs.length ()) {
             rs.getPattern ().append (MakePatterns.varPattern);
-            if (expectedChar >= 0) {
-                rs.getValue ().append ("((?:[^" + expectedChar + "]" + (expectedChar == '"' ? "|\"\"" : expectedChar == '\'' ? "|''" : "") + ")*)");
+            if (!"".equals (endToken)){
+                rs.getValue ().append ("((?:.|\\s)*?(?=" + endToken + "))");
+            }else if (!"".equals (expectedChar)) {
+                rs.getValue ().append ("((?:[^" + expectedChar + "]" + (firstExpectedChar == '"' ? "|\"\"" : firstExpectedChar == '\'' ? "|''" : "") + ")*)");
             }
         }
 

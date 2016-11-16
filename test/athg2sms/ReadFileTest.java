@@ -18,7 +18,7 @@ import org.toilelibre.libe.athg2sms.bp.ConvertListener;
 import org.toilelibre.libe.athg2sms.bp.ConvertThread;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings.BuiltInConversionSets;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class ReadFileTest {
     private int                       messagesInserted = 0;
@@ -77,6 +77,16 @@ public class ReadFileTest {
     @Test
     public void aleTxt () throws URISyntaxException {
         this.testFile ("athg2sms/ale.txt", BuiltInConversionSets.NokiaCsvWithCommas, false);
+    }
+
+    @Test
+    public void otherOtherNokia () throws URISyntaxException {
+        this.testFile ("athg2sms/nokia.csv", BuiltInConversionSets.NokiaSuite, false);
+    }
+
+    @Test
+    public void lumia () throws URISyntaxException {
+        this.testFile ("athg2sms/sms.vmsg", BuiltInConversionSets.LumiaVmg, false);
     }
 
     @Test

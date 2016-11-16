@@ -16,6 +16,7 @@ import org.toilelibre.libe.athg2sms.pattern.SmsResult;
 import org.toilelibre.libe.athg2sms.settings.PreparedPattern;
 import org.toilelibre.libe.athg2sms.settings.Settings;
 import org.toilelibre.libe.athg2sms.util.MatchesScanner;
+import org.toilelibre.libe.athg2sms.util.QuotedPrintable;
 
 public class ConvertThread extends Thread {
     private static String    folder = "content://sms/";
@@ -51,12 +52,11 @@ public class ConvertThread extends Thread {
     private Map<String, Object> buildMessageFromString (final String folder, final SmsResult sms) {
         final List<String> varNames = Settings.getVarNames (key);
         final Map<String, Object> values = new HashMap<String, Object> ();
+        boolean quotedPrintable = false;
         for (int i = 0 ; i < varNames.size () ; i++) {
             final String var = varNames.get (i);
             final String val = sms.group (i);
-            if (!var.startsWith ("date")) {
-                values.put (var, val);
-            } else {
+            if (var.startsWith ("date")) {
                 final SimpleDateFormat df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
                 try {
                     if (values.get ("date") == null) {
@@ -69,6 +69,14 @@ public class ConvertThread extends Thread {
                 } catch (final ParseException e) {
                     throw new ConvertException ("Problem while trying to build a Sms from a text row", e);
                 }
+            }else if (var.equals ("encoding") && "QUOTED-PRINTABLE".equalsIgnoreCase (val)) {
+                quotedPrintable = true;
+            }else if (var.equals ("charset")) {
+            }else if (var.equals ("body") && quotedPrintable) {
+                
+                values.put (var, new String (QuotedPrintable.decodeQuotedPrintable (val.getBytes ())));
+            }else{
+                values.put (var, val);
             }
         }
         values.put ("folder", sms.getFolder ());

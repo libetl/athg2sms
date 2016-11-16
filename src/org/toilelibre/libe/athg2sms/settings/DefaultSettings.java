@@ -28,7 +28,7 @@ public class DefaultSettings {
 
     public enum BuiltInConversionSets {
     	NokiaSuite ("Nokia Suite 3.8"), NokiaVmgInbox ("Nokia Vmg Inbox"), NokiaVmgSent ("Nokia Vmg Sent"), NokiaCsv ("Nokia Csv"), IPhoneCsv ("iPhone Csv"), BlackberryCsv ("Blackberry Csv"), DateAndFromAndAddressAndbody ("Date+'from'+address+body"), 
-    	DateAndAddressAndBodyAndINBOX ("Date+address+body+INBOX"), NokiaCsvWithQuotes ("Nokia Csv with quotes"), NokiaCsvWithCommas ("Nokia Csv with commas"), UnknownSmsFormat1 ("Unknown Sms Format 1");
+    	DateAndAddressAndBodyAndINBOX ("Date+address+body+INBOX"), NokiaCsvWithQuotes ("Nokia Csv with quotes"), NokiaCsvWithCommas ("Nokia Csv with commas"), UnknownSmsFormat1 ("Unknown Sms Format 1"), LumiaVmg ("Lumia Vmg");
 
         private final String value;
 
@@ -58,6 +58,7 @@ public class DefaultSettings {
     }
 
     public static void loadDefaults (final Map<String, Map<String, String>> sets, final Map<String, List<String>> varNames) {
+        DefaultSettings.insertConversionSet (BuiltInConversionSets.LumiaVmg.value, sets, varNames, "[\\s]*BEGIN:VMSG\\s+VERSION:[ ]*[0-9]+(?:.[0-9]+)\\r\\nBEGIN:VCARD\\r\\nTEL:$(address..\\r\\nEND:VCARD)\\r\\nEND:VCARD\\r\\nBEGIN:VBODY\\r\\nX-BOX:$(folder..\\r\\nX-READ)\\r\\nX-READ:[^\\s]+\\r\\nX-SIMID:[^\\s]+\\r\\nX-LOCKED:[^\\s]+\\r\\nX-TYPE:[^\\s]+\\r\\nDate:$(dateyyyy/MM/dd HH:mm:ss..\\r\\nSubject)\\r\\nSubject;ENCODING=$(encoding);CHARSET=$(charset):$(body..\\r\\nEND:VBODY)\\r\\nEND:VBODY\\r\\nEND:VMSG\\r\\n", "INBOX", "SENDBOX");
         DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaVmgInbox.value, sets, varNames, "[\\s]*BEGIN:VENV\nBEGIN:VCARD\nVERSION:[0-9]+(?:.[0-9]+)\nN:$(folder)\nTEL:$(address)\nEND:VCARD\nBEGIN:VENV\nBEGIN:VBODY\nDate:$(datedd-MM-yyyy HH:mm:ss)\n$(body)\nEND:VBODY\nEND:VENV\nEND:VENV\n", "", "?");
         DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaVmgSent.value, sets, varNames, "[\\s]*BEGIN:VENV\nBEGIN:VCARD\nVERSION:[0-9]+(?:.[0-9]+)\nN:$(folder)\nTEL:$(address)\nEND:VCARD\nBEGIN:VENV\nBEGIN:VBODY\nDate:$(datedd-MM-yyyy HH:mm:ss)\n$(body)\nEND:VBODY\nEND:VENV\nEND:VENV\n", "", "?");
         DefaultSettings.insertConversionSet (BuiltInConversionSets.NokiaCsvWithQuotes.value, sets, varNames, "[\\s]*\"sms\";\"$(folder)\";(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd HH:mm)\";\"\";\"$(body)\"[\\s]+", "deliver", "submit");
@@ -81,10 +82,13 @@ public class DefaultSettings {
         varNames.put (conversionSetName, new LinkedList<String> ());
         int index = 1;
         while (findVariablesNames.find ()) {
-            if ("folder".equals (findVariablesNames.group (1))) {
+            String fullVarNameWithEndToken = findVariablesNames.group (1);
+            String realVariableName = fullVarNameWithEndToken.indexOf ("..") == -1 ? fullVarNameWithEndToken : 
+                fullVarNameWithEndToken.substring (0, fullVarNameWithEndToken.indexOf (".."));
+            if ("folder".equals (realVariableName)) {
                 subSet.put (DefaultSettings.INDEX_OF_FOLDER_CAPTURING_GROUP, "" + index);
             }
-            varNames.get (conversionSetName).add (findVariablesNames.group (1));
+            varNames.get (conversionSetName).add (realVariableName);
             index++;
         }
         sets.put (conversionSetName, subSet);

@@ -23,6 +23,10 @@ public class ReadState {
     public char charAt (final int i) {
         return i >= 0 ? i < this.format.length () ? this.format.charAt (i) : 0 : 0;
     }
+    
+    public String substring (final int i, final int j) {
+        return this.format.substring (i, j);
+    }
 
     public int getAfterLastVar () {
         return this.afterLastVar;
