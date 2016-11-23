@@ -31,6 +31,9 @@ before_install:
 - mkdir -p $HOME/.m2/repository/com/android/support/support-vector-drawable/23.4.0
 - cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.4.0/*
   $HOME/.m2/repository/com/android/support/support-vector-drawable/23.4.0
+- mkdir -p $HOME/.m2/repository/com/android/support/animated-vector-drawable/23.4.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.4.0/*
+  $HOME/.m2/repository/com/android/support/animated-vector-drawable/23.4.0
 script:
 - mvn -B -DskipTests
   android:manifest-merger
