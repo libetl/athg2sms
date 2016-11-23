@@ -1,0 +1,27 @@
+sudo: false
+language: android
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-25.0.0
+  - android-25
+  - extra-android-m2repository
+cache:
+  directories:
+  - /usr/local/android-sdk
+  - "$HOME/.m2/repository"
+git:
+  depth: 65536 
+jdk:
+- oraclejdk8
+before_install:
+- openssl aes-256-cbc -K $encrypted_d067e69b362a_key -iv $encrypted_d067e69b362a_iv -in libe.b64.enc -out ../libe.b64 -d
+- cat ../libe.b64 | sed -e '/==/q' | base64 -d > ../libe.p12
+- cat ../libe.b64 | sed -e '1,/==/d' | base64 -d > ../libe.keystore
+script:
+- mvn -B -DskipTests
+  android:manifest-merger
+  install android:zipalign android:publish-apk -Ppublisher -Dsecret.storepass=$SECRET_STOREPASS
+  -Dsecret.keypass=$SECRET_KEYPASS -Dandroid.manifestMerger.versionCode=$(git rev-list --no-merges --count HEAD)
+  -Dandroid.publisher.track=$TRAVIS_BRANCH -Ddestination.manifestFile=AndroidManifest.xml
