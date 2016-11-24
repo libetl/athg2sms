@@ -41,14 +41,14 @@
                 android:id="@+id/conversionform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/convert" >
+                android:text="@string/convert" >
             </Button>
 
             <Button
-                android:id="@+id/helpme"
+                android:id="@+id/export"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/helpme" >
+                android:text="@string/export" >
             </Button>
         </LinearLayout>
 
@@ -62,14 +62,14 @@
                 android:id="@+id/manageconvsets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/convsets" >
+                android:text="@string/convsets" >
             </Button>
 
             <Button
                 android:id="@+id/exit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/exit" >
+                android:text="@string/exit" >
             </Button>
         </LinearLayout>
 
@@ -83,7 +83,7 @@
                 android:id="@+id/toggledefaultapp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/toggledefaultapp" >
+                android:text="@string/toggledefaultapp" >
             </Button>
         </LinearLayout>
     </LinearLayout>

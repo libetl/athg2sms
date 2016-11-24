@@ -1,6 +1,6 @@
 package org.toilelibre.libe.athg2sms;
 
-import org.toilelibre.libe.athg2sms.help.HelpActivity;
+import org.toilelibre.libe.athg2sms.help.ExportFormActivity;
 import org.toilelibre.libe.athg2sms.kitkatwrapper.Sms;
 import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
 import org.toilelibre.libe.athg2sms.settings.Settings;
@@ -34,10 +34,10 @@ public class Athg2SmsMainActivity extends Activity {
             }
         });
 
-        this.findViewById (R.id.helpme).setOnClickListener (new OnClickListener () {
+        this.findViewById (R.id.export).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                final Intent intent = new Intent (Athg2SmsMainActivity.this, HelpActivity.class);
+                final Intent intent = new Intent (Athg2SmsMainActivity.this, ExportFormActivity.class);
                 Athg2SmsMainActivity.this.startActivity (intent);
             }
         });

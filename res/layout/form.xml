@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/path" />
+                android:text="@string/path" />
 
             <EditText
                 android:id="@+id/filename"
@@ -41,7 +41,7 @@
                 android:id="@+id/selectfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/selectfile" />
+                android:text="@string/selectfile" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,14 +52,15 @@
 
             <Spinner
                 android:id="@+id/conversionSet"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/start" />
+                android:text="@string/start" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +73,7 @@
                 android:id="@+id/guessconvset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/guessconvset"/>
+                android:text="@string/guessconvset"/>
 
             <ProgressBar
                 android:id="@+id/guessing"
@@ -85,7 +86,7 @@
                 android:id="@+id/backtomainmenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/backtomainmenu" />
+                android:text="@string/backtomainmenu" />
         </LinearLayout>
     </LinearLayout>
 

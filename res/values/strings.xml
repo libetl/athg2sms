@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">Athg2Sms V1.4.8</string>
+    <string name="app_name">Athg2Sms V1.5.0</string>
 
     <string name="app_title">Anything To Sms</string>
     <string name="home_title">Athg2Sms</string>
-    <string name="help_title">Athg2Sms &gt; Help</string>
+    <string name="export_title">Athg2Sms &gt; Export</string>
     <string name="cs_title">Athg2Sms &gt; patterns</string>
     <string name="csedit_title">Athg2Sms &gt; patterns &gt; Edit</string>
     <string name="cf_title">Athg2Sms &gt; Conversion Form</string>
@@ -14,7 +14,8 @@
     <string name="done_title">Athg2Sms &gt; Finished &gt; Done</string>
     <string name="error_title">Athg2Sms &gt; Finished &gt; Error</string>
 
-    <string name="descr">Import SMS from CSV, XML, SQL Files ! </string>
+    <string name="descr">Import/Export SMS from CSV, VMG Files ! </string>
+    <string name="descrexport">Export your SMS to other devices</string>
     <string name="file_name">File Name</string>
     <string name="helpheader">How to convert your SMS messages :</string>
     <string name="failed_retry">Failed ! Retry ?</string>
@@ -33,9 +34,10 @@
     <string name="addone">Add a new pattern</string>
     <string name="convsets">Manage patterns</string>
     <string name="convert">Begin Conversion</string>
-    <string name="helpme">Quick Help</string>
+    <string name="export">Export</string>
     <string name="validate">Validate</string>
     <string name="delete">Delete</string>
+    <string name="filename">Save as</string>
     <string name="selectfile">Choose</string>
     <string name="start">Start ></string>
     <string name="again">Again</string>

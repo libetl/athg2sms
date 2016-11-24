@@ -8,22 +8,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class HelpActivity extends Activity {
+public class ExportFormActivity extends Activity {
 
     @Override
     protected void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        this.setContentView (R.layout.help);
+        this.setContentView (R.layout.export);
 
         this.findViewById (R.id.backtomainmenu).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                HelpActivity.this.finish ();
+                ExportFormActivity.this.finish ();
             }
 
         });
 
-        ((TextView) this.findViewById (R.id.helpcontent)).setText (this.getString (R.string.helpcontent));
     }
 
 }
