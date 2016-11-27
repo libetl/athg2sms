@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-import org.toilelibre.libe.athg2sms.settings.DefaultSettings;
-import org.toilelibre.libe.athg2sms.util.MapToMessage;
+import org.toilelibre.libe.athg2sms.business.export.MapToMessage;
+import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
 
 /**
  * Created by lionel on 24/11/16.
@@ -23,7 +23,7 @@ public class PatternToExportPatternTest {
         sampleMessageMap.put ("address", "+33238792342");
         sampleMessageMap.put ("body", "Da da dee dow dow...");
         System.out.println(MapToMessage.convert (sampleMessageMap, 
-                DefaultSettings.BuiltInConversionSets.NokiaSuite.getValue ()));
+                BuiltInFormatName.NokiaSuite.getValue ()));
 
     }
     @Test
@@ -34,8 +34,8 @@ public class PatternToExportPatternTest {
         sampleMessageMap.put ("date", timestamp);
         sampleMessageMap.put ("address", "+33238792342");
         sampleMessageMap.put ("body", "Da da dee dow dow...");
-        System.out.println(MapToMessage.convert (sampleMessageMap, 
-                DefaultSettings.BuiltInConversionSets.LumiaVmg.getValue ()));
+        System.out.println(MapToMessage.convert (sampleMessageMap,
+                BuiltInFormatName.LumiaVmg.getValue ()));
 
     }
 }

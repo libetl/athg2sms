@@ -19,7 +19,7 @@
         android:icon="@drawable/iconv3"
         android:label="@string/app_name" >
         <receiver
-            android:name=".util.SmsReceiver"
+            android:name=".androidstuff.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS" 
     		android:enabled="true"
     		android:exported="true" >
@@ -56,7 +56,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".util.Athg2SmsCarrierService"
+            android:name=".androidstuff.Athg2SmsCarrierService"
             android:label="@string/carrier_service"
             android:permission="android.permission.BIND_CARRIER_SERVICES" >
             <intent-filter>
@@ -64,8 +64,10 @@
             </intent-filter>
         </service>
 
+        <service android:name="org.toilelibre.libe.athg2sms.ui.Convert.ConversionService"/>
+
         <activity
-            android:name=".Athg2SmsStartActivity"
+            android:name=".EntryPoint"
             android:label="@string/app_title"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Dialog" >
@@ -76,7 +78,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Athg2SmsMainActivity"
+            android:name=".ui.MainMenu"
             android:label="@string/home_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -84,7 +86,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConvSetEditActivity"
+            android:name=".ui.PatternEdition"
             android:label="@string/csedit_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -92,7 +94,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConvSetsListActivity"
+            android:name=".ui.PatternListing"
             android:label="@string/cs_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -100,7 +102,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConversionFormActivity"
+            android:name=".ui.ConversionForm"
             android:label="@string/cf_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -108,7 +110,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProceedActivity"
+            android:name=".ui.Convert"
             android:label="@string/proceed_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -126,7 +128,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".status.Done"
+            android:name=".ui.Done"
             android:label="@string/done_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -134,14 +136,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".status.Error"
+            android:name=".ui.Error"
             android:label="@string/error_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".help.ExportFormActivity"
+            android:name=".ui.ExportForm"
             android:label="@string/export_title"
             android:launchMode="singleTop" >
             <intent-filter>
