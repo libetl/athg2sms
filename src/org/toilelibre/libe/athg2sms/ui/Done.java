@@ -15,7 +15,7 @@ public class Done extends Activity {
         super.onCreate (savedInstanceState);
         this.setContentView (R.layout.done);
 
-        ((Button) this.findViewById (R.id.backtoconvform)).setOnClickListener (new OnClickListener () {
+        this.findViewById (R.id.backtoconvform).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
                 Done.this.finish ();

@@ -31,7 +31,7 @@ public class Converter {
         }
     }
 
-    boolean runConversion (Format format, String content, ConvertListener convertListener, Handler convertHandler, Context context,
+    private boolean runConversion (Format format, String content, ConvertListener convertListener, Handler convertHandler, Context context,
                            SmsInserter inserter, SmsDeleter deleter) {
 
         PreparedPattern preparedPattern = PreparedPattern.fromFormat(format.getRegex());

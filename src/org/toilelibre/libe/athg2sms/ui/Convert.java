@@ -1,38 +1,31 @@
 package org.toilelibre.libe.athg2sms.ui;
 
-import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.util.Arrays;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.toilelibre.libe.athg2sms.androidstuff.SmsApplicationToggle;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.business.convert.Converter;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.business.sms.SmsDeleter;
-import org.toilelibre.libe.athg2sms.business.sms.SmsInserter;
-import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
-import org.toilelibre.libe.athg2sms.business.files.FileRetriever;
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.androidstuff.SmsApplicationToggle;
+import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
+import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
+
+import java.util.Arrays;
 
 public class Convert extends Activity {
-
-    private ProceedHandler handler;
 
     @SuppressLint ("InlinedApi")
     @Override
@@ -41,15 +34,6 @@ public class Convert extends Activity {
         this.setContentView (R.layout.proceed);
         String filename = this.getIntent().getStringExtra("filename");
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + filename);
-
-        try {
-            detectIfAlreadyRunning ();
-        } catch (IllegalStateException ise ) {
-            return;
-        }
-
-        this.handler = new ProceedHandler ((ProgressBar) this.findViewById (R.id.progress),
-                (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
 
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -63,26 +47,34 @@ public class Convert extends Activity {
         }
     }
 
-    private void detectIfAlreadyRunning() {
-        Converter converter = null;
-        if (converter != null) {
-            handler.setProgressBar((ProgressBar) this.findViewById (R.id.progress));
-            handler.setCurrent((TextView) this.findViewById (R.id.current));
-            handler.setInserted((TextView) this.findViewById (R.id.inserted));
-            ConversionRealTimeFeedback convertListener = new ConversionRealTimeFeedback(handler);
-            convertListener.setProceedHandler(handler);
-            ((ProgressBar) this.findViewById (R.id.progress)).setMax(convertListener.getMax());
+    private void startConvertProcess (String filename) {
+
+        final ProceedHandler handler = new ProceedHandler ((ProgressBar) this.findViewById (R.id.progress),
+                (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
+        final ConvertListener convertListener = new ConversionRealTimeFeedback(handler);
+
+        final Intent intent = new Intent (this, ConvertService.class);
+
+        intent.putExtra("pattern", this.getIntent().getStringExtra("pattern"));
+        intent.putExtra("filename", filename);
+
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Convert.this.finish();
+            }
+        }, new IntentFilter("stopConvert"));
+
+        if (convertListener.bind() == convertListener) {
+            displayIfDryRun();
+            this.startService (intent);
+        } else {
+            ConversionRealTimeFeedback.getInstance().updateHandler(handler);
         }
     }
 
-    private void startConvertProcess (String filename) {
-        ConvertListener convertListener = new ConversionRealTimeFeedback(handler);
-        final String content = this.getContentFromFileName (convertListener, filename);
-        if (content == null) {
-            return;
-        }
-        final Converter thisConverter = new Converter();
-        final ConvertListener thisConvertListener = convertListener;
+    private void displayIfDryRun() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT &&
                 !MainMenu.class.getPackage().getName().equals(
                         new SmsApplicationToggle().getDefaultSmsPackage(this))) {
@@ -91,34 +83,6 @@ public class Convert extends Activity {
                             "This will be a dry run.", Toast.LENGTH_LONG).show();
 
         }
-        new Thread(){
-            void error(Exception e) {
-                Error.setLastError (e);
-                Convert.this.startActivity (new Intent(Convert.this, Error.class));
-                Convert.this.finish ();
-            }
-
-            void done() {
-                Convert.this.startActivity (new Intent(Convert.this, Done.class));
-                Convert.this.finish ();
-            }
-
-            @Override
-            public void run() {
-                boolean atLeastOneConverted = false;
-                try {
-                    atLeastOneConverted = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
-                            Convert.this.getIntent().getStringExtra("pattern")), content,
-                            thisConvertListener, handler, Convert.this, new SmsInserter(), new SmsDeleter());
-                } catch (ConvertException ce) {
-                    error(ce);
-                }
-                if (!atLeastOneConverted)
-                    error(new ParseException("No SMS Imported !\nThe selected conversion set does not match the input", 0));
-                else
-                    done();
-            }
-        }.start();
     }
 
     @TargetApi (23)
@@ -142,14 +106,5 @@ public class Convert extends Activity {
             return;
         }
         ActivityCompat.requestPermissions(this, permissions, 0);
-    }
-
-    private String getContentFromFileName (ConvertListener convertListener, String filename) {
-        try {
-            return FileRetriever.getFile (this, filename);
-        } catch (FileNotFoundException e) {
-            convertListener.end ();
-            return null;
-        }
     }
 }

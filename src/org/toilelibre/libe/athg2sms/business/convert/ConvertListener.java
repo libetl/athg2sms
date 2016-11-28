@@ -2,9 +2,12 @@ package org.toilelibre.libe.athg2sms.business.convert;
 
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
+import java.io.Serializable;
 import java.net.URI;
 
-public interface ConvertListener {
+public interface ConvertListener extends Serializable {
+
+    ConvertListener bind ();
 
     int delete (URI uriDelete, String where, String [] strings);
 

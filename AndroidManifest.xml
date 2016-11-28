@@ -64,7 +64,7 @@
             </intent-filter>
         </service>
 
-        <service android:name="org.toilelibre.libe.athg2sms.ui.Convert.ConversionService"/>
+        <service android:name="org.toilelibre.libe.athg2sms.ui.ConvertService"/>
 
         <activity
             android:name=".EntryPoint"

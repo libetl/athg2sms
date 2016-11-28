@@ -12,29 +12,20 @@ import org.toilelibre.libe.athg2sms.R;
 
 public class Error extends Activity {
 
-    private static Exception lastError;
-
-    public static Exception getLastError () {
-        return Error.lastError;
-    }
-
-    public static void setLastError (final Object object) {
-        Error.lastError = (Exception) object;
-    }
-
     @Override
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         this.setContentView (R.layout.error);
-        final Exception e = Error.getLastError ();
-        ((TextView) this.findViewById (R.id.exception)).setText (e.toString ());
-        if (e.getCause () != null) {
-            ((TextView) this.findViewById (R.id.exception2)).setText (e.getCause ().toString ());
+        final String errorMessage1 = this.getIntent().getExtras().getString("errorMessage");
+        final String errorMessage2 = this.getIntent().getExtras().getString("secondErrorMessage");
+        ((TextView) this.findViewById (R.id.exception)).setText (errorMessage1);
+        if (errorMessage2 != null) {
+            ((TextView) this.findViewById (R.id.exception2)).setText (errorMessage2);
         } else {
             ((TextView) this.findViewById (R.id.exception2)).setText ("That's all we know.");
         }
 
-        ((Button) this.findViewById (R.id.backtoconvform)).setOnClickListener (new OnClickListener () {
+        this.findViewById (R.id.backtoconvform).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
                 Error.this.finish ();

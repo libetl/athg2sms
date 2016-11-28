@@ -4,7 +4,9 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-class ProceedHandler extends Handler {
+import java.io.Serializable;
+
+class ProceedHandler extends Handler implements Serializable {
 
     private ProgressBar progressBar;
     private TextView current;
