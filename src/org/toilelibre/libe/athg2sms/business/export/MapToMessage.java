@@ -9,8 +9,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import static org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult.INBOX;
+
 public class MapToMessage {
-    static final String   INBOX                 = "inbox";
 
     public static String convert (Map<String, Object> message, String pattern) {
         final FormatRegexRepresentation theFormatRegexRepresentation = FormatSettings.getInstance().getFormats().get(pattern).getRegex();

@@ -1,6 +1,5 @@
 package athg2sms;
 
-import android.os.Handler;
 import android.test.mock.MockContext;
 
 import java.io.File;
@@ -26,7 +25,7 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 public class ReadFileTest {
     private int                       messagesInserted = 0;
-    private List<Sms> messages = new ArrayList<Sms>();
+    private List<Sms> messages = new ArrayList<>();
 
     private final ConvertListener convertListener  = new ConvertListener () {
 

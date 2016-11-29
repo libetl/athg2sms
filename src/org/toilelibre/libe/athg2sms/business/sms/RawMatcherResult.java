@@ -6,8 +6,8 @@ import org.toilelibre.libe.athg2sms.business.pattern.PreparedPattern;
 import java.util.regex.Matcher;
 
 public class RawMatcherResult {
-    static final String   SENT                  = "sent";
-    static final String   INBOX                 = "inbox";
+    public static final String   SENT                  = "sent";
+    public static final String   INBOX                 = "inbox";
 
     private final String [] groups;
     private final String    folder;

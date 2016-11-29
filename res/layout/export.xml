@@ -44,10 +44,10 @@
             android:width="200dip" />
 
         <Button
-            android:id="@+id/selectfile"
+            android:id="@+id/exportfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/selectfile" />
+            android:text="@string/saveas" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
