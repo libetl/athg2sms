@@ -30,36 +30,41 @@ public class ReadFileTest {
 
     private final ConvertListener convertListener  = new ConvertListener () {
 
-                                                       public int delete (final URI uriDelete, final String where, final String [] strings) {
-                                                           return 0;
-                                                       }
+        @Override
+        public ConvertListener bind() {
+            return null;
+        }
 
-                                                       public void displayInserted (final int inserted, final int dupl) {
+        public int delete (final URI uriDelete, final String where, final String [] strings) {
+            return 0;
+        }
 
-                                                       }
+        public void displayInserted (final int inserted, final int dupl) {
 
-                                                       public void end () {
+        }
 
-                                                       }
+        public void end () {
 
-                                                       public void insert (final URI uri, final Sms sms) {
-                                                           System.out.println (sms.getValues());
-                                                           messages.add (sms);
-                                                           ReadFileTest.this.messagesInserted++;
-                                                       }
+        }
 
-                                                       public void sayIPrepareTheList (final int size) {
-                                                       }
+        public void insert (final URI uri, final Sms sms) {
+            System.out.println (sms.getValues());
+            messages.add (sms);
+            ReadFileTest.this.messagesInserted++;
+        }
 
-                                                       public void setMax (final int nb2) {
-                                                           messages = new ArrayList<>(nb2);
-                                                           ReadFileTest.this.messagesInserted = 0;
-                                                       }
+        public void sayIPrepareTheList (final int size) {
+        }
 
-                                                       public void updateProgress (final int i2, final int nb2) {
-                                                       }
+        public void setMax (final int nb2) {
+            messages = new ArrayList<>(nb2);
+            ReadFileTest.this.messagesInserted = 0;
+        }
 
-                                                   };
+        public void updateProgress (final int i2, final int nb2) {
+        }
+
+    };
 
     @Test
     public void csvSms () throws URISyntaxException {
@@ -126,13 +131,13 @@ public class ReadFileTest {
         Assert.assertTrue (hourOfDay == 12);
         Assert.assertTrue (minutes == 04);
     }
-    
+
     @Test
     public void unknownSmsFormat () throws URISyntaxException {
         this.testString ("\"+33682864563\",\"2015-07-10 21:53\",\"SMS\",\"0\",\"Bienvenue\"\n", BuiltInFormatName.UnknownSmsFormat1, true);
         Assert.assertEquals (1, this.messagesInserted);
     }
-    
+
     @Test
     public void nokiaCsv () throws URISyntaxException {
         this.testString ("sms;deliver;\"+33612345678\";\"\";\"\";\"2016.03.22 15:46\";\"\";\"First message\"\n" + "sms;submit;\"\";\"+33612345678\";\"\";\"2016.03.22 15:48\";\"\";\"Answer to the first message\"", BuiltInFormatName.NokiaCsv, true);
@@ -153,18 +158,18 @@ public class ReadFileTest {
 
         //"sms","$(folder)",(?:"",)?"$(address)",(?:"",)?"","$(dateyyyy.MM.dd hh:mm)","","$(body)"
         this.testString (
-        		"\"sms\",\"READ,RECEIVED\",\"+33654321009\",\"\",\"\",\"2015.04.19 12:23\",\"\",\"Here is a received message\"\n" +
-                "\"sms\",\"SENT\",\"\",\"+33634567811\",\"\",\"2015.04.20 18:49\",\"\",\"Here is a sent message\"\n",
+                "\"sms\",\"READ,RECEIVED\",\"+33654321009\",\"\",\"\",\"2015.04.19 12:23\",\"\",\"Here is a received message\"\n" +
+                        "\"sms\",\"SENT\",\"\",\"+33634567811\",\"\",\"2015.04.20 18:49\",\"\",\"Here is a sent message\"\n",
                 BuiltInFormatName.NokiaSuite, false);
         Assert.assertEquals (2, this.messagesInserted);
     }
-    
+
     @Test
     public void loremIpsum () throws URISyntaxException {
         this.testString ("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n" + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInFormatName.BlackberryCsv, false);
         Assert.assertEquals (2, this.messagesInserted);
     }
-    
+
     @Test
     public void vmg () throws URISyntaxException {
         this.testFile ("/mnt/data/lionel/Documents/workspace/athg2sms/test/athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox, false);
@@ -210,19 +215,19 @@ public class ReadFileTest {
             Assert.assertTrue (this.messagesInserted > 0);
         }
     }
-    
+
     @Test
     public void regexTest () {
         Assert.assertTrue (java.util.regex.Pattern.compile("[\r\n\t]*((?:[^;])*);((?:[^;])*);((?:[^;])*);\"\";\"((?:[^\"]|\"\")*)\"[\r\n\t]+").matcher (
                 "12/26/2015 6:22:03 AM;from;+654631231157;\"\";\"na go SONA kno problem hbe na ar oke phn krba go\"\n" +
-                "12/26/2015 6:17:58 AM;from;+654631231157;\"\";\"blchi j tmr sottie kno problem hbe na to go JAAN? ar sei phn gulo deini go ar ki blche go SONAAA?\"\n" +
-                "12/26/2015 6:14:29 AM;from;+654631231157;\"\";\"thik hai\"\n" +
-                "12/26/2015 6:10:48 AM;from;+654631231157;\"\";\"toainaki ha ha ha ha ha\"\n" +
-                "12/26/2015 5:25:57 AM;from;+654631231157;\"\";\"thikache go JAAN tale mongolbarei jabo go\"\n" +
-                "12/26/2015 4:27:18 AM;from;+654631231157;\"\";\"na go SONATA mongolbare hbe na go karn maa ager dn mane mongolbare fanudr bari jabe go tale?\"\n" +
-                "12/26/2015 4:18:23 AM;from;+654631231157;\"\";\"ami blle nebi na krbe na go jabei tale porer sombare jabe go school theke?\"\n" +
-                "12/26/2015 4:11:36 AM;from;+654631231157;\"\";\"kintu mayer operation krar por ki ar jaua hbe go? karn tkhn to amke sb kaj krte hbe abr jdi fanu ase ta o to jaua late uthie dibe go JAAN ki je kri chhai\"\n" +
-                "12/26/2015 4:01:11 AM;from;+654631231157;\"\";\"tau ktodner mddhe eta blen go\"\n" +
-                "12/").find ());
+                        "12/26/2015 6:17:58 AM;from;+654631231157;\"\";\"blchi j tmr sottie kno problem hbe na to go JAAN? ar sei phn gulo deini go ar ki blche go SONAAA?\"\n" +
+                        "12/26/2015 6:14:29 AM;from;+654631231157;\"\";\"thik hai\"\n" +
+                        "12/26/2015 6:10:48 AM;from;+654631231157;\"\";\"toainaki ha ha ha ha ha\"\n" +
+                        "12/26/2015 5:25:57 AM;from;+654631231157;\"\";\"thikache go JAAN tale mongolbarei jabo go\"\n" +
+                        "12/26/2015 4:27:18 AM;from;+654631231157;\"\";\"na go SONATA mongolbare hbe na go karn maa ager dn mane mongolbare fanudr bari jabe go tale?\"\n" +
+                        "12/26/2015 4:18:23 AM;from;+654631231157;\"\";\"ami blle nebi na krbe na go jabei tale porer sombare jabe go school theke?\"\n" +
+                        "12/26/2015 4:11:36 AM;from;+654631231157;\"\";\"kintu mayer operation krar por ki ar jaua hbe go? karn tkhn to amke sb kaj krte hbe abr jdi fanu ase ta o to jaua late uthie dibe go JAAN ki je kri chhai\"\n" +
+                        "12/26/2015 4:01:11 AM;from;+654631231157;\"\";\"tau ktodner mddhe eta blen go\"\n" +
+                        "12/").find ());
     }
 }
