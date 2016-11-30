@@ -39,11 +39,9 @@ public class ConversionForm extends Activity {
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         this.setContentView (R.layout.form);
-        final Set<String> setsSet = FormatSettings.getInstance().getFormats().keySet();
-        final String [] setsArray = new String [setsSet.size ()];
-        setsSet.toArray (setsArray);
 
-        ((Spinner) this.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, setsArray));
+        ((Spinner) this.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,
+                FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()])));
         this.findViewById (R.id.selectfile).setOnClickListener (new OnClickListener () {
 
             @SuppressLint ("InlinedApi")

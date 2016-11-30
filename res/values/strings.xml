@@ -39,7 +39,7 @@
     <string name="delete">Delete</string>
     <string name="filename">Save as</string>
     <string name="selectfile">Choose</string>
-    <string name="saveas">Save as</string>
+    <string name="saveas">Send to &gt;</string>
     <string name="start">Start ></string>
     <string name="again">Again</string>
     <string name="cancel">Cancel</string>

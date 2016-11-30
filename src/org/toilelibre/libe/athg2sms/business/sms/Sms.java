@@ -14,6 +14,10 @@ public class Sms {
 
     private final Map<String, Object> values = new HashMap<String, Object>();
 
+    public Sms(Map<String, Object> valuesToPick) {
+        this.values.putAll(valuesToPick);
+    }
+
     public Sms(Format.FormatVarNamesRepresentation varNames, RawMatcherResult result) {
         boolean quotedPrintable = false;
         for (int i = 0 ; i < varNames.size () ; i++) {
@@ -46,7 +50,7 @@ public class Sms {
     }
 
     public long getDate () {
-        return (Long) values.get("date");
+        return Long.valueOf(values.get("date").toString());
     }
 
     public String getFolder () {
@@ -67,5 +71,9 @@ public class Sms {
 
     public Map<String, Object> getValues () {
         return Collections.unmodifiableMap(this.values);
+    }
+
+    public CharSequence getAddress() {
+        return values.get("address").toString();
     }
 }

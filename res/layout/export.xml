@@ -31,41 +31,17 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/path" />
-
-        <EditText
-            android:id="@+id/filename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:width="200dip" />
-
+        <Spinner
+            android:id="@+id/exportPatterns"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/exportfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/saveas" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
 
-        <Spinner
-            android:id="@+id/conversionSet"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
