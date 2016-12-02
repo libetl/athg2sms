@@ -1,20 +1,20 @@
 package org.toilelibre.libe.athg2sms.business.export;
 
-import android.content.Context;
-import android.database.Cursor;
 
+import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.CursorHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.SmsFinder;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
-import org.toilelibre.libe.athg2sms.business.sms.SmsFinder;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Exporter {
 
-    public String export(Context context, String patternName) {
+    public String export(ContextHolder<?> context, String patternName) {
         StringBuilder result = new StringBuilder();
         MessageMapper messageMapper = new MessageMapper();
-        Cursor cursor = new SmsFinder().pickThemAll(context.getContentResolver());
+        CursorHolder<?> cursor = new SmsFinder().pickThemAll(context);
         cursor.moveToFirst();
         for (int msgIndex = 0 ; msgIndex < cursor.getCount() ; msgIndex++){
             Map<String, Object> values = new HashMap<>();

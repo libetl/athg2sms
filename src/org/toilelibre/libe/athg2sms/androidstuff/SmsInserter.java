@@ -1,11 +1,8 @@
-package org.toilelibre.libe.athg2sms.business.sms;
-
-import java.net.URI;
-import java.util.Map;
-import java.util.Map.Entry;
+package org.toilelibre.libe.athg2sms.androidstuff;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +11,38 @@ import android.os.Build;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 
+import org.toilelibre.libe.athg2sms.business.sms.Sms;
 import org.toilelibre.libe.athg2sms.useless.SMS2PDU;
 
+import java.net.URI;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class SmsInserter {
+
+    @SuppressLint ("NewApi")
+    public void insert (URI uri, Sms sms, ContextHolder<?> contextHolder) {
+
+        Map<String, Object> values = sms.getValues();
+        if (Build.VERSION.SDK_INT < 10 * Build.VERSION_CODES.LOLLIPOP) {
+            final ContentValues values2 = new ContentValues ();
+            for (final Entry<String, Object> entry : values.entrySet ()) {
+                if (!"folder".equals (entry.getKey ())) {
+                    this.putEntry (values2, entry);
+                }
+            }
+            contextHolder.get(ContentResolver.class).insert (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                    ? ("sent".equals (values.get ("folder")) ? Telephony.Sms.Sent.CONTENT_URI : Telephony.Sms.Inbox.CONTENT_URI) : Uri.parse (uri.toString ()), values2);
+        }else {
+            byte [] pdu = SMS2PDU.getPDU (values.get ("address").toString (), values.get ("body").toString (),
+                    values.get ("address").toString ().trim().charAt (0) != '+');
+            Intent receivedIntent = getReceivedIntent (pdu);
+            PendingIntent pendingIntent = getPendingIntent ((ContextHolder<Context>)contextHolder, receivedIntent);
+            contextHolder.sendBroadcast (receivedIntent);
+            SmsManager.getDefault ().injectSmsPdu (pdu, "3gpp2", pendingIntent);
+        }
+
+    }
     
     private void putEntry (final ContentValues values, final Entry<String, Object> entry) {
         if (entry.getValue () instanceof Boolean) {
@@ -47,30 +73,6 @@ public class SmsInserter {
             values.put (entry.getKey (), (String) entry.getValue ());
         }
     }
-    
-    @SuppressLint ("NewApi")
-    public void insert (URI uri, Sms sms, Context context) {
-
-        Map<String, Object> values = sms.getValues();
-        if (Build.VERSION.SDK_INT < 10 * Build.VERSION_CODES.LOLLIPOP) {
-            final ContentValues values2 = new ContentValues ();
-            for (final Entry<String, Object> entry : values.entrySet ()) {
-                if (!"folder".equals (entry.getKey ())) {
-                    this.putEntry (values2, entry);
-                }
-            }
-            context.getContentResolver().insert (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                    ? ("sent".equals (values.get ("folder")) ? Telephony.Sms.Sent.CONTENT_URI : Telephony.Sms.Inbox.CONTENT_URI) : Uri.parse (uri.toString ()), values2);
-        }else {
-            byte [] pdu = SMS2PDU.getPDU (values.get ("address").toString (), values.get ("body").toString (),
-                    values.get ("address").toString ().trim().charAt (0) != '+');
-            Intent receivedIntent = getReceivedIntent (pdu);
-            PendingIntent pendingIntent = getPendingIntent (context, receivedIntent);
-            context.sendBroadcast (receivedIntent);
-            SmsManager.getDefault ().injectSmsPdu (pdu, "3gpp2", pendingIntent);
-        }
-        
-    }
 
     private Intent getReceivedIntent (byte [] pdu) {
         Intent intent = new Intent ();
@@ -82,7 +84,7 @@ public class SmsInserter {
     }
     
     @SuppressLint ("NewApi")
-    private PendingIntent getPendingIntent (Context context, Intent intent) {
-        return PendingIntent.getBroadcast (context, 1, intent, PendingIntent.FLAG_ONE_SHOT);
+    private PendingIntent getPendingIntent (ContextHolder<Context> contextHolder, Intent intent) {
+        return PendingIntent.getBroadcast (contextHolder.get(), 1, intent, PendingIntent.FLAG_ONE_SHOT);
     }
 }

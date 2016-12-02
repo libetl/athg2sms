@@ -1,12 +1,12 @@
 package athg2sms;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.business.export.MessageMapper;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PatternToExportPatternTest {
 

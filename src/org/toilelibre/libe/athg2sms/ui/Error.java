@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 
-import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.R;
 
 public class Error extends Activity {

@@ -1,15 +1,13 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Handler;
-
+import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.HandlerHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.SmsDeleter;
+import org.toilelibre.libe.athg2sms.androidstuff.SmsInserter;
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.PreparedPattern;
 import org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
-import org.toilelibre.libe.athg2sms.business.sms.SmsDeleter;
-import org.toilelibre.libe.athg2sms.business.sms.SmsInserter;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,16 +20,16 @@ public class Converter {
     private final static String FOLDER = "content://sms/";
 
     public boolean convertNow (Format format,
-                               String content, ConvertListener convertListener, Handler convertHandler, Context context,
+                               String content, ConvertListener convertListener, HandlerHolder<?> convertHandler, ContextHolder<?> contextHolder,
                                SmsInserter inserter, SmsDeleter deleter) {
         try {
-            return this.runConversion (format, content, convertListener, convertHandler, context, inserter, deleter);
+            return this.runConversion (format, content, convertListener, convertHandler, contextHolder, inserter, deleter);
         } finally {
             this.end (convertListener, convertHandler);
         }
     }
 
-    private boolean runConversion (Format format, String content, ConvertListener convertListener, Handler convertHandler, Context context,
+    private boolean runConversion (Format format, String content, ConvertListener convertListener, HandlerHolder<?> convertHandler, ContextHolder<?> contextHolder,
                            SmsInserter inserter, SmsDeleter deleter) {
 
         PreparedPattern preparedPattern = PreparedPattern.fromFormat(format.getRegex());
@@ -42,14 +40,14 @@ public class Converter {
             throw new ConvertException ("The selected conversion set does not work, sorry", new IllegalArgumentException ());
         }
 
-        return this.insertAllMatcherOccurences (format, matcher, convertListener, convertHandler, context, inserter, deleter);
+        return this.insertAllMatcherOccurences (format, matcher, convertListener, convertHandler, contextHolder, inserter, deleter);
     }
 
     private void dispatchAnotherSmsFoundEvent (final int newSize,
                                                final ConvertListener convertListener,
-                                               final Handler handler) {
-        if (handler == null) return;
-        handler.post (new Runnable () {
+                                               final HandlerHolder<?> holder) {
+        if (holder == null) return;
+        holder.postForHandler (new Runnable () {
 
             public void run () {
                 convertListener.sayIPrepareTheList (newSize);
@@ -60,9 +58,9 @@ public class Converter {
 
     private void dispatchNewSmsInsertionEvent (final int nb, final int dupl, final int ins, final int i2,
                                                final ConvertListener convertListener,
-                                               final Handler handler) {
-        if (handler == null) return;
-        handler.post (new Runnable () {
+                                               final HandlerHolder<?> holder) {
+        if (holder == null) return;
+        holder.postForHandler (new Runnable () {
 
             public void run () {
                 convertListener.updateProgress (i2, nb);
@@ -73,9 +71,9 @@ public class Converter {
     }
 
     private void dispatchNumberOfSmsRowsKnownEvent (final int nb, final ConvertListener convertListener,
-                                                    final Handler handler) {
-        if (handler == null) return;
-        handler.post (new Runnable () {
+                                                    final HandlerHolder<?> holder) {
+        if (holder == null) return;
+        holder.postForHandler (new Runnable () {
 
             public void run () {
                 convertListener.setMax (nb);
@@ -106,7 +104,7 @@ public class Converter {
     private int proceedToInsertionAndReturnNumberOfDuplicates (final Format format,
                                                                final RawMatcherResult result,
                                                                final ConvertListener convertListener,
-                                                               final Context context,
+                                                               final ContextHolder<?> contextHolder,
                                                                final SmsInserter inserter,
                                                                final SmsDeleter deleter) {
         if (result.getFolder () == null) return 0;
@@ -122,11 +120,12 @@ public class Converter {
         try {
             final Format.FormatVarNamesRepresentation varNames = format.getVarNames();
             final Sms sms = new Sms(varNames, result);
+            if (sms.isEmpty ()) return 0;
             final String where = this.getWhere (sms);
             nbDuplicate += convertListener.delete (uriDelete, where, new String [0]);
-            if (deleter != null)deleter.delete(Uri.parse (uriDelete.toString ()), where, new String [0], context.getContentResolver());
+            if (deleter != null)deleter.delete(uriDelete, where, new String [0], contextHolder);
             convertListener.insert (uri, sms);
-            if(inserter != null)inserter.insert (uri, sms, context);
+            if(inserter != null)inserter.insert (uri, sms, contextHolder);
         } catch (final IllegalStateException ise) {
             throw new ConvertException ("Problem during one insertion", ise);
         }
@@ -134,35 +133,35 @@ public class Converter {
     }
 
     private boolean insertAllMatcherOccurences (Format format, Matcher matcher,
-                                             ConvertListener convertListener, Handler handler,
-                                             Context context, SmsInserter inserter, SmsDeleter deleter) {
+                                             ConvertListener convertListener, HandlerHolder<?> holder,
+                                             ContextHolder<?> contextHolder, SmsInserter inserter, SmsDeleter deleter) {
         int inserted = 0;
-        final List<RawMatcherResult> matchedSms = new LinkedList<RawMatcherResult> ();
+        final List<RawMatcherResult> matchedSms = new LinkedList<> ();
         while (matcher.find ()) {
             final String smsAsText = matcher.group ();
             matchedSms.add (new RawMatcherResult(matcher, format.getRegex(), smsAsText));
-            this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, handler);
+            this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, holder);
         }
         final int numberOfFoundSms = matchedSms.size ();
         int nbDuplicate = 0;
 
-        this.dispatchNumberOfSmsRowsKnownEvent (numberOfFoundSms, convertListener, handler);
+        this.dispatchNumberOfSmsRowsKnownEvent (numberOfFoundSms, convertListener, holder);
 
         for (int i = 0 ; i < matchedSms.size () ; i++) {
             this.dispatchNewSmsInsertionEvent (numberOfFoundSms, nbDuplicate, inserted, i,
-                    convertListener, handler);
+                    convertListener, holder);
 
             nbDuplicate += this.proceedToInsertionAndReturnNumberOfDuplicates (format, matchedSms.get (i),
-                    convertListener, context, inserter, deleter);
+                    convertListener, contextHolder, inserter, deleter);
             inserted++;
         }
 
         return inserted > 0;
     }
 
-    private void end (final ConvertListener convertListener, final Handler handler) {
-        if (handler == null) return;
-        handler.post (new Runnable () {
+    private void end (final ConvertListener convertListener, final HandlerHolder<?> holder) {
+        if (holder == null) return;
+        holder.postForHandler (new Runnable () {
 
             public void run () {
                 convertListener.end ();

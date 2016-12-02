@@ -1,5 +1,12 @@
 package org.toilelibre.libe.athg2sms.useless;
 
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.PhoneNumberUtils;
+import android.util.Log;
+
+import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -8,13 +15,6 @@ import java.net.URI;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
-
-import android.content.Context;
-import android.content.Intent;
-import android.telephony.PhoneNumberUtils;
-import android.util.Log;
-
-import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 
 public class SmsManagerProxy {
 

@@ -1,14 +1,13 @@
 package org.toilelibre.libe.athg2sms.business.export;
 
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.pattern.Format.FormatRegexRepresentation;
+import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 import static org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult.INBOX;
 

@@ -1,7 +1,5 @@
 package org.toilelibre.libe.athg2sms.ui;
 
-import java.util.Set;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +10,8 @@ import android.widget.ListView;
 
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+
+import java.util.Set;
 
 public class PatternListing extends ListActivity {
 

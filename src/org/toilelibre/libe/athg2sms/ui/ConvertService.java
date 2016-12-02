@@ -4,13 +4,15 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
+import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.FileRetriever;
+import org.toilelibre.libe.athg2sms.androidstuff.HandlerHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.SmsDeleter;
+import org.toilelibre.libe.athg2sms.androidstuff.SmsInserter;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;
-import org.toilelibre.libe.athg2sms.business.files.FileRetriever;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.business.sms.SmsDeleter;
-import org.toilelibre.libe.athg2sms.business.sms.SmsInserter;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -53,7 +55,8 @@ public class ConvertService extends IntentService {
         try {
             atLeastOneConverted = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
                     intent.getStringExtra("pattern")), content,
-                    convertListener, convertListener.getHandler(), this, new SmsInserter(), new SmsDeleter());
+                    convertListener, new HandlerHolder<>(convertListener.getHandler()),
+                    new ContextHolder<>(this), new SmsInserter(), new SmsDeleter());
         } catch (ConvertException ce) {
             error(ce);
             return;

@@ -34,7 +34,6 @@ public class Sms {
                         values.put ("date", l);
                     }
                 } catch (final ParseException e) {
-                    throw new ConvertException("Problem while trying to build a sms from a text row", e);
                 }
             }else if (var.equals ("encoding") && "QUOTED-PRINTABLE".equalsIgnoreCase (val)) {
                 quotedPrintable = true;
@@ -47,6 +46,14 @@ public class Sms {
             }
         }
         values.put ("folder", result.getFolder());
+    }
+    
+    public boolean isEmpty () {
+        for (String value : values.keySet ()) {
+            if (values.get (value) != null && !values.get (value).equals (""))
+                return false;
+        }
+        return true;
     }
 
     public long getDate () {

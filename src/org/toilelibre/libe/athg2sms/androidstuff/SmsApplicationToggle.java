@@ -1,11 +1,11 @@
 package org.toilelibre.libe.athg2sms.androidstuff;
 
-import java.lang.reflect.InvocationTargetException;
-
 import android.content.Context;
 import android.content.Intent;
 
 import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class SmsApplicationToggle {
     private static String       ACTION_CHANGE_DEFAULT = "android.provider.Telephony.ACTION_CHANGE_DEFAULT";

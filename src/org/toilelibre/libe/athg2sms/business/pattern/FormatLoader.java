@@ -1,6 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.pattern;
 
-import android.content.SharedPreferences;
+import org.toilelibre.libe.athg2sms.androidstuff.SharedPreferencesHolder;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +17,7 @@ class FormatLoader {
         return new BuiltInFormatsLoader().loadDefaults();
     }
 
-    Map<String, Format> loadFrom (final SharedPreferences sharedPreferences) {
+    Map<String, Format> loadFrom (final SharedPreferencesHolder sharedPreferences) {
         final Map<String, Format> formats = new HashMap<>();
         if (sharedPreferences == null)return formats;
         final Map<String, ?> prefs = sharedPreferences.getAll ();

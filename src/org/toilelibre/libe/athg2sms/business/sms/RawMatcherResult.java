@@ -1,7 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.sms;
 
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
-import org.toilelibre.libe.athg2sms.business.pattern.PreparedPattern;
 
 import java.util.regex.Matcher;
 

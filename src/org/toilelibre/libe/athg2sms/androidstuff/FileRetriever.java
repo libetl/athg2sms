@@ -1,13 +1,4 @@
-package org.toilelibre.libe.athg2sms.business.files;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+package org.toilelibre.libe.athg2sms.androidstuff;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
@@ -23,6 +14,15 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Files;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.provider.DocumentFile;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class FileRetriever {
 

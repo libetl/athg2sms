@@ -1,8 +1,5 @@
 package org.toilelibre.libe.athg2sms.ui;
 
-import java.io.FileNotFoundException;
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -18,10 +15,12 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.toilelibre.libe.athg2sms.business.files.FileRetriever;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertFormatGuesser;
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.androidstuff.FileRetriever;
+import org.toilelibre.libe.athg2sms.business.convert.ConvertFormatGuesser;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+
+import java.io.FileNotFoundException;
 
 public class ConversionForm extends Activity {
     private Handler handler = new Handler ();
@@ -38,7 +37,7 @@ public class ConversionForm extends Activity {
     @Override
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        this.setContentView (R.layout.form);
+        this.setContentView (R.layout.conversionform);
 
         ((Spinner) this.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,
                 FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()])));

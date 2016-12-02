@@ -2,6 +2,16 @@ package athg2sms;
 
 import android.test.mock.MockContext;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
+import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
+import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
+import org.toilelibre.libe.athg2sms.business.convert.Converter;
+import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
+import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+import org.toilelibre.libe.athg2sms.business.sms.Sms;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
@@ -13,15 +23,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
-
-import org.junit.Test;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.business.convert.Converter;
-
-import org.junit.Assert;
-import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 public class ReadFileTest {
     private int                       messagesInserted = 0;
@@ -72,7 +73,7 @@ public class ReadFileTest {
         Assert.assertEquals (2, this.messagesInserted);
     }
 
-    @Test
+    @Test(expected=ConvertException.class)
     public void empty () throws URISyntaxException {
         this.testString ("", BuiltInFormatName.NokiaCsv, true);
     }
@@ -191,7 +192,7 @@ public class ReadFileTest {
 
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
-                content, this.convertListener, null, new MockContext(),
+                content, this.convertListener, null, new ContextHolder<>(null),
                 null, null);
 
         // then
@@ -206,7 +207,7 @@ public class ReadFileTest {
 
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
-                content, this.convertListener, null, new MockContext(),
+                content, this.convertListener, null, new ContextHolder<>(null),
                 null, null);
 
         // then

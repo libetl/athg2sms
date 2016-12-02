@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.toilelibre.libe.athg2sms.androidstuff.SharedPreferencesHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
@@ -23,7 +24,7 @@ public class EntryPoint extends Activity {
     protected void onResume () {
         super.onResume ();
 
-        FormatSettings.getInstance().loadFrom(EntryPoint.this.getSharedPreferences ("athg2sms", 0));
+        FormatSettings.getInstance().loadFrom(new SharedPreferencesHolder(EntryPoint.this.getSharedPreferences ("athg2sms", 0)));
 
         if (android.os.Build.VERSION.SDK_INT < 19) {
             this.startActivity(new Intent(this, MainMenu.class));

@@ -1,9 +1,9 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
+import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+
 import java.io.FileNotFoundException;
 import java.util.regex.Matcher;
-
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 
 public class ConvertFormatGuesser {
 
