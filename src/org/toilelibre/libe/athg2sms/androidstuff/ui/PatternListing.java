@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.app.ListActivity;
 import android.content.Intent;

@@ -1,9 +1,9 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
-import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.HandlerHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsDeleter;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsInserter;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsDeleter;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsInserter;
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.PreparedPattern;
 import org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult;

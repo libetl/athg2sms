@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;

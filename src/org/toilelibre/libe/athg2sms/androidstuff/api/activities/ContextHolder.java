@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff;
+package org.toilelibre.libe.athg2sms.androidstuff.api.activities;
 
 import android.content.ContentResolver;
 import android.content.Context;

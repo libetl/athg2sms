@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.androidstuff.FileRetriever;
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertFormatGuesser;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 

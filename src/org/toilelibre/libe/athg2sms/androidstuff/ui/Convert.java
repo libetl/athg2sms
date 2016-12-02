@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,11 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsApplicationToggle;
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
+import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
 
 import java.util.Arrays;
+
+import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
 public class Convert extends Activity {
 
@@ -34,7 +38,6 @@ public class Convert extends Activity {
         this.setContentView (R.layout.proceed);
         String filename = this.getIntent().getStringExtra("filename");
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + filename);
-
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
             this.startConvertProcess(filename);
@@ -51,13 +54,12 @@ public class Convert extends Activity {
 
         final ProceedHandler handler = new ProceedHandler ((ProgressBar) this.findViewById (R.id.progress),
                 (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
-        final ConvertListener convertListener = new ConversionRealTimeFeedback(handler);
+        final ConvertListener convertListener = new ProcessRealTimeFeedback(handler);
 
         final Intent intent = new Intent (this, ConvertService.class);
 
         intent.putExtra("pattern", this.getIntent().getStringExtra("pattern"));
         intent.putExtra("filename", filename);
-
 
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
@@ -70,7 +72,7 @@ public class Convert extends Activity {
             displayIfDryRun();
             this.startService (intent);
         } else {
-            ConversionRealTimeFeedback.getInstance().updateHandler(handler);
+            ProcessRealTimeFeedback.getInstance().updateHandler(handler);
         }
     }
 
@@ -89,18 +91,22 @@ public class Convert extends Activity {
     @Override
     public void onRequestPermissionsResult (int requestCode, String [] permissions, int [] grantResults) {
         super.onRequestPermissionsResult (requestCode, permissions, grantResults);
+
+
+        SharedPreferencesHolder<SharedPreferences> preferences =
+                new SharedPreferencesHolder<>(this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
+
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
                 throw new SecurityException ("Permission Denied : " + permission);
             }
         }
-        new AppPreferences(Convert.this.getSharedPreferences ("athg2sms", 0) )
-                .saveAskedPermissions (permissions);
+        new AppPreferences(preferences).saveAskedPermissions (permissions);
         this.startConvertProcess (this.getIntent().getStringExtra("filename"));
     }
 
     private void checkPermissions (String... permissions) {
-        if (new AppPreferences(Convert.this.getSharedPreferences ("athg2sms", 0) )
+        if (new AppPreferences(new SharedPreferencesHolder<>(this.getSharedPreferences (BINDING_GLOBAL_NAME, 0)))
                 .getAskedPermissions ().containsAll (Arrays.asList (permissions))) {
             onRequestPermissionsResult(0, new String[0], new int[0]);
             return;

@@ -2,15 +2,18 @@ package org.toilelibre.libe.athg2sms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import org.toilelibre.libe.athg2sms.androidstuff.SharedPreferencesHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsApplicationToggle;
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
-import org.toilelibre.libe.athg2sms.ui.MainMenu;
+import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
+import org.toilelibre.libe.athg2sms.androidstuff.ui.MainMenu;
+
+import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
 public class EntryPoint extends Activity {
 
@@ -24,7 +27,10 @@ public class EntryPoint extends Activity {
     protected void onResume () {
         super.onResume ();
 
-        FormatSettings.getInstance().loadFrom(new SharedPreferencesHolder(EntryPoint.this.getSharedPreferences ("athg2sms", 0)));
+        SharedPreferencesHolder<SharedPreferences> preferences =
+                new SharedPreferencesHolder<>(EntryPoint.this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
+
+        FormatSettings.getInstance().loadFrom(preferences);
 
         if (android.os.Build.VERSION.SDK_INT < 19) {
             this.startActivity(new Intent(this, MainMenu.class));
@@ -37,7 +43,7 @@ public class EntryPoint extends Activity {
         }
         // App is not default.
         // Show the "not currently set as the default SMS app" interface
-        new AppPreferences(EntryPoint.this.getSharedPreferences ("athg2sms", 0))
+        new AppPreferences(preferences)
                 .saveDefaultSmsApp(new SmsApplicationToggle().getDefaultSmsPackage (this));
         final View viewGroup = this.findViewById (R.id.not_default_app);
         viewGroup.setVisibility (View.VISIBLE);

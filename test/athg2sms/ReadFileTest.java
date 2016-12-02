@@ -1,10 +1,8 @@
 package athg2sms;
 
-import android.test.mock.MockContext;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;

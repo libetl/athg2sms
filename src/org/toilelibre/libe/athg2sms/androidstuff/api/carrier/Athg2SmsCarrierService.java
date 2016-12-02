@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff;
+package org.toilelibre.libe.athg2sms.androidstuff.api.carrier;
 
 import android.annotation.TargetApi;
 import android.os.PersistableBundle;

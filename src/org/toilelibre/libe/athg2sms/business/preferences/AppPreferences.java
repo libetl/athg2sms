@@ -1,9 +1,8 @@
-package org.toilelibre.libe.athg2sms.preferences;
+package org.toilelibre.libe.athg2sms.business.preferences;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 
 import java.util.Arrays;
@@ -17,9 +16,9 @@ public class AppPreferences {
     private static final String   COMMON        = "common";
     private static final String   INBOX_KEYWORD = "inboxKeyword";
     private static final String   SENT_KEYWORD  = "sentKeyword";
-    private final SharedPreferences sharedPreferences;
+    private final SharedPreferencesHolder<?> sharedPreferences;
 
-    public AppPreferences(SharedPreferences sharedPreferences) {
+    public AppPreferences(SharedPreferencesHolder sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }
 
@@ -28,16 +27,12 @@ public class AppPreferences {
     }
 
     public void saveDefaultSmsApp (final String packageName) {
-        final Editor editor = sharedPreferences.edit ();
-        editor.putString ("defaultSmsApp", packageName);
-        editor.commit ();
+        sharedPreferences.edit ().putString ("defaultSmsApp", packageName).commit ();
     }
     
     @SuppressLint("NewApi")
 	public void saveAskedPermissions (final String... permissions) {
-        final Editor editor = sharedPreferences.edit ();
-        editor.putStringSet ("permissions", new HashSet<>(Arrays.asList (permissions)));
-        editor.commit ();
+        sharedPreferences.edit ().putStringSet ("permissions", new HashSet<>(Arrays.asList (permissions))).commit ();
     }
     
     @SuppressLint("NewApi")
@@ -47,7 +42,7 @@ public class AppPreferences {
 
     public void saveFormats(final Map<String, Format> formats) {
         final String smsApp = this.getDefaultSmsApp ();
-        final Editor editor = sharedPreferences.edit ();
+        final SharedPreferencesHolder.EditorHolder<?> editor = sharedPreferences.edit ();
         editor.clear ();
         this.saveDefaultSmsApp (smsApp);
         for (final Entry<String, Format> entry : formats.entrySet ()) {

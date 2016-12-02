@@ -1,14 +1,14 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
-import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.FileRetriever;
-import org.toilelibre.libe.athg2sms.androidstuff.HandlerHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsDeleter;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsInserter;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsDeleter;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsInserter;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;
@@ -46,7 +46,7 @@ public class ConvertService extends IntentService {
     @Override
     protected void onHandleIntent(final Intent intent) {
         final Converter thisConverter = new Converter();
-        ConversionRealTimeFeedback convertListener = ConversionRealTimeFeedback.getInstance();
+        ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
         final String content = this.getContentFromFileName (convertListener, intent.getStringExtra("filename"));
         if (content == null) {
             return;
@@ -60,6 +60,8 @@ public class ConvertService extends IntentService {
         } catch (ConvertException ce) {
             error(ce);
             return;
+        } finally {
+            ProcessRealTimeFeedback.unbind();
         }
         if (!atLeastOneConverted)
             error(new ParseException("No SMS Imported !\nThe selected conversion set does not match the input", 0));
@@ -71,7 +73,7 @@ public class ConvertService extends IntentService {
         try {
             return FileRetriever.getFile (this, filename);
         } catch (FileNotFoundException e) {
-            convertListener.end ();
+            ProcessRealTimeFeedback.unbind();
             return null;
         }
     }

@@ -1,11 +1,11 @@
-package org.toilelibre.libe.athg2sms.androidstuff;
+package org.toilelibre.libe.athg2sms.androidstuff.api.storage;
 
 
 import android.database.Cursor;
 
 public class CursorHolder<T> {
 
-    private T cursor;
+    private final T cursor;
 
     public CursorHolder(T cursor) {
         this.cursor = cursor;
@@ -49,5 +49,12 @@ public class CursorHolder<T> {
             ((Cursor)this.cursor).getString(columnIndex);
         }
         return "";
+    }
+
+    public void close() {
+        if (cursor instanceof Cursor) {
+            ((Cursor)this.cursor).close();
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.annotation.SuppressLint;
 
@@ -7,12 +7,12 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.net.URI;
 
-class ConversionRealTimeFeedback implements ConvertListener {
+class ProcessRealTimeFeedback implements ConvertListener {
 
     private ProceedHandler proceedHandler;
-    private static ConversionRealTimeFeedback instance = null;
+    private static ProcessRealTimeFeedback instance = null;
 
-    ConversionRealTimeFeedback(ProceedHandler proceedHandler) {
+    ProcessRealTimeFeedback(ProceedHandler proceedHandler) {
         this.proceedHandler = proceedHandler;
     }
 
@@ -49,12 +49,18 @@ class ConversionRealTimeFeedback implements ConvertListener {
         this.proceedHandler.getProgressBar().setProgress (i);
     }
 
-    public ConversionRealTimeFeedback bind () {
+    public ProcessRealTimeFeedback bind () {
         if (instance == null) {
             instance = this;
             return this;
         }
         return instance;
+    }
+
+    static void unbind () {
+        if (instance != null) {
+            instance = null;
+        }
     }
 
     ProceedHandler getHandler() {
@@ -66,7 +72,7 @@ class ConversionRealTimeFeedback implements ConvertListener {
         this.proceedHandler = handler;
     }
 
-    static ConversionRealTimeFeedback getInstance() {
+    static ProcessRealTimeFeedback getInstance() {
         return instance;
     }
 }

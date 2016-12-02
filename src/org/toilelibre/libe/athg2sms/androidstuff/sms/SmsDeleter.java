@@ -1,7 +1,9 @@
-package org.toilelibre.libe.athg2sms.androidstuff;
+package org.toilelibre.libe.athg2sms.androidstuff.sms;
 
 import android.content.ContentResolver;
 import android.net.Uri;
+
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 
 import java.net.URI;
 

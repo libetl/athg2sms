@@ -1,15 +1,20 @@
-package org.toilelibre.libe.athg2sms.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsApplicationToggle;
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.preferences.AppPreferences;
+import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
+
+import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
 public class MainMenu extends Activity {
 
@@ -17,6 +22,9 @@ public class MainMenu extends Activity {
     @Override
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
+
+        final SharedPreferencesHolder<SharedPreferences> preferences =
+                new SharedPreferencesHolder<>(this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
 
         this.setContentView (R.layout.main);
         this.findViewById (R.id.manageconvsets).setOnClickListener (new OnClickListener () {
@@ -44,7 +52,7 @@ public class MainMenu extends Activity {
         this.findViewById (R.id.exit).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                new AppPreferences(MainMenu.this.getSharedPreferences ("athg2sms", 0)).saveFormats(FormatSettings.getInstance().getFormats());
+                new AppPreferences(preferences).saveFormats(FormatSettings.getInstance().getFormats());
                 MainMenu.this.finish ();
                 final Intent intent = new Intent (Intent.ACTION_MAIN);
                 intent.addCategory (Intent.CATEGORY_HOME);

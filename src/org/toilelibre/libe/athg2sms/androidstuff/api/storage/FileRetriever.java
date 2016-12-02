@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff;
+package org.toilelibre.libe.athg2sms.androidstuff.api.storage;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

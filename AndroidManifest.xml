@@ -19,7 +19,7 @@
         android:icon="@drawable/iconv3"
         android:label="@string/app_name" >
         <receiver
-            android:name=".androidstuff.SmsReceiver"
+            android:name=".androidstuff.sms.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS" 
     		android:enabled="true"
     		android:exported="true" >
@@ -56,7 +56,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".androidstuff.Athg2SmsCarrierService"
+            android:name=".androidstuff.api.carrier.Athg2SmsCarrierService"
             android:label="@string/carrier_service"
             android:permission="android.permission.BIND_CARRIER_SERVICES" >
             <intent-filter>
@@ -64,7 +64,8 @@
             </intent-filter>
         </service>
 
-        <service android:name="org.toilelibre.libe.athg2sms.ui.ConvertService"/>
+        <service android:name=".androidstuff.ui.ConvertService"/>
+        <service android:name=".androidstuff.ui.ExportService"/>
 
         <activity
             android:name=".EntryPoint"
@@ -78,7 +79,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainMenu"
+            android:name=".androidstuff.ui.MainMenu"
             android:label="@string/home_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -86,7 +87,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.PatternEdition"
+            android:name=".androidstuff.ui.PatternEdition"
             android:label="@string/csedit_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -94,7 +95,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.PatternListing"
+            android:name=".androidstuff.ui.PatternListing"
             android:label="@string/cs_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -102,7 +103,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ConversionForm"
+            android:name=".androidstuff.ui.ConversionForm"
             android:label="@string/cf_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -110,7 +111,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Convert"
+            android:name=".androidstuff.ui.Convert"
             android:label="@string/proceed_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -128,7 +129,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Done"
+            android:name=".androidstuff.ui.Export"
+            android:label="@string/proceed_title"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".androidstuff.ui.Done"
             android:label="@string/done_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -136,14 +155,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Error"
+            android:name=".androidstuff.ui.Error"
             android:label="@string/error_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ExportForm"
+            android:name=".androidstuff.ui.ExportForm"
             android:label="@string/export_title"
             android:launchMode="singleTop" >
             <intent-filter>

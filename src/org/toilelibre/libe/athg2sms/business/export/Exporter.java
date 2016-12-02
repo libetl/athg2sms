@@ -1,29 +1,32 @@
 package org.toilelibre.libe.athg2sms.business.export;
 
 
-import org.toilelibre.libe.athg2sms.androidstuff.ContextHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.CursorHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.SmsFinder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsFinder;
+import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Exporter {
 
-    public String export(ContextHolder<?> context, String patternName) {
-        StringBuilder result = new StringBuilder();
-        MessageMapper messageMapper = new MessageMapper();
-        CursorHolder<?> cursor = new SmsFinder().pickThemAll(context);
-        cursor.moveToFirst();
-        for (int msgIndex = 0 ; msgIndex < cursor.getCount() ; msgIndex++){
-            Map<String, Object> values = new HashMap<>();
-            for (String columnName : cursor.getColumnNames()) {
-                values.put(columnName, cursor.getString(cursor.getColumnIndex(columnName)));
-            }
-            Sms sms = new Sms(values);
+    public String export(final ContextHolder<?> context, final HandlerHolder<?> handler, final String patternName, final ConvertListener convertListener) {
+        final StringBuilder result = new StringBuilder();
+        final MessageMapper messageMapper = new MessageMapper();
+        final List<Map<String, Object>> list = new SmsFinder().pickThemAll(context, handler, convertListener);
+
+        for (int i = 0; i < list.size() ; i++) {
+            final int thisIndex = i;
+            handler.postForHandler(new Runnable() {
+                @Override
+                public void run() {
+                   convertListener.updateProgress(thisIndex, list.size());
+                }
+            });
+            Sms sms = new Sms(list.get(i));
             result.append(messageMapper.convert(sms, patternName));
-            cursor.moveToNext();
         }
         return result.toString();
     }

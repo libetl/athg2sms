@@ -1,6 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.pattern;
 
-import org.toilelibre.libe.athg2sms.androidstuff.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
 
 import java.util.Map;
 
