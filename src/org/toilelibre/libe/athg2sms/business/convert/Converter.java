@@ -122,8 +122,8 @@ public class Converter {
             final Sms sms = new Sms(varNames, result);
             if (sms.isEmpty ()) return 0;
             final String where = this.getWhere (sms);
-            nbDuplicate += convertListener.delete (uriDelete, where, new String [0]);
-            if (deleter != null)deleter.delete(uriDelete, where, new String [0], contextHolder);
+            convertListener.delete (uriDelete, where, new String [0]);
+            if (deleter != null)nbDuplicate += deleter.delete(uriDelete, where, new String [0], contextHolder);
             convertListener.insert (uri, sms);
             if(inserter != null)inserter.insert (uri, sms, contextHolder);
         } catch (final IllegalStateException ise) {
