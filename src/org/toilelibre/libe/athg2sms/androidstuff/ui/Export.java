@@ -40,6 +40,7 @@ public class Export extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.proceed);
 
+        retryExportOperation();
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
             this.startExportService();
             return;
@@ -49,6 +50,21 @@ public class Export extends Activity {
         }catch (SecurityException se) {
         }
         this.startExportService();
+    }
+
+    private void retryExportOperation() {
+        String pattern = this.getIntent().getStringExtra("pattern");
+        ((TextView) this.findViewById (R.id.filename)).setText ("Pattern : " + pattern);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED)){
+            this.startExportService();
+            return;
+        }
+
+        ActivityCompat.requestPermissions(this, new String []{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_SMS}, 0);
+
     }
 
     private void startExportService() {

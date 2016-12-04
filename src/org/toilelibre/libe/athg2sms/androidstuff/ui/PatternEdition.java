@@ -19,7 +19,7 @@ public class PatternEdition extends Activity {
 
     private void notAllowedChar () {
         final AlertDialog.Builder builder = new AlertDialog.Builder (this);
-        builder.setMessage ("No '#' in Pattern name please.").setIcon (android.R.drawable.ic_dialog_alert).setCancelable (false).setPositiveButton ("Ok", new DialogInterface.OnClickListener () {
+        builder.setMessage ("No '#' in Format name please.").setIcon (android.R.drawable.ic_dialog_alert).setCancelable (false).setPositiveButton ("Ok", new DialogInterface.OnClickListener () {
             public void onClick (final DialogInterface dialog, final int id) {
                 dialog.dismiss ();
             }
@@ -38,6 +38,7 @@ public class PatternEdition extends Activity {
             this.format = FormatSettings.getInstance().getFormats().get(this.pattern);
             this.findViewById (R.id.editcsname).setEnabled (false);
             ((TextView) this.findViewById (R.id.cspattern)).setText (this.format.getRegex().getCommonRegex());
+            ((TextView) this.findViewById (R.id.export_format)).setText (this.format.getRegex().getExportFormat());
             ((TextView) this.findViewById (R.id.csinbox)).setText (this.format.getRegex().getInboxKeyword());
             ((TextView) this.findViewById (R.id.cssent)).setText (this.format.getRegex().getSentKeyword());
         } else {
@@ -80,7 +81,9 @@ public class PatternEdition extends Activity {
                 thiz.format = new Format(
                         thiz.pattern,
                         ((TextView) thiz.findViewById (R.id.cspattern)).getText ().toString (),
-                        ((TextView) thiz.findViewById (R.id.cspattern)).getText ().toString (),
+                        ((TextView) thiz.findViewById (R.id.export_format)).getText ().toString ().isEmpty() ?
+                                ((TextView) thiz.findViewById (R.id.cspattern)).getText ().toString () :
+                                ((TextView) thiz.findViewById (R.id.export_format)).getText ().toString (),
                         ((TextView) thiz.findViewById (R.id.csinbox)).getText ().toString (),
                         ((TextView) thiz.findViewById (R.id.cssent)).getText ().toString ());
 

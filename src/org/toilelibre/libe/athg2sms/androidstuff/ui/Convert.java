@@ -8,7 +8,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,14 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
-
-import java.util.Arrays;
-
-import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
 public class Convert extends Activity {
 
@@ -36,18 +29,24 @@ public class Convert extends Activity {
     protected void onCreate (final Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         this.setContentView (R.layout.proceed);
+
+        retryConvertOperation ();
+    }
+
+    private void retryConvertOperation() {
         String filename = this.getIntent().getStringExtra("filename");
         ((TextView) this.findViewById (R.id.filename)).setText ("Filename : " + filename);
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)){
             this.startConvertProcess(filename);
             return;
         }
-        try {
-            this.checkPermissions (Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_SMS,
-                    Manifest.permission.SEND_SMS);
-        }catch (SecurityException se) {
-        }
+
+        ActivityCompat.requestPermissions(this, new String []{"android.permission.READ_EXTERNAL_STORAGE",
+                Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS}, 0);
+
     }
 
     private void startConvertProcess (String filename) {
@@ -92,25 +91,6 @@ public class Convert extends Activity {
     public void onRequestPermissionsResult (int requestCode, String [] permissions, int [] grantResults) {
         super.onRequestPermissionsResult (requestCode, permissions, grantResults);
 
-
-        SharedPreferencesHolder<SharedPreferences> preferences =
-                new SharedPreferencesHolder<>(this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
-
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
-                throw new SecurityException ("Permission Denied : " + permission);
-            }
-        }
-        new AppPreferences(preferences).saveAskedPermissions (permissions);
-        this.startConvertProcess (this.getIntent().getStringExtra("filename"));
-    }
-
-    private void checkPermissions (String... permissions) {
-        if (new AppPreferences(new SharedPreferencesHolder<>(this.getSharedPreferences (BINDING_GLOBAL_NAME, 0)))
-                .getAskedPermissions ().containsAll (Arrays.asList (permissions))) {
-            onRequestPermissionsResult(0, new String[0], new int[0]);
-            return;
-        }
-        ActivityCompat.requestPermissions(this, permissions, 0);
+        retryConvertOperation();
     }
 }

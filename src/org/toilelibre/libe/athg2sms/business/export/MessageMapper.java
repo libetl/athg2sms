@@ -2,6 +2,7 @@ package org.toilelibre.libe.athg2sms.business.export;
 
 import org.toilelibre.libe.athg2sms.business.pattern.Format.FormatRegexRepresentation;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+import org.toilelibre.libe.athg2sms.business.sms.QuotedPrintable;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.text.DateFormat;
@@ -47,6 +48,9 @@ public class MessageMapper {
         }
         if (endToken == '\'') {
             body = body.replaceAll("\'", "\\\'");
+        }
+        if (theFormatRegexRepresentation.getCommonRegex().contains("$(encoding)")) {
+            body = new String(new QuotedPrintable ().encodeQuotedPrintable(body.getBytes()));
         }
         return result.replace ("$(body)", body);
     }
