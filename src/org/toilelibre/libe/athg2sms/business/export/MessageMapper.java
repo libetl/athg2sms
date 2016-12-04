@@ -25,7 +25,7 @@ public class MessageMapper {
         result = result.replace ("$(address)", sms.getAddress());
         result = result.replace ("$(inbox:address)", "");
         result = result.replace ("$(sent:address)", "");
-        result = result.replace ("$(body)",sms.getBody());
+        result = replaceBody (result, sms, theFormatRegexRepresentation);
         int startOfDate = result.indexOf ("$(date") + 7;
         int endOfDate = result.indexOf (')', startOfDate);
         String datePattern = result.substring (startOfDate, endOfDate);
@@ -36,5 +36,18 @@ public class MessageMapper {
                 result.substring (endOfDate + 1);
         
         return result;
+    }
+
+    private String replaceBody(String result, Sms sms, FormatRegexRepresentation theFormatRegexRepresentation) {
+        char endToken = theFormatRegexRepresentation.getExportFormat().charAt(
+                theFormatRegexRepresentation.getExportFormat().indexOf("$(body)") + 7);
+        String body = sms.getBody();
+        if (endToken == '"') {
+            body = body.replaceAll("\"", "\\\"");
+        }
+        if (endToken == '\'') {
+            body = body.replaceAll("\'", "\\\'");
+        }
+        return result.replace ("$(body)", body);
     }
 }

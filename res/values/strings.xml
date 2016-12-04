@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">Athg2Sms V1.5.0</string>
+    <string name="app_name">AthgWSms V1.5.0</string>
 
-    <string name="app_title">Anything To Sms</string>
-    <string name="home_title">Athg2Sms</string>
-    <string name="export_title">Athg2Sms &gt; Export</string>
-    <string name="cs_title">Athg2Sms &gt; patterns</string>
-    <string name="csedit_title">Athg2Sms &gt; patterns &gt; Edit</string>
-    <string name="cf_title">Athg2Sms &gt; Conversion Form</string>
-    <string name="cfoifm_title">Athg2Sms &gt; Conversion Form &gt; OI FM</string>
-    <string name="proceed_title">Athg2Sms &gt; In Progress !</string>
-    <string name="done_title">Athg2Sms &gt; Finished &gt; Done</string>
-    <string name="error_title">Athg2Sms &gt; Finished &gt; Error</string>
+    <string name="app_title">Anything With Sms</string>
+    <string name="home_title">AthgWSms</string>
+    <string name="export_title">AthgWSms &gt; Export</string>
+    <string name="cs_title">AthgWSms &gt; patterns</string>
+    <string name="csedit_title">AthgWSms &gt; patterns &gt; Edit</string>
+    <string name="cf_title">AthgWSms &gt; Conversion Form</string>
+    <string name="cfoifm_title">AthgWSms &gt; Conversion Form &gt; OI FM</string>
+    <string name="proceed_title">AthgWSms &gt; In Progress !</string>
+    <string name="done_title">AthgWSms &gt; Finished &gt; Done</string>
+    <string name="error_title">AthgWSms &gt; Finished &gt; Error</string>
 
     <string name="descr">Import/Export SMS from CSV, VMG Files ! </string>
     <string name="descrexport">Export your SMS to other devices</string>
@@ -49,8 +49,8 @@
     <string name="exit">Exit</string>
     <string name="toggledefaultapp">Toggle Default App (>=4.4)</string>
     
-    <string name="not_default_app">Dear KitKat (or +) user, The Android Platform requires your consent to let athg2sms become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
+    <string name="not_default_app">Dear KitKat (or +) user, The Android Platform requires your consent to let AthgWSms become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
     <string name="oic">Oh, I see !</string>
     
-    <string name="carrier_service">Carrier Service for Athg2Sms</string>
+    <string name="carrier_service">Carrier Service for AthgWSms</string>
 </resources>

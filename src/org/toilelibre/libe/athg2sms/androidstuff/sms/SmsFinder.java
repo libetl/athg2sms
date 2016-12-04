@@ -51,7 +51,9 @@ public class SmsFinder {
             handler.postForHandler(new Runnable() {
                 @Override
                 public void run() {
-                    convertListener.setMax(cursor.getCount());
+                    if (!cursor.isClosed()) {
+                        convertListener.setMax(cursor.getCount());
+                    }
                 }
             });
             handler.postForHandler(new Runnable() {
