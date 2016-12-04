@@ -1,6 +1,5 @@
 package org.toilelibre.libe.athg2sms.business.sms;
 
-import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 
 import java.text.ParseException;

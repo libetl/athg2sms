@@ -21,6 +21,6 @@ public interface ConvertListener extends Serializable {
 
     void setMax (int nb2);
 
-    void updateProgress (int i2, int nb2);
+    void updateProgress (String text, int i2, int nb2);
 
 }

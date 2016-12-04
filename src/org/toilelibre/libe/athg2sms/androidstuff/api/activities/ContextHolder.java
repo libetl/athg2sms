@@ -17,12 +17,6 @@ public class ContextHolder<T> {
         return this.context;
     }
 
-    public void sendBroadcast(Intent receivedIntent) {
-        if (this.context instanceof Context){
-            ((Context) this.context).sendBroadcast(receivedIntent);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public <U> U get(Class<U> contentResolver) {
         if (contentResolver == ContentResolver.class && this.context instanceof Context) {

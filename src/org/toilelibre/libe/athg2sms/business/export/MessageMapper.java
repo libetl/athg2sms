@@ -23,8 +23,8 @@ public class MessageMapper {
                         theFormatRegexRepresentation.getInboxKeyword() : theFormatRegexRepresentation.getSentKeyword() );
         result = result.replace ("$(" + sms.getFolder() + ":address)", sms.getAddress());
         result = result.replace ("$(address)", sms.getAddress());
-        result = result.replace ("$(inbox:address)","");
-        result = result.replace ("$(sent:address)","");
+        result = result.replace ("$(inbox:address)", "");
+        result = result.replace ("$(sent:address)", "");
         result = result.replace ("$(body)",sms.getBody());
         int startOfDate = result.indexOf ("$(date") + 7;
         int endOfDate = result.indexOf (')', startOfDate);

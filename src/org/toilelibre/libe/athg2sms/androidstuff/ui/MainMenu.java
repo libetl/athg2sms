@@ -58,6 +58,7 @@ public class MainMenu extends Activity {
                 intent.addCategory (Intent.CATEGORY_HOME);
                 intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
                 MainMenu.this.startActivity (intent);
+                System.exit(0);
             }
         });
         this.findViewById (R.id.toggledefaultapp).setOnClickListener (new OnClickListener () {

@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class FileRetriever {
@@ -48,7 +49,7 @@ public class FileRetriever {
                     } catch (FileNotFoundException e1) {
                         try {
                             return tryToOpenWithAsASimpleFile (filename);
-                        } catch (FileNotFoundException e) {
+                        } catch (FileNotFoundException | NoSuchElementException e) {
                             try {
                                 return tryToOpenWithAsAPicture (activity, filename);
                             } catch (FileNotFoundException e5) {

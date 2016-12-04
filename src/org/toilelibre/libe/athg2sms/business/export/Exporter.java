@@ -17,12 +17,19 @@ public class Exporter {
         final MessageMapper messageMapper = new MessageMapper();
         final List<Map<String, Object>> list = new SmsFinder().pickThemAll(context, handler, convertListener);
 
+        handler.postForHandler(new Runnable() {
+            @Override
+            public void run() {
+                convertListener.setMax(list.size());
+            }
+        });
+
         for (int i = 0; i < list.size() ; i++) {
             final int thisIndex = i;
             handler.postForHandler(new Runnable() {
                 @Override
                 public void run() {
-                   convertListener.updateProgress(thisIndex, list.size());
+                   convertListener.updateProgress("saving the sms #", thisIndex, list.size());
                 }
             });
             Sms sms = new Sms(list.get(i));

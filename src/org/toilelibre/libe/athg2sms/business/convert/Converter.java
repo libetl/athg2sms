@@ -63,7 +63,7 @@ public class Converter {
         holder.postForHandler (new Runnable () {
 
             public void run () {
-                convertListener.updateProgress (i2, nb);
+                convertListener.updateProgress ("Writing sms # : ", i2, nb);
                 convertListener.displayInserted (ins, dupl);
             }
 
@@ -84,7 +84,7 @@ public class Converter {
     private String getWhere (final Sms sms) {
         final StringBuilder sb = new StringBuilder ();
         for (final Entry<String, Object> entry : sms.getValues().entrySet ()) {
-            if ("FOLDER".equals (entry.getKey ())) {
+            if ("FOLDER".equalsIgnoreCase (entry.getKey ())) {
                 continue;
             }
             sb.append (entry.getKey ());

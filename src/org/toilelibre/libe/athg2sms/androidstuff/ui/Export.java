@@ -17,24 +17,23 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.business.export.Exporter;
 import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.Arrays;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
-/**
- * Created by lionel on 30/11/16.
- */
 public class Export extends Activity {
 
     protected void onCreate (final Bundle savedInstanceState) {
@@ -61,6 +60,25 @@ public class Export extends Activity {
 
         intent.putExtra("pattern", this.getIntent().getStringExtra("pattern"));
 
+        sendOrSaveFile();
+
+        if (convertListener.bind() == convertListener) {
+            this.startService (intent);
+        } else {
+            ProcessRealTimeFeedback.getInstance().updateHandler(handler);
+        }
+    }
+
+    private void sendOrSaveFile() {
+        if (Build.VERSION.SDK_INT < 16) {
+            copyTempFile();
+            return;
+        }
+
+        sendTextData();
+    }
+
+    private void sendTextData() {
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -72,12 +90,41 @@ public class Export extends Activity {
                 ProcessRealTimeFeedback.unbind();
             }
         }, new IntentFilter("stopExport"));
+    }
 
-        if (convertListener.bind() == convertListener) {
-            this.startService (intent);
-        } else {
-            ProcessRealTimeFeedback.getInstance().updateHandler(handler);
-        }
+    private void copyTempFile() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                File parentDir = Export.this.getExternalFilesDir(null);
+                if (parentDir == null) {
+                    return;
+                }
+                parentDir.mkdir();
+                String destFilename = parentDir.getAbsolutePath() + File.separator + "export" +
+                        System.currentTimeMillis() + ".txt";
+                try {
+                    FileInputStream inStream = new FileInputStream(new File(intent.getStringExtra("result")));
+                    FileOutputStream outStream = new FileOutputStream(new File(destFilename));
+                    FileChannel inChannel = inStream.getChannel();
+                    FileChannel outChannel = outStream.getChannel();
+                    inChannel.transferTo(0, inChannel.size(), outChannel);
+                    inStream.close();
+                    outStream.close();
+
+                    Toast.makeText(Export.this, "Your Android version is below 4.0. Unable to let you choose between actions." +
+                            "Therefore your export was stored in the file " + destFilename, LENGTH_LONG).show();
+
+                } catch (IOException e) {
+                    Toast.makeText(Export.this, "Because of a problem while trying to save the export file, the" +
+                            " export data was lost. " + e.getMessage(), LENGTH_LONG).show();
+                } finally {
+                    Export.this.finish();
+                    ProcessRealTimeFeedback.unbind();
+                }
+            }
+        }, new IntentFilter("stopExport"));
+
     }
 
     @TargetApi(23)

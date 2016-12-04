@@ -44,8 +44,8 @@ class ProcessRealTimeFeedback implements ConvertListener {
     }
 
 
-    public void updateProgress (final int i, final int nb) {
-        this.proceedHandler.getCurrent().setText ("Writing sms # : " + i + " / " + nb);
+    public void updateProgress (final String text, final int i, final int nb) {
+        this.proceedHandler.getCurrent().setText (text + i + " / " + nb);
         this.proceedHandler.getProgressBar().setProgress (i);
     }
 

@@ -20,27 +20,46 @@ import java.util.Map;
 public class SmsFinder {
 
     public List<Map<String, Object>> pickThemAll( final ContextHolder<?> contextHolder,  final HandlerHolder<?> handler, final ConvertListener convertListener) {
+        final List<Map<String, Object>> result = new ArrayList<>();
+
+        final Cursor cursorInbox = query(getSmsInboxFolder(), contextHolder);
+        final Cursor cursorSent = query(getSmsSentFolder(), contextHolder);
+
+        result.addAll(iterateFor("inbox", cursorInbox, handler, convertListener));
+        result.addAll(iterateFor("sent", cursorSent, handler, convertListener));
+
+        cursorInbox.close();
+        cursorSent.close();
+        return result;
+    }
+
+    private Cursor query(Uri smsFolder, ContextHolder<?> contextHolder) {
         final ContentResolver contentResolver = contextHolder.get(ContentResolver.class);
-        final Cursor cursor = contentResolver.query(getSmsFolder(), null, null, null, null);
+        return contentResolver.query(smsFolder, null, null, null, null);
+    }
+
+    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final HandlerHolder<?> handler, final ConvertListener convertListener) {
 
         if (cursor == null) return Collections.emptyList();
 
         List<Map<String, Object>> result = new ArrayList<>(cursor.getCount());
 
-        handler.postForHandler(new Runnable() {
-            @Override
-            public void run() {
-                convertListener.setMax(cursor.getCount());
-            }
-        });
         cursor.moveToFirst();
         for (int msgIndex = 0 ; msgIndex < cursor.getCount() ; msgIndex++) {
             final int thisMsgIndex = msgIndex;
+
+            handler.postForHandler(new Runnable() {
+                @Override
+                public void run() {
+                    convertListener.setMax(cursor.getCount());
+                }
+            });
             handler.postForHandler(new Runnable() {
                 @Override
                 public void run() {
                     if (!cursor.isClosed()) {
-                        convertListener.updateProgress(thisMsgIndex, cursor.getCount());
+                        convertListener.updateProgress("Picking a sms from " + folderName + " : ",
+                                thisMsgIndex, cursor.getCount());
                     }
                 }
             });
@@ -48,16 +67,21 @@ public class SmsFinder {
             for (String columnName : cursor.getColumnNames()) {
                 values.put(columnName, cursor.getString(cursor.getColumnIndex(columnName)));
             }
+            values.put("folder", folderName);
             result.add(values);
             cursor.moveToNext();
         }
 
-        cursor.close();
         return result;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private Uri getSmsFolder() {
+    private Uri getSmsSentFolder() {
+        return Build.VERSION.SDK_INT < 19 ? Uri.parse("content://sms/sent") : Telephony.Sms.Sent.CONTENT_URI;
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private Uri getSmsInboxFolder() {
         return Build.VERSION.SDK_INT < 19 ? Uri.parse("content://sms/inbox") : Telephony.Sms.Inbox.CONTENT_URI;
     }
 }

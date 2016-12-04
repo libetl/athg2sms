@@ -1,10 +1,10 @@
 package org.toilelibre.libe.athg2sms.androidstuff.api.storage;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.os.Build;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,10 +31,9 @@ public class SharedPreferencesHolder<T> {
             return this;
         }
 
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         public EditorHolder putStringSet(String key, Set<String> value) {
             if (editor instanceof SharedPreferences.Editor) {
-                ((SharedPreferences.Editor) editor).putStringSet(key, value);
+                ((SharedPreferences.Editor) editor).putString(key, value.toString());
             }
             return this;
         }
@@ -74,10 +73,14 @@ public class SharedPreferencesHolder<T> {
         return (EditorHolder<U>) new EditorHolder<>(new Object());
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public Set<String> getStringSet(String key, Set<String> strings) {
         if (sharedPreferences instanceof SharedPreferences) {
-            return ((SharedPreferences) sharedPreferences).getStringSet(key, strings);
+            String setAsString = ((SharedPreferences) sharedPreferences).getString(key, null);
+            if (setAsString == null) {
+                return strings;
+            }
+
+            return new HashSet<>(Arrays.asList(setAsString.replace('[', ' ').replace(']', ' ').trim().split(",")));
         }
         return Collections.emptySet();
     }

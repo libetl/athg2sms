@@ -41,7 +41,6 @@ dependencies {
  */
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
     /**
      * This nested sourceSets block points the source code directories to the
      * existing folders in the project, instead of using the default new
@@ -78,7 +77,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     defaultConfig {
-        minSdkVersion 4
+        minSdkVersion 9
         targetSdkVersion 25
     }
 
