@@ -59,7 +59,7 @@ public class ReadFileTest {
             ReadFileTest.this.messagesInserted = 0;
         }
 
-        public void updateProgress (final int i2, final int nb2) {
+        public void updateProgress (final String text, final int i2, final int nb2) {
         }
 
     };
