@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dip"
-            android:text="@+string/edityourPatterns"
+            android:text="@string/edityourPatterns"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/pattern"
+                android:text="@string/pattern"
                 android:width="100dip" />
 
             <EditText
@@ -69,7 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/inbox"
+                android:text="@string/inbox"
                 android:width="60dip" />
 
             <EditText
@@ -78,11 +78,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"/>
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@+string/sent"
+                android:text="@string/sent"
                 android:width="60dip" />
 
             <EditText
@@ -91,6 +91,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/export_format"
+                android:width="100dip" />
+
+            <EditText
+                android:inputType="text"
+                android:id="@+id/export_format"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:width="200dip" />
         </LinearLayout>
     </LinearLayout>
 
