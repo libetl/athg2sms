@@ -9,10 +9,9 @@ import android.view.View.OnClickListener;
 
 import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
 
 import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
@@ -52,7 +51,7 @@ public class MainMenu extends Activity {
         this.findViewById (R.id.exit).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                new AppPreferences(preferences).saveFormats(FormatSettings.getInstance().getFormats());
+                new Actions().saveFormats(preferences);
                 MainMenu.this.finish ();
                 final Intent intent = new Intent (Intent.ACTION_MAIN);
                 intent.addCategory (Intent.CATEGORY_HOME);

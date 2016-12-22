@@ -9,9 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+import org.toilelibre.libe.athg2sms.actions.Actions;
 
-import java.util.Set;
 
 public class PatternListing extends ListActivity {
 
@@ -55,9 +54,7 @@ public class PatternListing extends ListActivity {
     }
 
     private void reloadList () {
-        final Set<String> setsSet = FormatSettings.getInstance().getFormats().keySet();
-        this.setsArray = new String [setsSet.size ()];
-        setsSet.toArray (this.setsArray);
+        this.setsArray = new Actions().getAllFormats();
         ((ListView) this.findViewById (android.R.id.list)).setAdapter (new ArrayAdapter<> (this, android.R.layout.simple_list_item_1, this.setsArray));
     }
 

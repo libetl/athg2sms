@@ -16,9 +16,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.actions.Actions;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertFormatGuesser;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 
 import java.io.FileNotFoundException;
 
@@ -40,7 +40,7 @@ public class ConversionForm extends Activity {
         this.setContentView (R.layout.conversionform);
 
         ((Spinner) this.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,
-                FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()])));
+                new Actions ().getAllFormats()));
         this.findViewById (R.id.selectfile).setOnClickListener (new OnClickListener () {
 
             @SuppressLint ("InlinedApi")
@@ -88,8 +88,8 @@ public class ConversionForm extends Activity {
                         final String formatKey;
                         final String content;
                         try {
-                            content = FileRetriever.getFile (context, file);
-                            formatKey = new ConvertFormatGuesser().guessNow(content);
+                            content = FileRetriever.getFile (new ContextHolder<Object>(context), file);
+                            formatKey = new Actions().guessNow(content);
                         } catch (final FileNotFoundException e) {
                             handler.post (new Runnable () {
                                 public void run () {

@@ -20,16 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.actions.Actions;
+import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.Arrays;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
@@ -71,7 +70,7 @@ public class Export extends Activity {
 
         final ProceedHandler handler = new ProceedHandler ((ProgressBar) this.findViewById (R.id.progress),
                 (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
-        final ConvertListener convertListener = new ProcessRealTimeFeedback(handler);
+        final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(handler);
         final Intent intent = new Intent (this, ExportService.class);
 
         intent.putExtra("pattern", this.getIntent().getStringExtra("pattern"));
@@ -156,7 +155,7 @@ public class Export extends Activity {
                 throw new SecurityException ("Permission Denied : " + permission);
             }
         }
-        new AppPreferences(preferences).saveAskedPermissions (permissions);
+        new Actions().saveAskedPermissions(preferences, permissions);
 
         this.startExportService();
     }
@@ -164,7 +163,7 @@ public class Export extends Activity {
     private void checkPermissions (String... permissions) {
         SharedPreferencesHolder<SharedPreferences> preferences =
                 new SharedPreferencesHolder<>(this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
-        if (new AppPreferences(preferences).getAskedPermissions ().containsAll (Arrays.asList (permissions))) {
+        if (new Actions().askedPermissionsContainsAll(preferences, permissions)) {
             onRequestPermissionsResult(0, new String[0], new int[0]);
             return;
         }

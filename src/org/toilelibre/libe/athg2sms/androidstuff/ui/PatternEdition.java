@@ -9,15 +9,11 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.business.pattern.Format;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-
-import java.util.IllegalFormatException;
+import org.toilelibre.libe.athg2sms.actions.Actions;
 
 public class PatternEdition extends Activity {
 
     private String pattern;
-    private Format format;
 
     private void warning (String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder (this);
@@ -37,14 +33,13 @@ public class PatternEdition extends Activity {
         if (bundle != null && bundle.getCharSequence ("cs") != null) {
             this.pattern = (String) bundle.getCharSequence ("cs");
             ((TextView) this.findViewById (R.id.editcsname)).setText (this.pattern);
-            this.format = FormatSettings.getInstance().getFormats().get(this.pattern);
             this.findViewById (R.id.editcsname).setEnabled (false);
-            ((TextView) this.findViewById (R.id.cspattern)).setText (this.format.getRegex().getCommonRegex());
-            ((TextView) this.findViewById (R.id.export_format)).setText (this.format.getRegex().getExportFormat());
-            ((TextView) this.findViewById (R.id.csinbox)).setText (this.format.getRegex().getInboxKeyword());
-            ((TextView) this.findViewById (R.id.cssent)).setText (this.format.getRegex().getSentKeyword());
+
+            ((TextView) this.findViewById (R.id.cspattern)).setText (new Actions().getFormatRegex(this.pattern).getCommonRegex());
+            ((TextView) this.findViewById (R.id.export_format)).setText (new Actions().getFormatRegex(this.pattern).getExportFormat());
+            ((TextView) this.findViewById (R.id.csinbox)).setText (new Actions().getFormatRegex(this.pattern).getInboxKeyword());
+            ((TextView) this.findViewById (R.id.cssent)).setText (new Actions().getFormatRegex(this.pattern).getSentKeyword());
         } else {
-            this.format = null;
             this.pattern = "?";
             this.findViewById (R.id.delete).setEnabled (false);
         }
@@ -61,7 +56,7 @@ public class PatternEdition extends Activity {
                 new AlertDialog.Builder (PatternEdition.this).setIcon (android.R.drawable.ic_dialog_alert).setTitle (R.string.delete).setMessage (R.string.really_delete).setPositiveButton (R.string.delete_yes, new DialogInterface.OnClickListener () {
 
                     public void onClick (final DialogInterface dialog, final int which) {
-                        FormatSettings.getInstance().getFormats().remove (PatternEdition.this.pattern);
+                        new Actions().removeFormat(PatternEdition.this.pattern);
                         PatternEdition.this.finish ();
                     }
 
@@ -80,16 +75,14 @@ public class PatternEdition extends Activity {
                     return;
                 }
                 try {
-                    thiz.format = new Format(
-                            thiz.pattern,
+                    thiz.pattern = newPattern;
+                    new Actions().addOrChangeFormat(thiz.pattern,
                             ((TextView) thiz.findViewById(R.id.cspattern)).getText().toString(),
                             ((TextView) thiz.findViewById(R.id.export_format)).getText().toString().isEmpty() ?
                                     ((TextView) thiz.findViewById(R.id.cspattern)).getText().toString() :
                                     ((TextView) thiz.findViewById(R.id.export_format)).getText().toString(),
                             ((TextView) thiz.findViewById(R.id.csinbox)).getText().toString(),
                             ((TextView) thiz.findViewById(R.id.cssent)).getText().toString());
-                    thiz.pattern = newPattern;
-                    FormatSettings.getInstance().addOrChangeFormats(format);
                     thiz.finish ();
                 } catch (IllegalArgumentException ife) {
                     thiz.warning (ife.getMessage());

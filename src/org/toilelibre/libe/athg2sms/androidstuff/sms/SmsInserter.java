@@ -1,17 +1,13 @@
 package org.toilelibre.libe.athg2sms.androidstuff.sms;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Telephony;
 
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
-import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.net.URI;
 import java.util.Map;
@@ -20,17 +16,16 @@ import java.util.Map.Entry;
 public class SmsInserter {
 
     @SuppressLint ("NewApi")
-    public void insert (URI uri, Sms sms, ContextHolder<?> contextHolder) {
+    public void insert (URI uri, Map<String, Object> smsValues, ContextHolder<?> contextHolder) {
 
-        Map<String, Object> values = sms.getValues();
         final ContentValues values2 = new ContentValues ();
-        for (final Entry<String, Object> entry : values.entrySet ()) {
+        for (final Entry<String, Object> entry : smsValues.entrySet ()) {
             if (!"folder".equals (entry.getKey ())) {
                 this.putEntry (values2, entry);
             }
         }
         contextHolder.get(ContentResolver.class).insert (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                ? ("sent".equals (values.get ("folder")) ? Telephony.Sms.Sent.CONTENT_URI : Telephony.Sms.Inbox.CONTENT_URI) : Uri.parse (uri.toString ()), values2);
+                ? ("sent".equals (smsValues.get ("folder")) ? Telephony.Sms.Sent.CONTENT_URI : Telephony.Sms.Inbox.CONTENT_URI) : Uri.parse (uri.toString ()), values2);
 
 
     }
@@ -63,19 +58,5 @@ public class SmsInserter {
         } else if (entry.getValue () instanceof String) {
             values.put (entry.getKey (), (String) entry.getValue ());
         }
-    }
-
-    private Intent getReceivedIntent (byte [] pdu) {
-        Intent intent = new Intent ();
-        intent.setClassName("com.android.mms", ".transaction.PrivilegedSmsReceiver");
-        intent.setAction("android.provider.Telephony.SMS_DELIVER");
-        intent.putExtra("pdus", new Object[] { pdu });
-        intent.putExtra("format", "3gpp");
-        return intent;
-    }
-
-    @SuppressLint ("NewApi")
-    private PendingIntent getPendingIntent (ContextHolder<Context> contextHolder, Intent intent) {
-        return PendingIntent.getBroadcast (contextHolder.get(), 1, intent, PendingIntent.FLAG_ONE_SHOT);
     }
 }

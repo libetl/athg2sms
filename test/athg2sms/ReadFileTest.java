@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ReadFileTest {
@@ -45,9 +46,9 @@ public class ReadFileTest {
 
         }
 
-        public void insert (final URI uri, final Sms sms) {
-            System.out.println (sms.getValues());
-            messages.add (sms);
+        public void insert (final URI uri, final Map<String, Object> smsValues) {
+            System.out.println (smsValues);
+            messages.add (new Sms(smsValues));
             ReadFileTest.this.messagesInserted++;
         }
 

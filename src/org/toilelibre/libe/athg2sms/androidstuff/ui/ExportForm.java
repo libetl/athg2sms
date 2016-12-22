@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+import org.toilelibre.libe.athg2sms.actions.Actions;
 
 public class ExportForm extends Activity {
 
@@ -38,7 +38,7 @@ public class ExportForm extends Activity {
         });
 
         ((Spinner) this.findViewById (R.id.exportPatterns)).setAdapter (new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,
-                FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()])));
+                new Actions().getAllFormats()));
 
     }
 }

@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 
 public class Convert extends Activity {
 
@@ -53,7 +53,7 @@ public class Convert extends Activity {
 
         final ProceedHandler handler = new ProceedHandler ((ProgressBar) this.findViewById (R.id.progress),
                 (TextView) this.findViewById (R.id.current), (TextView) this.findViewById (R.id.inserted));
-        final ConvertListener convertListener = new ProcessRealTimeFeedback(handler);
+        final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(handler);
 
         final Intent intent = new Intent (this, ConvertService.class);
 

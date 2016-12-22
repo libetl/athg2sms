@@ -1,18 +1,17 @@
-package org.toilelibre.libe.athg2sms.androidstuff.ui;
+package org.toilelibre.libe.athg2sms.actions;
 
-import android.annotation.SuppressLint;
-
+import org.toilelibre.libe.athg2sms.androidstuff.ui.ProceedHandler;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
-import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.net.URI;
+import java.util.Map;
 
-class ProcessRealTimeFeedback implements ConvertListener {
+public class ProcessRealTimeFeedback implements ConvertListener {
 
     private ProceedHandler proceedHandler;
     private static ProcessRealTimeFeedback instance = null;
 
-    ProcessRealTimeFeedback(ProceedHandler proceedHandler) {
+    public ProcessRealTimeFeedback(ProceedHandler proceedHandler) {
         this.proceedHandler = proceedHandler;
     }
 
@@ -27,9 +26,8 @@ class ProcessRealTimeFeedback implements ConvertListener {
     public void end () {
         instance = null;
     }
-    
-    @SuppressLint ("NewApi")
-    public void insert (final URI uri, final Sms sms) {
+
+    public void insert (final URI uri, final Map<String, Object> smsValues) {
     }
 
     public void sayIPrepareTheList (final int size) {
@@ -57,22 +55,22 @@ class ProcessRealTimeFeedback implements ConvertListener {
         return instance;
     }
 
-    static void unbind () {
+    public static void unbind() {
         if (instance != null) {
             instance = null;
         }
     }
 
-    ProceedHandler getHandler() {
+    public ProceedHandler getHandler() {
         return proceedHandler;
     }
 
-    void updateHandler (ProceedHandler handler) {
+    public void updateHandler(ProceedHandler handler) {
         handler.getProgressBar().setMax(this.proceedHandler.getProgressBar().getMax());
         this.proceedHandler = handler;
     }
 
-    static ProcessRealTimeFeedback getInstance() {
+    public static ProcessRealTimeFeedback getInstance() {
         return instance;
     }
 }

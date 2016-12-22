@@ -9,7 +9,7 @@ import android.provider.Telephony;
 
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
+import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class SmsFinder {
 
-    public List<Map<String, Object>> pickThemAll( final ContextHolder<?> contextHolder,  final HandlerHolder<?> handler, final ConvertListener convertListener) {
+    public List<Map<String, Object>> pickThemAll( final ContextHolder<?> contextHolder,  final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
         final List<Map<String, Object>> result = new ArrayList<>();
 
         final Cursor cursorInbox = query(getSmsInboxFolder(), contextHolder);
@@ -38,7 +38,7 @@ public class SmsFinder {
         return contentResolver.query(smsFolder, null, null, null, null);
     }
 
-    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final HandlerHolder<?> handler, final ConvertListener convertListener) {
+    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
 
         if (cursor == null) return Collections.emptyList();
 

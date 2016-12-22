@@ -4,6 +4,7 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.util.Map;
 
 public interface ConvertListener extends Serializable {
 
@@ -15,7 +16,7 @@ public interface ConvertListener extends Serializable {
 
     void end ();
 
-    void insert (URI uri, Sms sms);
+    void insert (URI uri, Map<String, Object> smsValues);
 
     void sayIPrepareTheList (int size);
 
