@@ -65,8 +65,8 @@
             </intent-filter>
         </service>
 
-        <service android:name=".androidstuff.ui.ConvertService"/>
-        <service android:name=".androidstuff.ui.ExportService"/>
+        <service android:name=".androidstuff.service.ConvertService"/>
+        <service android:name=".androidstuff.service.ExportService"/>
 
         <activity
             android:name=".EntryPoint"

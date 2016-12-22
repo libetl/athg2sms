@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.service;
 
 import android.app.IntentService;
 import android.content.Intent;

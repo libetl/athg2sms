@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
+import org.toilelibre.libe.athg2sms.androidstuff.service.ConvertService;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 public class Convert extends Activity {

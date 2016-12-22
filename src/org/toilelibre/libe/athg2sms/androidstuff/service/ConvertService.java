@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.actions.ErrorHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.ui.Done;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
