@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">"Import d'un fichier" terminée !</string>
+    <string name="hello">"Import d\'un fichier" terminée !</string>
     <string name="app_name">AthgWSms V1.5.0.1</string>
 
     <string name="app_title">Anything With Sms</string>
@@ -15,7 +15,7 @@
     <string name="error_title">AthgWSms &gt; Import &gt; Erreur</string>
 
     <string name="descr">Import/Export des SMS à partir de fichiers CSV ou VMG</string>
-    <string name="descrexport">Exporter les SMS vers d'autres appareils</string>
+    <string name="descrexport">Exporter les SMS vers d\'autres appareils</string>
     <string name="file_name">Nom du fichier</string>
     <string name="helpheader">Comment convertir vos messages SMS.</string>
     <string name="failed_retry">Helas, ça a planté !</string>
@@ -27,11 +27,11 @@
     <string name="pattern">Pattern global</string>
     <string name="inbox">mot-clé "inbox"</string>
     <string name="sent">mot-clé "sent"</string>
-    <string name="export_format">Format d'export (optionnel)</string>
-    <string name="really_delete">Le format va vraiment être supprimé (sauf s'il est dans la liste officielle)</string>
+    <string name="export_format">Format d\'export (optionnel)</string>
+    <string name="really_delete">Le format va vraiment être supprimé (sauf s\'il est dans la liste officielle)</string>
     <string name="delete_yes">Supprimer</string>
 
-    <string name="proceed_button">C'est parti</string>
+    <string name="proceed_button">C\'est parti</string>
     <string name="addone">Ajouter format</string>
     <string name="convsets">Changer formats</string>
     <string name="convert">Importer</string>
@@ -50,7 +50,7 @@
     <string name="exit">Sortir</string>
     <string name="toggledefaultapp">App Sms par défaut (>=4.4)</string>
 
-    <string name="not_default_app">Salut. Je vois que cet appareil est au moins sur Kitkat, voire plus. Android souhaite (pour se préserver des apps peu scrupuleuses) qu'une seule app écrive des sms en même temps. Il faut donc sélectionner (temporairement) "App Sms par défaut" dans l'écran principal. Merci et désolé, mais c'est pour votre bien.</string>
+    <string name="not_default_app">Salut. Je vois que cet appareil est au moins sur Kitkat, voire plus. Android souhaite (pour se préserver des apps peu scrupuleuses) qu\'une seule app écrive des sms en même temps. Il faut donc sélectionner (temporairement) "App Sms par défaut" dans l\'écran principal. Merci et désolé, mais c\'est pour votre bien.</string>
     <string name="oic">Oh, I see !</string>
 
     <string name="carrier_service">Carrier Service for AthgWSms</string>
