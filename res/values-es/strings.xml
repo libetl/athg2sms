@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <String name="hello">"Importar desde archivo" completa!</String>
+   <String name="app_name">AthgWSms V1.5.0.1</String>
+
+   <String name="APP_TITLE">Anything with Sms</String>
+   <String name="home_title">AthgWSms</String>
+   <String name="export_title">AthgWSms &gt; Exportar</String>
+   <String name="cs_title">AthgWSms &gt; Formatos</String>
+   <String name="csedit_title">AthgWSms &gt; Formatos &gt; Edición</String>
+   <String name="cf_title">AthgWSms &gt; Importar</String>
+   <String name="cfoifm_title">AthgWSms &gt; Importación &gt; OI FM</String>
+   <String name="proceed_title">AthgWSms &gt; Importación &gt; en curso</String>
+   <String name="done_title">AthgWSms &gt; Importación &gt; Hecho!</String>
+   <String name="error_title">AthgWSms &gt; Importación &gt; Error</String>
+
+   <String name="descr">Importar / Exportar SMS desde archivos CSV o VMG</String>
+   <String name="descrexport">Exportar SMS a otros dispositivos</String>
+   <String name="file_name">​​Nombre archivo</String>
+   <String name="helpheader">Cómo convertir mensajes de texto.</String>
+   <String name="failed_retry">Por desgracia, se estrelló!</String>
+   <String name="sucessful">Ya esta !</String>
+   <String name="path">Archivo:</String>
+   <String name="touchonetoeditit">Pulsar para editar</String>
+   <String name="editcsname">Nombre del formato:</String>
+   <String name="edityourPatterns">Editar los siguientes formatos:</String>
+   <String name="pattern">Modelo Integral</String>
+   <String name="inbox">palabra clave "inbox"</String>
+   <String name="sent">palabra clave "sent"</String>
+   <String name="export_format">Formato de exportación (opcional)</String>
+   <String name="really_delete">Se eliminará realmente el formato (a no ser que se encuentra en la lista oficial)</String>
+   <String name="delete_yes">Eliminar</String>
+
+   <String name="proceed_button">Aquí vamos</String>
+   <String name="addone">Añadir Formato</String>
+   <String name="convsets">cambiar los formatos</String>
+   <String name="convert">Importar</String>
+   <String name="export">Exportar</String>
+   <String name="validate">Aceptar</String>
+   <String name="delete">Eliminar</String>
+   <String name="filename">​​Guardar ...</String>
+   <String name="selectfile">Elegir</String>
+   <String name="saveas">Export &gt;</String>
+   <String name="start">Inicio &gt;</String>
+   <String name="again">Una vez más</String>
+   <String name="cancel">Cancelar</String>
+   <String name="guessconvset">Adivina el formato</String>
+   <String name="backtomainmenu">Menú principal</String>
+   <String name="backtoconvform">Regreso</String>
+   <String name="exit">Salir</String>
+   <String name="toggledefaultapp">applicación por defecto (>=4.4)</String>
+
+   <String name="not_default_app">Hola. Veo que este dispositivo es al menos Kitkat o más. Android quiere (para protegerse de las aplicaciones sin escrúpulos) una app a la vez para escribir SMS. Así que hay que seleccionar (temporalmente) "applicación por defecto" en el menú principal. Gracias y lo siento.</String>
+   <String name="OCI">Oh, ya veo!</String>
+
+   <String name="carrier_service">Servicio Portador de AthgWSms</String>
+</resources>
