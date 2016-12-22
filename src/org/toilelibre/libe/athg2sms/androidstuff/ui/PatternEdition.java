@@ -12,14 +12,16 @@ import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 
+import java.util.IllegalFormatException;
+
 public class PatternEdition extends Activity {
 
     private String pattern;
     private Format format;
 
-    private void notAllowedChar () {
+    private void warning (String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder (this);
-        builder.setMessage ("No '#' in Format name please.").setIcon (android.R.drawable.ic_dialog_alert).setCancelable (false).setPositiveButton ("Ok", new DialogInterface.OnClickListener () {
+        builder.setMessage (message).setIcon (android.R.drawable.ic_dialog_alert).setCancelable (false).setPositiveButton ("Ok", new DialogInterface.OnClickListener () {
             public void onClick (final DialogInterface dialog, final int id) {
                 dialog.dismiss ();
             }
@@ -74,21 +76,24 @@ public class PatternEdition extends Activity {
                 final PatternEdition thiz = PatternEdition.this;
                 final String newPattern = ((TextView) thiz.findViewById (R.id.editcsname)).getText ().toString ();
                 if (newPattern.indexOf ('#') != -1) {
-                    thiz.notAllowedChar ();
+                    thiz.warning ("No '#' in Format name please.");
                     return;
                 }
-                thiz.pattern = newPattern;
-                thiz.format = new Format(
-                        thiz.pattern,
-                        ((TextView) thiz.findViewById (R.id.cspattern)).getText ().toString (),
-                        ((TextView) thiz.findViewById (R.id.export_format)).getText ().toString ().isEmpty() ?
-                                ((TextView) thiz.findViewById (R.id.cspattern)).getText ().toString () :
-                                ((TextView) thiz.findViewById (R.id.export_format)).getText ().toString (),
-                        ((TextView) thiz.findViewById (R.id.csinbox)).getText ().toString (),
-                        ((TextView) thiz.findViewById (R.id.cssent)).getText ().toString ());
-
-                FormatSettings.getInstance().addOrChangeFormats(format);
-                thiz.finish ();
+                try {
+                    thiz.format = new Format(
+                            thiz.pattern,
+                            ((TextView) thiz.findViewById(R.id.cspattern)).getText().toString(),
+                            ((TextView) thiz.findViewById(R.id.export_format)).getText().toString().isEmpty() ?
+                                    ((TextView) thiz.findViewById(R.id.cspattern)).getText().toString() :
+                                    ((TextView) thiz.findViewById(R.id.export_format)).getText().toString(),
+                            ((TextView) thiz.findViewById(R.id.csinbox)).getText().toString(),
+                            ((TextView) thiz.findViewById(R.id.cssent)).getText().toString());
+                    thiz.pattern = newPattern;
+                    FormatSettings.getInstance().addOrChangeFormats(format);
+                    thiz.finish ();
+                } catch (IllegalArgumentException ife) {
+                    thiz.warning (ife.getMessage());
+                }
             }
 
         });

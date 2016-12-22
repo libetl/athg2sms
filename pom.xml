@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.toile-libre.libe</groupId>
 	<artifactId>athg2sms</artifactId>
-	<version>1.5.0.0</version>
+	<version>1.5.0.1</version>
 	<name>Anything With Sms</name>
 	<packaging>apk</packaging>
 	<description>App to play with your sms</description>

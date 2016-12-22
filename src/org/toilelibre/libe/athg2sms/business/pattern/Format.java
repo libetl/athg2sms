@@ -1,8 +1,10 @@
 package org.toilelibre.libe.athg2sms.business.pattern;
 
 import java.util.Collections;
+import java.util.IllegalFormatException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,7 +65,7 @@ public class Format {
                 }
                 index++;
             }
-            return -1;
+            throw new MissingFormatArgumentException("There should be a folder var inside the format pattern ! Please try again.");
         }
 
         public String getCommonRegex() {
