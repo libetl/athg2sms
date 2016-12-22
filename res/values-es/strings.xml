@@ -3,7 +3,7 @@
    <string name="hello">"Importar desde archivo" completa!</string>
    <string name="app_name">AthgWSms V1.5.0.1</string>
 
-   <string name="APP_TITLE">Anything with Sms</string>
+   <string name="app_title">Anything with Sms</string>
    <string name="home_title">AthgWSms</string>
    <string name="export_title">AthgWSms &gt; Exportar</string>
    <string name="cs_title">AthgWSms &gt; Formatos</string>
@@ -51,7 +51,7 @@
    <string name="toggledefaultapp">applicación por defecto (>=4.4)</string>
 
    <string name="not_default_app">Hola. Veo que este dispositivo es al menos Kitkat o más. Android quiere (para protegerse de las aplicaciones sin escrúpulos) una app a la vez para escribir SMS. Así que hay que seleccionar (temporalmente) "applicación por defecto" en el menú principal. Gracias y lo siento.</string>
-   <string name="OCI">Oh, ya veo!</string>
+   <string name="oic">Oh, ya veo!</string>
 
    <string name="carrier_service">Servicio Portador de AthgWSms</string>
 </resources>
