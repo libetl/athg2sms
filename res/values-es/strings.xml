@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <String name="hello">"Importar desde archivo" completa!</String>
-   <String name="app_name">AthgWSms V1.5.0.1</String>
+   <string name="hello">"Importar desde archivo" completa!</string>
+   <string name="app_name">AthgWSms V1.5.0.1</string>
 
-   <String name="APP_TITLE">Anything with Sms</String>
-   <String name="home_title">AthgWSms</String>
-   <String name="export_title">AthgWSms &gt; Exportar</String>
-   <String name="cs_title">AthgWSms &gt; Formatos</String>
-   <String name="csedit_title">AthgWSms &gt; Formatos &gt; Edición</String>
-   <String name="cf_title">AthgWSms &gt; Importar</String>
-   <String name="cfoifm_title">AthgWSms &gt; Importación &gt; OI FM</String>
-   <String name="proceed_title">AthgWSms &gt; Importación &gt; en curso</String>
-   <String name="done_title">AthgWSms &gt; Importación &gt; Hecho!</String>
-   <String name="error_title">AthgWSms &gt; Importación &gt; Error</String>
+   <string name="APP_TITLE">Anything with Sms</string>
+   <string name="home_title">AthgWSms</string>
+   <string name="export_title">AthgWSms &gt; Exportar</string>
+   <string name="cs_title">AthgWSms &gt; Formatos</string>
+   <string name="csedit_title">AthgWSms &gt; Formatos &gt; Edición</string>
+   <string name="cf_title">AthgWSms &gt; Importar</string>
+   <string name="cfoifm_title">AthgWSms &gt; Importación &gt; OI FM</string>
+   <string name="proceed_title">AthgWSms &gt; Importación &gt; en curso</string>
+   <string name="done_title">AthgWSms &gt; Importación &gt; Hecho!</string>
+   <string name="error_title">AthgWSms &gt; Importación &gt; Error</string>
 
-   <String name="descr">Importar / Exportar SMS desde archivos CSV o VMG</String>
-   <String name="descrexport">Exportar SMS a otros dispositivos</String>
-   <String name="file_name">​​Nombre archivo</String>
-   <String name="helpheader">Cómo convertir mensajes de texto.</String>
-   <String name="failed_retry">Por desgracia, se estrelló!</String>
-   <String name="sucessful">Ya esta !</String>
-   <String name="path">Archivo:</String>
-   <String name="touchonetoeditit">Pulsar para editar</String>
-   <String name="editcsname">Nombre del formato:</String>
-   <String name="edityourPatterns">Editar los siguientes formatos:</String>
-   <String name="pattern">Modelo Integral</String>
-   <String name="inbox">palabra clave "inbox"</String>
-   <String name="sent">palabra clave "sent"</String>
-   <String name="export_format">Formato de exportación (opcional)</String>
-   <String name="really_delete">Se eliminará realmente el formato (a no ser que se encuentra en la lista oficial)</String>
-   <String name="delete_yes">Eliminar</String>
+   <string name="descr">Importar / Exportar SMS desde archivos CSV o VMG</string>
+   <string name="descrexport">Exportar SMS a otros dispositivos</string>
+   <string name="file_name">​​Nombre archivo</string>
+   <string name="helpheader">Cómo convertir mensajes de texto.</string>
+   <string name="failed_retry">Por desgracia, se estrelló!</string>
+   <string name="sucessful">Ya esta !</string>
+   <string name="path">Archivo:</string>
+   <string name="touchonetoeditit">Pulsar para editar</string>
+   <string name="editcsname">Nombre del formato:</string>
+   <string name="edityourPatterns">Editar los siguientes formatos:</string>
+   <string name="pattern">Modelo Integral</string>
+   <string name="inbox">palabra clave "inbox"</string>
+   <string name="sent">palabra clave "sent"</string>
+   <string name="export_format">Formato de exportación (opcional)</string>
+   <string name="really_delete">Se eliminará realmente el formato (a no ser que se encuentra en la lista oficial)</string>
+   <string name="delete_yes">Eliminar</string>
 
-   <String name="proceed_button">Aquí vamos</String>
-   <String name="addone">Añadir Formato</String>
-   <String name="convsets">cambiar los formatos</String>
-   <String name="convert">Importar</String>
-   <String name="export">Exportar</String>
-   <String name="validate">Aceptar</String>
-   <String name="delete">Eliminar</String>
-   <String name="filename">​​Guardar ...</String>
-   <String name="selectfile">Elegir</String>
-   <String name="saveas">Export &gt;</String>
-   <String name="start">Inicio &gt;</String>
-   <String name="again">Una vez más</String>
-   <String name="cancel">Cancelar</String>
-   <String name="guessconvset">Adivina el formato</String>
-   <String name="backtomainmenu">Menú principal</String>
-   <String name="backtoconvform">Regreso</String>
-   <String name="exit">Salir</String>
-   <String name="toggledefaultapp">applicación por defecto (>=4.4)</String>
+   <string name="proceed_button">Aquí vamos</string>
+   <string name="addone">Añadir Formato</string>
+   <string name="convsets">cambiar los formatos</string>
+   <string name="convert">Importar</string>
+   <string name="export">Exportar</string>
+   <string name="validate">Aceptar</string>
+   <string name="delete">Eliminar</string>
+   <string name="filename">​​Guardar &#8230;</string>
+   <string name="selectfile">Elegir</string>
+   <string name="saveas">Export &gt;</string>
+   <string name="start">Inicio &gt;</string>
+   <string name="again">Una vez más</string>
+   <string name="cancel">Cancelar</string>
+   <string name="guessconvset">Adivina el formato</string>
+   <string name="backtomainmenu">Menú principal</string>
+   <string name="backtoconvform">Regreso</string>
+   <string name="exit">Salir</string>
+   <string name="toggledefaultapp">applicación por defecto (>=4.4)</string>
 
-   <String name="not_default_app">Hola. Veo que este dispositivo es al menos Kitkat o más. Android quiere (para protegerse de las aplicaciones sin escrúpulos) una app a la vez para escribir SMS. Así que hay que seleccionar (temporalmente) "applicación por defecto" en el menú principal. Gracias y lo siento.</String>
-   <String name="OCI">Oh, ya veo!</String>
+   <string name="not_default_app">Hola. Veo que este dispositivo es al menos Kitkat o más. Android quiere (para protegerse de las aplicaciones sin escrúpulos) una app a la vez para escribir SMS. Así que hay que seleccionar (temporalmente) "applicación por defecto" en el menú principal. Gracias y lo siento.</string>
+   <string name="OCI">Oh, ya veo!</string>
 
-   <String name="carrier_service">Servicio Portador de AthgWSms</String>
+   <string name="carrier_service">Servicio Portador de AthgWSms</string>
 </resources>
