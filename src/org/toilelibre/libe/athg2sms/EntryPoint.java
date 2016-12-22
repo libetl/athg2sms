@@ -37,7 +37,7 @@ public class EntryPoint extends Activity {
             return;
         }
         final String myPackageName = this.getPackageName ();
-        if (new SmsApplicationToggle().getDefaultSmsPackage (this).equals (myPackageName)) {
+        if (("" + new SmsApplicationToggle().getDefaultSmsPackage (this)).equals (myPackageName)) {
             this.startActivity(new Intent(this, MainMenu.class));
             return;
         }
