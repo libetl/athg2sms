@@ -32,6 +32,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // Add other library dependencies here (see the next step)
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
 }
 
 /**

@@ -3,11 +3,13 @@ package org.toilelibre.libe.athg2sms;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.material.Screen;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
@@ -53,7 +55,7 @@ public class EntryPoint extends Activity {
         final Button button = (Button) this.findViewById (R.id.oic);
         button.setOnClickListener (new View.OnClickListener () {
             public void onClick (final View v) {
-                final Intent intentMain = new Intent (EntryPoint.this, MainMenu.class);
+                final Intent intentMain = new Intent (EntryPoint.this, Screen.class);
                 EntryPoint.this.startActivity (intentMain);
                 EntryPoint.this.finish ();
             }

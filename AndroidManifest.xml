@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.toilelibre.libe.athg2sms"
-    android:theme="@android:style/Theme.Light"
-    android:versionCode="33"
-    android:versionName="1.5.0.0">
+    android:theme="@style/AppTheme"
+    android:versionCode="34"
+    android:versionName="1.5.0.1">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -72,11 +72,19 @@
             android:name=".EntryPoint"
             android:label="@string/app_title"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/Base.Theme.AppCompat.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".androidstuff.material.Screen"
+            android:label="@string/home_title"
+            android:launchMode="singleTop" android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
