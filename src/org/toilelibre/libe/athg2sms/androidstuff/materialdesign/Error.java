@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
 import android.app.Activity;
 import android.os.Bundle;

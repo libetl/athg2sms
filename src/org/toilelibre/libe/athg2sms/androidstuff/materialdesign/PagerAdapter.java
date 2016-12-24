@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff.material;
+package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

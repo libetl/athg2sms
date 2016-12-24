@@ -7,7 +7,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.actions.ErrorHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.ui.Done;
+import org.toilelibre.libe.athg2sms.androidstuff.materialdesign.Done;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 

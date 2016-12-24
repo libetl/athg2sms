@@ -80,7 +80,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.material.Screen"
+            android:name=".androidstuff.materialdesign.Screen"
             android:label="@string/home_title"
             android:launchMode="singleTop" android:theme="@style/AppTheme">
             <intent-filter>
@@ -88,41 +88,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.MainMenu"
-            android:label="@string/home_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.PatternEdition"
+            android:name=".androidstuff.materialdesign.PatternEdition"
             android:label="@string/csedit_title"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.PatternListing"
-            android:label="@string/cs_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.ConversionForm"
-            android:label="@string/cf_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.Convert"
-            android:label="@string/proceed_title"
-            android:launchMode="singleTop" >
+            android:name=".androidstuff.materialdesign.Convert"
+            android:label="@string/proceed_convert_title"
+            android:launchMode="singleTop" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
                 <action android:name="android.intent.action.SEND" />
@@ -138,9 +114,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.Export"
-            android:label="@string/proceed_title"
-            android:launchMode="singleTop" >
+            android:name=".androidstuff.materialdesign.Export"
+            android:label="@string/proceed_export_title"
+            android:launchMode="singleTop" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
                 <action android:name="android.intent.action.SEND" />
@@ -156,7 +132,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.Done"
+            android:name=".androidstuff.materialdesign.Done"
             android:label="@string/done_title"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -164,16 +140,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.Error"
+            android:name=".androidstuff.materialdesign.Error"
             android:label="@string/error_title" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.ExportForm"
-            android:label="@string/export_title"
-            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>

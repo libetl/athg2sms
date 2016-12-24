@@ -1,4 +1,4 @@
-package org.toilelibre.libe.athg2sms.androidstuff.ui;
+package org.toilelibre.libe.athg2sms.androidstuff.interactions;
 
 import android.os.Handler;
 import android.widget.ProgressBar;
@@ -12,7 +12,7 @@ public class ProceedHandler extends Handler implements Serializable {
     private TextView current;
     private TextView inserted;
 
-	ProceedHandler(ProgressBar progressBar, TextView current, TextView inserted) {
+	public ProceedHandler(ProgressBar progressBar, TextView current, TextView inserted) {
 		super();
 		this.progressBar = progressBar;
 		this.current = current;

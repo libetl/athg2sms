@@ -22,7 +22,7 @@ public class ExportService extends IntentService {
         try {
             final File targetDir = this.getTargetDir();
             final File tempFile = File.createTempFile("athg2sms", ".txt", targetDir);
-            new Actions().exportNow(tempFile, new Runnable() {
+            new Actions().exportNow(this, tempFile, new Runnable() {
                 @Override
                 public void run() {
                     LocalBroadcastManager.getInstance(ExportService.this).sendBroadcast(new Intent("stopExport")

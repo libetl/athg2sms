@@ -82,10 +82,10 @@ public class Actions {
         return new AppPreferences(preferences).getAskedPermissions ().containsAll (Arrays.asList (permissions));
     }
 
-    public void exportNow(File tempFile, Runnable afterExport, String pattern) {
+    public void exportNow(Object context, File tempFile, Runnable afterExport, String pattern) {
 
         final ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
-        final String result = new Exporter().export(new ContextHolder<>(this),
+        final String result = new Exporter().export(new ContextHolder<>(context),
                 new HandlerHolder<>(convertListener.getHandler()), pattern, convertListener);
 
         try {

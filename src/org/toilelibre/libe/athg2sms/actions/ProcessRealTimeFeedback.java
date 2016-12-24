@@ -1,6 +1,6 @@
 package org.toilelibre.libe.athg2sms.actions;
 
-import org.toilelibre.libe.athg2sms.androidstuff.ui.ProceedHandler;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 
 import java.net.URI;

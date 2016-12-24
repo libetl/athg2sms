@@ -10,7 +10,8 @@
    <string name="csedit_title">AthgWSms &gt; Formatos &gt; Edición</string>
    <string name="cf_title">AthgWSms &gt; Importar</string>
    <string name="cfoifm_title">AthgWSms &gt; Importación &gt; OI FM</string>
-   <string name="proceed_title">AthgWSms &gt; Importación &gt; en curso</string>
+   <string name="proceed_convert_title">AthgWSms &gt; Importación &gt; Working</string>
+   <string name="proceed_export_title">AthgWSms &gt; Exportación &gt; Working</string>
    <string name="done_title">AthgWSms &gt; Importación &gt; Hecho!</string>
    <string name="error_title">AthgWSms &gt; Importación &gt; Error</string>
 
@@ -20,7 +21,7 @@
    <string name="helpheader">Cómo convertir mensajes de texto.</string>
    <string name="failed_retry">Por desgracia, se estrelló!</string>
    <string name="sucessful">Ya esta !</string>
-   <string name="path">Archivo:</string>
+   <string name="path">Archivo</string>
    <string name="touchonetoeditit">Pulsar para editar</string>
    <string name="editcsname">Nombre del formato:</string>
    <string name="edityourPatterns">Editar los siguientes formatos:</string>

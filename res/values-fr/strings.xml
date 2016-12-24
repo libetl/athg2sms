@@ -10,7 +10,8 @@
     <string name="csedit_title">AthgWSms &gt; Formats &gt; Edition</string>
     <string name="cf_title">AthgWSms &gt; Import</string>
     <string name="cfoifm_title">AthgWSms &gt; Import &gt; OI FM</string>
-    <string name="proceed_title">AthgWSms &gt; Import &gt; En cours</string>
+    <string name="proceed_convert_title">AthgWSms &gt; Import &gt; En cours</string>
+    <string name="proceed_export_title">AthgWSms &gt; Export &gt; En cours</string>
     <string name="done_title">AthgWSms &gt; Import &gt; Fait !</string>
     <string name="error_title">AthgWSms &gt; Import &gt; Erreur</string>
 
@@ -20,7 +21,7 @@
     <string name="helpheader">Comment convertir vos messages SMS.</string>
     <string name="failed_retry">Helas, ça a planté !</string>
     <string name="sucessful">Et voila !</string>
-    <string name="path">Fichier : </string>
+    <string name="path">Fichier</string>
     <string name="touchonetoeditit">Appuyer pour éditer</string>
     <string name="editcsname">Nom du format : </string>
     <string name="edityourPatterns">Editer vos formats ci-dessous :</string>

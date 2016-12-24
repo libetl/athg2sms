@@ -10,7 +10,8 @@
     <string name="csedit_title">AthgWSms &gt; Formats &gt; Edit</string>
     <string name="cf_title">AthgWSms &gt; Import</string>
     <string name="cfoifm_title">AthgWSms &gt; Import &gt; OI FM</string>
-    <string name="proceed_title">AthgWSms &gt; Import &gt; Working</string>
+    <string name="proceed_convert_title">AthgWSms &gt; Import &gt; Working</string>
+    <string name="proceed_export_title">AthgWSms &gt; Import &gt; Working</string>
     <string name="done_title">AthgWSms &gt; Import &gt; Done</string>
     <string name="error_title">AthgWSms &gt; Import &gt; Error</string>
 
@@ -20,7 +21,7 @@
     <string name="helpheader">How to convert your SMS messages :</string>
     <string name="failed_retry">Failed ! Retry ?</string>
     <string name="sucessful">Successful</string>
-    <string name="path">Path : </string>
+    <string name="path">Path</string>
     <string name="touchonetoeditit">Touch one to edit it.</string>
     <string name="editcsname">Format name : </string>
     <string name="edityourPatterns">Edit your formats below :</string>
