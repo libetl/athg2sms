@@ -1,7 +1,5 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
-import org.toilelibre.libe.athg2sms.business.sms.Sms;
-
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Map;

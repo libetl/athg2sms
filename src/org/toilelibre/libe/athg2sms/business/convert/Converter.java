@@ -87,12 +87,9 @@ public class Converter {
             if ("FOLDER".equalsIgnoreCase (entry.getKey ())) {
                 continue;
             }
-            sb.append (entry.getKey ());
-            sb.append (" = ");
+            sb.append (entry.getKey ()).append (" = ");
             if (entry.getValue () instanceof String) {
-                sb.append ("'");
-                sb.append (entry.getValue ().toString ().replace ("'", "''"));
-                sb.append ("'");
+                sb.append ("'").append (entry.getValue ().toString ().replace ("'", "''")).append ("'");
             } else {
                 sb.append (entry.getValue ());
             }

@@ -2,8 +2,10 @@ package org.toilelibre.libe.athg2sms.androidstuff.interactions;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -12,6 +14,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,9 +25,13 @@ import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.service.ConvertService;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
-public class ConvertUI {
+import java.util.ArrayList;
 
-    public void retryConvertOperation(final Activity activity) {
+class ConvertUI {
+
+    private static final ArrayList<BroadcastReceiver> toBeUnregistered = new ArrayList<>();
+
+    void retryConvertOperation(final Activity activity) {
         String filename = activity.getIntent().getStringExtra("filename");
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
                 (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
@@ -49,12 +57,33 @@ public class ConvertUI {
         intent.putExtra("pattern", activity.getIntent().getStringExtra("pattern"));
         intent.putExtra("filename", filename);
 
-        LocalBroadcastManager.getInstance(activity).registerReceiver(new BroadcastReceiver() {
+        final BroadcastReceiver stopConvert = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                activity.finish();
+                buildAlertDialog(activity, R.string.done_title, R.layout.done, R.string.great);
+                unregisterAllReceivers(activity);
             }
-        }, new IntentFilter("stopConvert"));
+        };
+        final BroadcastReceiver errorDuringConvert = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Dialog dialog = buildAlertDialog(activity, R.string.error_title, R.layout.error, R.string.again);
+                final String errorMessage1 = intent.getExtras().getString("errorMessage");
+                final String errorMessage2 = intent.getExtras().getString("secondErrorMessage");
+                ((TextView) dialog.findViewById (R.id.exception)).setText (errorMessage1);
+                if (errorMessage2 != null) {
+                    ((TextView) dialog.findViewById (R.id.exception2)).setText (errorMessage2);
+                } else {
+                    ((TextView) dialog.findViewById (R.id.exception2)).setText ("That's all we know.");
+                }
+                unregisterAllReceivers(activity);
+            }
+        };
+        toBeUnregistered.add(stopConvert);
+        toBeUnregistered.add(errorDuringConvert);
+        LocalBroadcastManager.getInstance(activity).registerReceiver(stopConvert, new IntentFilter("stopConvert"));
+
+        LocalBroadcastManager.getInstance(activity).registerReceiver(errorDuringConvert, new IntentFilter("errorDuringConvert"));
 
         if (convertListener.bind() == convertListener) {
             displayIfDryRun(activity);
@@ -62,6 +91,27 @@ public class ConvertUI {
         } else {
             ProcessRealTimeFeedback.getInstance().updateHandler(handler);
         }
+    }
+
+    private synchronized void unregisterAllReceivers(Activity activity) {
+        for (BroadcastReceiver receiver : toBeUnregistered) {
+            LocalBroadcastManager.getInstance(activity).unregisterReceiver(receiver);
+        }
+        toBeUnregistered.clear();
+    }
+
+    private Dialog buildAlertDialog(Context context, int titleResId, int layout, int buttonText) {
+        Dialog dialog = new AlertDialog.Builder(context).setCancelable(false)
+                .setTitle(titleResId)
+                .setView(LayoutInflater.from(context).inflate(layout, null))
+                .setPositiveButton(context.getResources().getText(buttonText),
+                        new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+        return dialog;
     }
 
     private void displayIfDryRun(final Activity activity) {

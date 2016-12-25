@@ -30,10 +30,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/backtoconvform"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/backtoconvform" />
 
 </LinearLayout>

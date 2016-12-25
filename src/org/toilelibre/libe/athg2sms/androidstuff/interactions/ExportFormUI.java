@@ -2,7 +2,6 @@ package org.toilelibre.libe.athg2sms.androidstuff.interactions;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -10,7 +9,6 @@ import android.widget.Spinner;
 
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.Actions;
-import org.toilelibre.libe.athg2sms.androidstuff.materialdesign.Export;
 
 public class ExportFormUI {
 
@@ -21,8 +19,9 @@ public class ExportFormUI {
             @SuppressLint("InlinedApi")
             public void onClick (final View v) {
                 final String patternName = ((Spinner) target.findViewById (R.id.exportPatterns)).getSelectedItem ().toString ();
-                final Intent goToExportActivity = new Intent(activity, Export.class).putExtra("pattern", patternName);
-                activity.startActivity(goToExportActivity);
+                activity.getIntent().putExtra("pattern", patternName);
+
+                new ExportUI().retryExportOperation(activity);
             }
         });
 

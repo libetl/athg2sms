@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">AthgWSms V1.5.0.1</string>
+    <string name="app_name">AthgWSms V1.6.0.0</string>
 
     <string name="app_title">Anything With Sms</string>
     <string name="home_title">AthgWSms</string>
@@ -47,7 +47,7 @@
     <string name="cancel">Cancel</string>
     <string name="guessconvset">Guess format</string>
     <string name="backtomainmenu">Back to Main menu</string>
-    <string name="backtoconvform">Back to conversion form</string>
+    <string name="great">Great !</string>
     <string name="exit">Exit</string>
     <string name="toggledefaultapp">Toggle Default App (>=4.4)</string>
     

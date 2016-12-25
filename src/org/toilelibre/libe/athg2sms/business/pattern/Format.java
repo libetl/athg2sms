@@ -1,7 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.pattern;
 
 import java.util.Collections;
-import java.util.IllegalFormatException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingFormatArgumentException;

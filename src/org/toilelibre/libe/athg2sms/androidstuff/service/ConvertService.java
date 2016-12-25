@@ -7,9 +7,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.actions.ErrorHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.materialdesign.Done;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class ConvertService extends IntentService {
 
@@ -20,24 +17,19 @@ public class ConvertService extends IntentService {
     private ErrorHandler error = new ErrorHandler() {
         @Override
         public void run(Exception e) {
-            final Intent intent = new Intent(getBaseContext(), Error.class);
-            intent.putExtra("errorMessage", e.toString());
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | FLAG_ACTIVITY_CLEAR_TOP);
-            if (e.getCause() != null) {
-                intent.putExtra("secondErrorMessage", e.getCause().toString());
+            Intent intent = new Intent("errorDuringConvert");
+            intent.putExtra("errorMessage", e.getMessage());
+            if (e.getCause() != null && e.getCause() != e) {
+                intent.putExtra("secondErrorMessage", e.getCause().getMessage());
             }
-            LocalBroadcastManager.getInstance(ConvertService.this).sendBroadcast(new Intent("stopConvert"));
-            ConvertService.this.startActivity(intent);
+            LocalBroadcastManager.getInstance(ConvertService.this).sendBroadcast(intent);
         }
     };
 
     private Runnable done = new Runnable() {
         @Override
         public void run() {
-            final Intent intent = new Intent(getBaseContext(), Done.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | FLAG_ACTIVITY_CLEAR_TOP);
             LocalBroadcastManager.getInstance(ConvertService.this).sendBroadcast(new Intent ("stopConvert"));
-            ConvertService.this.startActivity(intent);
         }
     };
 

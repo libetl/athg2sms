@@ -19,10 +19,4 @@
         android:text="@string/sucessful"
         android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/backtoconvform"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/backtoconvform" />
-
 </LinearLayout>

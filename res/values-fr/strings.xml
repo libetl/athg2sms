@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import d\'un fichier" terminée !</string>
-    <string name="app_name">AthgWSms V1.5.0.1</string>
+    <string name="app_name">AthgWSms V1.6.0.0</string>
 
     <string name="app_title">Anything With Sms</string>
     <string name="home_title">AthgWSms</string>
@@ -47,12 +47,12 @@
     <string name="cancel">Annuler</string>
     <string name="guessconvset">Deviner format</string>
     <string name="backtomainmenu">Menu principal</string>
-    <string name="backtoconvform">Ecran precedent</string>
+    <string name="great">Chouette !</string>
     <string name="exit">Sortir</string>
     <string name="toggledefaultapp">App Sms par défaut (>=4.4)</string>
 
     <string name="not_default_app">Salut. Je vois que cet appareil est au moins sur Kitkat, voire plus. Android souhaite (pour se préserver des apps peu scrupuleuses) qu\'une seule app écrive des sms en même temps. Il faut donc sélectionner (temporairement) "App Sms par défaut" dans l\'écran principal. Merci et désolé, mais c\'est pour votre bien.</string>
-    <string name="oic">Oh, I see !</string>
+    <string name="oic">Ha d\'accord !</string>
 
     <string name="carrier_service">Carrier Service for AthgWSms</string>
 </resources>

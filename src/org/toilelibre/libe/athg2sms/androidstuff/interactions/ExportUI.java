@@ -26,10 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-public class ExportUI {
+class ExportUI {
 
-    public void retryExportOperation(final Activity activity) {
-        String pattern = activity.getIntent().getStringExtra("pattern");
+    void retryExportOperation(final Activity activity) {
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
                 (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED)){
@@ -44,8 +43,8 @@ public class ExportUI {
 
     private void startExportService(final Activity activity) {
 
-        final ProceedHandler handler = new ProceedHandler ((ProgressBar) activity.findViewById (R.id.progress),
-                (TextView) activity.findViewById (R.id.current), (TextView) activity.findViewById (R.id.inserted));
+        final ProceedHandler handler = new ProceedHandler ((ProgressBar) activity.findViewById (R.id.exportprogress),
+                (TextView) activity.findViewById (R.id.exportcurrent), (TextView) activity.findViewById (R.id.exportinserted));
         final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(handler);
         final Intent intent = new Intent (activity, ExportService.class);
 
@@ -77,7 +76,6 @@ public class ExportUI {
                         .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(intent.getStringExtra("result"))))
                         .setType("text/plain");
                 activity.startActivity(Intent.createChooser(sendToIntent, "Save as..."));
-                activity.finish();
                 ProcessRealTimeFeedback.unbind();
             }
         }, new IntentFilter("stopExport"));
@@ -112,7 +110,6 @@ public class ExportUI {
                             "Because of a problem while trying to save the export file, the" +
                             " export data was lost. " + e.getMessage(), Snackbar.LENGTH_LONG).show();
                 } finally {
-                    activity.finish();
                     ProcessRealTimeFeedback.unbind();
                 }
             }

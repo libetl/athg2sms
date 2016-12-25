@@ -85,63 +85,22 @@
             android:launchMode="singleTop" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
             </intent-filter>
         </activity>
         <activity
             android:name=".androidstuff.materialdesign.PatternEdition"
             android:label="@string/csedit_title"
             android:launchMode="singleTop" android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.materialdesign.Convert"
-            android:label="@string/proceed_convert_title"
-            android:launchMode="singleTop" android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.materialdesign.Export"
-            android:label="@string/proceed_export_title"
-            android:launchMode="singleTop" android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.materialdesign.Done"
-            android:label="@string/done_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.materialdesign.Error"
-            android:label="@string/error_title" >
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>

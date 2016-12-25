@@ -72,6 +72,11 @@
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 android:visibility="invisible"/>
+            <Button
+                android:id="@+id/toggledefaultapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/toggledefaultapp"/>
 
         </LinearLayout>
 
@@ -84,6 +89,7 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:id="@+id/progress" />
 
         <TextView

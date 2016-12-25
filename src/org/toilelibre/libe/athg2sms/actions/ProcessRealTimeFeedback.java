@@ -6,6 +6,9 @@ import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import java.net.URI;
 import java.util.Map;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class ProcessRealTimeFeedback implements ConvertListener {
 
     private ProceedHandler proceedHandler;
@@ -25,12 +28,14 @@ public class ProcessRealTimeFeedback implements ConvertListener {
 
     public void end () {
         instance = null;
+        this.proceedHandler.getProgressBar().setVisibility (INVISIBLE);
     }
 
     public void insert (final URI uri, final Map<String, Object> smsValues) {
     }
 
     public void sayIPrepareTheList (final int size) {
+        this.proceedHandler.getProgressBar().setVisibility (VISIBLE);
     	this.proceedHandler.getProgressBar().setIndeterminate (true);
     	this.proceedHandler.getCurrent().setText ("Preparing write for sms # : " + size);
 

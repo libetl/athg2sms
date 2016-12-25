@@ -17,7 +17,7 @@ import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
-import org.toilelibre.libe.athg2sms.androidstuff.materialdesign.Convert;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 import java.io.FileNotFoundException;
 
@@ -65,7 +65,6 @@ public class ConversionFormUI {
                 final Intent proceedIntent = activity.getIntent();
                 proceedIntent.putExtra("filename", ((EditText) target.findViewById (R.id.filename)).getText ().toString ());
                 proceedIntent.putExtra("pattern", ((Spinner) target.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
-                activity.startActivity (proceedIntent);
                 new ConvertUI().retryConvertOperation (activity);
             }
         });
@@ -118,7 +117,13 @@ public class ConversionFormUI {
                         });
                     }
                 }.start();
+            }
+        });
 
+        target.findViewById (R.id.toggledefaultapp).setOnClickListener (new OnClickListener () {
+
+            public void onClick (final View v) {
+                new SmsApplicationToggle().toggleDefault(activity);
             }
         });
     }
