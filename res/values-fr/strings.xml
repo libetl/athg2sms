@@ -24,7 +24,7 @@
     <string name="path">Fichier</string>
     <string name="touchonetoeditit">Appuyer pour éditer</string>
     <string name="editcsname">Nom du format : </string>
-    <string name="edityourPatterns">Editer vos formats ci-dessous :</string>
+    <string name="edityourPatterns">Editer le format ci-dessous :</string>
     <string name="pattern">Pattern global</string>
     <string name="inbox">mot-clé "inbox"</string>
     <string name="sent">mot-clé "sent"</string>
@@ -55,4 +55,9 @@
     <string name="oic">Ha d\'accord !</string>
 
     <string name="carrier_service">Carrier Service for AthgWSms</string>
+    <string name="export_under_android_4">Cette version d\'Android est inférieure à 4.0. Je ne peux pas ouvrir de dialogue de choix. L\'export a été enregistré dans le fichier %s</string>
+    <string name="problem_while_exporting">En raison d\'un souci lors de l\'export du fichier, l\'export a été perdu. %s</string>
+    <string name="dryRun">Tiens&#8230; L\'app n\'est pas configurée par défaut. Cette execution sera "à blanc".</string>
+    <string name="nofileselected">Aucun fichier selectionné</string>
+    <string name="nocompatiblepattern">Aucun format compatible</string>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -22,14 +22,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/editcsname"
-                android:textSize="15sp" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/editcsname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                style="@style/Widget.AppCompat.EditText"
+                android:theme="@style/Widget.AppCompat.EditText" />
         </LinearLayout>
 
         <TextView
@@ -37,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dip"
             android:text="@string/edityourPatterns"
-            android:textSize="20sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -49,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pattern"
-                android:width="100dip" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
             <EditText
                 android:inputType="text"
@@ -57,7 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:width="200dip" />
+                style="@style/Widget.AppCompat.EditText"
+                android:theme="@style/Widget.AppCompat.EditText" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,27 +73,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/inbox"
-                android:width="60dip" />
+                android:width="60dip"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/csinbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                style="@style/Widget.AppCompat.EditText"
+                android:elevation="2dp"
+                android:theme="@style/Widget.AppCompat.EditText" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sent"
-                android:width="60dip" />
+                android:width="60dip"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/cssent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                style="@style/Widget.AppCompat.EditText"
+                android:shadowDy="5"
+                android:shadowDx="5"
+                android:theme="@style/Widget.AppCompat.EditText" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -102,7 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/export_format"
-                android:width="100dip" />
+                android:width="100dip"
+                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
             <EditText
                 android:inputType="text"
@@ -110,7 +123,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:width="200dip" />
+                android:width="200dip"
+                style="@style/Widget.AppCompat.EditText"
+                android:theme="@style/Widget.AppCompat.EditText" />
         </LinearLayout>
     </LinearLayout>
 

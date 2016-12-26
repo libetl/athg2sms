@@ -37,7 +37,7 @@ public class Converter {
         final Matcher matcher = new MatchesScanner(preparedPattern, content).matcher ();
 
         if (matcher == null) {
-            throw new ConvertException ("The selected conversion set does not work, sorry", new IllegalArgumentException ());
+            throw new ConvertException ("The selected format does not work, sorry", new IllegalArgumentException ());
         }
 
         return this.insertAllMatcherOccurences (format, matcher, convertListener, convertHandler, contextHolder, inserter, deleter);

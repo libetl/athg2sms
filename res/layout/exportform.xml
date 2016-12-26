@@ -17,10 +17,11 @@
             android:layout_gravity="center"
             android:text="@string/descrexport"
             android:textSize="12sp" />
-        <Spinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/exportPatterns"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+            android:layout_height="fill_parent"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
         <TextView
             android:id="@+id/exportcurrent"
             android:layout_width="fill_parent"

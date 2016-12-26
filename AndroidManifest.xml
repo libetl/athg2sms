@@ -100,7 +100,8 @@
         <activity
             android:name=".androidstuff.materialdesign.PatternEdition"
             android:label="@string/csedit_title"
-            android:launchMode="singleTop" android:theme="@style/AppTheme">
+            android:launchMode="singleTop"
+            android:theme="@style/Base.Theme.AppCompat.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>

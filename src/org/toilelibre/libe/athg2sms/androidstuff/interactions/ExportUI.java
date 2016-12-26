@@ -102,13 +102,11 @@ class ExportUI {
                     outStream.close();
 
                     Snackbar.make(activity.findViewById(android.R.id.content),
-                            "Your Android version is below 4.0. Unable to let you choose between actions." +
-                                    "Therefore your export was stored in the file " + destFilename, Snackbar.LENGTH_LONG).show();
+                            activity.getResources().getString(R.string.export_under_android_4, destFilename), Snackbar.LENGTH_LONG).show();
 
                 } catch (IOException e) {
                     Snackbar.make(activity.findViewById(android.R.id.content),
-                            "Because of a problem while trying to save the export file, the" +
-                            " export data was lost. " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            activity.getResources().getString(R.string.problem_while_exporting, e.getMessage()), Snackbar.LENGTH_LONG).show();
                 } finally {
                     ProcessRealTimeFeedback.unbind();
                 }

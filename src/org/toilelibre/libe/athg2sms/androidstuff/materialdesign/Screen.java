@@ -2,6 +2,7 @@ package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewCompat;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -67,6 +69,12 @@ public class Screen  extends AppCompatActivity {
                     FloatingActionButton exportButton = (FloatingActionButton) Screen.this.findViewById(R.id.exportfile);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         exportButton.setX( viewPager.getWidth() / 4 + viewPager.getScrollX() / 3 - 140);
+                    }
+                }
+                if (screen == 2) {
+                    FloatingActionButton addOneButton = (FloatingActionButton) Screen.this.findViewById(R.id.addone);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        addOneButton.setY((int)(viewPager.getHeight() - ((viewPager.getScrollX() - viewPager.getWidth()) * 1.0 / viewPager.getWidth() * 400 - 260)));
                     }
                 }
             }

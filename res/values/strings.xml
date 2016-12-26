@@ -24,7 +24,7 @@
     <string name="path">Path</string>
     <string name="touchonetoeditit">Touch one to edit it.</string>
     <string name="editcsname">Format name : </string>
-    <string name="edityourPatterns">Edit your formats below :</string>
+    <string name="edityourPatterns">Edit your format below :</string>
     <string name="pattern">Global pattern </string>
     <string name="inbox">Inbox keyword</string>
     <string name="sent">Sent keyword</string>
@@ -55,4 +55,9 @@
     <string name="oic">Oh, I see !</string>
     
     <string name="carrier_service">Carrier Service for AthgWSms</string>
+    <string name="export_under_android_4">Your Android version is below 4.0. Unable to let you choose between actions. Therefore your export was stored in the file %s</string>
+    <string name="problem_while_exporting">Because of a problem while trying to save the export file, the export data was lost. %s</string>
+    <string name="dryRun">BTW&#8230; this app is not toggled to insert SMS messages right now. This will be a dry run.</string>
+    <string name="nofileselected">No file selected</string>
+    <string name="nocompatiblepattern">No compatible format</string>
 </resources>

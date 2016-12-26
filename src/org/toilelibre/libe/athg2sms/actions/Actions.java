@@ -59,7 +59,7 @@ public class Actions {
             ProcessRealTimeFeedback.unbind();
         }
         if (!atLeastOneConverted)
-            errorHandler.run(new ParseException("No SMS Imported !\nThe selected conversion set does not match the input", 0));
+            errorHandler.run(new ParseException("No SMS Imported !\nThe selected format does not match the input", 0));
         else
             done.run();
     }

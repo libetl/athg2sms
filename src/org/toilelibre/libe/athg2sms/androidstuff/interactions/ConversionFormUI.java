@@ -57,7 +57,7 @@ public class ConversionFormUI {
                     handler.post (new Runnable () {
                         public void run () {
                             Snackbar.make(activity.findViewById(android.R.id.content),
-                                    "No file selected", Snackbar.LENGTH_SHORT).show();
+                                    activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
                         }
                     });
                     return;
@@ -88,7 +88,7 @@ public class ConversionFormUI {
                                 public void run () {
                                     progressBar.setVisibility(View.INVISIBLE);
                                     Snackbar.make(activity.findViewById(android.R.id.content),
-                                            "No file selected", Snackbar.LENGTH_SHORT).show();
+                                            activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
                                 }
                             });
                             return;
@@ -106,7 +106,7 @@ public class ConversionFormUI {
                                 }
                                 if (index == -1) {
                                     Snackbar.make(activity.findViewById(android.R.id.content),
-                                            "No compatible pattern", Snackbar.LENGTH_SHORT).show();
+                                            activity.getText(R.string.nocompatiblepattern), Snackbar.LENGTH_SHORT).show();
                                 }else{
                                     spinner.setSelection (index);
                                 }

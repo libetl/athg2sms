@@ -24,7 +24,7 @@
    <string name="path">Archivo</string>
    <string name="touchonetoeditit">Pulsar para editar</string>
    <string name="editcsname">Nombre del formato:</string>
-   <string name="edityourPatterns">Editar los siguientes formatos:</string>
+   <string name="edityourPatterns">Editar el siguiente formato:</string>
    <string name="pattern">Modelo Integral</string>
    <string name="inbox">palabra clave "inbox"</string>
    <string name="sent">palabra clave "sent"</string>
@@ -55,4 +55,9 @@
    <string name="oic">¡ Oh, ya veo !</string>
 
    <string name="carrier_service">Servicio Portador de AthgWSms</string>
+   <string name="export_under_android_4">Tu version de Android es abajo de la 4.0. Entonces no puedo abrir el cuadro de diálogo. La exportación fue grabada en el archivo %s</string>
+   <string name="problem_while_exporting">Debido a un problema durante la exportación, el archivo fue perdido. %s</string>
+   <string name="dryRun">Bueno bueno&#8230; La aplicación no está configurado por defecto para insertar SMS. Esta ejecución será sin efecto.</string>
+   <string name="nofileselected">Ningún archivo seleccionado</string>
+   <string name="nocompatiblepattern">Ningún formato compatible</string>
 </resources>

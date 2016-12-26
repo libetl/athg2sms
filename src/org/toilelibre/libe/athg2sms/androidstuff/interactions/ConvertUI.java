@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -89,6 +90,7 @@ class ConvertUI {
             displayIfDryRun(activity);
             activity.startService (intent);
         } else {
+            activity.findViewById (R.id.progress).setVisibility(View.VISIBLE);
             ProcessRealTimeFeedback.getInstance().updateHandler(handler);
         }
     }
@@ -120,8 +122,7 @@ class ConvertUI {
                         new SmsApplicationToggle().getDefaultSmsPackage(activity))) {
 
             Snackbar.make(activity.findViewById(android.R.id.content),
-                    "BTW... this app is not toggled to insert SMS messages right now." +
-                            "This will be a dry run.", Snackbar.LENGTH_LONG).show();
+                    activity.getText(R.string.dryRun), Snackbar.LENGTH_LONG).show();
 
         }
     }
