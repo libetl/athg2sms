@@ -64,7 +64,7 @@ public class Format {
                 }
                 index++;
             }
-            throw new MissingFormatArgumentException("There should be a folder var inside the format pattern ! Please try again.");
+            throw new MissingFormatArgumentException("folder");
         }
 
         public String getCommonRegex() {
@@ -92,7 +92,7 @@ public class Format {
         private final List<String> varNames;
 
         FormatVarNamesRepresentation(String regexAsString) {
-            this.varNames = new LinkedList<>();
+            this.varNames = new LinkedList<String>();
             final Matcher findVariablesNames = VARIABLE_PATTERN.matcher (regexAsString);
             while (findVariablesNames.find ()) {
                 String fullVarNameWithEndToken = findVariablesNames.group (1);

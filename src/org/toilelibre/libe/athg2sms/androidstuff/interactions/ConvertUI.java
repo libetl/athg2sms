@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 class ConvertUI {
 
-    private static final ArrayList<BroadcastReceiver> toBeUnregistered = new ArrayList<>();
+    private static final ArrayList<BroadcastReceiver> toBeUnregistered = new ArrayList<BroadcastReceiver>();
 
     void retryConvertOperation(final Activity activity) {
         String filename = activity.getIntent().getStringExtra("filename");

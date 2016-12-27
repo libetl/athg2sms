@@ -1,5 +1,7 @@
 package org.toilelibre.libe.athg2sms.actions;
 
+import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 
@@ -22,8 +24,8 @@ public class ProcessRealTimeFeedback implements ConvertListener {
         return 0;
     }
 
-    public void displayInserted (final int inserted, final int dupl) {
-        this.proceedHandler.getInserted().setText ("Inserted SMS : " + inserted + " (" + dupl + " duplicate(s))");
+    public <T> void displayInserted (final ContextHolder<T> contextHolder, final int inserted, final int dupl) {
+        this.proceedHandler.getInserted().setText (contextHolder.getString(R.string.insertedSms, inserted, dupl));
     }
 
     public void end () {
@@ -34,10 +36,10 @@ public class ProcessRealTimeFeedback implements ConvertListener {
     public void insert (final URI uri, final Map<String, Object> smsValues) {
     }
 
-    public void sayIPrepareTheList (final int size) {
+    public <T> void sayIPrepareTheList (final ContextHolder<T> contextHolder, final int size) {
         this.proceedHandler.getProgressBar().setVisibility (VISIBLE);
     	this.proceedHandler.getProgressBar().setIndeterminate (true);
-    	this.proceedHandler.getCurrent().setText ("Preparing write for sms # : " + size);
+    	this.proceedHandler.getCurrent().setText (contextHolder.getString(R.string.preparingWrite, size));
 
     }
 

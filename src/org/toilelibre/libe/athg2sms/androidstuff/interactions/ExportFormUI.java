@@ -25,7 +25,7 @@ public class ExportFormUI {
             }
         });
 
-        ((Spinner) target.findViewById (R.id.exportPatterns)).setAdapter (new ArrayAdapter<> (activity, android.R.layout.simple_spinner_item,
+        ((Spinner) target.findViewById (R.id.exportPatterns)).setAdapter (new ArrayAdapter<String> (activity, android.R.layout.simple_spinner_item,
                 new Actions().getAllFormats()));
 
     }

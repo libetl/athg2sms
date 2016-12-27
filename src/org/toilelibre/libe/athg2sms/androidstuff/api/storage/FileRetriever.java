@@ -52,7 +52,7 @@ public class FileRetriever {
                     } catch (FileNotFoundException e1) {
                         try {
                             return tryToOpenWithAsASimpleFile (filename);
-                        } catch (FileNotFoundException | NoSuchElementException e) {
+                        } catch (Exception e) {
                             try {
                                 return tryToOpenWithAsAPicture (activity, filename);
                             } catch (FileNotFoundException e5) {

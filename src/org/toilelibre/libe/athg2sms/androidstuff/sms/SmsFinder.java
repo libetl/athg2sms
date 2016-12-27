@@ -20,7 +20,7 @@ import java.util.Map;
 public class SmsFinder {
 
     public List<Map<String, Object>> pickThemAll( final ContextHolder<?> contextHolder,  final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
-        final List<Map<String, Object>> result = new ArrayList<>();
+        final List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
         final Cursor cursorInbox = query(getSmsInboxFolder(), contextHolder);
         final Cursor cursorSent = query(getSmsSentFolder(), contextHolder);
@@ -42,7 +42,7 @@ public class SmsFinder {
 
         if (cursor == null) return Collections.emptyList();
 
-        List<Map<String, Object>> result = new ArrayList<>(cursor.getCount());
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>(cursor.getCount());
 
         cursor.moveToFirst();
         for (int msgIndex = 0 ; msgIndex < cursor.getCount() ; msgIndex++) {
@@ -65,7 +65,7 @@ public class SmsFinder {
                     }
                 }
             });
-            Map<String, Object> values = new HashMap<>();
+            Map<String, Object> values = new HashMap<String, Object>();
             for (String columnName : cursor.getColumnNames()) {
                 values.put(columnName, cursor.getString(cursor.getColumnIndex(columnName)));
             }

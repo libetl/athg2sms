@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
+import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsDeleter;
@@ -37,7 +38,7 @@ public class Converter {
         final Matcher matcher = new MatchesScanner(preparedPattern, content).matcher ();
 
         if (matcher == null) {
-            throw new ConvertException ("The selected format does not work, sorry", new IllegalArgumentException ());
+            throw new ConvertException (contextHolder.getString(R.string.theSelectedFormatDoesNotWork), new IllegalArgumentException ());
         }
 
         return this.insertAllMatcherOccurences (format, matcher, convertListener, convertHandler, contextHolder, inserter, deleter);
@@ -45,26 +46,28 @@ public class Converter {
 
     private void dispatchAnotherSmsFoundEvent (final int newSize,
                                                final ConvertListener convertListener,
+                                               final ContextHolder<?> contextHolder,
                                                final HandlerHolder<?> holder) {
         if (holder == null) return;
         holder.postForHandler (new Runnable () {
 
             public void run () {
-                convertListener.sayIPrepareTheList (newSize);
+                convertListener.sayIPrepareTheList (contextHolder, newSize);
             }
 
         });
     }
 
     private void dispatchNewSmsInsertionEvent (final int nb, final int dupl, final int ins, final int i2,
+                                               final ContextHolder<?> contextHolder,
                                                final ConvertListener convertListener,
                                                final HandlerHolder<?> holder) {
         if (holder == null) return;
         holder.postForHandler (new Runnable () {
 
             public void run () {
-                convertListener.updateProgress ("Writing sms # : ", i2, nb);
-                convertListener.displayInserted (ins, dupl);
+                convertListener.updateProgress (contextHolder.getString(R.string.writingSms), i2, nb);
+                convertListener.displayInserted (contextHolder, ins, dupl);
             }
 
         });
@@ -124,7 +127,7 @@ public class Converter {
             convertListener.insert (uri, sms.getValues());
             if(inserter != null)inserter.insert (uri, sms.getValues(), contextHolder);
         } catch (final IllegalStateException ise) {
-            throw new ConvertException ("Problem during one insertion", ise);
+            throw new ConvertException (contextHolder.getString(R.string.problem_while_writing), ise);
         }
         return nbDuplicate;
     }
@@ -133,11 +136,11 @@ public class Converter {
                                              ConvertListener convertListener, HandlerHolder<?> holder,
                                              ContextHolder<?> contextHolder, SmsInserter inserter, SmsDeleter deleter) {
         int inserted = 0;
-        final List<RawMatcherResult> matchedSms = new LinkedList<> ();
+        final List<RawMatcherResult> matchedSms = new LinkedList<RawMatcherResult> ();
         while (matcher.find ()) {
             final String smsAsText = matcher.group ();
             matchedSms.add (new RawMatcherResult(matcher, format.getRegex(), smsAsText));
-            this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, holder);
+            this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, contextHolder, holder);
         }
         final int numberOfFoundSms = matchedSms.size ();
         int nbDuplicate = 0;
@@ -146,7 +149,7 @@ public class Converter {
 
         for (int i = 0 ; i < matchedSms.size () ; i++) {
             this.dispatchNewSmsInsertionEvent (numberOfFoundSms, nbDuplicate, inserted, i,
-                    convertListener, holder);
+                    contextHolder, convertListener, holder);
 
             nbDuplicate += this.proceedToInsertionAndReturnNumberOfDuplicates (format, matchedSms.get (i),
                     convertListener, contextHolder, inserter, deleter);

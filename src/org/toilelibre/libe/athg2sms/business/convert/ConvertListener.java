@@ -1,5 +1,7 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Map;
@@ -10,13 +12,13 @@ public interface ConvertListener extends Serializable {
 
     int delete (URI uriDelete, String where, String [] strings);
 
-    void displayInserted (int inserted, int dupl);
+    <T> void displayInserted (final ContextHolder<T> contextHolder, final int inserted, final int dupl);
 
     void end ();
 
     void insert (URI uri, Map<String, Object> smsValues);
 
-    void sayIPrepareTheList (int size);
+    <T> void sayIPrepareTheList (ContextHolder<T> contextHolder, int size);
 
     void setMax (int nb2);
 

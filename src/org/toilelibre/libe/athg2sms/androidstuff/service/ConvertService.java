@@ -35,7 +35,7 @@ public class ConvertService extends IntentService {
 
     @Override
     protected void onHandleIntent(final Intent intent) {
-        new Actions().runConversionNow(new ContextHolder<>(this), done, error, intent.getStringExtra("filename"), intent.getStringExtra("pattern"));
+        new Actions().runConversionNow(new ContextHolder<Object>(this), done, error, intent.getStringExtra("filename"), intent.getStringExtra("pattern"));
     }
 }
 

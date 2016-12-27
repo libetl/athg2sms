@@ -22,7 +22,7 @@ public class ConversionForm extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         final View result = inflater.inflate(R.layout.conversionform, container, false);
-        ((Spinner) result.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<> (this.getActivity(), android.R.layout.simple_spinner_item,
+        ((Spinner) result.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<String> (this.getActivity(), android.R.layout.simple_spinner_item,
                 new Actions ().getAllFormats()));
 
         new ConversionFormUI().onCreate(result, this.getActivity(), this);

@@ -17,7 +17,7 @@ public class SmsApplicationToggle {
 
     public void toggleDefault(Context context) {
         SharedPreferencesHolder<SharedPreferences> preferences =
-                new SharedPreferencesHolder<>(context.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
+                new SharedPreferencesHolder<SharedPreferences>(context.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
 
         if (android.os.Build.VERSION.SDK_INT >= 19) {
             final String myPackageName = context.getPackageName ();

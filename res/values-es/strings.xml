@@ -49,7 +49,7 @@
    <string name="backtomainmenu">Menú principal</string>
    <string name="great">¡ Estupendo !</string>
    <string name="exit">Salir</string>
-   <string name="toggledefaultapp">applicación por defecto (>=4.4)</string>
+   <string name="toggledefaultapp">App por defecto</string>
 
    <string name="not_default_app">Hola. Veo que este dispositivo es al menos Kitkat o más. Android quiere (para protegerse de las aplicaciones sin escrúpulos) una app a la vez para escribir SMS. Así que hay que seleccionar (temporalmente) "applicación por defecto" en el menú principal. Gracias y lo siento.</string>
    <string name="oic">¡ Oh, ya veo !</string>
@@ -60,4 +60,12 @@
    <string name="dryRun">Bueno bueno&#8230; La aplicación no está configurado por defecto para insertar SMS. Esta ejecución será sin efecto.</string>
    <string name="nofileselected">Ningún archivo seleccionado</string>
    <string name="nocompatiblepattern">Ningún formato compatible</string>
+
+   <string name="noHashInPatternPlease">No es posible utilizar el carácter # aquí</string>
+   <string name="preparingWrite">Preparacion del SMS numero : %d</string>
+   <string name="insertedSms">SMS insertados : %1$d (%2$d duplicado(s))</string>
+   <string name="theSelectedFormatDoesNotWork">Este formato no funciona.</string>
+   <string name="writingSms">Escribiendo el SMS : </string>
+   <string name="problem_while_writing">Yo no fui capaz de insertar un SMS</string>
+   <string name="missingFolderVar">¡ Debe ser una variable llamada "folder"! Gracias a incluirla.</string>
 </resources>

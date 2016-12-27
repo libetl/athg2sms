@@ -28,7 +28,7 @@ public class EntryPoint extends Activity {
         super.onResume ();
 
         SharedPreferencesHolder<SharedPreferences> preferences =
-                new SharedPreferencesHolder<>(EntryPoint.this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
+                new SharedPreferencesHolder<SharedPreferences>(EntryPoint.this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
 
         FormatSettings.getInstance().loadFrom(preferences);
 

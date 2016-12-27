@@ -32,7 +32,7 @@ public class AppPreferences {
     
     @SuppressLint("NewApi")
 	public void saveAskedPermissions (final String... permissions) {
-        sharedPreferences.edit ().putStringSet ("permissions", new HashSet<>(Arrays.asList (permissions))).commit ();
+        sharedPreferences.edit ().putStringSet ("permissions", new HashSet<String>(Arrays.asList (permissions))).commit ();
     }
     
     @SuppressLint("NewApi")

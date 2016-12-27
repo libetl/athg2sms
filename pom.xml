@@ -132,6 +132,12 @@
 			<type>aar</type>
 		</dependency>
 		<dependency>
+			<groupId>com.android.support</groupId>
+			<artifactId>design</artifactId>
+			<version>23.4.0</version>
+			<type>aar</type>
+		</dependency>
+		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>4.1.1.4</version>

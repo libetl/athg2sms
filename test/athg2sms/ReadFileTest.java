@@ -25,7 +25,7 @@ import java.util.Scanner;
 
 public class ReadFileTest {
     private int                       messagesInserted = 0;
-    private List<Sms> messages = new ArrayList<>();
+    private List<Sms> messages = new ArrayList<Sms>();
 
     private final ConvertListener convertListener  = new ConvertListener () {
 
@@ -38,7 +38,7 @@ public class ReadFileTest {
             return 0;
         }
 
-        public void displayInserted (final int inserted, final int dupl) {
+        public <T> void displayInserted (final ContextHolder<T> contextHolder, final int inserted, final int dupl) {
 
         }
 
@@ -52,11 +52,11 @@ public class ReadFileTest {
             ReadFileTest.this.messagesInserted++;
         }
 
-        public void sayIPrepareTheList (final int size) {
+        public <T> void sayIPrepareTheList (final ContextHolder<T> contextHolder, final int size) {
         }
 
         public void setMax (final int nb2) {
-            messages = new ArrayList<>(nb2);
+            messages = new ArrayList<Sms>(nb2);
             ReadFileTest.this.messagesInserted = 0;
         }
 
@@ -224,7 +224,7 @@ public class ReadFileTest {
 
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
-                content, this.convertListener, null, new ContextHolder<>(null),
+                content, this.convertListener, null, new ContextHolder<Object>(null),
                 null, null);
 
         // then
@@ -239,7 +239,7 @@ public class ReadFileTest {
 
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
-                content, this.convertListener, null, new ContextHolder<>(null),
+                content, this.convertListener, null, new ContextHolder<Object>(null),
                 null, null);
 
         // then

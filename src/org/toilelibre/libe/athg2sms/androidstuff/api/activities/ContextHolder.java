@@ -26,4 +26,8 @@ public class ContextHolder<T> {
         }
         return null;
     }
+
+    public String getString (int resId, Object... args) {
+        return this.context == null ? "" : ((Context) this.context).getString(resId, args);
+    }
 }

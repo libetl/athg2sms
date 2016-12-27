@@ -9,8 +9,7 @@
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
         android:text="@string/not_default_app"
-        tools:text="@string/not_default_app"
-        android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+        tools:text="@string/not_default_app"/>
   <LinearLayout 
     android:orientation="horizontal"
     android:layout_width="fill_parent"

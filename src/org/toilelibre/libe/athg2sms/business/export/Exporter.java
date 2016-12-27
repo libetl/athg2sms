@@ -16,7 +16,7 @@ public class Exporter {
         handler.postForHandler(new Runnable() {
             @Override
             public void run() {
-            convertListener.sayIPrepareTheList(0);
+            convertListener.sayIPrepareTheList(context, 0);
             }
         });
         final StringBuilder result = new StringBuilder();

@@ -25,6 +25,9 @@ public class ConversionFormUI {
     private Handler handler = new Handler ();
 
     public void onCreate (final View target, final Activity activity, final Fragment fragment) {
+        if (android.os.Build.VERSION.SDK_INT < 19){
+            target.findViewById(R.id.toggledefaultapp).setVisibility(View.INVISIBLE);
+        }
         target.findViewById (R.id.selectfile).setOnClickListener (new OnClickListener () {
 
             @SuppressLint ("InlinedApi")

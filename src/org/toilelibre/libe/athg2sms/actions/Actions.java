@@ -50,7 +50,7 @@ public class Actions {
         try {
             atLeastOneConverted = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
                     pattern), content,
-                    convertListener, new HandlerHolder<>(convertListener.getHandler()),
+                    convertListener, new HandlerHolder<Object>(convertListener.getHandler()),
                     contextHolder, new SmsInserter(), new SmsDeleter());
         } catch (ConvertException ce) {
             errorHandler.run(ce);
@@ -85,8 +85,8 @@ public class Actions {
     public void exportNow(Object context, File tempFile, Runnable afterExport, String pattern) {
 
         final ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
-        final String result = new Exporter().export(new ContextHolder<>(context),
-                new HandlerHolder<>(convertListener.getHandler()), pattern, convertListener);
+        final String result = new Exporter().export(new ContextHolder<Object>(context),
+                new HandlerHolder<Object>(convertListener.getHandler()), pattern, convertListener);
 
         try {
             FileWriter fw = new FileWriter(tempFile);
@@ -108,7 +108,7 @@ public class Actions {
     }
 
     public void addOrChangeFormat(String patternName, String pattern, String exportFormat, String inbox, String sent) {
-        Format format = new Format(patternName, pattern, exportFormat.isEmpty() ? pattern : exportFormat, inbox, sent);
+        Format format = new Format(patternName, pattern, exportFormat.length() == 0 ? pattern : exportFormat, inbox, sent);
         FormatSettings.getInstance().addOrChangeFormats(format);
     }
 

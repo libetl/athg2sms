@@ -2,79 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/editcsname"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+                android:text="@string/editcsname"/>
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/editcsname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                style="@style/Widget.AppCompat.EditText"
-                android:theme="@style/Widget.AppCompat.EditText" />
+                android:textSize="15sp"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dip"
-            android:text="@string/edityourPatterns"
-            android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+            android:text="@string/edityourPatterns"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pattern"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+                android:text="@string/pattern"/>
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/cspattern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                style="@style/Widget.AppCompat.EditText"
-                android:theme="@style/Widget.AppCompat.EditText" />
+                android:singleLine="true"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/inbox"
-                android:width="60dip"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+                android:width="60dip"/>
 
             <EditText
                 android:inputType="text"
@@ -82,16 +69,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                style="@style/Widget.AppCompat.EditText"
-                android:elevation="2dp"
-                android:theme="@style/Widget.AppCompat.EditText" />
+                android:elevation="2dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sent"
-                android:width="60dip"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+                android:width="60dip"/>
 
             <EditText
                 android:inputType="text"
@@ -99,23 +83,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                style="@style/Widget.AppCompat.EditText"
                 android:shadowDy="5"
-                android:shadowDx="5"
-                android:theme="@style/Widget.AppCompat.EditText" />
+                android:shadowDx="5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/export_format"
-                android:width="100dip"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+                android:width="100dip"/>
 
             <EditText
                 android:inputType="text"
@@ -123,9 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:width="200dip"
-                style="@style/Widget.AppCompat.EditText"
-                android:theme="@style/Widget.AppCompat.EditText" />
+                android:width="200dip"/>
         </LinearLayout>
     </LinearLayout>
 
