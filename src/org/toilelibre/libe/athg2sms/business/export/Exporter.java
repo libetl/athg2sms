@@ -1,6 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.export;
 
-
+import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
@@ -37,7 +37,7 @@ public class Exporter {
             handler.postForHandler(new Runnable() {
                 @Override
                 public void run() {
-                   convertListener.updateProgress("saving the sms #", thisIndex, list.size());
+                   convertListener.updateProgress(context.getString(R.string.savingthesms), thisIndex, list.size());
                 }
             });
             Sms sms = new Sms(list.get(i));

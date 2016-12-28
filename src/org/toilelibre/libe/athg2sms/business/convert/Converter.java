@@ -12,6 +12,7 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -20,18 +21,62 @@ import java.util.regex.Matcher;
 public class Converter {
     private final static String FOLDER = "content://sms/";
 
-    public boolean convertNow (Format format,
-                               String content, ConvertListener convertListener, HandlerHolder<?> convertHandler, ContextHolder<?> contextHolder,
-                               SmsInserter inserter, SmsDeleter deleter) {
+    public static class ConversionResult {
+        private static final ConversionResult BAD_ONE = new ConversionResult(1, 0, 0, 1);
+        private static final ConversionResult NOT_YET_PRESENT = new ConversionResult(1, 1, 0, 0);
+        private static final ConversionResult ALREADY_PRESENT = new ConversionResult(1, 1, 1, 0);
+        private int total;
+        private int inserted;
+        private int duplicated;
+        private int failed;
+
+        public ConversionResult(int total, int inserted, int duplicated, int failed) {
+            this.total = total;
+            this.inserted = inserted;
+            this.duplicated = duplicated;
+            this.failed = failed;
+        }
+
+        public ConversionResult with(ConversionResult oldResult) {
+            this.inserted = oldResult.inserted + inserted;
+            this.duplicated = oldResult.duplicated + duplicated;
+            this.failed = oldResult.failed + failed;
+            return this;
+        }
+
+        public int getTotal() {
+            return total;
+        }
+
+        public int getInserted() {
+            return inserted;
+        }
+
+        public int getDuplicated() {
+            return duplicated;
+        }
+
+        public int getFailed() {
+            return failed;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public ConversionResult convertNow (Format format,
+                                        String content, ConvertListener<?> convertListener, HandlerHolder<?> convertHandler, ContextHolder<?> contextHolder,
+                                        SmsInserter inserter, SmsDeleter deleter) {
+        final ContextHolder<Object> contextHolder1 = (ContextHolder<Object>) contextHolder;
+        final ConvertListener<Object> convertListener1 = (ConvertListener<Object>) convertListener;
+        final HandlerHolder<Object> convertHandler1 = (HandlerHolder<Object>) convertHandler;
         try {
-            return this.runConversion (format, content, convertListener, convertHandler, contextHolder, inserter, deleter);
+            return this.runConversion (format, content, convertListener1, convertHandler1, contextHolder1, inserter, deleter);
         } finally {
             this.end (convertListener, convertHandler);
         }
     }
 
-    private boolean runConversion (Format format, String content, ConvertListener convertListener, HandlerHolder<?> convertHandler, ContextHolder<?> contextHolder,
-                           SmsInserter inserter, SmsDeleter deleter) {
+    private ConversionResult runConversion (Format format, String content, ConvertListener<Object> convertListener, HandlerHolder<Object> convertHandler, ContextHolder<Object> contextHolder,
+                                            SmsInserter inserter, SmsDeleter deleter) {
 
         PreparedPattern preparedPattern = PreparedPattern.fromFormat(format.getRegex());
 
@@ -45,8 +90,8 @@ public class Converter {
     }
 
     private void dispatchAnotherSmsFoundEvent (final int newSize,
-                                               final ConvertListener convertListener,
-                                               final ContextHolder<?> contextHolder,
+                                               final ConvertListener<Object> convertListener,
+                                               final ContextHolder<Object> contextHolder,
                                                final HandlerHolder<?> holder) {
         if (holder == null) return;
         holder.postForHandler (new Runnable () {
@@ -58,16 +103,16 @@ public class Converter {
         });
     }
 
-    private void dispatchNewSmsInsertionEvent (final int nb, final int dupl, final int ins, final int i2,
-                                               final ContextHolder<?> contextHolder,
-                                               final ConvertListener convertListener,
-                                               final HandlerHolder<?> holder) {
+    private void dispatchNewSmsInsertionEvent (final ConversionResult result, final int i2,
+                                               final ContextHolder<Object> contextHolder,
+                                               final ConvertListener<Object> convertListener,
+                                               final HandlerHolder<Object> holder) {
         if (holder == null) return;
         holder.postForHandler (new Runnable () {
 
             public void run () {
-                convertListener.updateProgress (contextHolder.getString(R.string.writingSms), i2, nb);
-                convertListener.displayInserted (contextHolder, ins, dupl);
+                convertListener.updateProgress (contextHolder.getString(R.string.writingSms), i2, result.total);
+                convertListener.displayInserted (contextHolder, result);
             }
 
         });
@@ -101,13 +146,13 @@ public class Converter {
         return sb.substring (0, sb.length () - " and ".length ());
     }
 
-    private int proceedToInsertionAndReturnNumberOfDuplicates (final Format format,
-                                                               final RawMatcherResult result,
-                                                               final ConvertListener convertListener,
-                                                               final ContextHolder<?> contextHolder,
-                                                               final SmsInserter inserter,
-                                                               final SmsDeleter deleter) {
-        if (result.getFolder () == null) return 0;
+    private ConversionResult proceedToInsertion (final Format format,
+                                                 final RawMatcherResult result,
+                                                 final ConvertListener convertListener,
+                                                 final ContextHolder<?> contextHolder,
+                                                 final SmsInserter inserter,
+                                                 final SmsDeleter deleter) {
+        if (result.getFolder () == null) return ConversionResult.BAD_ONE;
         int nbDuplicate = 0;
         final URI uri;
         final URI uriDelete;
@@ -120,7 +165,7 @@ public class Converter {
         try {
             final Format.FormatVarNamesRepresentation varNames = format.getVarNames();
             final Sms sms = new Sms(varNames, result);
-            if (sms.isEmpty ()) return 0;
+            if (sms.isEmpty ()) return ConversionResult.BAD_ONE;
             final String where = this.getWhere (sms);
             convertListener.delete (uriDelete, where, new String [0]);
             if (deleter != null)nbDuplicate += deleter.delete(uriDelete, where, new String [0], contextHolder);
@@ -128,35 +173,36 @@ public class Converter {
             if(inserter != null)inserter.insert (uri, sms.getValues(), contextHolder);
         } catch (final IllegalStateException ise) {
             throw new ConvertException (contextHolder.getString(R.string.problem_while_writing), ise);
+        } catch (final ParseException pe) {
+            return ConversionResult.BAD_ONE;
         }
-        return nbDuplicate;
+        return nbDuplicate == 0 ? ConversionResult.NOT_YET_PRESENT :
+                nbDuplicate == 1 ? ConversionResult.ALREADY_PRESENT :
+                        new ConversionResult(1, 1, nbDuplicate, 0);
     }
 
-    private boolean insertAllMatcherOccurences (Format format, Matcher matcher,
-                                             ConvertListener convertListener, HandlerHolder<?> holder,
-                                             ContextHolder<?> contextHolder, SmsInserter inserter, SmsDeleter deleter) {
-        int inserted = 0;
+    private ConversionResult insertAllMatcherOccurences (Format format, Matcher matcher,
+                                                         ConvertListener<Object> convertListener, HandlerHolder<Object> holder,
+                                                         ContextHolder<Object> contextHolder, SmsInserter inserter, SmsDeleter deleter) {
         final List<RawMatcherResult> matchedSms = new LinkedList<RawMatcherResult> ();
         while (matcher.find ()) {
             final String smsAsText = matcher.group ();
             matchedSms.add (new RawMatcherResult(matcher, format.getRegex(), smsAsText));
             this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, contextHolder, holder);
         }
-        final int numberOfFoundSms = matchedSms.size ();
-        int nbDuplicate = 0;
 
-        this.dispatchNumberOfSmsRowsKnownEvent (numberOfFoundSms, convertListener, holder);
+        this.dispatchNumberOfSmsRowsKnownEvent (matchedSms.size (), convertListener, holder);
 
+        ConversionResult result = new ConversionResult(matchedSms.size (), 0, 0, 0);
         for (int i = 0 ; i < matchedSms.size () ; i++) {
-            this.dispatchNewSmsInsertionEvent (numberOfFoundSms, nbDuplicate, inserted, i,
+            this.dispatchNewSmsInsertionEvent (result, i,
                     contextHolder, convertListener, holder);
 
-            nbDuplicate += this.proceedToInsertionAndReturnNumberOfDuplicates (format, matchedSms.get (i),
-                    convertListener, contextHolder, inserter, deleter);
-            inserted++;
+            result = result.with(this.proceedToInsertion (format, matchedSms.get (i),
+                    convertListener, contextHolder, inserter, deleter));
         }
 
-        return inserted > 0;
+        return result;
     }
 
     private void end (final ConvertListener convertListener, final HandlerHolder<?> holder) {

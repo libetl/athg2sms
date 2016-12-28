@@ -12,7 +12,7 @@ public interface ConvertListener<T> extends Serializable {
 
     int delete (URI uriDelete, String where, String [] strings);
 
-    void displayInserted (final ContextHolder<T> contextHolder, final int inserted, final int dupl);
+    void displayInserted(final ContextHolder<T> contextHolder, final Converter.ConversionResult result);
 
     void end ();
 

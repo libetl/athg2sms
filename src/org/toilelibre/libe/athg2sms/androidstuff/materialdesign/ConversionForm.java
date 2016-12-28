@@ -36,6 +36,7 @@ public class ConversionForm extends Fragment {
         super.onActivityResult (requestCode, resultCode, data);
         if (data != null && data.getData () != null && data.getData ().getPath () != null) {
             ((EditText) this.view.findViewById (R.id.filename)).setText (Build.VERSION.SDK_INT <19 ? data.getData ().getPath () : data.getDataString ());
+            new ConversionFormUI().triggerGuessFormat(this.getActivity(), this.view);
         }
     }
 }

@@ -38,7 +38,7 @@ public class ReadFileTest {
             return 0;
         }
 
-        public void displayInserted (final ContextHolder<Object> contextHolder, final int inserted, final int dupl) {
+        public void displayInserted(final ContextHolder<Object> contextHolder, final Converter.ConversionResult result) {
 
         }
 
@@ -204,7 +204,7 @@ public class ReadFileTest {
                 "ot 08:00 do 17:00\n" +
                 "Ref: 45345\"";
         this.testString (anotherAttempt, BuiltInFormatName.NokiaSuite, false);
-        Assert.assertEquals (9, this.messagesInserted);
+        Assert.assertEquals (8, this.messagesInserted);
 
     }
 

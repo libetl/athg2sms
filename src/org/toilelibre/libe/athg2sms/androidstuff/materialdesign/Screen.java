@@ -29,7 +29,7 @@ public class Screen  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.iconv3);
+        toolbar.setNavigationIcon(R.drawable.ic_logo);
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

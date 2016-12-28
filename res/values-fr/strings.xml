@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import d\'un fichier" terminée !</string>
-    <string name="app_name">AthgWSms V1.6.0.0</string>
+    <string name="app_name">AthgWSms</string>
 
     <string name="app_title">Anything With Sms</string>
     <string name="home_title">AthgWSms</string>
@@ -62,9 +62,11 @@
     <string name="nocompatiblepattern">Aucun format compatible</string>
     <string name="noHashInPatternPlease">Le caractère # n\'est pas autorisé</string>
     <string name="preparingWrite">Preparation du SMS n°%d</string>
-    <string name="insertedSms">SMS insérés : %1$d (dont %1$d doublon(s))</string>
+    <string name="insertedSms">SMS insérés : %1$d (dont %1$d doublon(s)) et %3$d planté(s)</string>
     <string name="theSelectedFormatDoesNotWork">Je crois que le format choisi ne va pas.</string>
     <string name="writingSms">Écriture du sms : </string>
     <string name="problem_while_writing">L\'ajout d\'un SMS a planté</string>
     <string name="missingFolderVar">Il devrait y avoir une variable pour \"folder\" ! Merci de le rajouter.</string>
+    <string name="savingthesms">Enregistrement du SMS n°</string>
+    <string name="nosmsimported">Ça aurait pu marcher mais aucun SMS n\'était valide dans le fichier</string>
 </resources>

@@ -76,52 +76,7 @@ public class ConversionFormUI {
         target.findViewById (R.id.guessconvset).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                final Spinner spinner = (Spinner) target.findViewById (R.id.conversionSet);
-                final String file = ((EditText) target.findViewById (R.id.filename)).getText ().toString ();
-                final ProgressBar progressBar =  ((ProgressBar)target.findViewById (R.id.guessing));
-                progressBar.setVisibility(View.VISIBLE);
-                new Thread() {
-                    @Override
-                    public void run() {
-                        final String formatKey;
-                        final String content;
-                        try {
-                            content = FileRetriever.getFile (new ContextHolder<Object>(activity), file);
-                            formatKey = new Actions().guessNow(content);
-                        } catch (final FileNotFoundException e) {
-                            handler.post (new Runnable () {
-                                public void run () {
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    Snackbar.make(activity.findViewById(android.R.id.content),
-                                            activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
-                                }
-                            });
-                            return;
-                        }
-                        handler.post (new Runnable () {
-
-                            public void run () {
-                                int index = -1;
-
-                                for (int i = 0 ; i < spinner.getCount () ; i++) {
-                                    if (spinner.getItemAtPosition (i).toString ().equalsIgnoreCase (formatKey)) {
-                                        index = i;
-                                        break;
-                                    }
-                                }
-                                if (index == -1) {
-                                    Snackbar.make(activity.findViewById(android.R.id.content),
-                                            activity.getText(R.string.nocompatiblepattern), Snackbar.LENGTH_SHORT).show();
-                                }else{
-                                    spinner.setSelection (index);
-                                }
-                                progressBar.setVisibility (View.INVISIBLE);
-
-                            }
-
-                        });
-                    }
-                }.start();
+                triggerGuessFormat(activity, target);
             }
         });
 
@@ -140,4 +95,54 @@ public class ConversionFormUI {
             new ConvertUI().retryConvertOperation (activity);
         }
     }
+
+    public void triggerGuessFormat(final Activity activity, View rootView) {
+        final Spinner spinner = (Spinner) rootView.findViewById (R.id.conversionSet);
+        final String file = ((EditText) rootView.findViewById (R.id.filename)).getText ().toString ();
+        final ProgressBar progressBar =  ((ProgressBar)rootView.findViewById (R.id.guessing));
+        progressBar.setVisibility(View.VISIBLE);
+        new Thread() {
+            @Override
+            public void run() {
+                final String formatKey;
+                final String content;
+                try {
+                    content = FileRetriever.getFile (new ContextHolder<Object>(activity), file);
+                    formatKey = new Actions().guessNow(content);
+                } catch (final FileNotFoundException e) {
+                    handler.post (new Runnable () {
+                        public void run () {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Snackbar.make(activity.findViewById(android.R.id.content),
+                                    activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+                handler.post (new Runnable () {
+
+                    public void run () {
+                        int index = -1;
+
+                        for (int i = 0 ; i < spinner.getCount () ; i++) {
+                            if (spinner.getItemAtPosition (i).toString ().equalsIgnoreCase (formatKey)) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index == -1) {
+                            Snackbar.make(activity.findViewById(android.R.id.content),
+                                    activity.getText(R.string.nocompatiblepattern), Snackbar.LENGTH_SHORT).show();
+                        }else{
+                            spinner.setSelection (index);
+                        }
+                        progressBar.setVisibility (View.INVISIBLE);
+
+                    }
+
+                });
+            }
+        }.start();
+    }
+
 }
