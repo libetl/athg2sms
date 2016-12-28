@@ -4,6 +4,7 @@ import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsDeleter;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsInserter;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
@@ -19,7 +20,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Arrays;
 
 public class Actions {
 
@@ -72,14 +72,6 @@ public class Actions {
             ProcessRealTimeFeedback.unbind();
             return null;
         }
-    }
-
-    public void saveAskedPermissions(SharedPreferencesHolder<?> preferences, String[] permissions) {
-        new AppPreferences(preferences).saveAskedPermissions (permissions);
-    }
-
-    public boolean askedPermissionsContainsAll(SharedPreferencesHolder<?> preferences, String[] permissions) {
-        return new AppPreferences(preferences).getAskedPermissions ().containsAll (Arrays.asList (permissions));
     }
 
     public void exportNow(Object context, File tempFile, Runnable afterExport, String pattern) {

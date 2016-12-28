@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -20,6 +21,7 @@ import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 public class ConversionFormUI {
     private Handler handler = new Handler ();
@@ -131,4 +133,11 @@ public class ConversionFormUI {
         });
     }
 
+    public void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults) {
+        if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE")) {
+            activity.getIntent().putExtra("filename", ((EditText) activity.findViewById (R.id.filename)).getText ().toString ());
+            activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
+            new ConvertUI().retryConvertOperation (activity);
+        }
+    }
 }

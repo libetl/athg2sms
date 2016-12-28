@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Telephony;
 
-import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
 

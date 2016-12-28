@@ -10,6 +10,8 @@ import android.widget.Spinner;
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 
+import java.util.Arrays;
+
 public class ExportFormUI {
 
     public void onCreate (final View target, final Activity activity) {
@@ -27,6 +29,12 @@ public class ExportFormUI {
 
         ((Spinner) target.findViewById (R.id.exportPatterns)).setAdapter (new ArrayAdapter<String> (activity, android.R.layout.simple_spinner_item,
                 new Actions().getAllFormats()));
+    }
 
+    public void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions, int[] grantResults) {
+        if (Arrays.asList(permissions).contains("android.permission.WRITE_EXTERNAL_STORAGE")) {
+            activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.exportfile)).getSelectedItem ().toString ());
+            new ExportUI().retryExportOperation(activity);
+        }
     }
 }

@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.service.ExportService;
 
 import java.io.File;
@@ -26,9 +25,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-public class ExportUI {
+class ExportUI {
 
-    public void retryExportOperation(final Activity activity) {
+    void retryExportOperation(final Activity activity) {
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
                 (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED)){
@@ -45,7 +44,7 @@ public class ExportUI {
 
         final ProceedHandler handler = new ProceedHandler ((ProgressBar) activity.findViewById (R.id.exportprogress),
                 (TextView) activity.findViewById (R.id.exportcurrent), (TextView) activity.findViewById (R.id.exportinserted));
-        final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(handler);
+        final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(ProcessRealTimeFeedback.Type.EXPORT, handler);
         final Intent intent = new Intent (activity, ExportService.class);
 
         intent.putExtra("pattern", activity.getIntent().getStringExtra("pattern"));
@@ -85,7 +84,12 @@ public class ExportUI {
         LocalBroadcastManager.getInstance(activity).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                File parentDir = activity.getExternalFilesDir(null);
+                File parentDir;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+                    parentDir = activity.getExternalFilesDir(null);
+                }else {
+                    parentDir = new File("/sdcard/");
+                }
                 if (parentDir == null) {
                     return;
                 }
@@ -112,6 +116,5 @@ public class ExportUI {
                 }
             }
         }, new IntentFilter("stopExport"));
-
     }
 }

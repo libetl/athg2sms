@@ -3,7 +3,6 @@ package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewCompat;
@@ -11,17 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.androidstuff.interactions.ConvertUI;
-import org.toilelibre.libe.athg2sms.androidstuff.interactions.ExportUI;
-
-import java.util.Arrays;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ConversionFormUI;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ExportFormUI;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 
 public class Screen  extends AppCompatActivity {
 
@@ -103,6 +102,17 @@ public class Screen  extends AppCompatActivity {
                         startButton.setScaleY(0);
                     }
                 }
+
+                if (screen == 0 && ProcessRealTimeFeedback.getInstance() != null && ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.IMPORT) {
+                    viewPager.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                    ProcessRealTimeFeedback.getInstance().updateHandler(new ProceedHandler((ProgressBar) viewPager.findViewById(R.id.progress),
+                            (TextView) viewPager.findViewById(R.id.current), (TextView) viewPager.findViewById(R.id.inserted)));
+                }
+                if (screen == 1 && ProcessRealTimeFeedback.getInstance() != null && ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.EXPORT) {
+                    viewPager.findViewById(R.id.exportprogress).setVisibility(View.VISIBLE);
+                    ProcessRealTimeFeedback.getInstance().updateHandler(new ProceedHandler((ProgressBar) viewPager.findViewById(R.id.exportprogress),
+                            (TextView) viewPager.findViewById(R.id.exportcurrent), (TextView) viewPager.findViewById(R.id.exportinserted)));
+                }
             }
 
             @Override
@@ -127,14 +137,7 @@ public class Screen  extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE")) {
-            this.getIntent().putExtra("filename", ((EditText) this.findViewById (R.id.filename)).getText ().toString ());
-            this.getIntent().putExtra("pattern", ((Spinner) this.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
-            new ConvertUI().retryConvertOperation (this);
-        }
-        if (Arrays.asList(permissions).contains("android.permission.WRITE_EXTERNAL_STORAGE")) {
-            this.getIntent().putExtra("pattern", ((Spinner) this.findViewById (R.id.exportfile)).getSelectedItem ().toString ());
-            new ExportUI().retryExportOperation(this);
-        }
+        new ConversionFormUI().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        new ExportFormUI().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }

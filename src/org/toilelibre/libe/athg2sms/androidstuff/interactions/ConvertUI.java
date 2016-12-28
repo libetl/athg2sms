@@ -22,17 +22,16 @@ import android.widget.TextView;
 
 import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
-import org.toilelibre.libe.athg2sms.actions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.service.ConvertService;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 import java.util.ArrayList;
 
-public class ConvertUI {
+class ConvertUI {
 
     private static final ArrayList<BroadcastReceiver> toBeUnregistered = new ArrayList<BroadcastReceiver>();
 
-    public void retryConvertOperation(final Activity activity) {
+    void retryConvertOperation(final Activity activity) {
         String filename = activity.getIntent().getStringExtra("filename");
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
                 (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
@@ -51,7 +50,7 @@ public class ConvertUI {
 
         final ProceedHandler handler = new ProceedHandler ((ProgressBar) activity.findViewById (R.id.progress),
                 (TextView) activity.findViewById (R.id.current), (TextView) activity.findViewById (R.id.inserted));
-        final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(handler);
+        final ProcessRealTimeFeedback convertListener = new ProcessRealTimeFeedback(ProcessRealTimeFeedback.Type.IMPORT, handler);
 
         final Intent intent = new Intent (activity, ConvertService.class);
 

@@ -1,9 +1,10 @@
-package org.toilelibre.libe.athg2sms.actions;
+package org.toilelibre.libe.athg2sms.androidstuff.interactions;
+
+import android.content.Context;
 
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
-import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
+import org.toilelibre.libe.athg2sms.actions.ConvertListener;
 
 import java.net.URI;
 import java.util.Map;
@@ -11,20 +12,25 @@ import java.util.Map;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-public class ProcessRealTimeFeedback implements ConvertListener {
+public class ProcessRealTimeFeedback implements ConvertListener<Context> {
 
+    private final Type type;
     private ProceedHandler proceedHandler;
     private static ProcessRealTimeFeedback instance = null;
 
-    public ProcessRealTimeFeedback(ProceedHandler proceedHandler) {
+    public enum Type {
+        IMPORT, EXPORT
+    }
+    public ProcessRealTimeFeedback(Type type, ProceedHandler proceedHandler) {
         this.proceedHandler = proceedHandler;
+        this.type = type;
     }
 
     public int delete (final URI uriDelete, final String where, final String [] strings) {
         return 0;
     }
 
-    public <T> void displayInserted (final ContextHolder<T> contextHolder, final int inserted, final int dupl) {
+    public void displayInserted (final ContextHolder<Context> contextHolder, final int inserted, final int dupl) {
         this.proceedHandler.getInserted().setText (contextHolder.getString(R.string.insertedSms, inserted, dupl));
     }
 
@@ -36,7 +42,7 @@ public class ProcessRealTimeFeedback implements ConvertListener {
     public void insert (final URI uri, final Map<String, Object> smsValues) {
     }
 
-    public <T> void sayIPrepareTheList (final ContextHolder<T> contextHolder, final int size) {
+    public void sayIPrepareTheList (final ContextHolder<Context> contextHolder, final int size) {
         this.proceedHandler.getProgressBar().setVisibility (VISIBLE);
     	this.proceedHandler.getProgressBar().setIndeterminate (true);
     	this.proceedHandler.getCurrent().setText (contextHolder.getString(R.string.preparingWrite, size));
@@ -75,6 +81,10 @@ public class ProcessRealTimeFeedback implements ConvertListener {
     public void updateHandler(ProceedHandler handler) {
         handler.getProgressBar().setMax(this.proceedHandler.getProgressBar().getMax());
         this.proceedHandler = handler;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public static ProcessRealTimeFeedback getInstance() {
