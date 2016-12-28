@@ -27,7 +27,7 @@ public class ReadFileTest {
     private int                       messagesInserted = 0;
     private List<Sms> messages = new ArrayList<Sms>();
 
-    private final ConvertListener convertListener  = new ConvertListener () {
+    private final ConvertListener<Object> convertListener  = new ConvertListener<Object> () {
 
         @Override
         public ConvertListener bind() {
@@ -38,7 +38,7 @@ public class ReadFileTest {
             return 0;
         }
 
-        public <T> void displayInserted (final ContextHolder<T> contextHolder, final int inserted, final int dupl) {
+        public void displayInserted (final ContextHolder<Object> contextHolder, final int inserted, final int dupl) {
 
         }
 
@@ -52,7 +52,7 @@ public class ReadFileTest {
             ReadFileTest.this.messagesInserted++;
         }
 
-        public <T> void sayIPrepareTheList (final ContextHolder<T> contextHolder, final int size) {
+        public void sayIPrepareTheList (final ContextHolder<Object> contextHolder, final int size) {
         }
 
         public void setMax (final int nb2) {
