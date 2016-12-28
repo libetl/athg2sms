@@ -21,7 +21,7 @@ public class SmsApplicationToggle {
 
         if (android.os.Build.VERSION.SDK_INT >= 19) {
             final String myPackageName = context.getPackageName ();
-            if (!this.getDefaultSmsPackage (context).equals (myPackageName)) {
+            if (!myPackageName.equals(this.getDefaultSmsPackage (context))) {
                 new Actions().saveDefaultSmsApp(preferences, this.getDefaultSmsPackage (context));
                 final Intent intentSetDefault = new Intent (SmsApplicationToggle.ACTION_CHANGE_DEFAULT);
                 intentSetDefault.putExtra (SmsApplicationToggle.EXTRA_PACKAGE_NAME, myPackageName);
