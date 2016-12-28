@@ -38,7 +38,7 @@ public class SmsApplicationToggle {
     }
 
     public String getDefaultSmsPackage (final Context context) {
-        String result = null;
+        String result = "";
         try {
             final Class<?> c = Class.forName ("android.provider.Telephony$Sms");
             result = (String) c.getMethod ("getDefaultSmsPackage", Context.class).invoke (null, context);
