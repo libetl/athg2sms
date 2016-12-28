@@ -3,6 +3,7 @@ package org.toilelibre.libe.athg2sms.business.pattern;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,7 +64,7 @@ public class Format {
                 }
                 index++;
             }
-            return -1;
+            throw new MissingFormatArgumentException("folder");
         }
 
         public String getCommonRegex() {
@@ -91,7 +92,7 @@ public class Format {
         private final List<String> varNames;
 
         FormatVarNamesRepresentation(String regexAsString) {
-            this.varNames = new LinkedList<>();
+            this.varNames = new LinkedList<String>();
             final Matcher findVariablesNames = VARIABLE_PATTERN.matcher (regexAsString);
             while (findVariablesNames.find ()) {
                 String fullVarNameWithEndToken = findVariablesNames.group (1);

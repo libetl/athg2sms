@@ -18,10 +18,10 @@ class FormatLoader {
     }
 
     Map<String, Format> loadFrom (final SharedPreferencesHolder sharedPreferences) {
-        final Map<String, Format> formats = new HashMap<>();
+        final Map<String, Format> formats = new HashMap<String, Format>();
         if (sharedPreferences == null)return formats;
         final Map<String, ?> prefs = sharedPreferences.getAll ();
-        Set<String> formatNames = new HashSet<>();
+        Set<String> formatNames = new HashSet<String>();
         for (final String entry : prefs.keySet ()) {if (entry.indexOf ('#') != -1)formatNames.add(entry.split ("#") [0]);}
         for (final String formatName : formatNames) {
             formats.put(formatName,

@@ -68,9 +68,9 @@ public class SharedPreferencesHolder<T> {
     @SuppressWarnings("unchecked")
     public <U> EditorHolder<U> edit() {
         if (sharedPreferences instanceof SharedPreferences) {
-            return new EditorHolder<>((U)((SharedPreferences) sharedPreferences).edit());
+            return new EditorHolder<U>((U)((SharedPreferences) sharedPreferences).edit());
         }
-        return (EditorHolder<U>) new EditorHolder<>(new Object());
+        return new EditorHolder<U>((U)new Object());
     }
 
     public Set<String> getStringSet(String key, Set<String> strings) {
@@ -80,7 +80,7 @@ public class SharedPreferencesHolder<T> {
                 return strings;
             }
 
-            return new HashSet<>(Arrays.asList(setAsString.replace('[', ' ').replace(']', ' ').trim().split(",")));
+            return new HashSet<String>(Arrays.asList(setAsString.replace('[', ' ').replace(']', ' ').trim().split(",")));
         }
         return Collections.emptySet();
     }

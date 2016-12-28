@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/not_default_app"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -7,8 +8,8 @@
     <TextView 
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  android:textSize="20sp"
-  android:text="@string/not_default_app"/>
+        android:text="@string/not_default_app"
+        tools:text="@string/not_default_app"/>
   <LinearLayout 
     android:orientation="horizontal"
     android:layout_width="fill_parent"

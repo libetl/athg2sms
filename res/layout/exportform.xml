@@ -1,58 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/exportForm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
-    <ImageView
-        android:id="@+id/ImageView01"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:contentDescription="big picture"
-        android:src="@drawable/iconv3" />
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/descrexport"
-        android:textSize="12sp" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <Spinner
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/descrexport"
+            android:textSize="12sp" />
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/exportPatterns"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+        <TextView
+            android:id="@+id/exportcurrent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
-        <Button
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/exportprogress" />
+
+        <TextView
+            android:id="@+id/exportinserted"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/fabLayout2"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/exportfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/saveas" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/backtomainmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/backtomainmenu" />
-    </LinearLayout>
-</LinearLayout>
+            android:gravity="end"
+            android:src="@android:drawable/ic_menu_save"
+            app:elevation="4dp"
+            android:clickable="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

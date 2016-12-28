@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">AthgWSms V1.5.0</string>
+    <string name="app_name">AthgWSms V1.6.0.0</string>
 
     <string name="app_title">Anything With Sms</string>
     <string name="home_title">AthgWSms</string>
@@ -10,7 +10,8 @@
     <string name="csedit_title">AthgWSms &gt; Formats &gt; Edit</string>
     <string name="cf_title">AthgWSms &gt; Import</string>
     <string name="cfoifm_title">AthgWSms &gt; Import &gt; OI FM</string>
-    <string name="proceed_title">AthgWSms &gt; Import &gt; Working</string>
+    <string name="proceed_convert_title">AthgWSms &gt; Import &gt; Working</string>
+    <string name="proceed_export_title">AthgWSms &gt; Import &gt; Working</string>
     <string name="done_title">AthgWSms &gt; Import &gt; Done</string>
     <string name="error_title">AthgWSms &gt; Import &gt; Error</string>
 
@@ -20,10 +21,10 @@
     <string name="helpheader">How to convert your SMS messages :</string>
     <string name="failed_retry">Failed ! Retry ?</string>
     <string name="sucessful">Successful</string>
-    <string name="path">Path : </string>
+    <string name="path">Path</string>
     <string name="touchonetoeditit">Touch one to edit it.</string>
     <string name="editcsname">Format name : </string>
-    <string name="edityourPatterns">Edit your formats below :</string>
+    <string name="edityourPatterns">Edit your format below :</string>
     <string name="pattern">Global pattern </string>
     <string name="inbox">Inbox keyword</string>
     <string name="sent">Sent keyword</string>
@@ -46,12 +47,24 @@
     <string name="cancel">Cancel</string>
     <string name="guessconvset">Guess format</string>
     <string name="backtomainmenu">Back to Main menu</string>
-    <string name="backtoconvform">Back to conversion form</string>
+    <string name="great">Great !</string>
     <string name="exit">Exit</string>
-    <string name="toggledefaultapp">Toggle Default App (>=4.4)</string>
+    <string name="toggledefaultapp">Default App</string>
     
     <string name="not_default_app">Dear KitKat (or +) user, The Android Platform requires your consent to let AthgWSms become temporarily your default sms app. Please choose \'toggle\' in the main screen.</string>
     <string name="oic">Oh, I see !</string>
     
     <string name="carrier_service">Carrier Service for AthgWSms</string>
+    <string name="export_under_android_4">Your Android version is below 4.0. Unable to let you choose between actions. Therefore your export was stored in the file %s</string>
+    <string name="problem_while_exporting">Because of a problem while trying to save the export file, the export data was lost. %s</string>
+    <string name="dryRun">BTW&#8230; this app is not toggled to insert SMS messages right now. This will be a dry run.</string>
+    <string name="nofileselected">No file selected</string>
+    <string name="nocompatiblepattern">No compatible format</string>
+    <string name="noHashInPatternPlease">No hash char in the pattern please</string>
+    <string name="preparingWrite">Preparing write for sms # : %d</string>
+    <string name="insertedSms">Inserted SMS : %1$d (%2$d duplicate(s))</string>
+    <string name="theSelectedFormatDoesNotWork">The selected format does not work, sorry</string>
+    <string name="writingSms">Writing sms : </string>
+    <string name="problem_while_writing">Problem during one insertion</string>
+    <string name="missingFolderVar">There should be a folder var inside the format pattern ! Please try again.</string>
 </resources>

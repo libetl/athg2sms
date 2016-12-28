@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.Button;
 
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.materialdesign.Screen;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.preferences.AppPreferences;
-import org.toilelibre.libe.athg2sms.androidstuff.ui.MainMenu;
 
 import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesBinding.BINDING_GLOBAL_NAME;
 
@@ -28,17 +28,17 @@ public class EntryPoint extends Activity {
         super.onResume ();
 
         SharedPreferencesHolder<SharedPreferences> preferences =
-                new SharedPreferencesHolder<>(EntryPoint.this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
+                new SharedPreferencesHolder<SharedPreferences>(EntryPoint.this.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
 
         FormatSettings.getInstance().loadFrom(preferences);
 
         if (android.os.Build.VERSION.SDK_INT < 19) {
-            this.startActivity(new Intent(this, MainMenu.class));
+            this.startActivity(new Intent(this, Screen.class));
             return;
         }
         final String myPackageName = this.getPackageName ();
-        if (new SmsApplicationToggle().getDefaultSmsPackage (this).equals (myPackageName)) {
-            this.startActivity(new Intent(this, MainMenu.class));
+        if (("" + new SmsApplicationToggle().getDefaultSmsPackage (this)).equals (myPackageName)) {
+            this.startActivity(new Intent(this, Screen.class));
             return;
         }
         // App is not default.
@@ -53,7 +53,7 @@ public class EntryPoint extends Activity {
         final Button button = (Button) this.findViewById (R.id.oic);
         button.setOnClickListener (new View.OnClickListener () {
             public void onClick (final View v) {
-                final Intent intentMain = new Intent (EntryPoint.this, MainMenu.class);
+                final Intent intentMain = new Intent (EntryPoint.this, Screen.class);
                 EntryPoint.this.startActivity (intentMain);
                 EntryPoint.this.finish ();
             }

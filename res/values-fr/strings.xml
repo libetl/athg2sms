@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">"Import d\'un fichier" terminée !</string>
+    <string name="app_name">AthgWSms V1.6.0.0</string>
+
+    <string name="app_title">Anything With Sms</string>
+    <string name="home_title">AthgWSms</string>
+    <string name="export_title">AthgWSms &gt; Export</string>
+    <string name="cs_title">AthgWSms &gt; Formats</string>
+    <string name="csedit_title">AthgWSms &gt; Formats &gt; Edition</string>
+    <string name="cf_title">AthgWSms &gt; Import</string>
+    <string name="cfoifm_title">AthgWSms &gt; Import &gt; OI FM</string>
+    <string name="proceed_convert_title">AthgWSms &gt; Import &gt; En cours</string>
+    <string name="proceed_export_title">AthgWSms &gt; Export &gt; En cours</string>
+    <string name="done_title">AthgWSms &gt; Import &gt; Fait !</string>
+    <string name="error_title">AthgWSms &gt; Import &gt; Erreur</string>
+
+    <string name="descr">Import/Export des SMS à partir de fichiers CSV ou VMG</string>
+    <string name="descrexport">Exporter les SMS vers d\'autres appareils</string>
+    <string name="file_name">Nom du fichier</string>
+    <string name="helpheader">Comment convertir vos messages SMS.</string>
+    <string name="failed_retry">Helas, ça a planté !</string>
+    <string name="sucessful">Et voila !</string>
+    <string name="path">Fichier</string>
+    <string name="touchonetoeditit">Appuyer pour éditer</string>
+    <string name="editcsname">Nom du format : </string>
+    <string name="edityourPatterns">Editer le format ci-dessous :</string>
+    <string name="pattern">Pattern global</string>
+    <string name="inbox">mot-clé "inbox"</string>
+    <string name="sent">mot-clé "sent"</string>
+    <string name="export_format">Format d\'export (optionnel)</string>
+    <string name="really_delete">Le format va vraiment être supprimé (sauf s\'il est dans la liste officielle)</string>
+    <string name="delete_yes">Supprimer</string>
+
+    <string name="proceed_button">C\'est parti</string>
+    <string name="addone">Ajouter format</string>
+    <string name="convsets">Changer formats</string>
+    <string name="convert">Importer</string>
+    <string name="export">Exporter</string>
+    <string name="validate">Valider</string>
+    <string name="delete">Supprimer</string>
+    <string name="filename">Enregistrer&#8230;</string>
+    <string name="selectfile">Choisir</string>
+    <string name="saveas">Exporter &gt;</string>
+    <string name="start">Démarrer &gt;</string>
+    <string name="again">Encore</string>
+    <string name="cancel">Annuler</string>
+    <string name="guessconvset">Deviner format</string>
+    <string name="backtomainmenu">Menu principal</string>
+    <string name="great">Chouette !</string>
+    <string name="exit">Sortir</string>
+    <string name="toggledefaultapp">App par défaut</string>
+
+    <string name="not_default_app">Salut. Je vois que cet appareil est au moins sur Kitkat, voire plus. Android souhaite (pour se préserver des apps peu scrupuleuses) qu\'une seule app écrive des sms en même temps. Il faut donc sélectionner (temporairement) "App Sms par défaut" dans l\'écran principal. Merci et désolé, mais c\'est pour votre bien.</string>
+    <string name="oic">Ha d\'accord !</string>
+
+    <string name="carrier_service">Carrier Service for AthgWSms</string>
+    <string name="export_under_android_4">Cette version d\'Android est inférieure à 4.0. Je ne peux pas ouvrir de dialogue de choix. L\'export a été enregistré dans le fichier %s</string>
+    <string name="problem_while_exporting">En raison d\'un souci lors de l\'export du fichier, l\'export a été perdu. %s</string>
+    <string name="dryRun">Tiens&#8230; L\'app n\'est pas configurée par défaut. Cette execution sera \"à blanc\".</string>
+    <string name="nofileselected">Aucun fichier selectionné</string>
+    <string name="nocompatiblepattern">Aucun format compatible</string>
+    <string name="noHashInPatternPlease">Le caractère # n\'est pas autorisé</string>
+    <string name="preparingWrite">Preparation du SMS n°%d</string>
+    <string name="insertedSms">SMS insérés : %1$d (dont %1$d doublon(s))</string>
+    <string name="theSelectedFormatDoesNotWork">Je crois que le format choisi ne va pas.</string>
+    <string name="writingSms">Écriture du sms : </string>
+    <string name="problem_while_writing">L\'ajout d\'un SMS a planté</string>
+    <string name="missingFolderVar">Il devrait y avoir une variable pour \"folder\" ! Merci de le rajouter.</string>
+</resources>

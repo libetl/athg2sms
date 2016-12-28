@@ -2,7 +2,6 @@ package org.toilelibre.libe.athg2sms.androidstuff.api.activities;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.test.mock.MockContentResolver;
 
 public class ContextHolder<T> {
@@ -26,5 +25,9 @@ public class ContextHolder<T> {
             return (U)new MockContentResolver();
         }
         return null;
+    }
+
+    public String getString (int resId, Object... args) {
+        return this.context == null ? "" : ((Context) this.context).getString(resId, args);
     }
 }

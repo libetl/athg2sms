@@ -2,107 +2,100 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/editcsname"
-                android:textSize="15sp" />
+                android:text="@string/editcsname"/>
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/editcsname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dip"
-            android:text="@string/edityourPatterns"
-            android:textSize="20sp" />
+            android:text="@string/edityourPatterns"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pattern"
-                android:width="100dip" />
+                android:text="@string/pattern"/>
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/cspattern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:width="200dip" />
+                android:singleLine="true"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/inbox"
-                android:width="60dip" />
+                android:width="60dip"/>
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/csinbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:elevation="2dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sent"
-                android:width="60dip" />
+                android:width="60dip"/>
 
             <EditText
                 android:inputType="text"
                 android:id="@+id/cssent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:shadowDy="5"
+                android:shadowDx="5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/export_format"
-                android:width="100dip" />
+                android:width="100dip"/>
 
             <EditText
                 android:inputType="text"
@@ -110,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:width="200dip" />
+                android:width="200dip"/>
         </LinearLayout>
     </LinearLayout>
 

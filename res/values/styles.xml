@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">#775683</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="colorPrimaryDark">#572663</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">#2172aa</item>
+        <item name="toolbarStyle">@style/myToolbarStyle</item>
+        <item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>
+        <item name="android:buttonStyle">@style/myButtonStyle</item>
+    </style>
+    <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:padding">-4000dp</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="myButtonStyle" parent="@style/Base.Widget.AppCompat.Button">
+        <item name="android:background">#572663</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="myToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+    </style>
+
+</resources>

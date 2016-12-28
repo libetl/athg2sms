@@ -15,6 +15,8 @@ import android.provider.MediaStore.Files;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.provider.DocumentFile;
 
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +32,8 @@ public class FileRetriever {
     
     private static final String EXTERNAL_MEDIA = "external"; 
     
-    public static String getFile (Context activity, String filename) throws FileNotFoundException {
+    public static String getFile (ContextHolder<?> contextHolder, String filename) throws FileNotFoundException {
+        Context activity = (Context) contextHolder.get();
         if (filename == null) {
             return null;
             
@@ -49,7 +52,7 @@ public class FileRetriever {
                     } catch (FileNotFoundException e1) {
                         try {
                             return tryToOpenWithAsASimpleFile (filename);
-                        } catch (FileNotFoundException | NoSuchElementException e) {
+                        } catch (Exception e) {
                             try {
                                 return tryToOpenWithAsAPicture (activity, filename);
                             } catch (FileNotFoundException e5) {

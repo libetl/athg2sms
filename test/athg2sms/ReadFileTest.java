@@ -20,13 +20,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ReadFileTest {
     private int                       messagesInserted = 0;
-    private List<Sms> messages = new ArrayList<>();
+    private List<Sms> messages = new ArrayList<Sms>();
 
-    private final ConvertListener convertListener  = new ConvertListener () {
+    private final ConvertListener<Object> convertListener  = new ConvertListener<Object> () {
 
         @Override
         public ConvertListener bind() {
@@ -37,7 +38,7 @@ public class ReadFileTest {
             return 0;
         }
 
-        public void displayInserted (final int inserted, final int dupl) {
+        public void displayInserted (final ContextHolder<Object> contextHolder, final int inserted, final int dupl) {
 
         }
 
@@ -45,17 +46,17 @@ public class ReadFileTest {
 
         }
 
-        public void insert (final URI uri, final Sms sms) {
-            System.out.println (sms.getValues());
-            messages.add (sms);
+        public void insert (final URI uri, final Map<String, Object> smsValues) {
+            System.out.println (smsValues);
+            messages.add (new Sms(smsValues));
             ReadFileTest.this.messagesInserted++;
         }
 
-        public void sayIPrepareTheList (final int size) {
+        public void sayIPrepareTheList (final ContextHolder<Object> contextHolder, final int size) {
         }
 
         public void setMax (final int nb2) {
-            messages = new ArrayList<>(nb2);
+            messages = new ArrayList<Sms>(nb2);
             ReadFileTest.this.messagesInserted = 0;
         }
 
@@ -174,6 +175,39 @@ public class ReadFileTest {
         Assert.assertEquals (1, this.messagesInserted);
     }
 
+    @Test
+    public void nokia382 () throws URISyntaxException {
+        String anotherAttempt = "\"sms\",\"SENT\",\"\",\"+287943978430\",\"\",\"2016.12.13 13:44\",\"\",\"Ref:\n" +
+                "4900875984\n" +
+                "ako e nevalidna izpolzvai slednata ref: 1380647\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+238763287642\",\"\",\"2016.12.13 13:17\",\"\",\"Tofdsdfsfdsn adres:\n" +
+                "Paulaner Brauerei GmbH & Co\n" +
+                "GPS: N48.176454, E11.433920\n" +
+                "Malzereisrasse 31\n" +
+                "DE/81249 Langwied\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3788979789\",\"\",\"2016.12.13 11:06\",\"\",\"Kolega, da se\n" +
+                "sfggf... Na izlizane ot HR trrgfgfg wvcxwvc jhkjkjghkj i\n" +
+                "kato vlezesh v SRB prevish prepratnica\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3788979789\",\"\",\"2016.12.12 20:01\",\"\",\"bvncnbcnv\n" +
+                "adres: N39.004925, W(-) 3.358996\"\n" +
+                "\"sms\",\"SENT\",\"\",\"07657657576\",\"\",\"2016.12.12 19:45\",\"\",\"tryytty e\n" +
+                "za 16.12\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+359877315758\",\"\",\"2016.12.12 19:45\",\"\",\"Ok\"\n" +
+                "\"sms\",\"SENT\",\"\",\"07657657576\",\"\",\"2016.12.12 19:44\",\"\",\"dfdgqsffsd adres:\n" +
+                "wvcxwcvx reryeyryt GmbH\n" +
+                "GPS:N42.54655; E45.213573\n" +
+                "ghjhhjffjjhf 3G\n" +
+                "AT/8755 fjjf iytiu kj lkgjglk\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+359877315758\",\"\",\"\",\"2016.12.12\n" +
+                "19:40\",\"\",\"Тръгвам\"\n" +
+                "\"sms\",\"SENT\",\"\",\"07657657576\",\"\",\"2016.12.12 19:34\",\"\",\"Tovarish na 13.12\n" +
+                "ot 08:00 do 17:00\n" +
+                "Ref: 45345\"";
+        this.testString (anotherAttempt, BuiltInFormatName.NokiaSuite, false);
+        Assert.assertEquals (9, this.messagesInserted);
+
+    }
+
     public void testFile (final String classpathFile, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
         final Converter convertV4 = new Converter();
@@ -190,7 +224,7 @@ public class ReadFileTest {
 
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
-                content, this.convertListener, null, new ContextHolder<>(null),
+                content, this.convertListener, null, new ContextHolder<Object>(null),
                 null, null);
 
         // then
@@ -205,7 +239,7 @@ public class ReadFileTest {
 
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
-                content, this.convertListener, null, new ContextHolder<>(null),
+                content, this.convertListener, null, new ContextHolder<Object>(null),
                 null, null);
 
         // then

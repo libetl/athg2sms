@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.toilelibre.libe.athg2sms"
-    android:theme="@android:style/Theme.Light"
-    android:versionCode="33"
-    android:versionName="1.5.0.0">
+    android:theme="@style/AppTheme"
+    android:versionCode="999"
+    android:versionName="1.6.0.0">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="7"
         android:targetSdkVersion="25" />
 
     <application
@@ -65,14 +65,14 @@
             </intent-filter>
         </service>
 
-        <service android:name=".androidstuff.ui.ConvertService"/>
-        <service android:name=".androidstuff.ui.ExportService"/>
+        <service android:name=".androidstuff.service.ConvertService"/>
+        <service android:name=".androidstuff.service.ExportService"/>
 
         <activity
             android:name=".EntryPoint"
             android:label="@string/app_title"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/Base.Theme.AppCompat.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,92 +80,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.MainMenu"
+            android:name=".androidstuff.materialdesign.Screen"
             android:label="@string/home_title"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop" android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".androidstuff.ui.PatternEdition"
+            android:name=".androidstuff.materialdesign.PatternEdition"
             android:label="@string/csedit_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.PatternListing"
-            android:label="@string/cs_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.ConversionForm"
-            android:label="@string/cf_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.Convert"
-            android:label="@string/proceed_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.Export"
-            android:label="@string/proceed_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.Done"
-            android:label="@string/done_title"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.Error"
-            android:label="@string/error_title" >
-            <intent-filter>
-                <action android:name="android.intent.action.RUN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".androidstuff.ui.ExportForm"
-            android:label="@string/export_title"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:theme="@style/Base.Theme.AppCompat.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
             </intent-filter>
