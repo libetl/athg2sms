@@ -2,6 +2,7 @@ package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -13,8 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ConvertUI;
+import org.toilelibre.libe.athg2sms.androidstuff.interactions.ExportUI;
+
+import java.util.Arrays;
 
 public class Screen  extends AppCompatActivity {
 
@@ -114,10 +121,20 @@ public class Screen  extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.new_one) {
-            return true;
-        }
+        return id == R.id.new_one || super.onOptionsItemSelected(item);
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE")) {
+            this.getIntent().putExtra("filename", ((EditText) this.findViewById (R.id.filename)).getText ().toString ());
+            this.getIntent().putExtra("pattern", ((Spinner) this.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
+            new ConvertUI().retryConvertOperation (this);
+        }
+        if (Arrays.asList(permissions).contains("android.permission.WRITE_EXTERNAL_STORAGE")) {
+            this.getIntent().putExtra("pattern", ((Spinner) this.findViewById (R.id.exportfile)).getSelectedItem ().toString ());
+            new ExportUI().retryExportOperation(this);
+        }
     }
 }

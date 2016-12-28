@@ -33,7 +33,7 @@ public class ConversionFormUI {
             @SuppressLint ("InlinedApi")
             public void onClick (final View v) {
                 Intent intent;
-                if (Build.VERSION.SDK_INT <19){
+                if (Build.VERSION.SDK_INT < 19){
                     intent = new Intent (Intent.ACTION_GET_CONTENT);
                     intent.setType ("*/*");
                     intent.putExtra ("org.openintents.extra.BUTTON_TEXT", activity.getString (R.string.selectfile));

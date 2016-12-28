@@ -28,11 +28,11 @@ import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 import java.util.ArrayList;
 
-class ConvertUI {
+public class ConvertUI {
 
     private static final ArrayList<BroadcastReceiver> toBeUnregistered = new ArrayList<BroadcastReceiver>();
 
-    void retryConvertOperation(final Activity activity) {
+    public void retryConvertOperation(final Activity activity) {
         String filename = activity.getIntent().getStringExtra("filename");
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
                 (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
