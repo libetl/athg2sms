@@ -54,20 +54,22 @@ public class QuotedPrintable {
             int b = bytes [i];
             if (b == ESCAPE_CHAR) {
                 try {
-                    if ('\n' == (char) bytes [i + 1]) {
+                    if (bytes.length > i + 1 && '\n' == (char) bytes [i + 1]) {
                         i+= 1;
                         continue;
                     }
-                    if ('\r' == (char) bytes [i + 1] && '\n' == (char) bytes [i + 2]) {
+                    if (bytes.length > i + 2 && '\r' == (char) bytes [i + 1] && '\n' == (char) bytes [i + 2]) {
                         i += 2;
                         continue;
                     }
-                    int u = Character.digit ((char) bytes [++i], 16);
-                    int l = Character.digit ((char) bytes [++i], 16);
-                    if (u == -1 || l == -1) {
-                        return null;
+                    if (bytes.length > i + 2) {
+                        int u = Character.digit((char) bytes[++i], 16);
+                        int l = Character.digit((char) bytes[++i], 16);
+                        if (u == -1 || l == -1) {
+                            return null;
+                        }
+                        buffer.write((char) ((u << 4) + l));
                     }
-                    buffer.write ((char) ((u << 4) + l));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     return null;
                 }
