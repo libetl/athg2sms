@@ -24,11 +24,13 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.ViewAnimator;
 
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
+import org.toilelibre.libe.athg2sms.androidstuff.service.ConvertService;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 import java.io.FileNotFoundException;
@@ -63,28 +65,12 @@ public class ConversionFormUI {
         target.findViewById (R.id.start).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-
-                fromColorToColor(activity, target, R.id.start, R.color.colorAccent, R.color.redAccent);
-
-                if (((Spinner) target.findViewById (R.id.conversionSet)).getSelectedItem () == null) {
-                    return;
+                if (ProcessRealTimeFeedback.getInstance() != null &&
+                        ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.IMPORT) {
+                    stop(activity, target);
+                }else {
+                    start(activity, target);
                 }
-                String filename = ((EditText) target.findViewById (R.id.filename)).getText ().toString ();
-                try {
-                    FileRetriever.getFile (new ContextHolder<Object>(activity), filename);
-                } catch (final FileNotFoundException e) {
-                    handler.post (new Runnable () {
-                        public void run () {
-                            Snackbar.make(activity.findViewById(android.R.id.content),
-                                    activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
-                        }
-                    });
-                    return;
-                }
-                final Intent proceedIntent = activity.getIntent();
-                proceedIntent.putExtra("filename", ((EditText) target.findViewById (R.id.filename)).getText ().toString ());
-                proceedIntent.putExtra("pattern", ((Spinner) target.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
-                new ConvertUI().retryConvertOperation (activity);
             }
         });
         target.findViewById (R.id.guessconvset).setOnClickListener (new OnClickListener () {
@@ -100,6 +86,34 @@ public class ConversionFormUI {
                 new SmsApplicationToggle().toggleDefault(activity);
             }
         });
+    }
+
+    private void stop(Activity activity, View target) {
+        new ConvertUI().stopConvertOperation (activity);
+    }
+
+    private void start(final Activity activity, final View target) {
+        if (((Spinner) target.findViewById (R.id.conversionSet)).getSelectedItem () == null) {
+            return;
+        }
+        String filename = ((EditText) target.findViewById (R.id.filename)).getText ().toString ();
+        try {
+            FileRetriever.getFile (new ContextHolder<Object>(activity), filename);
+        } catch (final FileNotFoundException e) {
+            handler.post (new Runnable () {
+                public void run () {
+                    Snackbar.make(activity.findViewById(android.R.id.content),
+                            activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        final Intent proceedIntent = activity.getIntent();
+        proceedIntent.putExtra("filename", ((EditText) target.findViewById (R.id.filename)).getText ().toString ());
+        proceedIntent.putExtra("pattern", ((Spinner) target.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
+        becomeStopButton(activity);
+        new ConvertUI().retryConvertOperation (activity);
+
     }
 
     private void fromColorToColor(final Context context, final View rootView, final int button, final int start, final int end) {
@@ -138,7 +152,19 @@ public class ConversionFormUI {
             activity.getIntent().putExtra("filename", ((EditText) activity.findViewById (R.id.filename)).getText ().toString ());
             activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
             new ConvertUI().retryConvertOperation (activity);
+        }else {
+            resetStartButton(activity);
         }
+    }
+
+    public void becomeStopButton(Activity activity) {
+        fromColorToColor(activity, activity.findViewById (R.id.start), R.id.start, R.color.colorAccent, R.color.redAccent);
+        ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_stop);
+    }
+
+    void resetStartButton(Activity activity) {
+        fromColorToColor(activity, activity.findViewById (R.id.start), R.id.start, R.color.redAccent, R.color.colorAccent);
+        ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_move_to_inbox_black_24dp);
     }
 
     public void triggerGuessFormat(final Activity activity, View rootView) {

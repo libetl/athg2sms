@@ -16,6 +16,8 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 import java.util.regex.Matcher;
 
 public class Converter {
@@ -64,19 +66,19 @@ public class Converter {
     @SuppressWarnings("unchecked")
     public ConversionResult convertNow (Format format,
                                         String content, ConvertListener<?> convertListener, HandlerHolder<?> convertHandler, ContextHolder<?> contextHolder,
-                                        SmsInserter inserter, SmsDeleter deleter) {
+                                        SmsInserter inserter, SmsDeleter deleter, Condition stopMonitor) {
         final ContextHolder<Object> contextHolder1 = (ContextHolder<Object>) contextHolder;
         final ConvertListener<Object> convertListener1 = (ConvertListener<Object>) convertListener;
         final HandlerHolder<Object> convertHandler1 = (HandlerHolder<Object>) convertHandler;
         try {
-            return this.runConversion (format, content, convertListener1, convertHandler1, contextHolder1, inserter, deleter);
+            return this.runConversion (format, content, convertListener1, convertHandler1, contextHolder1, inserter, deleter, stopMonitor);
         } finally {
             this.end (convertListener, convertHandler);
         }
     }
 
     private ConversionResult runConversion (Format format, String content, ConvertListener<Object> convertListener, HandlerHolder<Object> convertHandler, ContextHolder<Object> contextHolder,
-                                            SmsInserter inserter, SmsDeleter deleter) {
+                                            SmsInserter inserter, SmsDeleter deleter, Condition stopMonitor) {
 
         PreparedPattern preparedPattern = PreparedPattern.fromFormat(format.getRegex());
 
@@ -86,7 +88,7 @@ public class Converter {
             throw new ConvertException (contextHolder.getString(R.string.theSelectedFormatDoesNotWork), new IllegalArgumentException ());
         }
 
-        return this.insertAllMatcherOccurences (format, matcher, convertListener, convertHandler, contextHolder, inserter, deleter);
+        return this.insertAllMatcherOccurences (format, matcher, convertListener, convertHandler, contextHolder, inserter, deleter, stopMonitor);
     }
 
     private void dispatchAnotherSmsFoundEvent (final int newSize,
@@ -183,7 +185,8 @@ public class Converter {
 
     private ConversionResult insertAllMatcherOccurences (Format format, Matcher matcher,
                                                          ConvertListener<Object> convertListener, HandlerHolder<Object> holder,
-                                                         ContextHolder<Object> contextHolder, SmsInserter inserter, SmsDeleter deleter) {
+                                                         ContextHolder<Object> contextHolder, SmsInserter inserter, SmsDeleter deleter,
+                                                         Condition stopMonitor) {
         final List<RawMatcherResult> matchedSms = new LinkedList<RawMatcherResult> ();
         while (matcher.find ()) {
             final String smsAsText = matcher.group ();
@@ -198,6 +201,15 @@ public class Converter {
             this.dispatchNewSmsInsertionEvent (result, i,
                     contextHolder, convertListener, holder);
 
+            synchronized (stopMonitor) {
+                try {
+                    if (stopMonitor.await(10, TimeUnit.MILLISECONDS)) {
+                        return result;
+                    }
+                } catch (InterruptedException e) {
+                } catch (IllegalMonitorStateException e) {
+                }
+            }
             result = result.with(this.proceedToInsertion (format, matchedSms.get (i),
                     convertListener, contextHolder, inserter, deleter));
         }

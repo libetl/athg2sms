@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.concurrent.locks.Condition;
 
 public class Actions {
 
@@ -40,7 +41,7 @@ public class Actions {
         return FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()]);
     }
 
-    public void runConversionNow(ContextHolder<?> contextHolder, Runnable done, ErrorHandler errorHandler, String filename, String pattern) {
+    public void runConversionNow(ContextHolder<?> contextHolder, Runnable done, ErrorHandler errorHandler, String filename, String pattern, Condition stopMonitor) {
         final Converter thisConverter = new Converter();
         ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
         final String content = this.getContentFromFileName (contextHolder, filename);
@@ -52,7 +53,7 @@ public class Actions {
             atLeastOneConverted = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
                     pattern), content,
                     convertListener, new HandlerHolder<Object>(convertListener.getHandler()),
-                    contextHolder, new SmsInserter(), new SmsDeleter()).getInserted() > 0;
+                    contextHolder, new SmsInserter(), new SmsDeleter(), stopMonitor).getInserted() > 0;
         } catch (ConvertException ce) {
             errorHandler.run(ce);
             return;
