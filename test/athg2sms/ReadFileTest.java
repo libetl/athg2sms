@@ -170,6 +170,14 @@ public class ReadFileTest {
     }
 
     @Test
+    public void davidWhite () throws URISyntaxException {
+        this.testString ("sent,\"2016-06-26 18:48:49\",61424525904,61414443227,\"His paw is very sore.\n" +
+                "I'll have a close look at it tomorrow morning. He's a bit edgy and startles\n" +
+                "easily...\",Delivered", BuiltInFormatName.DavidNokia, false);
+        Assert.assertEquals (1, this.messagesInserted);
+    }
+
+    @Test
     public void vmg () throws URISyntaxException {
         this.testFile ("/mnt/data/lionel/Documents/workspace/athg2sms/test/athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox, false);
         Assert.assertEquals (1, this.messagesInserted);
