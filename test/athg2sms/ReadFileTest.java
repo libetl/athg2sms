@@ -184,6 +184,43 @@ public class ReadFileTest {
     }
 
     @Test
+    public void johnPierre() throws URISyntaxException {
+        this.testString ("BEGIN:VMSG\n" +
+                "VERSION: 1.1\n" +
+                "BEGIN:VCARD\n" +
+                "TEL:+36707100000\n" +
+                "END:VCARD\n" +
+                "BEGIN:VBODY\n" +
+                "X-BOX:INBOX\n" +
+                "X-READ:READ\n" +
+                "X-SIMID:0\n" +
+                "X-LOCKED:UNLOCKED\n" +
+                "X-TYPE:SMS\n" +
+                "Date:2016/12/27 18:25:44\n" +
+                "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Your WhatsApp code is --- but you can simply tap on this link to verify=\n" +
+                " your device:---\n" +
+                "END:VBODY\n" +
+                "END:VMSG\n" +
+                "BEGIN:VMSG\n" +
+                "VERSION: 1.1\n" +
+                "BEGIN:VCARD\n" +
+                "TEL:+17632800000\n" +
+                "END:VCARD\n" +
+                "BEGIN:VBODY\n" +
+                "X-BOX:INBOX\n" +
+                "X-READ:READ\n" +
+                "X-SIMID:0\n" +
+                "X-LOCKED:UNLOCKED\n" +
+                "X-TYPE:SMS\n" +
+                "Date:2016/12/27 18:23:34\n" +
+                "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:WhatsApp code --- You can also tap on this link to verify your ph=\n" +
+                "one: ---\n" +
+                "END:VBODY\n" +
+                "END:VMSG\n", BuiltInFormatName.LumiaVmg, false);
+        Assert.assertEquals (2, this.messagesInserted);
+    }
+
+    @Test
     public void nokia382 () throws URISyntaxException {
         String anotherAttempt = "\"sms\",\"SENT\",\"\",\"+287943978430\",\"\",\"2016.12.13 13:44\",\"\",\"Ref:\n" +
                 "4900875984\n" +
