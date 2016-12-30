@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu android:id="@+id/top_menu" xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/new_one"
+    <item android:id="@+id/rate_this_app"
         android:icon="@drawable/ic_logo"
-        android:title="@string/app_title"/>
-    <item android:id="@+id/help"
-        android:icon="@drawable/ic_logo"
-        android:title="@string/app_title" />
+        android:title="@string/rate_this_app"/>
 </menu>

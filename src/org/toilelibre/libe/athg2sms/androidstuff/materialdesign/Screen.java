@@ -1,5 +1,7 @@
 package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,16 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ConversionFormUI;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ExportFormUI;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
-public class Screen  extends AppCompatActivity {
+public class Screen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,13 +136,16 @@ public class Screen  extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        menu.findItem(R.id.rate_this_app).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("market://details?id=" + EntryPoint.class.getPackage().getName()));
+                startActivity(intent);
+                return true;
+            }
+        });
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return id == R.id.new_one || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -144,5 +153,15 @@ public class Screen  extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         new ConversionFormUI().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         new ExportFormUI().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult (requestCode, resultCode, data);
+        if (requestCode == SmsApplicationToggle.REQUEST_CODE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            boolean checked =
+                    EntryPoint.class.getPackage().getName().equals(new SmsApplicationToggle().getDefaultSmsPackage(this));
+            ((Switch)this.findViewById(R.id.toggledefaultapp)).setChecked(checked);
+        }
     }
 }

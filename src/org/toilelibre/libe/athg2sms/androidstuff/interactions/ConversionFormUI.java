@@ -158,11 +158,13 @@ public class ConversionFormUI {
     }
 
     public void becomeStopButton(Activity activity) {
+        if (activity.findViewById (R.id.start) == null) return;
         fromColorToColor(activity, activity.findViewById (R.id.start), R.id.start, R.color.colorAccent, R.color.redAccent);
         ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_stop);
     }
 
     void resetStartButton(Activity activity) {
+        if (activity.findViewById (R.id.start) == null) return;
         fromColorToColor(activity, activity.findViewById (R.id.start), R.id.start, R.color.redAccent, R.color.colorAccent);
         ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_move_to_inbox_black_24dp);
     }
