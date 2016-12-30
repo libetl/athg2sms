@@ -170,10 +170,11 @@ public class ReadFileTest {
     }
 
     @Test
-    public void davidWhite () throws URISyntaxException {
-        this.testString ("sent,\"2016-06-26 18:48:49\",61424525904,61414443227,\"His paw is very sore.\n" +
-                "I'll have a close look at it tomorrow morning. He's a bit edgy and startles\n" +
-                "easily...\",Delivered", BuiltInFormatName.DavidNokia, false);
+    public void mxtSmsGlobal () throws URISyntaxException {
+        this.testString ("Date,Origin,Destination,Message,Status\n" +
+                "\"2016-12-22 23:34:54\",61424525904,61405190016,\"Thomas if you see or hear\n" +
+                "the cat can you bring him in, I couldn't find him...\",Delivered\n" +
+                "Date,Origin,Destination,Message,Status", BuiltInFormatName.MxtSmsglobal, false);
         Assert.assertEquals (1, this.messagesInserted);
     }
 
