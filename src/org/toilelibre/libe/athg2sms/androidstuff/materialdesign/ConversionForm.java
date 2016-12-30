@@ -1,5 +1,7 @@
 package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,11 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 
+import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ConversionFormUI;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
 public class ConversionForm extends Fragment {
 
@@ -22,6 +29,11 @@ public class ConversionForm extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         final View result = inflater.inflate(R.layout.conversionform, container, false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            replaceButtonBySwitch(this.getActivity(), (ViewGroup)result);
+        }
+
         ((Spinner) result.findViewById (R.id.conversionSet)).setAdapter (new ArrayAdapter<String> (this.getActivity(), android.R.layout.simple_spinner_item,
                 new Actions ().getAllFormats()));
 
@@ -31,7 +43,41 @@ public class ConversionForm extends Fragment {
         return result;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        applyCheckedStatus(view.findViewById(R.id.toggledefaultapp));
+    }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void replaceButtonBySwitch(Activity activity, ViewGroup result) {
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        TextView titleView = new TextView(activity);
+        titleView.setLayoutParams(lparams);
+        titleView.setText(R.string.toggledefaultapp);
+        Switch theSwitch = new Switch(activity);
+        theSwitch.setId(R.id.toggledefaultapp);
+        theSwitch.setLayoutParams(lparams);
+        applyCheckedStatus(theSwitch);
+        layout.addView(theSwitch);
+        layout.addView(titleView);
+
+        ((ViewGroup) result.findViewById(R.id.conversionFormButtons)).removeView(result.findViewById(R.id.toggledefaultapp));
+        ((ViewGroup) result.findViewById(R.id.conversionFormButtons)).addView(layout);
+    }
+
+    private void applyCheckedStatus(View aSwitch) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            String defaultSmsApp =
+                    new SmsApplicationToggle().getDefaultSmsPackage(this.getActivity());
+            ((Switch)aSwitch).setChecked(EntryPoint.class.getPackage().getName().equals(defaultSmsApp));
+        }
+    }
+
+    @Override
     public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult (requestCode, resultCode, data);
         if (data != null && data.getData () != null && data.getData ().getPath () != null) {

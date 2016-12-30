@@ -70,4 +70,5 @@
     <string name="savingthesms">Saving the sms #</string>
     <string name="nosmsimported">I thought it would work but no SMS was valid in this file</string>
     <string name="pickingfrom">"Picking a sms from %s : </string>
+    <string name="rate_this_app">Rate this app</string>
 </resources>

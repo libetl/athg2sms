@@ -70,4 +70,5 @@
     <string name="savingthesms">Enregistrement du SMS n°</string>
     <string name="nosmsimported">Ça aurait pu marcher mais aucun SMS n\'était valide dans le fichier</string>
     <string name="pickingfrom">Récuperation d\'un SMS depuis %s : </string>
+    <string name="rate_this_app">Mettre une note</string>
 </resources>
