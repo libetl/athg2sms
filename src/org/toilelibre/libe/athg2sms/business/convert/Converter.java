@@ -201,20 +201,28 @@ public class Converter {
             this.dispatchNewSmsInsertionEvent (result, i,
                     contextHolder, convertListener, holder);
 
-            synchronized (stopMonitor) {
-                try {
-                    if (stopMonitor.await(10, TimeUnit.MILLISECONDS)) {
-                        return result;
-                    }
-                } catch (InterruptedException e) {
-                } catch (IllegalMonitorStateException e) {
-                }
+            if (weAreAskedToStopNow(stopMonitor)) {
+                return result;
             }
             result = result.with(this.proceedToInsertion (format, matchedSms.get (i),
                     convertListener, contextHolder, inserter, deleter));
         }
 
         return result;
+    }
+
+    private boolean weAreAskedToStopNow(Condition stopMonitor) {
+        if (stopMonitor == null)return false;
+        synchronized (stopMonitor) {
+            try {
+                if (stopMonitor.await(1, TimeUnit.MILLISECONDS)) {
+                    return true;
+                }
+            } catch (InterruptedException e) {
+            } catch (IllegalMonitorStateException e) {
+            }
+        }
+        return false;
     }
 
     private void end (final ConvertListener convertListener, final HandlerHolder<?> holder) {

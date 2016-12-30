@@ -69,4 +69,5 @@
     <string name="missingFolderVar">There should be a folder var inside the format pattern ! Please try again.</string>
     <string name="savingthesms">Saving the sms #</string>
     <string name="nosmsimported">I thought it would work but no SMS was valid in this file</string>
+    <string name="pickingfrom">"Picking a sms from %s : </string>
 </resources>

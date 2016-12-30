@@ -270,7 +270,7 @@ public class ReadFileTest {
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
                 content, this.convertListener, null, new ContextHolder<Object>(null),
-                null, null);
+                null, null, null);
 
         // then
         if (!shouldBeEmpty) {
@@ -285,7 +285,7 @@ public class ReadFileTest {
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
                 content, this.convertListener, null, new ContextHolder<Object>(null),
-                null, null);
+                null, null, null);
 
         // then
         if (!shouldBeEmpty) {

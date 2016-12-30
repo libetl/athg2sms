@@ -70,4 +70,5 @@
    <string name="missingFolderVar">¡ Debe ser una variable llamada "folder"! Gracias a incluirla.</string>
    <string name="savingthesms">Estoy registrando el SMS numero </string>
    <string name="nosmsimported">Pensaba que este era posible mas ningún SMS fue valido en este archivo.</string>
+   <string name="pickingfrom">Recuperación del SMS desde %s : </string>
 </resources>

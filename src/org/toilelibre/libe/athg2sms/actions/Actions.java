@@ -45,7 +45,7 @@ public class Actions {
         final Converter thisConverter = new Converter();
         ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
         final String content = this.getContentFromFileName (contextHolder, filename);
-        if (content == null) {
+        if (content == null || convertListener == null) {
             return;
         }
         boolean atLeastOneConverted;
