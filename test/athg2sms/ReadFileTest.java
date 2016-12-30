@@ -38,7 +38,7 @@ public class ReadFileTest {
             return 0;
         }
 
-        public void displayInserted (final ContextHolder<Object> contextHolder, final int inserted, final int dupl) {
+        public void displayInserted(final ContextHolder<Object> contextHolder, final Converter.ConversionResult result) {
 
         }
 
@@ -170,9 +170,54 @@ public class ReadFileTest {
     }
 
     @Test
+    public void davidWhite () throws URISyntaxException {
+        this.testString ("sent,\"2016-06-26 18:48:49\",61424525904,61414443227,\"His paw is very sore.\n" +
+                "I'll have a close look at it tomorrow morning. He's a bit edgy and startles\n" +
+                "easily...\",Delivered", BuiltInFormatName.DavidNokia, false);
+        Assert.assertEquals (1, this.messagesInserted);
+    }
+
+    @Test
     public void vmg () throws URISyntaxException {
         this.testFile ("/mnt/data/lionel/Documents/workspace/athg2sms/test/athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox, false);
         Assert.assertEquals (1, this.messagesInserted);
+    }
+
+    @Test
+    public void johnPierre() throws URISyntaxException {
+        this.testString ("BEGIN:VMSG\n" +
+                "VERSION: 1.1\n" +
+                "BEGIN:VCARD\n" +
+                "TEL:+36707100000\n" +
+                "END:VCARD\n" +
+                "BEGIN:VBODY\n" +
+                "X-BOX:INBOX\n" +
+                "X-READ:READ\n" +
+                "X-SIMID:0\n" +
+                "X-LOCKED:UNLOCKED\n" +
+                "X-TYPE:SMS\n" +
+                "Date:2016/12/27 18:25:44\n" +
+                "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Your WhatsApp code is --- but you can simply tap on this link to verify=\n" +
+                " your device:---\n" +
+                "END:VBODY\n" +
+                "END:VMSG\n" +
+                "BEGIN:VMSG\n" +
+                "VERSION: 1.1\n" +
+                "BEGIN:VCARD\n" +
+                "TEL:+17632800000\n" +
+                "END:VCARD\n" +
+                "BEGIN:VBODY\n" +
+                "X-BOX:INBOX\n" +
+                "X-READ:READ\n" +
+                "X-SIMID:0\n" +
+                "X-LOCKED:UNLOCKED\n" +
+                "X-TYPE:SMS\n" +
+                "Date:2016/12/27 18:23:34\n" +
+                "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:WhatsApp code --- You can also tap on this link to verify your ph=\n" +
+                "one: ---\n" +
+                "END:VBODY\n" +
+                "END:VMSG\n", BuiltInFormatName.LumiaVmg, false);
+        Assert.assertEquals (2, this.messagesInserted);
     }
 
     @Test
@@ -204,7 +249,7 @@ public class ReadFileTest {
                 "ot 08:00 do 17:00\n" +
                 "Ref: 45345\"";
         this.testString (anotherAttempt, BuiltInFormatName.NokiaSuite, false);
-        Assert.assertEquals (9, this.messagesInserted);
+        Assert.assertEquals (8, this.messagesInserted);
 
     }
 
@@ -225,7 +270,7 @@ public class ReadFileTest {
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
                 content, this.convertListener, null, new ContextHolder<Object>(null),
-                null, null);
+                null, null, null);
 
         // then
         if (!shouldBeEmpty) {
@@ -240,7 +285,7 @@ public class ReadFileTest {
         // When
         convertV4.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
                 content, this.convertListener, null, new ContextHolder<Object>(null),
-                null, null);
+                null, null, null);
 
         // then
         if (!shouldBeEmpty) {

@@ -29,7 +29,7 @@ public class Screen  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.iconv3);
+        toolbar.setNavigationIcon(R.drawable.ic_logo);
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -96,6 +96,11 @@ public class Screen  extends AppCompatActivity {
                     }
                     ViewCompat.animate(startButton).scaleX(1).scaleY(1).alpha(1.0F)
                             .setInterpolator(new FastOutSlowInInterpolator()).withLayer().setStartDelay(100).start();
+
+                    if (ProcessRealTimeFeedback.getInstance() != null &&
+                            ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.IMPORT) {
+                        new ConversionFormUI().becomeStopButton(Screen.this);
+                    }
                 }else {
                     if (startButton != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         startButton.setScaleX(0);

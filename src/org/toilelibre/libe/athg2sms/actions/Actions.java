@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.actions;
 
+import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
@@ -20,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.concurrent.locks.Condition;
 
 public class Actions {
 
@@ -39,11 +41,11 @@ public class Actions {
         return FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()]);
     }
 
-    public void runConversionNow(ContextHolder<?> contextHolder, Runnable done, ErrorHandler errorHandler, String filename, String pattern) {
+    public void runConversionNow(ContextHolder<?> contextHolder, Runnable done, ErrorHandler errorHandler, String filename, String pattern, Condition stopMonitor) {
         final Converter thisConverter = new Converter();
         ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
         final String content = this.getContentFromFileName (contextHolder, filename);
-        if (content == null) {
+        if (content == null || convertListener == null) {
             return;
         }
         boolean atLeastOneConverted;
@@ -51,7 +53,7 @@ public class Actions {
             atLeastOneConverted = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
                     pattern), content,
                     convertListener, new HandlerHolder<Object>(convertListener.getHandler()),
-                    contextHolder, new SmsInserter(), new SmsDeleter());
+                    contextHolder, new SmsInserter(), new SmsDeleter(), stopMonitor).getInserted() > 0;
         } catch (ConvertException ce) {
             errorHandler.run(ce);
             return;
@@ -59,7 +61,7 @@ public class Actions {
             ProcessRealTimeFeedback.unbind();
         }
         if (!atLeastOneConverted)
-            errorHandler.run(new ParseException("No SMS Imported !\nThe selected format does not match the input", 0));
+            errorHandler.run(new ParseException(contextHolder.getString(R.string.nosmsimported), 0));
         else
             done.run();
     }

@@ -1,4 +1,6 @@
 <resources>
 
     <color name="black">#00000000</color>
+    <color name="colorAccent">#002172aa</color>
+    <color name="redAccent">#00aa2221</color>
 </resources>

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Telephony;
 
+import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
@@ -25,8 +26,8 @@ public class SmsFinder {
         final Cursor cursorInbox = query(getSmsInboxFolder(), contextHolder);
         final Cursor cursorSent = query(getSmsSentFolder(), contextHolder);
 
-        result.addAll(iterateFor("inbox", cursorInbox, handler, convertListener));
-        result.addAll(iterateFor("sent", cursorSent, handler, convertListener));
+        result.addAll(iterateFor("inbox", cursorInbox, contextHolder, handler, convertListener));
+        result.addAll(iterateFor("sent", cursorSent, contextHolder, handler, convertListener));
 
         cursorInbox.close();
         cursorSent.close();
@@ -38,7 +39,7 @@ public class SmsFinder {
         return contentResolver.query(smsFolder, null, null, null, null);
     }
 
-    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
+    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final ContextHolder<?> contextHolder, final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
 
         if (cursor == null) return Collections.emptyList();
 
@@ -60,7 +61,7 @@ public class SmsFinder {
                 @Override
                 public void run() {
                     if (!cursor.isClosed()) {
-                        convertListener.updateProgress("Picking a sms from " + folderName + " : ",
+                        convertListener.updateProgress(contextHolder.getString(R.string.pickingfrom, folderName),
                                 thisMsgIndex, cursor.getCount());
                     }
                 }

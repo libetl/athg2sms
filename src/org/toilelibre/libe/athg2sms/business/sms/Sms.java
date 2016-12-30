@@ -17,22 +17,19 @@ public class Sms {
         this.values.putAll(valuesToPick);
     }
 
-    public Sms(Format.FormatVarNamesRepresentation varNames, RawMatcherResult result) {
+    public Sms(Format.FormatVarNamesRepresentation varNames, RawMatcherResult result) throws ParseException {
         boolean quotedPrintable = false;
         for (int i = 0 ; i < varNames.size () ; i++) {
             final String var = varNames.getVarNames().get (i);
             final String val = result.group (i);
             if (var.startsWith ("date")) {
                 final SimpleDateFormat df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
-                try {
-                    if (values.get ("date") == null) {
-                        values.put ("date", df.parse (val).getTime ());
-                    } else {
-                        long l = Long.parseLong ("" + values.get ("date"));
-                        l += df.parse (val).getTime ();
-                        values.put ("date", l);
-                    }
-                } catch (final ParseException e) {
+                if (values.get ("date") == null) {
+                    values.put ("date", df.parse (val).getTime ());
+                } else {
+                    long l = Long.parseLong ("" + values.get ("date"));
+                    l += df.parse (val).getTime ();
+                    values.put ("date", l);
                 }
             }else if (var.equals ("encoding") && "QUOTED-PRINTABLE".equalsIgnoreCase (val)) {
                 quotedPrintable = true;
@@ -46,7 +43,7 @@ public class Sms {
         }
         values.put ("folder", result.getFolder());
     }
-    
+
     public boolean isEmpty () {
         for (String value : values.keySet ()) {
             if (values.get (value) != null && !values.get (value).equals (""))

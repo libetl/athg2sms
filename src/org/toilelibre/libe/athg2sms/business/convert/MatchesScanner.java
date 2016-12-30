@@ -19,7 +19,7 @@ class MatchesScanner {
 
     Matcher matcher () {
         final String pattern = preparedPattern.getValPattern ();
-        final String sampleOfTheContent = this.content.length () > 2048 ? this.content.substring (0, 2048) : this.content;
+        final String sampleOfTheContent = this.content.length () > 2048 ? this.content.substring (0, 2048) : this.content + '\n';
         // sample it to test it
         final Pattern patternObject = Pattern.compile (pattern);
         final Matcher m = patternObject.matcher (sampleOfTheContent);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">"Import from File" Done !</string>
-    <string name="app_name">AthgWSms V1.6.0.0</string>
+    <string name="app_name">AthgWSms</string>
 
     <string name="app_title">Anything With Sms</string>
     <string name="home_title">AthgWSms</string>
@@ -62,9 +62,12 @@
     <string name="nocompatiblepattern">No compatible format</string>
     <string name="noHashInPatternPlease">No hash char in the pattern please</string>
     <string name="preparingWrite">Preparing write for sms # : %d</string>
-    <string name="insertedSms">Inserted SMS : %1$d (%2$d duplicate(s))</string>
+    <string name="insertedSms">Inserted SMS : %1$d (%2$d duplicate(s) and %3$d failed</string>
     <string name="theSelectedFormatDoesNotWork">The selected format does not work, sorry</string>
     <string name="writingSms">Writing sms : </string>
     <string name="problem_while_writing">Problem during one insertion</string>
     <string name="missingFolderVar">There should be a folder var inside the format pattern ! Please try again.</string>
+    <string name="savingthesms">Saving the sms #</string>
+    <string name="nosmsimported">I thought it would work but no SMS was valid in this file</string>
+    <string name="pickingfrom">"Picking a sms from %s : </string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.actions.ConvertListener;
+import org.toilelibre.libe.athg2sms.business.convert.Converter;
 
 import java.net.URI;
 import java.util.Map;
@@ -30,8 +31,9 @@ public class ProcessRealTimeFeedback implements ConvertListener<Context> {
         return 0;
     }
 
-    public void displayInserted (final ContextHolder<Context> contextHolder, final int inserted, final int dupl) {
-        this.proceedHandler.getInserted().setText (contextHolder.getString(R.string.insertedSms, inserted, dupl));
+    public void displayInserted(final ContextHolder<Context> contextHolder, final Converter.ConversionResult result) {
+        this.proceedHandler.getInserted().setText (contextHolder.getString(R.string.insertedSms,
+                result.getInserted(), result.getDuplicated(), result.getFailed()));
     }
 
     public void end () {

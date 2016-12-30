@@ -60,6 +60,7 @@ class ConvertUI {
         final BroadcastReceiver stopConvert = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                new ConversionFormUI().resetStartButton(activity);
                 buildAlertDialog(activity, R.string.done_title, R.layout.done, R.string.great);
                 unregisterAllReceivers(activity);
             }
@@ -67,6 +68,7 @@ class ConvertUI {
         final BroadcastReceiver errorDuringConvert = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                new ConversionFormUI().resetStartButton(activity);
                 Dialog dialog = buildAlertDialog(activity, R.string.error_title, R.layout.error, R.string.again);
                 final String errorMessage1 = intent.getExtras().getString("errorMessage");
                 final String errorMessage2 = intent.getExtras().getString("secondErrorMessage");
@@ -92,6 +94,12 @@ class ConvertUI {
             activity.findViewById (R.id.progress).setVisibility(View.VISIBLE);
             ProcessRealTimeFeedback.getInstance().updateHandler(handler);
         }
+    }
+
+    void stopConvertOperation(Activity activity) {
+        final Intent intent = new Intent (activity, ConvertService.class);
+        intent.putExtra("stopNow", "stopNow");
+        activity.startService(intent);
     }
 
     private synchronized void unregisterAllReceivers(Activity activity) {
