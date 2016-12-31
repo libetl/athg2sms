@@ -71,4 +71,6 @@
     <string name="nosmsimported">I thought it would work but no SMS was valid in this file</string>
     <string name="pickingfrom">"Picking a sms from %s : </string>
     <string name="rate_this_app">Rate this app</string>
+    <string name="exportpermissionsarenecessary">Cannot export a single SMS. I must be allowed to do that.</string>
+    <string name="conversionpermissionsarenecessary">Cannot import a single SMS entry. I must be allowed to do that.</string>
 </resources>

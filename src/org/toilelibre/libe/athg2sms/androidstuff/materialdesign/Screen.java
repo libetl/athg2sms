@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -78,9 +77,14 @@ public class Screen extends AppCompatActivity {
                     }
                 }
                 if (screen == 1) {
+                    FloatingActionButton startButton = (FloatingActionButton) Screen.this.findViewById(R.id.start);
                     FloatingActionButton exportButton = (FloatingActionButton) Screen.this.findViewById(R.id.exportfile);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         exportButton.setX( viewPager.getWidth() / 4 + viewPager.getScrollX() / 3 - 140);
+                    }
+                    if (startButton != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        startButton.setScaleX(0);
+                        startButton.setScaleY(0);
                     }
                 }
                 if (screen == 2) {
@@ -112,6 +116,10 @@ public class Screen extends AppCompatActivity {
                         startButton.setScaleX(0);
                         startButton.setScaleY(0);
                     }
+                }
+                if (screen == 1 && ProcessRealTimeFeedback.getInstance() != null &&
+                        ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.EXPORT) {
+                    new ExportFormUI().becomeStopButton(Screen.this);
                 }
 
                 if (screen == 0 && ProcessRealTimeFeedback.getInstance() != null && ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.IMPORT) {
@@ -151,8 +159,11 @@ public class Screen extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        new ConversionFormUI().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-        new ExportFormUI().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+
+        Integer[] grantResults1 = new Integer[grantResults.length];
+        for (int i = 0 ; i < grantResults1.length ; i++)grantResults1[i] = grantResults [i];
+        new ConversionFormUI().onRequestPermissionsResult(this, permissions, grantResults1);
+        new ExportFormUI().onRequestPermissionsResult(this, permissions, grantResults1);
     }
 
     @Override

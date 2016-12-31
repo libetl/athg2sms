@@ -10,10 +10,13 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Condition;
+
+import static org.toilelibre.libe.athg2sms.business.concurrent.ConditionWatcher.weAreAskedToStopNowBecauseOfThe;
 
 public class Exporter {
 
-    public String export(final ContextHolder<?> context, final HandlerHolder<?> handler, final String patternName, final ConvertListener convertListener) {
+    public String export(final ContextHolder<?> context, final HandlerHolder<?> handler, final String patternName, final ConvertListener convertListener, final Condition stopMonitor) {
         handler.postForHandler(new Runnable() {
             @Override
             @SuppressWarnings("unchecked")
@@ -23,7 +26,9 @@ public class Exporter {
         });
         final StringBuilder result = new StringBuilder();
         final MessageMapper messageMapper = new MessageMapper();
-        final List<Map<String, Object>> list = new SmsFinder().pickThemAll(context, handler, (ProcessRealTimeFeedback) convertListener);
+        final List<Map<String, Object>> list = new SmsFinder().pickThemAll(context, handler, (ProcessRealTimeFeedback) convertListener, stopMonitor);
+
+        if (list == null) return null;
 
         handler.postForHandler(new Runnable() {
             @Override
@@ -33,6 +38,9 @@ public class Exporter {
         });
 
         for (int i = 0; i < list.size() ; i++) {
+
+            if (weAreAskedToStopNowBecauseOfThe(stopMonitor)) return null;
+
             final int thisIndex = i;
             handler.postForHandler(new Runnable() {
                 @Override
