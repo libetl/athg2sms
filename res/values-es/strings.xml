@@ -69,7 +69,9 @@
    <string name="problem_while_writing">Yo no fui capaz de insertar un SMS</string>
    <string name="missingFolderVar">¡ Debe ser una variable llamada "folder"! Gracias a incluirla.</string>
    <string name="savingthesms">Estoy registrando el SMS numero </string>
-   <string name="nosmsimported">Pensaba que este era posible mas ningún SMS fue valido en este archivo.</string>
+   <string name="nosmsimported">Pensaba que este era posible pero ningún SMS fue valido en este archivo.</string>
    <string name="pickingfrom">Recuperación del SMS desde %s : </string>
    <string name="rate_this_app">Calificar esta app</string>
+   <string name="exportpermissionsarenecessary">No puedo exportar nada. Necesito los derechos para hacerlo.</string>
+   <string name="conversionpermissionsarenecessary">No puedo importar nada. Necesito los derechos para hacerlo.</string>
 </resources>

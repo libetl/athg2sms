@@ -76,12 +76,16 @@ public class Actions {
         }
     }
 
-    public void exportNow(Object context, File tempFile, Runnable afterExport, String pattern) {
+    public void exportNow(Object context, File tempFile, Runnable afterExport, String pattern, Condition stopMonitor) {
 
         final ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
         final String result = new Exporter().export(new ContextHolder<Object>(context),
-                new HandlerHolder<Object>(convertListener.getHandler()), pattern, convertListener);
+                new HandlerHolder<Object>(convertListener.getHandler()), pattern, convertListener, stopMonitor);
 
+        if (result == null) {
+            afterExport.run();
+            return;
+        }
         try {
             FileWriter fw = new FileWriter(tempFile);
             fw.write(result);

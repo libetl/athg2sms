@@ -16,15 +16,17 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.regex.Matcher;
+
+import static org.toilelibre.libe.athg2sms.business.concurrent.ConditionWatcher.weAreAskedToStopNowBecauseOfThe;
 
 public class Converter {
     private final static String FOLDER = "content://sms/";
 
     public static class ConversionResult {
         private static final ConversionResult BAD_ONE = new ConversionResult(1, 0, 0, 1);
+        private static final ConversionResult NOTHING_TO_SAY = new ConversionResult(1, 1, 0, 1);
         private static final ConversionResult NOT_YET_PRESENT = new ConversionResult(1, 1, 0, 0);
         private static final ConversionResult ALREADY_PRESENT = new ConversionResult(1, 1, 1, 0);
         private int total;
@@ -32,7 +34,7 @@ public class Converter {
         private int duplicated;
         private int failed;
 
-        public ConversionResult(int total, int inserted, int duplicated, int failed) {
+        ConversionResult(int total, int inserted, int duplicated, int failed) {
             this.total = total;
             this.inserted = inserted;
             this.duplicated = duplicated;
@@ -96,6 +98,7 @@ public class Converter {
                                                final ContextHolder<Object> contextHolder,
                                                final HandlerHolder<?> holder) {
         if (holder == null) return;
+        if (newSize % 100 != 0) return;
         holder.postForHandler (new Runnable () {
 
             public void run () {
@@ -191,6 +194,9 @@ public class Converter {
         while (matcher.find ()) {
             final String smsAsText = matcher.group ();
             matchedSms.add (new RawMatcherResult(matcher, format.getRegex(), smsAsText));
+            if (weAreAskedToStopNowBecauseOfThe(stopMonitor)) {
+                return ConversionResult.NOTHING_TO_SAY;
+            }
             this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, contextHolder, holder);
         }
 
@@ -201,7 +207,7 @@ public class Converter {
             this.dispatchNewSmsInsertionEvent (result, i,
                     contextHolder, convertListener, holder);
 
-            if (weAreAskedToStopNow(stopMonitor)) {
+            if (weAreAskedToStopNowBecauseOfThe(stopMonitor)) {
                 return result;
             }
             result = result.with(this.proceedToInsertion (format, matchedSms.get (i),
@@ -209,20 +215,6 @@ public class Converter {
         }
 
         return result;
-    }
-
-    private boolean weAreAskedToStopNow(Condition stopMonitor) {
-        if (stopMonitor == null)return false;
-        synchronized (stopMonitor) {
-            try {
-                if (stopMonitor.await(1, TimeUnit.MILLISECONDS)) {
-                    return true;
-                }
-            } catch (InterruptedException e) {
-            } catch (IllegalMonitorStateException e) {
-            }
-        }
-        return false;
     }
 
     private void end (final ConvertListener convertListener, final HandlerHolder<?> holder) {

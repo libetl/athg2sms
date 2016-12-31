@@ -24,8 +24,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 
 class ExportUI {
+    private static final ArrayList<BroadcastReceiver> toBeUnregistered = new ArrayList<BroadcastReceiver>();
 
     void retryExportOperation(final Activity activity) {
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1 ||
@@ -68,22 +70,33 @@ class ExportUI {
     }
 
     private void sendTextData(final Activity activity) {
-        LocalBroadcastManager.getInstance(activity).registerReceiver(new BroadcastReceiver() {
+        BroadcastReceiver newReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                final Intent sendToIntent = new Intent(Intent.ACTION_SEND)
-                        .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(intent.getStringExtra("result"))))
-                        .setType("text/plain");
-                activity.startActivity(Intent.createChooser(sendToIntent, "Save as..."));
+                if (intent.getStringExtra("result") != null) {
+                    final Intent sendToIntent = new Intent(Intent.ACTION_SEND)
+                            .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(intent.getStringExtra("result"))))
+                            .setType("text/plain");
+                    activity.startActivity(Intent.createChooser(sendToIntent, "Save as..."));
+                }
                 ProcessRealTimeFeedback.unbind();
+                new ExportFormUI().resetExportButton(activity);
+                unregisterAllReceivers(activity);
             }
-        }, new IntentFilter("stopExport"));
+        };
+        LocalBroadcastManager.getInstance(activity).registerReceiver(newReceiver, new IntentFilter("stopExport"));
+        toBeUnregistered.add(newReceiver);
     }
 
     private void copyTempFile(final Activity activity) {
-        LocalBroadcastManager.getInstance(activity).registerReceiver(new BroadcastReceiver() {
+        BroadcastReceiver newReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                if (intent.getStringExtra("result") == null) {
+                    ProcessRealTimeFeedback.unbind();
+                    new ExportFormUI().resetExportButton(activity);
+                    unregisterAllReceivers(activity);
+                }
                 File parentDir;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
                     parentDir = activity.getExternalFilesDir(null);
@@ -113,8 +126,25 @@ class ExportUI {
                             activity.getResources().getString(R.string.problem_while_exporting, e.getMessage()), Snackbar.LENGTH_LONG).show();
                 } finally {
                     ProcessRealTimeFeedback.unbind();
+                    new ExportFormUI().resetExportButton(activity);
+                    unregisterAllReceivers(activity);
                 }
             }
-        }, new IntentFilter("stopExport"));
+        };
+        LocalBroadcastManager.getInstance(activity).registerReceiver(newReceiver, new IntentFilter("stopExport"));
+        toBeUnregistered.add(newReceiver);
+    }
+
+    void stopConvertOperation(Activity activity) {
+        final Intent intent = new Intent (activity, ExportService.class);
+        intent.putExtra("stopNow", "stopNow");
+        activity.startService (intent);
+    }
+
+    private synchronized void unregisterAllReceivers(Activity activity) {
+        for (BroadcastReceiver receiver : toBeUnregistered) {
+            LocalBroadcastManager.getInstance(activity).unregisterReceiver(receiver);
+        }
+        toBeUnregistered.clear();
     }
 }

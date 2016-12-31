@@ -71,4 +71,6 @@
     <string name="nosmsimported">Ça aurait pu marcher mais aucun SMS n\'était valide dans le fichier</string>
     <string name="pickingfrom">Récuperation d\'un SMS depuis %s : </string>
     <string name="rate_this_app">Mettre une note</string>
+    <string name="exportpermissionsarenecessary">Je ne peux rien exporter. Il me faut absolument les permissions.</string>
+    <string name="conversionpermissionsarenecessary">Je ne peux rien importer. Il me faut absolument les permissions.</string>
 </resources>

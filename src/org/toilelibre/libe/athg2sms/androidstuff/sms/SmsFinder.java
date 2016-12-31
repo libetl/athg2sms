@@ -17,17 +17,30 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Condition;
+
+import static org.toilelibre.libe.athg2sms.business.concurrent.ConditionWatcher.weAreAskedToStopNowBecauseOfThe;
 
 public class SmsFinder {
 
-    public List<Map<String, Object>> pickThemAll( final ContextHolder<?> contextHolder,  final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
+    public List<Map<String, Object>> pickThemAll(final ContextHolder<?> contextHolder, final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener, final Condition stopMonitor) {
         final List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
         final Cursor cursorInbox = query(getSmsInboxFolder(), contextHolder);
         final Cursor cursorSent = query(getSmsSentFolder(), contextHolder);
 
-        result.addAll(iterateFor("inbox", cursorInbox, contextHolder, handler, convertListener));
-        result.addAll(iterateFor("sent", cursorSent, contextHolder, handler, convertListener));
+        final List<Map<String, Object>> inboxElements =
+                iterateFor("inbox", cursorInbox, contextHolder, handler, convertListener, stopMonitor);
+
+        if (inboxElements == null) {cursorInbox.close();cursorSent.close();return null;}
+
+        final List<Map<String, Object>> sentElements =
+                iterateFor("sent", cursorInbox, contextHolder, handler, convertListener, stopMonitor);
+
+        if (sentElements == null) {cursorInbox.close();cursorSent.close();return null;}
+
+        result.addAll(inboxElements);
+        result.addAll(sentElements);
 
         cursorInbox.close();
         cursorSent.close();
@@ -39,28 +52,29 @@ public class SmsFinder {
         return contentResolver.query(smsFolder, null, null, null, null);
     }
 
-    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final ContextHolder<?> contextHolder, final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener) {
+    private List<Map<String, Object>> iterateFor(final String folderName, final Cursor cursor, final ContextHolder<?> contextHolder, final HandlerHolder<?> handler, final ProcessRealTimeFeedback convertListener, final Condition stopMonitor) {
 
         if (cursor == null) return Collections.emptyList();
 
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>(cursor.getCount());
 
         cursor.moveToFirst();
+        handler.postForHandler(new Runnable() {
+            @Override
+            public void run() {
+                if (!cursor.isClosed()) {
+                    convertListener.setMax(cursor.getCount());
+                }
+            }
+        });
         for (int msgIndex = 0 ; msgIndex < cursor.getCount() ; msgIndex++) {
+            if (weAreAskedToStopNowBecauseOfThe(stopMonitor)) return null;
             final int thisMsgIndex = msgIndex;
 
             handler.postForHandler(new Runnable() {
                 @Override
                 public void run() {
-                    if (!cursor.isClosed()) {
-                        convertListener.setMax(cursor.getCount());
-                    }
-                }
-            });
-            handler.postForHandler(new Runnable() {
-                @Override
-                public void run() {
-                    if (!cursor.isClosed()) {
+                    if (!cursor.isClosed() && thisMsgIndex % 100 == 0) {
                         convertListener.updateProgress(contextHolder.getString(R.string.pickingfrom, folderName),
                                 thisMsgIndex, cursor.getCount());
                     }
