@@ -78,6 +78,10 @@ class ExportUI {
                             .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(intent.getStringExtra("result"))))
                             .setType("text/plain");
                     activity.startActivity(Intent.createChooser(sendToIntent, "Save as..."));
+                } else {
+                    Snackbar.make(activity.findViewById(android.R.id.content),
+                            activity.getString(R.string.aborted),
+                            Snackbar.LENGTH_LONG).show();
                 }
                 ProcessRealTimeFeedback.unbind();
                 new ExportFormUI().resetExportButton(activity);
@@ -93,6 +97,9 @@ class ExportUI {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getStringExtra("result") == null) {
+                    Snackbar.make(activity.findViewById(android.R.id.content),
+                            activity.getString(R.string.aborted),
+                            Snackbar.LENGTH_LONG).show();
                     ProcessRealTimeFeedback.unbind();
                     new ExportFormUI().resetExportButton(activity);
                     unregisterAllReceivers(activity);

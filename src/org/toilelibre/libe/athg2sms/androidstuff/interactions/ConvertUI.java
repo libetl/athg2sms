@@ -76,16 +76,27 @@ class ConvertUI {
                 if (errorMessage2 != null) {
                     ((TextView) dialog.findViewById (R.id.exception2)).setText (errorMessage2);
                 } else {
-                    ((TextView) dialog.findViewById (R.id.exception2)).setText ("That's all we know.");
+                    ((TextView) dialog.findViewById (R.id.exception2)).setText (context.getString(R.string.thatsallweknow));
                 }
+                unregisterAllReceivers(activity);
+            }
+        };
+        final BroadcastReceiver abortConvert = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                new ConversionFormUI().resetStartButton(activity);
+                Snackbar.make(activity.findViewById(android.R.id.content),
+                        activity.getString(R.string.aborted),
+                        Snackbar.LENGTH_LONG).show();
                 unregisterAllReceivers(activity);
             }
         };
         toBeUnregistered.add(stopConvert);
         toBeUnregistered.add(errorDuringConvert);
+        toBeUnregistered.add(abortConvert);
         LocalBroadcastManager.getInstance(activity).registerReceiver(stopConvert, new IntentFilter("stopConvert"));
-
         LocalBroadcastManager.getInstance(activity).registerReceiver(errorDuringConvert, new IntentFilter("errorDuringConvert"));
+        LocalBroadcastManager.getInstance(activity).registerReceiver(abortConvert, new IntentFilter("abortConvert"));
 
         if (convertListener.bind() == convertListener) {
             displayIfDryRun(activity);

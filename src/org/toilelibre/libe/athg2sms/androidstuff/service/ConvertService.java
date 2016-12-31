@@ -1,18 +1,13 @@
 package org.toilelibre.libe.athg2sms.androidstuff.service;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.actions.ErrorHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 
-import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -45,6 +40,13 @@ public class ConvertService extends IntentService {
         }
     };
 
+    private Runnable abort = new Runnable() {
+        @Override
+        public void run() {
+            LocalBroadcastManager.getInstance(ConvertService.this).sendBroadcast(new Intent ("abortConvert"));
+        }
+    };
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent.getExtras().getString("stopNow") != null) {
@@ -60,7 +62,7 @@ public class ConvertService extends IntentService {
         if (intent.getExtras().getString("stopNow") != null) return;
         LOCK.lock();
         try {
-            new Actions().runConversionNow(new ContextHolder<Object>(this), done, error, intent.getStringExtra("filename"), intent.getStringExtra("pattern"), STOP_MONITOR);
+            new Actions().runConversionNow(new ContextHolder<Object>(this), done, error, abort, intent.getStringExtra("filename"), intent.getStringExtra("pattern"), STOP_MONITOR);
         } finally {
             LOCK.unlock();
         }

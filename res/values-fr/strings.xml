@@ -73,4 +73,6 @@
     <string name="rate_this_app">Mettre une note</string>
     <string name="exportpermissionsarenecessary">Je ne peux rien exporter. Il me faut absolument les permissions.</string>
     <string name="conversionpermissionsarenecessary">Je ne peux rien importer. Il me faut absolument les permissions.</string>
+    <string name="thatsallweknow">C\'est tout ce que je peux dire</string>
+    <string name="aborted">Opération annulée</string>
 </resources>

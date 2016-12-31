@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 public class ConversionFormUI {
-    private Handler handler = new Handler ();
+    private static final Handler HANDLER = new Handler ();
 
     public void onCreate (final View target, final Activity activity, final Fragment fragment) {
         if (android.os.Build.VERSION.SDK_INT < 19){
@@ -88,7 +88,7 @@ public class ConversionFormUI {
         try {
             FileRetriever.getFile (new ContextHolder<Object>(activity), filename);
         } catch (final FileNotFoundException e) {
-            handler.post (new Runnable () {
+            HANDLER.post (new Runnable () {
                 public void run () {
                     Snackbar.make(activity.findViewById(android.R.id.content),
                             activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
@@ -148,7 +148,7 @@ public class ConversionFormUI {
                     content = FileRetriever.getFile (new ContextHolder<Object>(activity), file);
                     formatKey = new Actions().guessNow(content);
                 } catch (final FileNotFoundException e) {
-                    handler.post (new Runnable () {
+                    HANDLER.post (new Runnable () {
                         public void run () {
                             progressBar.setVisibility(View.INVISIBLE);
                             Snackbar.make(activity.findViewById(android.R.id.content),
@@ -157,7 +157,7 @@ public class ConversionFormUI {
                     });
                     return;
                 }
-                handler.post (new Runnable () {
+                HANDLER.post (new Runnable () {
 
                     public void run () {
                         int index = -1;

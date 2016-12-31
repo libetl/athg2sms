@@ -41,29 +41,32 @@ public class Actions {
         return FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()]);
     }
 
-    public void runConversionNow(ContextHolder<?> contextHolder, Runnable done, ErrorHandler errorHandler, String filename, String pattern, Condition stopMonitor) {
+    public void runConversionNow(ContextHolder<?> contextHolder, Runnable done, ErrorHandler errorHandler, Runnable abort, String filename, String pattern, Condition stopMonitor) {
         final Converter thisConverter = new Converter();
         ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
         final String content = this.getContentFromFileName (contextHolder, filename);
         if (content == null || convertListener == null) {
             return;
         }
-        boolean atLeastOneConverted;
+        Converter.ConversionResult result;
         try {
-            atLeastOneConverted = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
+            result = thisConverter.convertNow(FormatSettings.getInstance().getFormats().get(
                     pattern), content,
                     convertListener, new HandlerHolder<Object>(convertListener.getHandler()),
-                    contextHolder, new SmsInserter(), new SmsDeleter(), stopMonitor).getInserted() > 0;
+                    contextHolder, new SmsInserter(), new SmsDeleter(), stopMonitor);
         } catch (ConvertException ce) {
             errorHandler.run(ce);
             return;
         } finally {
             ProcessRealTimeFeedback.unbind();
         }
-        if (!atLeastOneConverted)
+        if (result.getTotal() > 0 && result.getInserted() == 0)
             errorHandler.run(new ParseException(contextHolder.getString(R.string.nosmsimported), 0));
-        else
+        else if (result.getTotal () > 0) {
             done.run();
+        } else {
+            abort.run();
+        }
     }
 
 

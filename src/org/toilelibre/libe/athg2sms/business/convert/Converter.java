@@ -26,7 +26,7 @@ public class Converter {
 
     public static class ConversionResult {
         private static final ConversionResult BAD_ONE = new ConversionResult(1, 0, 0, 1);
-        private static final ConversionResult NOTHING_TO_SAY = new ConversionResult(1, 1, 0, 1);
+        private static final ConversionResult NOTHING_TO_SAY = new ConversionResult(0, 0, 0, 0);
         private static final ConversionResult NOT_YET_PRESENT = new ConversionResult(1, 1, 0, 0);
         private static final ConversionResult ALREADY_PRESENT = new ConversionResult(1, 1, 1, 0);
         private int total;

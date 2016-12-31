@@ -35,7 +35,7 @@ public class SmsFinder {
         if (inboxElements == null) {cursorInbox.close();cursorSent.close();return null;}
 
         final List<Map<String, Object>> sentElements =
-                iterateFor("sent", cursorInbox, contextHolder, handler, convertListener, stopMonitor);
+                iterateFor("sent", cursorSent, contextHolder, handler, convertListener, stopMonitor);
 
         if (sentElements == null) {cursorInbox.close();cursorSent.close();return null;}
 

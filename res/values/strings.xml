@@ -73,4 +73,6 @@
     <string name="rate_this_app">Rate this app</string>
     <string name="exportpermissionsarenecessary">Cannot export a single SMS. I must be allowed to do that.</string>
     <string name="conversionpermissionsarenecessary">Cannot import a single SMS entry. I must be allowed to do that.</string>
+    <string name="thatsallweknow">That\'s all we know.</string>
+    <string name="aborted">Operation was aborted</string>
 </resources>
