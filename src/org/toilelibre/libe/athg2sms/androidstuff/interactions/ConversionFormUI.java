@@ -58,6 +58,11 @@ public class ConversionFormUI {
                         ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.IMPORT) {
                     stop(activity);
                 }else {
+                    if (((EditText) target.findViewById (R.id.filename)).getText ().toString ().length() == 0){
+                        Snackbar.make(activity.findViewById(android.R.id.content),
+                                activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
                     if (!EntryPoint.class.getPackage().getName().equals(
                             new SmsApplicationToggle().getDefaultSmsPackage(activity))){
                         new SmsApplicationToggle().toggleDefault(activity, SmsApplicationToggle.RETRY_CONVERT);
@@ -94,12 +99,8 @@ public class ConversionFormUI {
         try {
             FileRetriever.getFile (new ContextHolder<Object>(activity), filename);
         } catch (final FileNotFoundException e) {
-            HANDLER.post (new Runnable () {
-                public void run () {
-                    Snackbar.make(activity.findViewById(android.R.id.content),
-                            activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
-                }
-            });
+            Snackbar.make(activity.findViewById(android.R.id.content),
+                    activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
             return;
         }
         final Intent proceedIntent = activity.getIntent();
