@@ -15,9 +15,10 @@ import static org.toilelibre.libe.athg2sms.androidstuff.api.storage.PreferencesB
 public class SmsApplicationToggle {
     private static String       ACTION_CHANGE_DEFAULT = "android.provider.Telephony.ACTION_CHANGE_DEFAULT";
     private static final String EXTRA_PACKAGE_NAME    = "package";
-    public static final int REQUEST_CODE = 42;
+    public static final int DONT_RETRY_CONVERT = 42;
+    public static final int RETRY_CONVERT = 43;
 
-    public void toggleDefault(Activity activity) {
+    public void toggleDefault(Activity activity, int requestCode) {
         SharedPreferencesHolder<SharedPreferences> preferences =
                 new SharedPreferencesHolder<SharedPreferences>(activity.getSharedPreferences (BINDING_GLOBAL_NAME, 0));
 
@@ -27,12 +28,12 @@ public class SmsApplicationToggle {
                 new Actions().saveDefaultSmsApp(preferences, this.getDefaultSmsPackage (activity));
                 final Intent intentSetDefault = new Intent (SmsApplicationToggle.ACTION_CHANGE_DEFAULT);
                 intentSetDefault.putExtra (SmsApplicationToggle.EXTRA_PACKAGE_NAME, myPackageName);
-                activity.startActivityForResult (intentSetDefault, REQUEST_CODE);
+                activity.startActivityForResult (intentSetDefault, requestCode);
             } else {
                 final String packageName = new Actions().getDefaultSmsApp(preferences);
                 final Intent intentSetDefault = new Intent (SmsApplicationToggle.ACTION_CHANGE_DEFAULT);
                 intentSetDefault.putExtra (SmsApplicationToggle.EXTRA_PACKAGE_NAME, packageName);
-                activity.startActivityForResult (intentSetDefault, REQUEST_CODE);
+                activity.startActivityForResult (intentSetDefault, requestCode);
 
             }
         }

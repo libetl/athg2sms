@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
@@ -57,7 +58,12 @@ public class ConversionFormUI {
                         ProcessRealTimeFeedback.getInstance().getType() == ProcessRealTimeFeedback.Type.IMPORT) {
                     stop(activity);
                 }else {
-                    start(activity, target);
+                    if (!EntryPoint.class.getPackage().getName().equals(
+                            new SmsApplicationToggle().getDefaultSmsPackage(activity))){
+                        new SmsApplicationToggle().toggleDefault(activity, SmsApplicationToggle.RETRY_CONVERT);
+                    }else{
+                        start(activity, target);
+                    }
                 }
             }
         });
@@ -71,7 +77,7 @@ public class ConversionFormUI {
         target.findViewById (R.id.toggledefaultapp).setOnClickListener (new OnClickListener () {
 
             public void onClick (final View v) {
-                new SmsApplicationToggle().toggleDefault(activity);
+                new SmsApplicationToggle().toggleDefault(activity, SmsApplicationToggle.DONT_RETRY_CONVERT);
             }
         });
     }
@@ -80,7 +86,7 @@ public class ConversionFormUI {
         new ConvertUI().stopConvertOperation (activity);
     }
 
-    private void start(final Activity activity, final View target) {
+    public void start(final Activity activity, final View target) {
         if (((Spinner) target.findViewById (R.id.conversionSet)).getSelectedItem () == null) {
             return;
         }

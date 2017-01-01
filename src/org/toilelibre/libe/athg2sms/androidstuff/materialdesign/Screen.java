@@ -169,10 +169,15 @@ public class Screen extends AppCompatActivity {
     @Override
     public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult (requestCode, resultCode, data);
-        if (requestCode == SmsApplicationToggle.REQUEST_CODE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if ((requestCode == SmsApplicationToggle.DONT_RETRY_CONVERT ||
+                requestCode == SmsApplicationToggle.RETRY_CONVERT) &&
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             boolean checked =
                     EntryPoint.class.getPackage().getName().equals(new SmsApplicationToggle().getDefaultSmsPackage(this));
             ((Switch)this.findViewById(R.id.toggledefaultapp)).setChecked(checked);
+            if (requestCode == SmsApplicationToggle.RETRY_CONVERT) {
+                new ConversionFormUI().start(this, this.findViewById(R.id.conversionForm));
+            }
         }
     }
 }
