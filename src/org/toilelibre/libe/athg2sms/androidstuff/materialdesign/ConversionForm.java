@@ -3,8 +3,10 @@ package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,13 @@ public class ConversionForm extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         final View result = inflater.inflate(R.layout.conversionform, container, false);
+
+
+        try {
+            ((FloatingActionButton)result.findViewById (R.id.start)).setImageResource(R.drawable.ic_move_to_inbox_black_24dp);
+        } catch (Resources.NotFoundException drawableNotSupportedException) {
+            ((FloatingActionButton)result.findViewById (R.id.start)).setImageResource(android.R.drawable.ic_dialog_email);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             replaceButtonBySwitch(this.getActivity(), (ViewGroup)result);

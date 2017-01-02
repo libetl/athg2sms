@@ -1,6 +1,7 @@
 package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,7 +35,11 @@ public class Screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_logo);
+        try {
+            toolbar.setNavigationIcon(R.drawable.ic_logo);
+        } catch (Resources.NotFoundException vectorDrawableNotSupportedException){
+            toolbar.setNavigationIcon(R.drawable.icon);
+        }
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

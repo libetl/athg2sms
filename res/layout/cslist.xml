@@ -39,7 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:src="@drawable/ic_add_black_24dp"
             app:elevation="4dp"
             android:clickable="true"
             android:layout_gravity="bottom|end"
