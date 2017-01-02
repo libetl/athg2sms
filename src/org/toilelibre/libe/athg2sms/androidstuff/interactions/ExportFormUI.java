@@ -66,7 +66,7 @@ public class ExportFormUI {
         try {
             ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(R.drawable.ic_cloud_upload_black_24dp);
         } catch (Resources.NotFoundException drawableNotSupportedException) {
-            ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(android.R.drawable.ic_dialog_email);
+            ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(android.R.drawable.ic_menu_save);
         }
     }
 
