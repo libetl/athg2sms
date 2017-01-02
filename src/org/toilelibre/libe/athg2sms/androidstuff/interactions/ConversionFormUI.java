@@ -64,7 +64,7 @@ public class ConversionFormUI {
                                 activity.getText(R.string.nofileselected), Snackbar.LENGTH_SHORT).show();
                         return;
                     }
-                    if (!EntryPoint.class.getPackage().getName().equals(
+                    if (Build.VERSION.SDK_INT >= 19 && !EntryPoint.class.getPackage().getName().equals(
                             new SmsApplicationToggle().getDefaultSmsPackage(activity))){
                         new SmsApplicationToggle().toggleDefault(activity, SmsApplicationToggle.RETRY_CONVERT);
                     }else{

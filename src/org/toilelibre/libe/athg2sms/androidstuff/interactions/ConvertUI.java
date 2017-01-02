@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +18,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -61,7 +63,7 @@ class ConvertUI {
             @Override
             public void onReceive(Context context, Intent intent) {
                 new ConversionFormUI().resetStartButton(activity);
-                buildAlertDialog(activity, R.string.done_title, R.layout.done, R.string.great);
+                buildAlertDialog(activity, R.string.done_title, R.layout.done, R.drawable.ic_iconok, R.string.great);
                 unregisterAllReceivers(activity);
             }
         };
@@ -69,7 +71,7 @@ class ConvertUI {
             @Override
             public void onReceive(Context context, Intent intent) {
                 new ConversionFormUI().resetStartButton(activity);
-                Dialog dialog = buildAlertDialog(activity, R.string.error_title, R.layout.error, R.string.again);
+                Dialog dialog = buildAlertDialog(activity, R.string.error_title, R.layout.error, R.drawable.ic_iconko, R.string.again);
                 final String errorMessage1 = intent.getExtras().getString("errorMessage");
                 final String errorMessage2 = intent.getExtras().getString("secondErrorMessage");
                 ((TextView) dialog.findViewById (R.id.exception)).setText (errorMessage1);
@@ -120,16 +122,20 @@ class ConvertUI {
         toBeUnregistered.clear();
     }
 
-    private Dialog buildAlertDialog(Context context, int titleResId, int layout, int buttonText) {
+    private Dialog buildAlertDialog(Context context, int titleResId, int layout, int picture, int buttonText) {
+        View dialogContent = LayoutInflater.from(context).inflate(layout, null);
         Dialog dialog = new AlertDialog.Builder(context).setCancelable(false)
                 .setTitle(titleResId)
-                .setView(LayoutInflater.from(context).inflate(layout, null))
+                .setView(dialogContent)
                 .setPositiveButton(context.getResources().getText(buttonText),
                         new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }
                 }).create();
+        try {
+            ((ImageView)dialogContent.findViewById(R.id.ImageView01)).setImageResource(picture);
+        } catch (Resources.NotFoundException drawableNotSupportedException){}
         dialog.show();
         return dialog;
     }
