@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -132,13 +133,21 @@ public class ConversionFormUI {
     public void becomeStopButton(Activity activity) {
         if (activity.findViewById (R.id.start) == null) return;
         FromColorToColor.animate(activity, activity.findViewById (R.id.start), R.id.start, R.color.colorAccent, R.color.redAccent);
-        ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_stop);
+        try {
+            ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_stop);
+        } catch (Resources.NotFoundException drawableNotSupportedException) {
+            ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(android.R.drawable.alert_light_frame);
+        }
     }
 
     void resetStartButton(Activity activity) {
         if (activity.findViewById (R.id.start) == null) return;
         FromColorToColor.animate(activity, activity.findViewById (R.id.start), R.id.start, R.color.redAccent, R.color.colorAccent);
-        ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_move_to_inbox_black_24dp);
+        try {
+            ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(R.drawable.ic_move_to_inbox_black_24dp);
+        } catch (Resources.NotFoundException drawableNotSupportedException) {
+            ((FloatingActionButton)activity.findViewById (R.id.start)).setImageResource(android.R.drawable.ic_dialog_email);
+        }
     }
 
     public void triggerGuessFormat(final Activity activity, View rootView) {

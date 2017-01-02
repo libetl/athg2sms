@@ -3,6 +3,7 @@ package org.toilelibre.libe.athg2sms.androidstuff.interactions;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -52,13 +53,21 @@ public class ExportFormUI {
     public void becomeStopButton(Activity activity) {
         if (activity.findViewById (R.id.exportfile) == null) return;
         FromColorToColor.animate(activity, activity.findViewById (R.id.exportfile), R.id.exportfile, R.color.colorAccent, R.color.redAccent);
-        ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(R.drawable.ic_stop);
+        try {
+            ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(R.drawable.ic_stop);
+        } catch (Resources.NotFoundException drawableNotSupportedException) {
+            ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(android.R.drawable.alert_light_frame);
+        }
     }
 
     void resetExportButton(Activity activity) {
         if (activity.findViewById (R.id.exportfile) == null) return;
         FromColorToColor.animate(activity, activity.findViewById (R.id.exportfile), R.id.exportfile, R.color.redAccent, R.color.colorAccent);
-        ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(R.drawable.ic_cloud_upload_black_24dp);
+        try {
+            ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(R.drawable.ic_cloud_upload_black_24dp);
+        } catch (Resources.NotFoundException drawableNotSupportedException) {
+            ((FloatingActionButton)activity.findViewById (R.id.exportfile)).setImageResource(android.R.drawable.ic_dialog_email);
+        }
     }
 
     public void onRequestPermissionsResult(Activity activity, String[] permissions, Integer... grantResults) {
