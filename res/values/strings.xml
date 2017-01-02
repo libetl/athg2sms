@@ -75,4 +75,8 @@
     <string name="conversionpermissionsarenecessary">Cannot import a single SMS entry. I must be allowed to do that.</string>
     <string name="thatsallweknow">That\'s all we know.</string>
     <string name="aborted">Operation was aborted</string>
+    <string name="patternmaker">Pattern maker</string>
+    <string name="buildhere">Builder :</string>
+    <string name="viewhere">Example :</string>
+    <string name="build">Here I am !</string>
 </resources>

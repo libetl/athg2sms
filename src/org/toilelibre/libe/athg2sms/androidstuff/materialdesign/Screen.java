@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.androidstuff.materialdesign;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,8 @@ import org.toilelibre.libe.athg2sms.androidstuff.interactions.ExportFormUI;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
+
+import java.util.logging.Logger;
 
 public class Screen extends AppCompatActivity {
 
@@ -45,8 +49,10 @@ public class Screen extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.convert)));
         tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.export)));
+        tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.patternmaker)));
         tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.convsets)));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
@@ -92,10 +98,11 @@ public class Screen extends AppCompatActivity {
                         startButton.setScaleY(0);
                     }
                 }
-                if (screen == 2) {
+                if (screen == 3) {
+                    Log.i("toto", "" + (-3.0 / 8 * viewPager.getScrollX() + 1.74 * viewPager.getHeight()));
                     FloatingActionButton addOneButton = (FloatingActionButton) Screen.this.findViewById(R.id.addone);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        addOneButton.setY((int)(viewPager.getHeight() - ((viewPager.getScrollX() - viewPager.getWidth()) * 1.0 / viewPager.getWidth() * 400 - 260)));
+                        addOneButton.setY((int)(-3.0 / 8 * viewPager.getScrollX() + 1.74 * viewPager.getHeight()));
                     }
                 }
             }
@@ -171,6 +178,7 @@ public class Screen extends AppCompatActivity {
         new ExportFormUI().onRequestPermissionsResult(this, permissions, grantResults1);
     }
 
+    @SuppressLint("WrongViewCast")
     @Override
     public void onActivityResult (final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult (requestCode, resultCode, data);

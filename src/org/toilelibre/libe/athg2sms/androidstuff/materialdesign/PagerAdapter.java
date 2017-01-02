@@ -21,6 +21,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new ExportForm();
             case 2:
+                return new PatternMaker();
+            case 3:
                 return new PatternListing();
             default:
                 return null;

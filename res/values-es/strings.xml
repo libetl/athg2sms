@@ -76,4 +76,8 @@
    <string name="conversionpermissionsarenecessary">No puedo importar nada. Necesito los derechos para hacerlo.</string>
    <string name="thatsallweknow">Esto es todo lo que sé.</string>
    <string name="aborted">Operación cancelada</string>
+   <string name="patternmaker">Mi formato</string>
+   <string name="buildhere">Constructor :</string>
+   <string name="viewhere">Ejemplo :</string>
+   <string name="build">¡ Ya esta !</string>
 </resources>
