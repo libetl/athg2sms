@@ -155,7 +155,7 @@ public class ConversionFormUI {
     }
 
     public void triggerGuessFormat(final Activity activity, View rootView) {
-        final Spinner spinner = (Spinner) rootView.findViewById (R.id.conversionSet);
+        final Spinner spinner = (Spinner) rootView.findViewById (R.id.conversionSet); 
         final String file = ((EditText) rootView.findViewById (R.id.filename)).getText ().toString ();
         final ProgressBar progressBar =  ((ProgressBar)rootView.findViewById (R.id.guessing));
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1 &&
