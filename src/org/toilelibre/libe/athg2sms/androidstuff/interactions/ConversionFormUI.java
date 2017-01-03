@@ -173,7 +173,7 @@ public class ConversionFormUI {
             public void run() {
                 final String formatKey;
                 final String content;
-                try {
+                try { 
                     content = FileRetriever.getFile (new ContextHolder<Object>(activity), file);
                     formatKey = new Actions().guessNow(content);
                 } catch (final FileNotFoundException e) {
