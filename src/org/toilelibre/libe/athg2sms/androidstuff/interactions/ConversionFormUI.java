@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.androidstuff.interactions;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +10,9 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -121,7 +124,8 @@ public class ConversionFormUI {
             resetStartButton(activity);
             return;
         }
-        if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE")) {
+        if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE") &&
+                Arrays.asList(permissions).contains("android.permission.READ_SMS")) {
             activity.getIntent().putExtra("filename", ((EditText) activity.findViewById (R.id.filename)).getText ().toString ());
             activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
             new ConvertUI().retryConvertOperation (activity);
@@ -154,6 +158,11 @@ public class ConversionFormUI {
         final Spinner spinner = (Spinner) rootView.findViewById (R.id.conversionSet);
         final String file = ((EditText) rootView.findViewById (R.id.filename)).getText ().toString ();
         final ProgressBar progressBar =  ((ProgressBar)rootView.findViewById (R.id.guessing));
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1 &&
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(activity, new String []{"android.permission.READ_EXTERNAL_STORAGE"}, 0);
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         new Thread() {
             @Override
