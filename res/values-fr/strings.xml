@@ -79,4 +79,5 @@
     <string name="buildhere">Usine :</string>
     <string name="viewhere">Example :</string>
     <string name="build">Ça y est !</string>
+    <string name="permissions_settings">Configurer les permissions</string>
 </resources>

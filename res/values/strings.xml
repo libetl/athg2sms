@@ -79,4 +79,5 @@
     <string name="buildhere">Builder :</string>
     <string name="viewhere">Example :</string>
     <string name="build">Here I am !</string>
+    <string name="permissions_settings">Permissions settings</string>
 </resources>

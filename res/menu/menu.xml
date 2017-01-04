@@ -3,4 +3,7 @@
     <item android:id="@+id/rate_this_app"
         android:icon="@drawable/icon"
         android:title="@string/rate_this_app"/>
+    <item android:id="@+id/go_to_permissions"
+          android:icon="@drawable/icon"
+          android:title="@string/permissions_settings"/>
 </menu>

@@ -80,4 +80,5 @@
    <string name="buildhere">Constructor :</string>
    <string name="viewhere">Ejemplo :</string>
    <string name="build">¡ Ya esta !</string>
+   <string name="permissions_settings">Ajustes de permisos</string>
 </resources>
