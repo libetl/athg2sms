@@ -125,6 +125,10 @@ public class ConversionFormUI {
             return;
         }
         if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE") &&
+                Arrays.asList(grantResults).contains(PackageManager.PERMISSION_GRANTED) && permissions.length == 1) {
+            triggerGuessFormat(activity, activity.findViewById(R.id.conversionForm));
+        }
+        if (Arrays.asList(permissions).contains("android.permission.READ_EXTERNAL_STORAGE") &&
                 Arrays.asList(permissions).contains("android.permission.READ_SMS")) {
             activity.getIntent().putExtra("filename", ((EditText) activity.findViewById (R.id.filename)).getText ().toString ());
             activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.conversionSet)).getSelectedItem ().toString ());
