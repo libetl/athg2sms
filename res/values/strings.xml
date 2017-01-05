@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">"Import from Csv" Done !</string>
+    <string name="app_name">Csv2Sms</string>
+    <string name="app_title">Nokia Csv -&gt; Sms</string>
+    <string name="file_name">File Name</string>
+    <string name="proceed_button">Proceed</string>
+    <string name="failed_retry">Failed ! Retry ?</string>
+    <string name="sucessful">Sucessful</string>
+    
+    <string name="again">Again</string>
+    <string name="exit">Exit</string>
+</resources>
