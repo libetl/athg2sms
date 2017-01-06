@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import static org.toilelibre.libe.athg2sms.business.concurrent.ConditionWatcher.weAreAskedToStopNowBecauseOfThe;
 
 public class Converter {
-    private final static String FOLDER = "content://sms/";
+    public final static String FOLDER = "content://sms/";
 
     public static class ConversionResult {
         private static final ConversionResult BAD_ONE = new ConversionResult(1, 0, 0, 1);

@@ -20,7 +20,7 @@ import java.util.List;
 public class PatternMaker extends Fragment {
     private List<View> allViews = new ArrayList<View>();
     private String [] allPossibleCompletions = new String [] { "__choose below",
-      "anything until", "the char(s)", "a comma", "a semicolon", "a simple quote", "a double quote", "the address", "the folder", "the body", "the date", "end of match"
+      "0+ char until", "1+ char until", "a number", "a version", "a comma", "a semicolon", "a simple quote", "a double quote", "the address", "the folder", "the body", "the date", "end of match"
     };
     private ViewGroup rootView;
 
@@ -40,7 +40,6 @@ public class PatternMaker extends Fragment {
     private void addTextView() {
         EditText newEditText = new EditText(this.getContext());
         newEditText.setId(ViewIdGenerator.generateViewId());
-        newEditText.setLayoutParams(new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         allViews.add(newEditText);
         ((ViewGroup)this.rootView.findViewById(R.id.builder)).addView(newEditText);
     }
