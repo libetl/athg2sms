@@ -17,8 +17,7 @@
             android:id="@+id/builder"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        </org.toilelibre.libe.athg2sms.androidstuff.materialdesign.FlowLayout>
+            android:orientation="horizontal"/>
     </ScrollView>
     <TextView
         android:layout_width="wrap_content"
