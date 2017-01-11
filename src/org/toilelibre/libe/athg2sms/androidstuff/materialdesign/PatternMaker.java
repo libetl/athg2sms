@@ -22,6 +22,7 @@ import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.id.ViewIdGenerator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PatternMaker extends Fragment {
@@ -30,10 +31,10 @@ public class PatternMaker extends Fragment {
       "0+ char until", "1+ char until", "a number", "a version", "a comma", "a semicolon", "a simple quote", "a double quote", "the address", "the folder", "the body", "the date", "whitespaces", "remove that"
     };
     private String [] regexCompletions = new String [] { "",
-            ".{0,20}", ".{1,20}", "[0-9]{1,20}", "\\s?[0-9](\\.[0-9])?", ",", ";", "\\'", "\\\"", "ADDRESS", "INBOX", "Lorem Ipsum", "2000-01-01", "\\s+"
+            ".{0,20}", ".{1,20}", "[0-9]{1,20}", "\\s?[0-9](\\.[0-9])?", ",", ";", "\\'", "\\\"", "+1 [1-6][0-9][0-9] [0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]", "INBOX", "Lorem Ipsum", "2000-01-01", "\\s+"
     };
     private String [] realRegexCompletions = new String [] { "",
-            ".*?(?=%s)%s", ".+?(?=%s)%s", "[0-9]+", "\\s?[0-9]+(\\.[0-9]+)?", ",", ";", "\\'", "\\\"", "$(adress)", "$(folder)", "$(body)", "$(dateyyyy-MM-dd)", "\\s+"
+            ".*?(?=%s)%s", ".+?(?=%s)%s", "[0-9]+", "\\s?[0-9]+(\\.[0-9]+)?", ",", ";", "\\'", "\\\"", "$(address)", "$(folder)", "$(body)", "$(dateyyyy-MM-dd)", "\\s+"
     };
     private ViewGroup rootView;
 
@@ -142,13 +143,11 @@ public class PatternMaker extends Fragment {
         for (int i = 0 ; i < allViews.size() ; i++) {
             if (allViews.get(i) instanceof Spinner) {
                 if (((Spinner) allViews.get(i)).getSelectedItemPosition() == 1 ||
-                        ((Spinner) allViews.get(i)).getSelectedItemPosition() == 2) {
-                    if (((EditText)allViews.get(i+1)).getText().length() != 0) {
-                        regex.append(array [((Spinner) allViews.get(i)).getSelectedItemPosition()]);
+                        ((Spinner) allViews.get(i)).getSelectedItemPosition() == 2 &&
+                                ((EditText)allViews.get(i + 1)).getText().length() != 0) {
+                        regex.append(parameterizedRegexPart(array, i));
                         i++;
-                        regex.append(((EditText) allViews.get(i)).getText());
-                    }
-                }else {
+                } else {
                     regex.append(array [((Spinner) allViews.get(i)).getSelectedItemPosition()]);
                 }
             }else if (allViews.get(i) instanceof EditText) {
@@ -156,6 +155,18 @@ public class PatternMaker extends Fragment {
             }
         }
         return regex.toString();
+    }
+
+    private String parameterizedRegexPart(String[] array, int i) {
+
+        String pattern = array[((Spinner) allViews.get(i)).getSelectedItemPosition()];
+        String nextToken = ((EditText) allViews.get(i + 1)).getText().toString();
+        if (pattern.contains("%s")){
+            String[] nextTokens = new String [pattern.split("%s").length];
+            Arrays.fill(nextTokens, nextToken);
+            return String.format(pattern, (String[])nextTokens);
+        }
+        return pattern + nextToken;
     }
 
     private String replaceWeirdChars(String text) {
