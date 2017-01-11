@@ -46,6 +46,10 @@ public class PatternEdition extends Activity {
             ((TextView) this.findViewById (R.id.export_format)).setText (new Actions().getFormatRegex(this.pattern).getExportFormat());
             ((TextView) this.findViewById (R.id.csinbox)).setText (new Actions().getFormatRegex(this.pattern).getInboxKeyword());
             ((TextView) this.findViewById (R.id.cssent)).setText (new Actions().getFormatRegex(this.pattern).getSentKeyword());
+        } else if (bundle != null && bundle.getCharSequence ("format") != null) {
+            ((TextView) this.findViewById (R.id.cspattern)).setText (bundle.getCharSequence ("format"));
+            this.pattern = "?";
+            this.findViewById (R.id.delete).setEnabled (false);
         } else {
             this.pattern = "?";
             this.findViewById (R.id.delete).setEnabled (false);
