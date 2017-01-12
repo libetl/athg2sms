@@ -42,7 +42,7 @@ before_install:
 - cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/recyclerview-v7/23.4.0/*
   $HOME/.m2/repository/com/android/support/recyclerview-v7/23.4.0
 script:
-- mvn -B -DskipTests
+- mvn -B
   android:manifest-merger
   install android:zipalign android:publish-apk -Ppublisher -Dsecret.storepass=$SECRET_STOREPASS
   -Dsecret.keypass=$SECRET_KEYPASS -Dandroid.manifestMerger.versionCode=$(git rev-list --no-merges --count HEAD)

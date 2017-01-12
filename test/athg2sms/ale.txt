@@ -1,0 +1,60 @@
+
+contact
+
+"Title","First name","Middle name","Last name","Suffix","Job title","Company","Birthday","SIP address","Push-to-talk","Share view","User ID","Notes","General mobile","General phone","General email","General fax","General video call","General web address","General VOIP address","General P.O.Box","General extension","General street","General postal/ZIP code","General city","General state/province","General country/region","Home mobile","Home phone","Home email","Home fax","Home video call","Home web address","Home VOIP address","Home P.O.Box","Home extension","Home street","Home postal/ZIP code","Home city","Home state/province","Home country/region","Business mobile","Business phone","Business email","Business fax","Business video call","Business web address","Business VOIP address","Business P.O.Box","Business extension","Business street","Business postal/ZIP code","Business city","Business state/province","Business country/region",""
+"","","","Ale EMMA","","","","","","","","","","+39335350590","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
+"","Asineria","","Marianocomse","","","","","","","","","","3345820918","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
+"","Agrit","","Camilla","","","","","","","","","","3803703519","039647289","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""
+
+
+MMS
+
+mms,"","3403853912","","2015.12.30 17:52",""," ",
+
+
+
+SMS
+
+sms,submit,"","+3934912345","","2015.09.09 18:55","","envoyé XXXXXX !"
+
+sms,submit,"","+3934212345","","2015.08.16 19:46","","envoyé XXXXXXX?"
+
+sms,deliver,"+3934912345","","","2015.09.09 18:54","","reçu XXXXXXXXXXXXXXXXXX"
+
+sms,deliver,"3934912345","","","2015.09.09 18:54","","reçu XXXXXXXXXXXXXXXXXXX. XXXX"
+
+sms,deliver,"3934912345","","","2015.09.09 18:54","","reçu XXXXXXXXXXXXXXXXXXX!"
+
+sms,deliver,"3932912345","","","2014.11.16 08:16","","reçu XXXXXXXXXXXXXXXXXX :-)"
+
+to import 2496, 2493 sms and 3 mms; original source nokia N73 then nokia C5-00 exported via nokia pc suite to file.csv.
+Please advise do i need to edit fiel and remove the mms.
+
+
+app default 15/6/2016
+
+Nokia Csv
+[\S]*sms;$(folder);(?:"";)?"$(address)";"";(?:"";)?"$(dateyyyy.MM.dd hh:mm:ss)";"";"$(body)"[\S]
+
+inbox= deliver outbox= submit
+
+either used the standard and teh nokia csv with quotes scipt, do not work!
+
+
+option to change-replace the ; to ,
+
+
+then multiple variance to get working version, also not sure what is the end line symbol (?)
+
+tried
+
+[\S]*SMS,$(folder),(?:"";),"$(number)","",(?:"";),"$(dateyyyy.MM.dd hh:mm:ss)","$(body)"[\S]
+SMS,$(folder),"","$(number)","","","$(dateyyyy.MM.dd hh:mm:ss)","$(body)"[\N]
+SMS,"$(folder)","","$(number)","","","$(dateyyyy.MM.dd hh:mm:ss)","$(body)"[\N]
+SMS,"$(folder)",(?:"";),"$(number)",(?:"";),(?:"";),"$(dateyyyy.MM.dd hh:mm:ss)","$(body)"[\N]
+
+error message
+The selected conversion set does not work, sorry
+java.lang.illegalArgumentException
+
+??????? 

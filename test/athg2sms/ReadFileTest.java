@@ -10,8 +10,10 @@ import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -21,7 +23,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ReadFileTest {
     private int                       messagesInserted = 0;
@@ -99,36 +100,36 @@ public class ReadFileTest {
 
     @Test
     public void lionel () throws URISyntaxException {
-        this.testFile ("/mnt/data/lionel/Documents/misc/NouvelOrdi/Msgs5200.csv", BuiltInFormatName.NokiaCsv, false);
+        this.testFile ("athg2sms/Msgs5200.csv", BuiltInFormatName.NokiaCsv, false);
     }
 
     @Test
     public void yetAnotherTest () throws URISyntaxException {
-        this.testFile ("/mnt/data/lionel/Documents/misc/NouvelOrdi/test.csv", BuiltInFormatName.NokiaCsv, false);
+        this.testFile ("athg2sms/oldFile.csv", BuiltInFormatName.NokiaCsv, false);
     }
 
     @Test
     public void checkingTheDateFormat () throws URISyntaxException {
         this.testString ("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 16:05\";\"\";\"Bonjour Ca va ?\"\n", BuiltInFormatName.NokiaCsv, false);
-        Date d = new Date ((Long)messages.get (0).getDate());
+        Date d = new Date (messages.get (0).getDate());
         Calendar c = new GregorianCalendar ();
         c.setTime (d);
         int hourOfDay = c.get (Calendar.HOUR_OF_DAY);
         int minutes = c.get (Calendar.MINUTE);
         Assert.assertTrue (hourOfDay == 16);
-        Assert.assertTrue (minutes == 05);
+        Assert.assertTrue (minutes == /*0*/5);
     }
 
     @Test
     public void checkingTheDateFormat2 () throws URISyntaxException {
         this.testString ("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 12:04\";\"\";\"C'est l'heure de manger\"\n", BuiltInFormatName.NokiaCsv, false);
-        Date d = new Date ((Long)messages.get (0).getDate());
+        Date d = new Date (messages.get (0).getDate());
         Calendar c = new GregorianCalendar ();
         c.setTime (d);
         int hourOfDay = c.get (Calendar.HOUR_OF_DAY);
         int minutes = c.get (Calendar.MINUTE);
         Assert.assertTrue (hourOfDay == 12);
-        Assert.assertTrue (minutes == 04);
+        Assert.assertTrue (minutes == /*0*/4);
     }
 
     @Test
@@ -180,7 +181,7 @@ public class ReadFileTest {
 
     @Test
     public void vmg () throws URISyntaxException {
-        this.testFile ("/mnt/data/lionel/Documents/workspace/athg2sms/test/athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox, false);
+        this.testFile ("athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox, false);
         Assert.assertEquals (1, this.messagesInserted);
     }
 
@@ -254,17 +255,15 @@ public class ReadFileTest {
 
     }
 
-    public void testFile (final String classpathFile, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
+    private void testFile (final String classpathFile, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
         final Converter convertV4 = new Converter();
         final URL url = ReadFileTest.class.getClassLoader ().getResource (classpathFile);
-        final String content;
+        String content;
         try {
-            final Scanner scan = new Scanner (url == null ? new File (classpathFile) : new File (url.toURI ()));
-            scan.useDelimiter ("\\Z");
-            content = scan.next ();
-            scan.close ();
-        } catch (final FileNotFoundException e) {
+            final File file = url == null ? new File (classpathFile) : new File (url.toURI ());
+            content = read(file);
+        } catch (final IOException e) {
             throw new RuntimeException (e);
         }
 
@@ -279,7 +278,17 @@ public class ReadFileTest {
         }
     }
 
-    public void testString (final String content, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
+    private String read(File file) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        for (String line = br.readLine(); line != null; line = br.readLine()) {
+            stringBuilder.append(line).append('\n');
+        }
+        return stringBuilder.toString();
+    }
+
+    private void testString (final String content, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
         final Converter convertV4 = new Converter();
 
