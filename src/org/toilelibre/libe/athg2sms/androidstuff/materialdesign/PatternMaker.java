@@ -24,6 +24,7 @@ import org.toilelibre.libe.athg2sms.androidstuff.api.id.ViewIdGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PatternMaker extends Fragment {
     private List<View> allViews = new ArrayList<View>();
@@ -31,7 +32,7 @@ public class PatternMaker extends Fragment {
       "0+ char until", "1+ char until", "a number", "a version", "a comma", "a semicolon", "a simple quote", "a double quote", "the address", "the folder", "the body", "the date", "whitespaces", "remove that"
     };
     private String [] regexCompletions = new String [] { "",
-            ".{0,20}", ".{1,20}", "[0-9]{1,20}", "\\s?[0-9](\\.[0-9])?", ",", ";", "\\'", "\\\"", "+1 [1-6][0-9][0-9] [0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]", "INBOX", "Lorem Ipsum", "2000-01-01", "\\s+"
+            ".{0,20}", ".{1,20}", "[0-9]{1,20}", "\\s?[0-9](\\.[0-9])?", ",", ";", "\\'", "\\\"", "\\+1 [1-6][0-9][0-9] [0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9]", "INBOX", "Lorem Ipsum", "2000-01-01", "\\s+"
     };
     private String [] realRegexCompletions = new String [] { "",
             ".*?(?=%s)%s", ".+?(?=%s)%s", "[0-9]+", "\\s?[0-9]+(\\.[0-9]+)?", ",", ";", "\\'", "\\\"", "$(address)", "$(folder)", "$(body)", "$(dateyyyy-MM-dd)", "\\s+"
@@ -151,7 +152,7 @@ public class PatternMaker extends Fragment {
                     regex.append(array [((Spinner) allViews.get(i)).getSelectedItemPosition()]);
                 }
             }else if (allViews.get(i) instanceof EditText) {
-                regex.append(((EditText)allViews.get(i)).getText());
+                regex.append(Pattern.quote(((EditText) allViews.get(i)).getText().toString()));
             }
         }
         return regex.toString();
@@ -160,7 +161,7 @@ public class PatternMaker extends Fragment {
     private String parameterizedRegexPart(String[] array, int i) {
 
         String pattern = array[((Spinner) allViews.get(i)).getSelectedItemPosition()];
-        String nextToken = ((EditText) allViews.get(i + 1)).getText().toString();
+        String nextToken = Pattern.quote(((EditText) allViews.get(i + 1)).getText().toString());
         if (pattern.contains("%s")){
             String[] nextTokens = new String [pattern.split("%s").length];
             Arrays.fill(nextTokens, nextToken);
