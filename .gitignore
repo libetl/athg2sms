@@ -23,3 +23,4 @@ local.properties
 *.iml
 .settings
 .gradle
+gen-external-apklibs

@@ -192,6 +192,61 @@ public class ReadFileTest {
     }
 
     @Test
+    public void received () throws URISyntaxException {
+        this.testString("\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAA AAAA AAAAA AAA AAA AA AA AAAA AAAA..... AAA AAAA AA AAAAAAAA.... AAA AAA AA A, A AAAAA AA AA AAAAAA AAAA AAA AA AAAA.... \"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAAAAA AA AAAAAAA AA AAAAAAAA AAAA AAAAA AAA AAAAAAAA......... AAAAA AA AA AAA AAAAAA AA AA AAAA AAAA AAAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAA AA AA AAAAA AAA AAA .. AA AA AAA AA AAAA AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AA AAAA AAAAA..... AAA AAA AAAAAA AAA..... AAAAA AAA AAAA AAA AAAAA AA AAAA AAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAA AAAA AA AAA AA AAAAAAAA AA AAAAAA A AAA AA \"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA AA AA AAA AAAAAA AAAA AAAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA AAAAA AAAA AAAA AA AA AAA AAAAAAAA , AA AA AAAAAA AAAAAA...... AAA AAA AAAAA AA AAAAAA AA AAA AAAA AAAAA AAAAAAA AAA........ AA AA AAAAAA AAA ? AA AAA AAAAA AA AAAAA AA AAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AA AAAAA AAAA AA AAA AA AA AAAAAA AA AAA AAAA AAAAA AAAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AA AA AAA AAA AAAAA AAAA AAA AAAA AA AAAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA. AAAA AAAAAA AA AAA AAA ?\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AA AA AA AAA AAA AA AAA AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAA AA ... AAA ,,,,,,,,,,,,, AAA AAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAA AA AA AAAA AAAA AAAAA AA ;-(AA AA AA AAA AAAAA AAA AA AA AAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAA AA ... AA AA AA AAAAAAA AAAA AAAA AAAA AA AAA.   AAA AAAA AAAAA AAA AAA AA AAAA AAA.... AA AAAA AAAA AAAA AAAA ............. AAA AAA AAA AAAA AAAA...... AAA AAAA AAAA.... AAAA AAAA.\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA ..... AAAAAA........ AA AAAA AAAA AA AAAAA AA AAAA.. AAAAA AAA AAAAA AAA AA. \"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAAAA AAAAA AAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA AAA AAAAA AAAAA?\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AA AAAAAA AAA.... AAA AAAA AAAA....... AAAAAA AA AAAA AAAA .... AAA AAA AAAAAA AA AAAAAAAAAA AAAA AAAA AAA AAA AA AAAA AA AAAA AAAAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAA AA AAAAAA AA AAAAA AAAA AAAAA AAAAAAA. AA AAAAA AA AAAA AAA. AAA AAAA AAAAAAA AAAAA AAAA. \"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA :-) AAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA. AAA AAA'A AAAA AAAAA AAA AAAAAAA AAAA, AA AAA AA AAAAAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AA AAAA AA AA AAAAAAA . AA AAAAAA.. \"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AA AAAAA AAAA AAA AA AAAAA AAA AAAA AAAA AA AAAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAA A AAAAA AAAA... AA AAAA AA AAAAAAA AAAA. AAAA AAAA AAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AA AA AAA AA AAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAA AAA ....... AAAAA AA AAAA .AAAAAA AAAA AA AAAAAAAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAA AAAAAAAA AAAAAAA AAAA\"\n" +
+                "\"sms\",\"RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"A AAA AA AAAA AAAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AA AAA AAAA AAAA AAA. AAA AAAA AAAA AAA AAAA AAAA AA AA AAAA AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AA. AAAA AAA . AAA AAAA AAAA AAAA AAAAA AA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAA AAA AAA AAAAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAAA AAAA AA AA AAA AA AAA AAAA AA AAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA A AAAA AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAA !!! AAA AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAAAA AA AAAA AA AAAA AAA AAAA.   AAA AAA AAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AA ..... AAAAAA AAAAAAA AAAAA.\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAAAAA .... AAAA AAAAA AA AAAA AA.... \"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA AAA \"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAA AAAA AAAAA AAA , AAAAA AA AA AAAAAA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAA AAAAA AAA AAAA AA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA AAAAAA... AA AAAAA AAAAA AAA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAA?\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAAA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA?\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AA AAA AAAA AAAAA AAAA\"\n" +
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA ?\"\n", BuiltInFormatName.NokiaSuite, false);
+        Assert.assertEquals (50, this.messagesInserted);
+    }
+
+    @Test
     public void johnPierre() throws URISyntaxException {
         this.testString ("BEGIN:VMSG\n" +
                 "VERSION: 1.1\n" +
