@@ -17,6 +17,7 @@ class FormatLoader {
         return new BuiltInFormatsLoader().loadDefaults();
     }
 
+    @SuppressWarnings("unchecked")
     Map<String, Format> loadFrom (final SharedPreferencesHolder sharedPreferences) {
         final Map<String, Format> formats = new HashMap<String, Format>();
         if (sharedPreferences == null)return formats;
@@ -25,11 +26,16 @@ class FormatLoader {
         for (final String entry : prefs.keySet ()) {if (entry.indexOf ('#') != -1)formatNames.add(entry.split ("#") [0]);}
         for (final String formatName : formatNames) {
             formats.put(formatName,
-                    new Format(formatName, (String) prefs.get (formatName + '#' + FormatLoader.COMMON),
-                            (String) prefs.get (formatName + '#' + FormatLoader.EXPORT_FORMAT),
-                            (String) prefs.get (formatName + '#' + FormatLoader.INBOX_KEYWORD),
+                    new Format(formatName, get(prefs, formatName, FormatLoader.COMMON),
+                            get(prefs, formatName, FormatLoader.EXPORT_FORMAT),
+                            get(prefs, formatName, FormatLoader.INBOX_KEYWORD),
                             (String) prefs.get (formatName + '#' + FormatLoader.SENT_KEYWORD)));
         }
         return formats;
+    }
+
+    private String get(Map<String, ?> prefs, String formatName, String suffix) {
+        String result = (String)prefs.get(formatName + '#' + suffix);
+        return result == null ? "" : result;
     }
 }
