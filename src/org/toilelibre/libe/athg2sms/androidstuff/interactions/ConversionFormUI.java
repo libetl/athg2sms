@@ -48,7 +48,7 @@ public class ConversionFormUI {
                     fragment.startActivityForResult (intent, 1);
                 } else {
                     intent = new Intent();
-                    intent.setType("text/*");
+                    intent.setType("*/*");
                     intent.addCategory (Intent.CATEGORY_OPENABLE);
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     fragment.startActivityForResult (intent, 0);
