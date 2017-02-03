@@ -180,6 +180,12 @@ public class ReadFileTest {
     }
 
     @Test
+    public void philippe () throws URISyntaxException {
+        this.testString ("sms,\"\",+32478679517,,,1435597166455,,\"Texte du message\"\n", BuiltInFormatName.NokiaCsvWithoutQuotes, false);
+        Assert.assertEquals (1, this.messagesInserted);
+    }
+
+    @Test
     public void vmg () throws URISyntaxException {
         this.testFile ("athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox, false);
         Assert.assertEquals (1, this.messagesInserted);

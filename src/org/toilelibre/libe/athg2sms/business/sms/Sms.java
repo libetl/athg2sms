@@ -23,8 +23,10 @@ public class Sms {
             final String var = varNames.getVarNames().get (i);
             final String val = result.group (i);
             if (var.startsWith ("date")) {
-                final SimpleDateFormat df = new SimpleDateFormat (var.substring ("date".length ()), Locale.US);
-                if (values.get ("date") == null) {
+                final SimpleDateFormat df = new SimpleDateFormat(var.substring("date".length()), Locale.US);
+                if (var.equals("date")){
+                    values.put("date", Long.parseLong(val));
+                }else if (values.get ("date") == null) {
                     values.put ("date", df.parse (val).getTime ());
                 } else {
                     long l = Long.parseLong ("" + values.get ("date"));

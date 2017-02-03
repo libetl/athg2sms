@@ -28,6 +28,8 @@ class BuiltInFormatsLoader {
                 "\"$(dateyy-M-d HH:mm:ss)\",\"$(address)\",\"\",\"$(body)\",\"$(folder)\"\n", "INBOX", "SENT"));
         formats.put(BuiltInFormatName.NokiaCsv.getValue(), new Format(BuiltInFormatName.NokiaCsv.getValue(), "[\\s]*sms;$(folder);(?:\"\";)?\"$(address)\";\"\";(?:\"\";)?\"$(dateyyyy.MM.dd HH:mm)\";\"\";\"$(body)\"[\\s]+",
                 "sms;$(folder);\"$(inbox:address)\";\"$(sent:address)\";\"\";\"$(dateyyyy.MM.dd HH:mm)\";\"\";\"$(body)\"\n", "deliver", "submit"));
+        formats.put(BuiltInFormatName.NokiaCsvWithoutQuotes.getValue(), new Format(BuiltInFormatName.NokiaCsvWithoutQuotes.getValue(), "[\\s]*sms,\"$(folder)\",$(address),,,$(date),,\"$(body)\"[\\s]+",
+                "sms,\"$(folder)\",$(address),,,$(date),,\"$(body)\"\n", "", "?"));
         formats.put(BuiltInFormatName.NokiaSuite.getValue(), new Format(BuiltInFormatName.NokiaSuite.getValue(), "[\\s]*\"sms\",\"$(folder)\",(?:\"\",)?\"$(address)\",(?:\"\",)?\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"[\\s]+",
                 "\"sms\",\"$(folder)\",\"$(inbox:address)\",\"$(sent:address)\",\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "READ,RECEIVED", "SENT"));
         formats.put(BuiltInFormatName.UnknownSmsFormat1.getValue(), new Format(BuiltInFormatName.UnknownSmsFormat1.getValue(), "[\\s]*\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"[\\s]+",
