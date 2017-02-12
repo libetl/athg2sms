@@ -14,11 +14,11 @@ public class PatternToExportPatternTest {
     public void withNokiaSuite ()  {
 
         long timestamp = System.currentTimeMillis ();
-        Map<String, Object> sampleMessageMap = new HashMap<String, Object> ();
-        sampleMessageMap.put ("folder", "inbox");
-        sampleMessageMap.put ("date", timestamp);
-        sampleMessageMap.put ("address", "+33238792342");
-        sampleMessageMap.put ("body", "Da da dee dow dow...");
+        Map<Sms.Part, Object> sampleMessageMap = new HashMap<Sms.Part, Object> ();
+        sampleMessageMap.put (Sms.Part.FOLDER, "inbox");
+        sampleMessageMap.put (Sms.Part.DATE, timestamp);
+        sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
+        sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
         System.out.println(new MessageMapper().convert (new Sms(sampleMessageMap),
                 BuiltInFormatName.NokiaSuite.getValue ()));
     }
@@ -26,11 +26,11 @@ public class PatternToExportPatternTest {
     @Test
     public void withVMG ()  {
         long timestamp = System.currentTimeMillis ();
-        Map<String, Object> sampleMessageMap = new HashMap<String, Object> ();
-        sampleMessageMap.put ("folder", "inbox");
-        sampleMessageMap.put ("date", timestamp);
-        sampleMessageMap.put ("address", "+33238792342");
-        sampleMessageMap.put ("body", "Da da dee dow dow...");
+        Map<Sms.Part, Object> sampleMessageMap = new HashMap<Sms.Part, Object> ();
+        sampleMessageMap.put (Sms.Part.FOLDER, "inbox");
+        sampleMessageMap.put (Sms.Part.DATE, timestamp);
+        sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
+        sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
         System.out.println(new MessageMapper().convert (new Sms(sampleMessageMap),
                 BuiltInFormatName.LumiaVmg.getValue ()));
 

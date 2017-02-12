@@ -136,11 +136,11 @@ public class Converter {
 
     private String getWhere (final Sms sms) {
         final StringBuilder sb = new StringBuilder ();
-        for (final Entry<String, Object> entry : sms.getValues().entrySet ()) {
-            if ("FOLDER".equalsIgnoreCase (entry.getKey ())) {
+        for (final Entry<Sms.Part, Object> entry : sms.getValues().entrySet ()) {
+            if (entry.getKey () == Sms.Part.FOLDER) {
                 continue;
             }
-            sb.append (entry.getKey ()).append (" = ");
+            sb.append (entry.getKey ().getPartName()).append (" = ");
             if (entry.getValue () instanceof String) {
                 sb.append ("'").append (entry.getValue ().toString ().replace ("'", "''")).append ("'");
             } else {
@@ -162,7 +162,7 @@ public class Converter {
         final URI uri;
         final URI uriDelete;
         try {
-            uri = new URI (Converter.FOLDER + result.getFolder () + "/");
+            uri = new URI (Converter.FOLDER + result.getFolder ().getFolderName() + "/");
             uriDelete = new URI (Converter.FOLDER);
         } catch (final URISyntaxException e) {
             throw new ConvertException ("Cannot happen", e);
@@ -174,7 +174,7 @@ public class Converter {
             final String where = this.getWhere (sms);
             convertListener.delete (uriDelete, where, new String [0]);
             if (deleter != null)nbDuplicate += deleter.delete(uriDelete, where, new String [0], contextHolder);
-            convertListener.insert (uri, sms.getValues());
+            convertListener.insert (uri, sms);
             if(inserter != null)inserter.insert (uri, sms.getValues(), contextHolder);
         } catch (final IllegalStateException ise) {
             throw new ConvertException (contextHolder.getString(R.string.problem_while_writing), ise);

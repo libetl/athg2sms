@@ -4,12 +4,13 @@ import org.toilelibre.libe.athg2sms.business.pattern.Format;
 
 import java.util.regex.Matcher;
 
+import static org.toilelibre.libe.athg2sms.business.sms.Folder.INBOX;
+import static org.toilelibre.libe.athg2sms.business.sms.Folder.SENT;
+
 public class RawMatcherResult {
-    public static final String   SENT                  = "sent";
-    public static final String   INBOX                 = "inbox";
 
     private final String [] groups;
-    private final String    folder;
+    private final Folder    folder;
     private final String    catched;
     private final Matcher   matcher;
 
@@ -24,7 +25,7 @@ public class RawMatcherResult {
         }
     }
 
-    public String getFolder () {
+    public Folder getFolder () {
         return this.folder;
     }
 

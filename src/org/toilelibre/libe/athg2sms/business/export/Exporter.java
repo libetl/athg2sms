@@ -16,7 +16,8 @@ import static org.toilelibre.libe.athg2sms.business.concurrent.ConditionWatcher.
 
 public class Exporter {
 
-    public String export(final ContextHolder<?> context, final HandlerHolder<?> handler, final String patternName, final ConvertListener convertListener, final Condition stopMonitor) {
+    public <T> String export(final SmsFinder smsFinder, final ContextHolder<T> context, final HandlerHolder<?> handler,
+                         final String patternName, final ConvertListener<T> convertListener, final Condition stopMonitor) {
         handler.postForHandler(new Runnable() {
             @Override
             @SuppressWarnings("unchecked")
@@ -26,7 +27,7 @@ public class Exporter {
         });
         final StringBuilder result = new StringBuilder();
         final MessageMapper messageMapper = new MessageMapper();
-        final List<Map<String, Object>> list = new SmsFinder().pickThemAll(context, handler, (ProcessRealTimeFeedback) convertListener, stopMonitor);
+        final List<Sms> list = smsFinder.pickThemAll(context, handler, (ConvertListener<T>) convertListener, stopMonitor);
 
         if (list == null) return null;
 
@@ -48,8 +49,7 @@ public class Exporter {
                    convertListener.updateProgress(context.getString(R.string.savingthesms), thisIndex, list.size());
                 }
             });
-            Sms sms = new Sms(list.get(i));
-            result.append(messageMapper.convert(sms, patternName));
+            result.append(messageMapper.convert(list.get(i), patternName));
         }
         handler.postForHandler(new Runnable() {
             @Override

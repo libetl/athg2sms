@@ -34,6 +34,8 @@ class BuiltInFormatsLoader {
                 "\"sms\",\"$(folder)\",\"$(inbox:address)\",\"$(sent:address)\",\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "READ,RECEIVED", "SENT"));
         formats.put(BuiltInFormatName.UnknownSmsFormat1.getValue(), new Format(BuiltInFormatName.UnknownSmsFormat1.getValue(), "[\\s]*\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"[\\s]+",
                 "\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"\n", "0", "1"));
+        formats.put(BuiltInFormatName.XmlMessage.getValue(), new Format(BuiltInFormatName.XmlMessage.getValue(), "<Message><Recepients(?:[\\s]*\\/>|><string>$(sent:address)<\\/string><\\/Recepients>)<Body(?:[\\s]*\\/>|>$(body)<\\/Body>)<IsIncoming>$(folder)<\\/IsIncoming><IsRead>(?:[^<]+)<\\/IsRead><Attachments(?:.*?\\/>)<LocalTimestamp>$(date)<\\/LocalTimestamp><Sender(?:[\\s]*\\/>|>$(inbox:address)<\\/Sender>)<\\/Message>",
+                "<Message><Recepients[sent?]><string>$(sent:address)</string></Recepients>[:] />[;]<Body>$(body)</Body><IsIncoming>$(folder)</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>$(date)</LocalTimestamp><Sender[inbox?]>$(inbox:address)</Sender>[:] />[;]</Message>", "true", "false"));
         return formats;
     }
 }

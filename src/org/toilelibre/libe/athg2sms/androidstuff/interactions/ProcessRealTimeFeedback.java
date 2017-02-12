@@ -6,9 +6,9 @@ import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.actions.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;
+import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.net.URI;
-import java.util.Map;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -41,7 +41,7 @@ public class ProcessRealTimeFeedback implements ConvertListener<Context> {
         this.proceedHandler.getProgressBar().setVisibility (INVISIBLE);
     }
 
-    public void insert (final URI uri, final Map<String, Object> smsValues) {
+    public void insert (final URI uri, final Sms sms) {
     }
 
     public void sayIPrepareTheList (final ContextHolder<Context> contextHolder, final int size) {

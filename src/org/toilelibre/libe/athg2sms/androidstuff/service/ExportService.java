@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.toilelibre.libe.athg2sms.actions.Actions;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsFinder;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public class ExportService extends IntentService {
         try {
             final File targetDir = this.getTargetDir();
             final File tempFile = File.createTempFile("athg2sms", ".txt", targetDir);
-            new Actions().exportNow(this, tempFile, new Runnable() {
+            new Actions().exportNow(this, tempFile, new SmsFinder(), new Runnable() {
                 @Override
                 public void run() {
                     boolean done = true;

@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult.INBOX;
+import static org.toilelibre.libe.athg2sms.business.sms.Folder.INBOX;
 
 public class MessageMapper {
 
@@ -18,24 +18,32 @@ public class MessageMapper {
 
     public String convert (Sms sms, String pattern) {
         final FormatRegexRepresentation theFormatRegexRepresentation = FormatSettings.getInstance().getFormats().get(pattern).getRegex();
-        String result = theFormatRegexRepresentation.getExportFormat();
+        String result = INBOX == sms.getFolder() ?
+                theFormatRegexRepresentation.getExportFormatForInbox() :
+                theFormatRegexRepresentation.getExportFormatForSent();
         result = result.replace ("$(folder)", 
-                INBOX.equals (sms.getFolder()) ?
+                INBOX == sms.getFolder() ?
                         theFormatRegexRepresentation.getInboxKeyword() : theFormatRegexRepresentation.getSentKeyword() );
-        result = result.replace ("$(" + sms.getFolder() + ":address)", sms.getAddress());
+        result = result.replace ("$(" + sms.getFolder().getFolderName() + ":address)", sms.getAddress());
         result = result.replace ("$(address)", sms.getAddress());
         result = result.replace ("$(inbox:address)", "");
         result = result.replace ("$(sent:address)", "");
         result = replaceBody (result, sms, theFormatRegexRepresentation);
-        int startOfDate = result.indexOf ("$(date") + 7;
+        int startOfDate = result.indexOf ("$(date") + 6;
         int endOfDate = result.indexOf (')', startOfDate);
         String datePattern = result.substring (startOfDate, endOfDate);
         
-        DateFormat df = new SimpleDateFormat (datePattern, Locale.getDefault());
-        result = result.substring (0, startOfDate - 7) +
-                df.format (new Date (sms.getDate())) +
-                result.substring (endOfDate + 1);
-        
+        if ("".equals(datePattern)) {
+            result = result.substring (0, startOfDate - 6) +
+                    sms.getDate() +
+                    result.substring (endOfDate + 1);
+        }else{
+            DateFormat df = new SimpleDateFormat (datePattern, Locale.getDefault());
+            result = result.substring (0, startOfDate - 6) +
+                    df.format (new Date (sms.getDate())) +
+                    result.substring (endOfDate + 1);
+        }
+
         return result;
     }
 

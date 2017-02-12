@@ -7,6 +7,7 @@ import org.toilelibre.libe.athg2sms.androidstuff.api.storage.FileRetriever;
 import org.toilelibre.libe.athg2sms.androidstuff.api.storage.SharedPreferencesHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsDeleter;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsFinder;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsInserter;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertFormatGuesser;
@@ -79,11 +80,13 @@ public class Actions {
         }
     }
 
-    public void exportNow(Object context, File tempFile, Runnable afterExport, String pattern, Condition stopMonitor) {
+    @SuppressWarnings("unchecked")
+    public void exportNow(Object context, File tempFile, SmsFinder smsFinder, Runnable afterExport, String pattern, Condition stopMonitor) {
 
         final ProcessRealTimeFeedback convertListener = ProcessRealTimeFeedback.getInstance();
-        final String result = new Exporter().export(new ContextHolder<Object>(context),
-                new HandlerHolder<Object>(convertListener.getHandler()), pattern, convertListener, stopMonitor);
+        final ConvertListener uncastedConvertListener = (ConvertListener) convertListener;
+        final String result = new Exporter().export(smsFinder, new ContextHolder<Object>(context),
+                new HandlerHolder<Object>(convertListener.getHandler()), pattern, uncastedConvertListener, stopMonitor);
 
         if (result == null) {
             afterExport.run();

@@ -4,24 +4,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;
+import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class SmsReceiver extends BroadcastReceiver {
 
-    private static final Set<Map<String, Object>> ALREADY_RECEIVED_SMS = new HashSet<Map<String, Object>>();
+    private static final Set<Map<Sms.Part, Object>> ALREADY_RECEIVED_SMS = new HashSet<Map<Sms.Part, Object>>();
     @Override
     public void onReceive (Context context, Intent intent) {
         final Object[] pdusObj = (Object[]) intent.getExtras().get("pdus");
@@ -30,7 +27,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
         for (Object pduObj : pdusObj) {
 
-            Map<String, Object> currentMessage = buildFrom(SmsMessage.createFromPdu((byte[]) pduObj));
+            Map<Sms.Part, Object> currentMessage = buildFrom(SmsMessage.createFromPdu((byte[]) pduObj));
             try {
 
                 if (!ALREADY_RECEIVED_SMS.contains(currentMessage))
@@ -44,11 +41,11 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
-    private Map<String, Object> buildFrom(SmsMessage currentMessage) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("address", currentMessage.getOriginatingAddress());
-        result.put("date", currentMessage.getTimestampMillis());
-        result.put("body", currentMessage.getDisplayMessageBody());
+    private Map<Sms.Part, Object> buildFrom(SmsMessage currentMessage) {
+        Map<Sms.Part, Object> result = new HashMap<Sms.Part, Object>();
+        result.put(Sms.Part.ADDRESS, currentMessage.getOriginatingAddress());
+        result.put(Sms.Part.DATE, currentMessage.getTimestampMillis());
+        result.put(Sms.Part.BODY, currentMessage.getDisplayMessageBody());
         return result;
     }
 
