@@ -21,7 +21,7 @@ public class PatternToExportPatternTest {
         sampleMessageMap.put (Sms.Part.DATE, timestamp);
         sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
         sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
-        Assert.assertEquals("\"sms\",\"READ,RECEIVED\",\"+33238792342\",\"\",\"\",\"2017.02.13 17:36\",\"\",\"Da da dee dow dow...\"\n", new MessageMapper().convert (new Sms(sampleMessageMap),
+        Assert.assertEquals("\"sms\",\"READ,RECEIVED\",\"+33238792342\",\"\",\"\",\"2017.02.13 16:36\",\"\",\"Da da dee dow dow...\"\n", new MessageMapper().convert (new Sms(sampleMessageMap),
                 BuiltInFormatName.NokiaSuite.getValue ()));
     }
 
@@ -45,7 +45,7 @@ public class PatternToExportPatternTest {
                         "X-SIMID:0\r\n" +
                         "X-LOCKED:UNLOCKED\r\n" +
                         "X-TYPE:SMS\r\n" +
-                        "Date:2017/02/13 17:36:36\r\n" +
+                        "Date:2017/02/13 16:36:36\r\n" +
                         "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Da da dee dow dow...\r\n" +
                         "END:VBODY\r\n" +
                         "END:VMSG\r\n", new MessageMapper().convert (new Sms(sampleMessageMap),
