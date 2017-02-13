@@ -51,7 +51,7 @@ public class SmsFinder {
 
     private Cursor query(Uri smsFolder, ContextHolder<?> contextHolder) {
         final ContentResolver contentResolver = contextHolder.get(ContentResolver.class);
-        return contentResolver.query(smsFolder, null, null, null, null);
+        return contentResolver.query(smsFolder, Sms.Part.asString(), null, null, null);
     }
 
     private List<Sms> iterateFor(final Folder folder, final Cursor cursor, final ContextHolder<?> contextHolder, final HandlerHolder<?> handler, final ConvertListener<?> convertListener, final Condition stopMonitor) {
@@ -84,10 +84,7 @@ public class SmsFinder {
             });
             Map<Sms.Part, Object> values = new HashMap<Sms.Part, Object>();
             for (String columnName : cursor.getColumnNames()) {
-                Sms.Part column = Sms.Part.reverse(columnName);
-                if (column != Sms.Part.UNKNOWN) {
-                    values.put(column, cursor.getString(cursor.getColumnIndex(columnName)));
-                }
+                values.put(Sms.Part.valueOf(columnName.toUpperCase()), cursor.getString(cursor.getColumnIndex(columnName)));
             }
             values.put(Sms.Part.FOLDER, folder);
             result.add(new Sms(values));

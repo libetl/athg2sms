@@ -4,9 +4,11 @@ import org.toilelibre.libe.athg2sms.business.pattern.Format;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,14 +36,14 @@ public class Sms {
             }
         }
 
-        public static Part reverse(String input) {
-            String input2 = input.toUpperCase();
-            for (Part value : values()) {
-                if (value.name().equals(input2)) {
-                    return value;
+        public static String [] asString () {
+            List<String> partsAsString = new ArrayList<String>(Part.values().length - 2);
+            for (Part part : Part.values()) {
+                if (part != UNKNOWN && part != FOLDER && part != CHARSET && part != ENCODING) {
+                    partsAsString.add(part.getPartName());
                 }
             }
-            return UNKNOWN;
+            return partsAsString.toArray(new String [partsAsString.size()]);
         }
 
         public String getPartName() {

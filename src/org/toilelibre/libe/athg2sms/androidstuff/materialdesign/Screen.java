@@ -100,7 +100,6 @@ public class Screen extends AppCompatActivity {
                     }
                 }
                 if (screen == 3) {
-                    Log.i("toto", "" + (-3.0 / 8 * viewPager.getScrollX() + 1.74 * viewPager.getHeight()));
                     FloatingActionButton addOneButton = (FloatingActionButton) Screen.this.findViewById(R.id.addone);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         addOneButton.setY((int)(-3.0 / 8 * viewPager.getScrollX() + 1.74 * viewPager.getHeight()));
