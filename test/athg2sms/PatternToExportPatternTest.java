@@ -3,6 +3,7 @@ package athg2sms;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.business.export.MessageMapper;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
+import org.toilelibre.libe.athg2sms.business.sms.Folder;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class PatternToExportPatternTest {
 
         long timestamp = System.currentTimeMillis ();
         Map<Sms.Part, Object> sampleMessageMap = new HashMap<Sms.Part, Object> ();
-        sampleMessageMap.put (Sms.Part.FOLDER, "inbox");
+        sampleMessageMap.put (Sms.Part.FOLDER, Folder.INBOX);
         sampleMessageMap.put (Sms.Part.DATE, timestamp);
         sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
         sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
@@ -27,7 +28,7 @@ public class PatternToExportPatternTest {
     public void withVMG ()  {
         long timestamp = System.currentTimeMillis ();
         Map<Sms.Part, Object> sampleMessageMap = new HashMap<Sms.Part, Object> ();
-        sampleMessageMap.put (Sms.Part.FOLDER, "inbox");
+        sampleMessageMap.put (Sms.Part.FOLDER, Folder.INBOX);
         sampleMessageMap.put (Sms.Part.DATE, timestamp);
         sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
         sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
