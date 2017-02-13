@@ -84,7 +84,10 @@ public class SmsFinder {
             });
             Map<Sms.Part, Object> values = new HashMap<Sms.Part, Object>();
             for (String columnName : cursor.getColumnNames()) {
-                values.put(Sms.Part.parse(columnName), cursor.getString(cursor.getColumnIndex(columnName)));
+                Sms.Part column = Sms.Part.parse(columnName);
+                if (column != Sms.Part.UNKNOWN) {
+                    values.put(column, cursor.getString(cursor.getColumnIndex(columnName)));
+                }
             }
             values.put(Sms.Part.FOLDER, folder);
             result.add(new Sms(values));

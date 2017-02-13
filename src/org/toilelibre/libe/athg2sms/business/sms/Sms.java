@@ -20,14 +20,18 @@ import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.FOLDER;
 public class Sms {
 
     public enum Part {
-        ADDRESS, DATE, ENCODING, CHARSET, BODY, FOLDER;
+        ADDRESS, DATE, ENCODING, CHARSET, BODY, FOLDER, UNKNOWN;
 
         public static Part parse(String input) {
             if (input.startsWith ("date")) {
                 return DATE;
             }
             input = input.replaceAll("^inbox:", "").replaceAll("^sent:", "");
-            return Part.valueOf(input.toUpperCase());
+            try {
+                return Part.valueOf(input.toUpperCase());
+            } catch (IllegalArgumentException iae) {
+                return UNKNOWN;
+            }
         }
 
         public String getPartName() {
