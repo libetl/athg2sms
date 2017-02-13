@@ -81,7 +81,7 @@ public class ExportFormUI {
         }
 
         if (Arrays.asList(permissions).contains("android.permission.WRITE_EXTERNAL_STORAGE")) {
-            activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.exportfile)).getSelectedItem ().toString ());
+            activity.getIntent().putExtra("pattern", ((Spinner) activity.findViewById (R.id.exportPatterns)).getSelectedItem ().toString ());
             new ExportUI().retryExportOperation(activity);
         } else {
             resetExportButton(activity);

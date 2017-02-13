@@ -34,6 +34,16 @@ public class Sms {
             }
         }
 
+        public static Part reverse(String input) {
+            String input2 = input.toUpperCase();
+            for (Part value : values()) {
+                if (value.name().equals(input2)) {
+                    return value;
+                }
+            }
+            return UNKNOWN;
+        }
+
         public String getPartName() {
             return this.name().toLowerCase();
         }
