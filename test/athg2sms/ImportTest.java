@@ -288,4 +288,295 @@ public class ImportTest {
                         "12/26/2015 4:01:11 AM;from;+654631231157;\"\";\"tau ktodner mddhe eta blen go\"\n" +
                         "12/").find ());
     }
+
+    @Test
+    public void anotherXmlMessage () throws URISyntaxException {
+        JunitConvertListener convertListener = importString("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "<ArrayOfMessage xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>Hi! Check out our timesaving tips and videos for getting the most from your new phone.\n" +
+                "\n" +
+                "windowsphone.com/hello\n" +
+                "\n" +
+                "This is a free message.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>130352170807645806</LocalTimestamp>\n" +
+                "<Sender>Windows Phone</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>Mau berbagi Pulsa ke Sesama Pengguna Telkomsel? Ketik *858*NomorTujuan*NominalTransfer# lalu tunggu SMS konfirmasinya.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131308493967196623</LocalTimestamp>\n" +
+                "<Sender>TELKOMSEL</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>Buy 1 Get 1 Teh Tareek Semenanjung (Hot/Ice).Redeem this SMS today at Kopi Oey Sabang Jl.H.Agus Salim No.16A Sabang,Telp (021)31934438.Limited stock.Promo *606#</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131308214773816168</LocalTimestamp>\n" +
+                "<Sender>Kopi Oey</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>sdh dibayarkah oleh paung? kpn dibayarnya? bgm sy bs ksh uangnya ke pak santo?</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131249601674812662</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131249601803623809</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>returan diambil ya besok</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131280670830475069</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>false</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131265992559883530</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>ketarik sisa 44 buku yg ada, sy lgs bayar tunai...</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131265992489069086</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>kapan ampo bro</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131265991431285223</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>dihubungi saja bos saya</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131249602209415890</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131249601803623809</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>sdh dibayarkah oleh paung? kpn dibayarnya? bgm sy bs ksh uangnya ke pak santo?</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131249601674812662</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131237593783283181</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>pak santo, sy mau menarik buku 'direktori perguruan tinggi' &amp; dana hasil penjualan buku minggu ini. kpn sy bs ambil. terima kasih</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131237593670674338</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131183865918594256</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>pak santo, sy mau menarik dana hasil penjualan buku saya minggu ini, berapa pun jumlahnya. terima kasih</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131183865807130000</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>habis minggu depan</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131158028228770000</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131158025317700994</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>sdh 4 bulan buku saya ada di paung. bgm kabar penjualan buku saya? terima kasih sebelumnya.</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131158025211430000</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>mas belum</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131133875315000000</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131133865136937766</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>pak santo, ini sando. saya mau tanya ttg laporan penjualan buku saya. terima kasih</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131133865062030000</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131103593146768339</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>kalau bukunya laku semua n cpt dibayarin oleh paung, saya pasti lebihin, apalagi kalau dibayar sblm lebaran. tq sebelumnya</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131103593034800000</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>mas tambahin seratus ribu buat oleh oleh bisakan mas</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131103423205930000</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>mas 250 ribu ya untuk gunung agung biaya barcod ya</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131102740066570000</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131066626584797592</LocalTimestamp>\n" +
+                "<Sender>Mobile operator</Sender>\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients>\n" +
+                "<string>+6208765216644</string>\n" +
+                "</Recepients>\n" +
+                "<Body>bsk sktr jam 10 ya pak. terima kasih.</Body>\n" +
+                "<IsIncoming>false</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131066580763100000</LocalTimestamp>\n" +
+                "<Sender />\n" +
+                "</Message>\n" +
+                "<Message>\n" +
+                "<Recepients />\n" +
+                "<Body>mas dikteori perguruan tinggi: 100 exp</Body>\n" +
+                "<IsIncoming>true</IsIncoming>\n" +
+                "<IsRead>true</IsRead>\n" +
+                "<Attachments />\n" +
+                "<LocalTimestamp>131066523469030000</LocalTimestamp>\n" +
+                "<Sender>+6208765216644</Sender>\n" +
+                "</Message>", BuiltInFormatName.XmlMessage);
+
+        Assert.assertEquals (29, convertListener.getMessages().size());
+    }
 }
