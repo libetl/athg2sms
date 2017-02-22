@@ -2,6 +2,7 @@ package org.toilelibre.libe.athg2sms.business.convert;
 
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+import org.toilelibre.libe.athg2sms.business.pattern.PreparedPattern;
 import org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
@@ -36,5 +37,28 @@ public class ConvertFormatGuesser {
 
         return matcher == null ? null : key;
     }
-    
+
+    public String getFailedGuessDetailsFor(final String content, final String pattern) {
+        final String beginning = escapeText(content.substring(0, Math.min(4095, content.length() - 1)));
+        final String preparedPattern = escapeRegex(FormatSettings.getInstance().preparePattern (pattern).getValPattern());
+        return "curl -X 'POST' " +
+                "-H'Content-Type:application/json' " +
+                "-d'{\"regex\":\""+preparedPattern+"\",\"flags\":\"i\",\"delimiter\":\"/\",\"flavor\":\"pcre\",\"testString\":\""+beginning+"\"}' " +
+                "https://regex101.com/api/regex";
+    }
+
+    private String escape(String sequence) {
+        return sequence.replaceAll("(?<!\\\\)[0-9]", "0").replaceAll("(?<!\\\\)[A-Z]", "A").replaceAll("(?<!\\\\)[a-z]", "a")
+                .replaceAll("\"", "\\\\\"").replaceAll("'", "''")
+                .replaceAll("\\n", "\\\\n").replaceAll("\\r", "\\\\r").replaceAll("\\t", "\\\\t");
+    }
+
+    private String escapeRegex(String sequence) {
+        return escape(sequence).replaceAll("(?<!\\\\)\\\\(?=[a-zA-Z0-9])", "\\\\\\\\");
+    }
+
+    private String escapeText(String sequence) {
+        return escape(sequence).replaceAll("[^\\x00-\\x7F]", "@").replaceAll("(?<!\\\\)\\\\(?=[^rnt\"])", "\\\\\\\\");
+    }
+
 }

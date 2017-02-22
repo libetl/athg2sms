@@ -44,6 +44,7 @@
     <string name="saveas">Exporter &gt;</string>
     <string name="start">Démarrer &gt;</string>
     <string name="again">Encore</string>
+    <string name="reporterror">Signaler erreur</string>
     <string name="cancel">Annuler</string>
     <string name="guessconvset">Deviner format</string>
     <string name="backtomainmenu">Menu principal</string>

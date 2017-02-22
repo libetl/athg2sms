@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 
 import org.toilelibre.libe.athg2sms.EntryPoint;
 import org.toilelibre.libe.athg2sms.R;
+import org.toilelibre.libe.athg2sms.actions.Actions;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.service.ConvertService;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
@@ -56,7 +59,8 @@ class ConvertUI {
 
         final Intent intent = new Intent (activity, ConvertService.class);
 
-        intent.putExtra("pattern", activity.getIntent().getStringExtra("pattern"));
+        final String pattern = activity.getIntent().getStringExtra("pattern");
+        intent.putExtra("pattern", pattern);
         intent.putExtra("filename", filename);
 
         final BroadcastReceiver stopConvert = new BroadcastReceiver() {
@@ -71,7 +75,13 @@ class ConvertUI {
             @Override
             public void onReceive(Context context, Intent intent) {
                 new ConversionFormUI().resetStartButton(activity);
-                Dialog dialog = buildAlertDialog(activity, R.string.error_title, R.layout.error, R.drawable.ic_iconko, R.string.again);
+                Dialog dialog = buildAlertDialog(activity, R.string.error_title, R.layout.error, R.drawable.ic_iconko, R.string.again, R.string.reporterror,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ConvertUI.this.createRegex101Entry(activity, pattern, filename);
+                            }
+                        });
                 final String errorMessage1 = intent.getExtras().getString("errorMessage");
                 final String errorMessage2 = intent.getExtras().getString("secondErrorMessage");
                 ((TextView) dialog.findViewById (R.id.exception)).setText (errorMessage1);
@@ -109,6 +119,23 @@ class ConvertUI {
         }
     }
 
+    private void createRegex101Entry(final Activity activity, final String pattern, final String filename) {
+        new Thread() {
+            @Override
+            public void run() {
+                final Intent sendToIntent = new Intent(Intent.ACTION_SEND, Uri.fromParts("mailto", "libe4@free.fr", null))
+                        .putExtra(Intent.EXTRA_TEXT,
+                                new Actions().getFailedGuessDetailsFor(
+                                        new Actions().getContentFromFileName(new ContextHolder<Object>(activity.getBaseContext()), filename), pattern))
+                        .putExtra(Intent.EXTRA_SUBJECT, "AthgWSms : format not working, help please")
+                        .putExtra(Intent.EXTRA_EMAIL, new String[]{"libe4@free.fr"})
+                        .setType("text/plain");
+                activity.startActivity(Intent.createChooser(sendToIntent, "Send the error details by e-mail"));
+
+            }
+        }.start();
+    }
+
     void stopConvertOperation(Activity activity) {
         final Intent intent = new Intent (activity, ConvertService.class);
         intent.putExtra("stopNow", "stopNow");
@@ -123,19 +150,30 @@ class ConvertUI {
     }
 
     private Dialog buildAlertDialog(Context context, int titleResId, int layout, int picture, int buttonText) {
+        return buildAlertDialog(context, titleResId, layout, picture, buttonText, 0, null);
+    }
+
+    private Dialog buildAlertDialog(Context context, int titleResId, int layout, int picture, int buttonText, int negativeButtonText,
+                                    DialogInterface.OnClickListener negativeOnClickListener) {
         View dialogContent = LayoutInflater.from(context).inflate(layout, null);
-        Dialog dialog = new AlertDialog.Builder(context).setCancelable(false)
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context).setCancelable(false)
                 .setTitle(titleResId)
                 .setView(dialogContent)
                 .setPositiveButton(context.getResources().getText(buttonText),
                         new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                }).create();
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        if (negativeButtonText != 0)
+            dialogBuilder = dialogBuilder.setNegativeButton(context.getResources().getText(negativeButtonText),
+                    negativeOnClickListener);
         try {
             ((ImageView)dialogContent.findViewById(R.id.ImageView01)).setImageResource(picture);
         } catch (Resources.NotFoundException drawableNotSupportedException){}
+
+        AlertDialog dialog = dialogBuilder.create();
         dialog.show();
         return dialog;
     }

@@ -44,6 +44,7 @@
     <string name="saveas">Send to &gt;</string>
     <string name="start">Start ></string>
     <string name="again">Again</string>
+    <string name="reporterror">Report error</string>
     <string name="cancel">Cancel</string>
     <string name="guessconvset">Guess format</string>
     <string name="backtomainmenu">Back to Main menu</string>

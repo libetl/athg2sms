@@ -38,6 +38,11 @@ public class Actions {
         return new ConvertFormatGuesser().guessNow(content);
     }
 
+    public String getFailedGuessDetailsFor(String content, String pattern) {
+        return new ConvertFormatGuesser().getFailedGuessDetailsFor(content, pattern);
+    }
+
+
     public String[] getAllFormats() {
         return FormatSettings.getInstance().getFormats().keySet().toArray(new String [FormatSettings.getInstance().getFormats().size ()]);
     }
@@ -71,7 +76,7 @@ public class Actions {
     }
 
 
-    private String getContentFromFileName (ContextHolder<?> context, String filename) {
+    public String getContentFromFileName (ContextHolder<?> context, String filename) {
         try {
             return FileRetriever.getFile (context, filename);
         } catch (FileNotFoundException e) {

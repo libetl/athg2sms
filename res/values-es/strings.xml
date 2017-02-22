@@ -44,6 +44,7 @@
    <string name="saveas">Export &gt;</string>
    <string name="start">Inicio &gt;</string>
    <string name="again">Una vez más</string>
+   <string name="reporterror">Informar error</string>
    <string name="cancel">Cancelar</string>
    <string name="guessconvset">Adivina el formato</string>
    <string name="backtomainmenu">Menú principal</string>
