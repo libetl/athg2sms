@@ -22,7 +22,7 @@ public class SmsInserter {
 
         final ContentValues values2 = new ContentValues ();
         for (final Entry<Sms.Part, Object> entry : smsValues.entrySet ()) {
-            if (entry.getKey () == Sms.Part.FOLDER) {
+            if (entry.getKey () != Sms.Part.FOLDER) {
                 this.putEntry (values2, entry);
             }
         }
