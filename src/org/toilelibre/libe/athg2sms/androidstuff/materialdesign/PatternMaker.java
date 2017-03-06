@@ -134,8 +134,12 @@ public class PatternMaker extends Fragment {
         String regex = buildRegex (regexCompletions);
         ((ViewGroup)this.rootView.findViewById(R.id.example)).removeAllViews();
         TextView textView = new TextView(this.getContext());
-        String example = replaceWeirdChars (new Generex(regex).random(0, 160));
-        textView.setText(example);
+        try {
+            String example = replaceWeirdChars (new Generex(regex).random(0, 160));
+            textView.setText(example);
+        } catch (StringIndexOutOfBoundsException indexOutOfBoundsException) {
+            textView.setText(R.string.generex_failed);
+        }
         ((ViewGroup)this.rootView.findViewById(R.id.example)).addView(textView);
     }
 

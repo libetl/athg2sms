@@ -14,7 +14,7 @@ class PatternsMaker {
         patternBuilder.setAfterLastVar (patternBuilder.index () + 1);
         final char firstExpectedChar = patternBuilder.charAt (patternBuilder.getAfterLastVar ());
         String expectedChar = "" + (firstExpectedChar == 0 ? "" : firstExpectedChar);
-        if (expectedChar.charAt (0) == '\\') {
+        if (expectedChar.length() > 0 && expectedChar.charAt (0) == '\\') {
             expectedChar += patternBuilder.charAt (patternBuilder.getAfterLastVar () + 1);
         }
         if (patternBuilder.index () < patternBuilder.length ()) {
