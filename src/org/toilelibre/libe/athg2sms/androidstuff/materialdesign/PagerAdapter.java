@@ -24,6 +24,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return new PatternMaker();
             case 3:
                 return new PatternListing();
+            case 4:
+                return new MySms();
             default:
                 return null;
         }

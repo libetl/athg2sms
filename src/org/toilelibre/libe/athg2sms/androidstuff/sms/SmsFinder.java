@@ -23,6 +23,7 @@ import java.util.concurrent.locks.Condition;
 
 import static org.toilelibre.libe.athg2sms.business.concurrent.ConditionWatcher.weAreAskedToStopNowBecauseOfThe;
 
+
 public class SmsFinder {
 
     public <T> List<Sms> pickThemAll(final ContextHolder<T> contextHolder, final HandlerHolder<?> handler, final ConvertListener<T> convertListener, final Condition stopMonitor) {
@@ -73,18 +74,19 @@ public class SmsFinder {
             if (weAreAskedToStopNowBecauseOfThe(stopMonitor)) return null;
             final int thisMsgIndex = msgIndex;
 
-            handler.postForHandler(new Runnable() {
-                @Override
-                public void run() {
-                    if (!cursor.isClosed() && thisMsgIndex % 100 == 0) {
+            if (!cursor.isClosed() && thisMsgIndex % 100 == 0) {
+                handler.postForHandler(new Runnable() {
+                    @Override
+                    public void run() {
                         convertListener.updateProgress(contextHolder.getString(R.string.pickingfrom, folder.getFolderName()),
-                                thisMsgIndex, cursor.getCount());
+                                thisMsgIndex, cursor.isClosed() ? 0 : cursor.getCount());
                     }
-                }
-            });
+                });
+            }
             Map<Sms.Part, Object> values = new HashMap<Sms.Part, Object>();
             for (String columnName : cursor.getColumnNames()) {
-                values.put(Sms.Part.valueOf(columnName.toUpperCase()), cursor.getString(cursor.getColumnIndex(columnName)));
+                String value = cursor.getString(cursor.getColumnIndex(columnName));
+                values.put(Sms.Part.valueOf(columnName.toUpperCase()), value == null ? "" : value);
             }
             values.put(Sms.Part.FOLDER, folder);
             result.add(new Sms(values));

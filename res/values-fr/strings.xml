@@ -81,5 +81,5 @@
     <string name="viewhere">Example :</string>
     <string name="build">Ça y est !</string>
     <string name="permissions_settings">Configurer les permissions</string>
-    <string name="generex_failed">&lt;probleme-avec-l-exemple&gt;</string>
+    <string name="sms_list">Liste des Sms</string>
 </resources>

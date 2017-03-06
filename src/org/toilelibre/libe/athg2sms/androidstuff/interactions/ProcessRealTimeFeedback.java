@@ -20,8 +20,9 @@ public class ProcessRealTimeFeedback implements ConvertListener<Context> {
     private static ProcessRealTimeFeedback instance = null;
 
     public enum Type {
-        IMPORT, EXPORT
+        IMPORT, NOTHING, EXPORT
     }
+
     public ProcessRealTimeFeedback(Type type, ProceedHandler proceedHandler) {
         this.proceedHandler = proceedHandler;
         this.type = type;

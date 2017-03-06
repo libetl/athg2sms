@@ -137,6 +137,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
+			<artifactId>cardview-v7</artifactId>
+			<version>23.4.0</version>
+			<type>aar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.android.support</groupId>
 			<artifactId>design</artifactId>
 			<version>23.4.0</version>
 			<type>aar</type>

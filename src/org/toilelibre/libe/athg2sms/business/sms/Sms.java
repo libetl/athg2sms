@@ -1,5 +1,8 @@
 package org.toilelibre.libe.athg2sms.business.sms;
 
+import android.os.Build;
+import android.telephony.PhoneNumberUtils;
+
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 
 import java.text.ParseException;
@@ -18,11 +21,12 @@ import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.CHARSET;
 import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.DATE;
 import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.ENCODING;
 import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.FOLDER;
+import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.PARSED_ADDRESS;
 
 public class Sms {
 
     public enum Part {
-        ADDRESS, DATE, ENCODING, CHARSET, BODY, FOLDER, UNKNOWN;
+        PARSED_ADDRESS, ADDRESS, DATE, ENCODING, CHARSET, BODY, FOLDER, UNKNOWN;
 
         public static Part parse(String input) {
             if (input.startsWith ("date")) {
@@ -39,7 +43,7 @@ public class Sms {
         public static String [] asString () {
             List<String> partsAsString = new ArrayList<String>(Part.values().length - 2);
             for (Part part : Part.values()) {
-                if (part != UNKNOWN && part != FOLDER && part != CHARSET && part != ENCODING) {
+                if (part != PARSED_ADDRESS && part != UNKNOWN && part != FOLDER && part != CHARSET && part != ENCODING) {
                     partsAsString.add(part.getPartName());
                 }
             }
@@ -65,6 +69,17 @@ public class Sms {
 
     public Sms(Map<Part, Object> valuesToPick) {
         this.values.putAll(valuesToPick);
+    }
+
+    public Sms withParsedAddress () {
+        return new Sms(this.getValues(), true);
+    }
+
+    private Sms(Map<Part, Object> valuesToPick, boolean parsePhoneNumber) {
+        this(valuesToPick);
+        if (parsePhoneNumber) {
+            values.put(PARSED_ADDRESS, parseAddress(valuesToPick.get(ADDRESS).toString()));
+        }
     }
 
     public Sms(Format.FormatVarNamesRepresentation varNames, RawMatcherResult result) throws ParseException {
@@ -108,6 +123,17 @@ public class Sms {
         return result;
     }
 
+    private String parseAddress(String val) {
+        String result = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            result = PhoneNumberUtils.formatNumber(val, Locale.getDefault().getCountry());
+        }
+        if (result == null) {
+            result = PhoneNumberUtils.formatNumber(val);
+        }
+        return result == null ? "" : result;
+    }
+
     public boolean isEmpty () {
         for (Part value : values.keySet ()) {
             if (values.get (value) != null)
@@ -142,5 +168,9 @@ public class Sms {
 
     public CharSequence getAddress() {
         return values.get(ADDRESS).toString();
+    }
+
+    public String getParsedAddress() {
+        return values.get(PARSED_ADDRESS).toString();
     }
 }

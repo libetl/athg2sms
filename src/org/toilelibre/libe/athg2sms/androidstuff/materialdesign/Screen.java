@@ -31,8 +31,6 @@ import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProceedHandler;
 import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsApplicationToggle;
 
-import java.util.logging.Logger;
-
 public class Screen extends AppCompatActivity {
 
     @Override
@@ -52,6 +50,7 @@ public class Screen extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.export)));
         tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.patternmaker)));
         tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.convsets)));
+        tabLayout.addTab(tabLayout.newTab().setText(this.getText(R.string.sms_list)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
