@@ -3,7 +3,7 @@ package athg2sms;
 import org.junit.Assert;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.business.export.MessageMapper;
-import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
+import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
 import org.toilelibre.libe.athg2sms.business.sms.Folder;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
@@ -22,7 +22,7 @@ public class PatternToExportPatternTest {
         sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
         sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
         Assert.assertEquals("\"sms\",\"READ,RECEIVED\",\"+33238792342\",\"\",\"\",\"2017.02.13 16:36\",\"\",\"Da da dee dow dow...\"\n", new MessageMapper().convert (new Sms(sampleMessageMap),
-                BuiltInFormatName.NokiaSuite.getValue ()));
+                BuiltInFormat.NokiaSuite.getCompleteName()));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class PatternToExportPatternTest {
                         "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Da da dee dow dow...\r\n" +
                         "END:VBODY\r\n" +
                         "END:VMSG\r\n", new MessageMapper().convert (new Sms(sampleMessageMap),
-                BuiltInFormatName.LumiaVmg.getValue ()));
+                BuiltInFormat.LumiaVmg.getCompleteName()));
 
     }
 }

@@ -2,7 +2,7 @@ package athg2sms;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
+import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
 
 import java.net.URISyntaxException;
 
@@ -17,9 +17,9 @@ public class RoundTripTest {
         String inboxAndSentMessage =
                 "<Message><Recepients><string>+33612345678</string></Recepients><Body>Say Hello Joe</Body><IsIncoming>false</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131230002909464794</LocalTimestamp><Sender /></Message>" +
                 "<Message><Recepients /><Body>Hello Joe</Body><IsIncoming>true</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>131230002746920903</LocalTimestamp><Sender>+33623456789</Sender></Message>";
-        Athg2SmsJUnitTester.JunitConvertListener importListener = importString(inboxAndSentMessage, BuiltInFormatName.XmlMessage);
+        Athg2SmsJUnitTester.JunitConvertListener importListener = importString(inboxAndSentMessage, BuiltInFormat.XmlMessage);
 
-        String result = exportNow(importListener.getMessages(), BuiltInFormatName.XmlMessage);
+        String result = exportNow(importListener.getMessages(), BuiltInFormat.XmlMessage);
 
         Assert.assertEquals (result, inboxAndSentMessage);
     }
