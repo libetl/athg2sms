@@ -94,4 +94,8 @@ android {
     repositories {
         mavenCentral()
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }

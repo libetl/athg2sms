@@ -1,6 +1,7 @@
 package athg2sms;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.business.export.MessageMapper;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
@@ -8,6 +9,7 @@ import org.toilelibre.libe.athg2sms.business.sms.Folder;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class PatternToExportPatternTest {
@@ -21,8 +23,8 @@ public class PatternToExportPatternTest {
         sampleMessageMap.put (Sms.Part.DATE, timestamp);
         sampleMessageMap.put (Sms.Part.ADDRESS, "+33238792342");
         sampleMessageMap.put (Sms.Part.BODY, "Da da dee dow dow...");
-        Assert.assertEquals("\"sms\",\"READ,RECEIVED\",\"+33238792342\",\"\",\"\",\"2017.02.13 16:36\",\"\",\"Da da dee dow dow...\"\n", new MessageMapper().convert (new Sms(sampleMessageMap),
-                BuiltInFormat.NokiaSuite.getCompleteName()));
+        Assert.assertEquals("\"sms\",\"READ,RECEIVED\",\"+33238792342\",\"\",\"\",\"2017.02.13 XX:36\",\"\",\"Da da dee dow dow...\"\n", new MessageMapper().convert (new Sms(sampleMessageMap),
+                BuiltInFormat.NokiaSuite.getCompleteName()).replaceAll("[0-9][0-9]:36", "XX:36"));
     }
 
     @Test
@@ -45,11 +47,11 @@ public class PatternToExportPatternTest {
                         "X-SIMID:0\r\n" +
                         "X-LOCKED:UNLOCKED\r\n" +
                         "X-TYPE:SMS\r\n" +
-                        "Date:2017/02/13 16:36:36\r\n" +
+                        "Date:2017/02/13 XX:36:36\r\n" +
                         "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Da da dee dow dow...\r\n" +
                         "END:VBODY\r\n" +
                         "END:VMSG\r\n", new MessageMapper().convert (new Sms(sampleMessageMap),
-                BuiltInFormat.LumiaVmg.getCompleteName()));
+                BuiltInFormat.LumiaVmg.getCompleteName()).replaceAll("[0-9][0-9]:36", "XX:36"));
 
     }
 }

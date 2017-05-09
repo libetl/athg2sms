@@ -24,13 +24,19 @@ public class ConvertFormatGuesser {
             Format.FormatVarNamesRepresentation varNames = patternEntrySet.getValue().getVarNames();
             Format.FormatRegexRepresentation regex = patternEntrySet.getValue().getRegex();
             if (matcher != null && matcher.find()) {
-                final String smsAsText = matcher.group ();
-                try {
-                    new Sms(varNames, new RawMatcherResult(matcher, regex, smsAsText));
-                } catch (ParseException e) {
-                    continue;
+                boolean readOne = false;
+
+                while (!readOne && matcher.find()) {
+                    final String smsAsText = matcher.group ();
+                    try {
+                        new Sms(varNames, new RawMatcherResult(matcher, regex, smsAsText));
+                        readOne = true;
+                    } catch (ParseException e) {
+                    }
                 }
-                break;
+                if (readOne) {
+                    break;
+                }
             }
 
         }

@@ -31,6 +31,11 @@ public class ImportTest {
     }
 
     @Test
+    public void redmi3sPrime () throws URISyntaxException {
+        importString("sms,deliver,\"address\",\"\",\"\",\"2017.04.20 19:14\",\"\",\"sms_body\"", BuiltInFormat.NokiaCsvWithCommas, false);
+    }
+
+    @Test
     public void indianGuy () throws URISyntaxException {
         importFile("athg2sms/DE.csv", BuiltInFormat.DateAndFromAndAddressAndbody);
     }
@@ -120,6 +125,17 @@ public class ImportTest {
     public void loremIpsum () throws URISyntaxException {
         JunitConvertListener convertListener = importString("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n" + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInFormat.BlackberryCsv, false);
         Assert.assertEquals (2, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void victorTest () throws URISyntaxException {
+        JunitConvertListener convertListener = importString("number,address,content,date,send|receive,person,,\n" +
+                "14,2.34807E+12,8132581738,16/10/2014 12:01,other,2.34807E+12,,This is a draft message\n" +
+                "17,8091924903,08037598576 - Dayo,23/04/2014 16:43,other,8091924903,,This is a draft message\n" +
+                "29,2.34807E+12,How far...abeg hola wen done. Cos right nw ur boi done almst dey stranded. Tnx,18/05/2014 17:56,receive,413,,This is a received message\n" +
+                "30,2.34807E+12,Aight.,18/09/2014 14:42,receive,413,,This is a sent message\n" +
+                "31,8065089071,Call you later,18/09/2014 10:45,send,me,,\n", BuiltInFormat.WeirdVictorFormat);
+        Assert.assertEquals (5, convertListener.getMessages().size());
     }
 
     @Test
