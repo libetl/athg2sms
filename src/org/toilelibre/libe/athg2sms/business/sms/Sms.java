@@ -43,9 +43,10 @@ public class Sms {
         }
 
         public static String [] asString () {
-            List<String> partsAsString = new ArrayList<String>(Part.values().length - 2);
+            List<String> partsAsString = new ArrayList<String>();
             for (Part part : Part.values()) {
-                if (part != PARSED_ADDRESS && part != UNKNOWN && part != FOLDER && part != CHARSET && part != ENCODING) {
+                if (part != PARSED_ADDRESS && part != UNKNOWN && part != FOLDER && part != CHARSET
+                        && part != ENCODING && part != LOCALTIMESTAMP) {
                     partsAsString.add(part.getPartName());
                 }
             }
