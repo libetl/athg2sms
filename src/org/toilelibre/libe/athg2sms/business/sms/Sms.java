@@ -41,7 +41,8 @@ public class Sms {
         public static String [] asString () {
             List<String> partsAsString = new ArrayList<String>(Part.values().length - 2);
             for (Part part : Part.values()) {
-                if (part != UNKNOWN && part != FOLDER && part != CHARSET && part != ENCODING) {
+                if (part != UNKNOWN && part != FOLDER && part != CHARSET
+                        && part != ENCODING && part != LOCALTIMESTAMP) {
                     partsAsString.add(part.getPartName());
                 }
             }
