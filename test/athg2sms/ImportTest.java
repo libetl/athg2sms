@@ -3,7 +3,7 @@ package athg2sms;
 import org.junit.Assert;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
-import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
+import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
 
 import java.net.URISyntaxException;
 import java.util.Calendar;
@@ -21,48 +21,53 @@ public class ImportTest {
     @Test
     public void csvSms () throws URISyntaxException {
         // "\"Created\",\"Number\",\"Sender Name\",\"Text\",\"Folder\"\n"
-        JunitConvertListener convertListener = importString("\"2016-04-19 01:04:34\",\"VM-FCHRGE\",\"\",\"Dear customer, You have made a Debit\",\"INBOX\"\n" + "\"2016-04-19 17:24:11\",\"ID-IDEA\",\"\",\"UR BSNL a/c Topup with Rs. 10 by 2222\",\"INBOX\"\n", BuiltInFormatName.DateAndAddressAndBodyAndINBOX, false);
+        JunitConvertListener convertListener = importString("\"2016-04-19 01:04:34\",\"VM-FCHRGE\",\"\",\"Dear customer, You have made a Debit\",\"INBOX\"\n" + "\"2016-04-19 17:24:11\",\"ID-IDEA\",\"\",\"UR BSNL a/c Topup with Rs. 10 by 2222\",\"INBOX\"\n", BuiltInFormat.DateAndAddressAndBodyAndINBOX, false);
         Assert.assertEquals (2, convertListener.getMessages().size());
     }
 
     @Test(expected=ConvertException.class)
     public void empty () throws URISyntaxException {
-        importString("", BuiltInFormatName.NokiaCsv, true);
+        importString("", BuiltInFormat.NokiaCsv, true);
+    }
+
+    @Test
+    public void redmi3sPrime () throws URISyntaxException {
+        importString("sms,deliver,\"address\",\"\",\"\",\"2017.04.20 19:14\",\"\",\"sms_body\"", BuiltInFormat.NokiaCsvWithCommas, false);
     }
 
     @Test
     public void indianGuy () throws URISyntaxException {
-        importFile("athg2sms/DE.csv", BuiltInFormatName.DateAndFromAndAddressAndbody);
+        importFile("athg2sms/DE.csv", BuiltInFormat.DateAndFromAndAddressAndbody);
     }
 
     @Test
     public void aleTxt () throws URISyntaxException {
-        importFile("athg2sms/ale.txt", BuiltInFormatName.NokiaCsvWithCommas);
+        importFile("athg2sms/ale.txt", BuiltInFormat.NokiaCsvWithCommas);
     }
 
     @Test
     public void otherOtherNokia () throws URISyntaxException {
-        importFile("athg2sms/nokia.csv", BuiltInFormatName.NokiaSuite);
+        importFile("athg2sms/nokia.csv", BuiltInFormat.NokiaSuite);
     }
 
     @Test
     public void lumia () throws URISyntaxException {
-        importFile("athg2sms/sms.vmsg", BuiltInFormatName.LumiaVmg);
+        importFile("athg2sms/sms.vmsg", BuiltInFormat.LumiaVmg);
     }
 
     @Test
     public void lionel () throws URISyntaxException {
-        importFile("athg2sms/Msgs5200.csv", BuiltInFormatName.NokiaCsv);
+        importFile("athg2sms/Msgs5200.csv", BuiltInFormat.NokiaCsv);
     }
 
     @Test
     public void yetAnotherTest () throws URISyntaxException {
-        importFile("athg2sms/oldFile.csv", BuiltInFormatName.NokiaCsv);
+        importFile("athg2sms/oldFile.csv", BuiltInFormat.NokiaCsv);
     }
 
     @Test
     public void checkingTheDateFormat () throws URISyntaxException {
-        JunitConvertListener convertListener = importString("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 16:05\";\"\";\"Bonjour Ca va ?\"\n", BuiltInFormatName.NokiaCsv, false);
+        JunitConvertListener convertListener = importString("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 16:05\";\"\";\"Bonjour Ca va ?\"\n", BuiltInFormat.NokiaCsv, false);
         Date d = new Date (convertListener.getMessages().get (0).getDate());
         Calendar c = new GregorianCalendar ();
         c.setTime (d);
@@ -74,7 +79,7 @@ public class ImportTest {
 
     @Test
     public void checkingTheDateFormat2 () throws URISyntaxException {
-        JunitConvertListener convertListener = importString("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 12:04\";\"\";\"C'est l'heure de manger\"\n", BuiltInFormatName.NokiaCsv, false);
+        JunitConvertListener convertListener = importString("sms;submit;\"0000000\";\"\";\"\";\"2010.01.11 12:04\";\"\";\"C'est l'heure de manger\"\n", BuiltInFormat.NokiaCsv, false);
         Date d = new Date (convertListener.getMessages().get (0).getDate());
         Calendar c = new GregorianCalendar ();
         c.setTime (d);
@@ -86,13 +91,13 @@ public class ImportTest {
 
     @Test
     public void unknownSmsFormat () throws URISyntaxException {
-        JunitConvertListener convertListener = importString("\"+33682864563\",\"2015-07-10 21:53\",\"SMS\",\"0\",\"Bienvenue\"\n", BuiltInFormatName.UnknownSmsFormat1, true);
+        JunitConvertListener convertListener = importString("\"+33682864563\",\"2015-07-10 21:53\",\"SMS\",\"0\",\"Bienvenue\"\n", BuiltInFormat.UnknownSmsFormat1, true);
         Assert.assertEquals (1, convertListener.getMessages().size());
     }
 
     @Test
     public void nokiaCsv () throws URISyntaxException {
-        JunitConvertListener convertListener = importString("sms;deliver;\"+33612345678\";\"\";\"\";\"2016.03.22 15:46\";\"\";\"First message\"\n" + "sms;submit;\"\";\"+33612345678\";\"\";\"2016.03.22 15:48\";\"\";\"Answer to the first message\"", BuiltInFormatName.NokiaCsv, true);
+        JunitConvertListener convertListener = importString("sms;deliver;\"+33612345678\";\"\";\"\";\"2016.03.22 15:46\";\"\";\"First message\"\n" + "sms;submit;\"\";\"+33612345678\";\"\";\"2016.03.22 15:48\";\"\";\"Answer to the first message\"", BuiltInFormat.NokiaCsv, true);
         Assert.assertEquals (2, convertListener.getMessages().size());
     }
 
@@ -101,7 +106,7 @@ public class ImportTest {
         JunitConvertListener convertListener = importString(
                 "\"sms\";\"submit\";\"+498537215678\";\"\";\"\";\"2016.04.14 11:58\";\"\";\"How are you doing?\"\n"
                         + "\"sms\";\"submit\";\"00434566400787\";\"\";\"\";\"2016.04.10 10:43\";\"\";\"Neue Info OS129: Die aktuelle Abflugzeit ist jetzt voraussichtlich 10Apr 11:10. Wir bitten um Entschuldigung.\"",
-                BuiltInFormatName.NokiaCsvWithQuotes);
+                BuiltInFormat.NokiaCsvWithQuotes);
         Assert.assertEquals (2, convertListener.getMessages().size());
     }
 
@@ -112,14 +117,25 @@ public class ImportTest {
         JunitConvertListener convertListener = importString(
                 "\"sms\",\"READ,RECEIVED\",\"+33654321009\",\"\",\"\",\"2015.04.19 12:23\",\"\",\"Here is a received message\"\n" +
                         "\"sms\",\"SENT\",\"\",\"+33634567811\",\"\",\"2015.04.20 18:49\",\"\",\"Here is a sent message\"\n",
-                BuiltInFormatName.NokiaSuite);
+                BuiltInFormat.NokiaSuite);
         Assert.assertEquals (2, convertListener.getMessages().size());
     }
 
     @Test
     public void loremIpsum () throws URISyntaxException {
-        JunitConvertListener convertListener = importString("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n" + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInFormatName.BlackberryCsv, false);
+        JunitConvertListener convertListener = importString("-545061504,Fri Feb 19 03:18:04 EST 2010,Thu Feb 18 16:18:10 EST 2010,false,+61422798642,\"Lorem ipsumRecu\"\n" + "-491825428,Fri Feb 19 07:05:26 EST 2010,Fri Feb 19 07:05:26 EST 2010,true,+61432988391,\"Lorem ipsumSent\"", BuiltInFormat.BlackberryCsv, false);
         Assert.assertEquals (2, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void victorTest () throws URISyntaxException {
+        JunitConvertListener convertListener = importString("number,address,content,date,send|receive,person,,\n" +
+                "14,2.34807E+12,8132581738,16/10/2014 12:01,other,2.34807E+12,,This is a draft message\n" +
+                "17,8091924903,08037598576 - Dayo,23/04/2014 16:43,other,8091924903,,This is a draft message\n" +
+                "29,2.34807E+12,How far...abeg hola wen done. Cos right nw ur boi done almst dey stranded. Tnx,18/05/2014 17:56,receive,413,,This is a received message\n" +
+                "30,2.34807E+12,Aight.,18/09/2014 14:42,receive,413,,This is a sent message\n" +
+                "31,8065089071,Call you later,18/09/2014 10:45,send,me,,\n", BuiltInFormat.WeirdVictorFormat);
+        Assert.assertEquals (5, convertListener.getMessages().size());
     }
 
     @Test
@@ -127,25 +143,25 @@ public class ImportTest {
         JunitConvertListener convertListener = importString("Date,Origin,Destination,Message,Status\n" +
                 "\"2016-12-22 23:34:54\",61424525904,61405190016,\"Thomas if you see or hear\n" +
                 "the cat can you bring him in, I couldn't find him...\",Delivered\n" +
-                "Date,Origin,Destination,Message,Status", BuiltInFormatName.MxtSmsglobal);
+                "Date,Origin,Destination,Message,Status", BuiltInFormat.MxtSmsglobal);
         Assert.assertEquals (1, convertListener.getMessages().size());
     }
 
     @Test
     public void xmlMsgFile () throws URISyntaxException {
-        JunitConvertListener convertListener = importFile("athg2sms/xmlfile.msg", BuiltInFormatName.XmlMessage);
+        JunitConvertListener convertListener = importFile("athg2sms/xmlfile.msg", BuiltInFormat.XmlMessage);
         Assert.assertEquals (12328, convertListener.getMessages().size());
     }
 
     @Test
     public void philippe () throws URISyntaxException {
-        JunitConvertListener convertListener = importString("sms,\"\",+32478679517,,,1435597166455,,\"Texte du message\"\n", BuiltInFormatName.NokiaCsvWithoutQuotes, false);
+        JunitConvertListener convertListener = importString("sms,\"\",+32478679517,,,1435597166455,,\"Texte du message\"\n", BuiltInFormat.NokiaCsvWithoutQuotes, false);
         Assert.assertEquals (1, convertListener.getMessages().size());
     }
 
     @Test
     public void vmg () throws URISyntaxException {
-        JunitConvertListener convertListener = importFile("athg2sms/test.vmg", BuiltInFormatName.NokiaVmgInbox);
+        JunitConvertListener convertListener = importFile("athg2sms/test.vmg", BuiltInFormat.NokiaVmgInbox);
         Assert.assertEquals (1, convertListener.getMessages().size());
     }
 
@@ -200,7 +216,7 @@ public class ImportTest {
                 "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAAAAA\"\n" +
                 "\"sms\",\"READ,RECEIVED\",\"+3312345678\",\"\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA?\"\n" +
                 "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AA AAA AAAA AAAAA AAAA\"\n" +
-                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA ?\"\n", BuiltInFormatName.NokiaSuite);
+                "\"sms\",\"SENT\",\"\",\"+3312345678\",\"\",\"2017.01.01 15:23\",\"\",\"AAAA ?\"\n", BuiltInFormat.NokiaSuite);
         Assert.assertEquals (50, convertListener.getMessages().size());
     }
 
@@ -237,7 +253,7 @@ public class ImportTest {
                 "Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:WhatsApp code --- You can also tap on this link to verify your ph=\n" +
                 "one: ---\n" +
                 "END:VBODY\n" +
-                "END:VMSG\n", BuiltInFormatName.LumiaVmg);
+                "END:VMSG\n", BuiltInFormat.LumiaVmg);
         Assert.assertEquals (2, convertListener.getMessages().size());
     }
 
@@ -269,7 +285,7 @@ public class ImportTest {
                 "\"sms\",\"SENT\",\"\",\"07657657576\",\"\",\"2016.12.12 19:34\",\"\",\"Tovarish na 13.12\n" +
                 "ot 08:00 do 17:00\n" +
                 "Ref: 45345\"";
-        JunitConvertListener convertListener = importString(anotherAttempt, BuiltInFormatName.NokiaSuite);
+        JunitConvertListener convertListener = importString(anotherAttempt, BuiltInFormat.NokiaSuite);
         Assert.assertEquals (8, convertListener.getMessages().size());
 
     }
@@ -575,8 +591,32 @@ public class ImportTest {
                 "<Attachments />\n" +
                 "<LocalTimestamp>131066523469030000</LocalTimestamp>\n" +
                 "<Sender>+6208765216644</Sender>\n" +
-                "</Message>", BuiltInFormatName.XmlMessage);
+                "</Message>", BuiltInFormat.XmlMessage);
 
         Assert.assertEquals (29, convertListener.getMessages().size());
+    }
+
+
+    @Test
+    public void localTimestampIssue () throws URISyntaxException {
+        JunitConvertListener convertListener = importString(
+                "<ArrayOfMessage>" +
+                " <Message>" +
+                "  <Recepients>" +
+                "   <string>+33685280000</string>" +
+                "  </Recepients>" +
+                "  <Body>Ah cool! Au fait les crevettes vont très bien !</Body>" +
+                "  <IsIncoming>false</IsIncoming>" +
+                "  <IsRead>true</IsRead>" +
+                "  <Attachments/>" +
+                "  <LocalTimestamp>131450419779746184</LocalTimestamp>" +
+                "  <Sender/>" +
+                " </Message>" +
+                "</ArrayOfMessage>", BuiltInFormat.XmlMessage);
+        Assert.assertEquals (1, convertListener.getMessages().size());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(convertListener.getMessages().get(0).getDate());
+        Assert.assertTrue(calendar.get(GregorianCalendar.YEAR) == 2017);
     }
 }

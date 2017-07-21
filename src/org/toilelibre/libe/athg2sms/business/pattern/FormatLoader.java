@@ -14,7 +14,7 @@ class FormatLoader {
     private static final String SENT_KEYWORD  = "sentKeyword";
 
     Map<String,Format> loadWithoutPreferences() {
-        return new BuiltInFormatsLoader().loadDefaults();
+        return BuiltInFormat.formats();
     }
 
     @SuppressWarnings("unchecked")

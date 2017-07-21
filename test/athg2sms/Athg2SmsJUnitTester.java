@@ -3,12 +3,11 @@ package athg2sms;
 import org.junit.Assert;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
-import org.toilelibre.libe.athg2sms.androidstuff.interactions.ProcessRealTimeFeedback;
 import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsFinder;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;
 import org.toilelibre.libe.athg2sms.business.export.Exporter;
-import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormatName;
+import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
@@ -82,11 +81,11 @@ class Athg2SmsJUnitTester {
     }
 
 
-    static JunitConvertListener importFile(final String classpathFile, final BuiltInFormatName conversionSet) throws URISyntaxException {
+    static JunitConvertListener importFile(final String classpathFile, final BuiltInFormat conversionSet) throws URISyntaxException {
         return importFile(classpathFile, conversionSet, false);
     }
 
-    static JunitConvertListener importFile(final String classpathFile, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
+    static JunitConvertListener importFile(final String classpathFile, final BuiltInFormat conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
         final URL url = ImportTest.class.getClassLoader ().getResource (classpathFile);
         String content;
@@ -110,21 +109,21 @@ class Athg2SmsJUnitTester {
         return stringBuilder.toString();
     }
 
-    static JunitConvertListener importString(final String content, final BuiltInFormatName conversionSet) throws URISyntaxException {
+    static JunitConvertListener importString(final String content, final BuiltInFormat conversionSet) throws URISyntaxException {
         return importString(content, conversionSet, false);
     }
 
-    static JunitConvertListener importString(final String content, final BuiltInFormatName conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
+    static JunitConvertListener importString(final String content, final BuiltInFormat conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         return importNow(conversionSet, shouldBeEmpty, content);
     }
 
-    private static JunitConvertListener importNow(BuiltInFormatName conversionSet, boolean shouldBeEmpty, String content) {
+    private static JunitConvertListener importNow(BuiltInFormat conversionSet, boolean shouldBeEmpty, String content) {
         // Given
         final Converter converter = new Converter();
         final JunitConvertListener junitConvertListener = new JunitConvertListener();
 
         // When
-        converter.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getValue()),
+        converter.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getCompleteName()),
                 content, junitConvertListener, null, new ContextHolder<Object>(null),
                 null, null, null);
 
@@ -136,11 +135,11 @@ class Athg2SmsJUnitTester {
         return junitConvertListener;
     }
 
-    static String exportNow(List<Sms> messages, BuiltInFormatName conversionSet) {
+    static String exportNow(List<Sms> messages, BuiltInFormat conversionSet) {
         return exportNow(messages, conversionSet, false);
     }
 
-    static String exportNow(List<Sms> messages, BuiltInFormatName conversionSet, boolean shouldBeEmpty) {
+    static String exportNow(List<Sms> messages, BuiltInFormat conversionSet, boolean shouldBeEmpty) {
         //Given
         final Exporter exporter = new Exporter();
         //When
@@ -150,7 +149,7 @@ class Athg2SmsJUnitTester {
                             @Override
                             public void postForHandler(Runnable runnable) {
                             }
-                        }, conversionSet.getValue(),
+                        }, conversionSet.getCompleteName(),
                         new JunitConvertListener(), null);
 
         //then
