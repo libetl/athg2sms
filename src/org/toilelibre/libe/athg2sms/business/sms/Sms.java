@@ -9,7 +9,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +28,7 @@ import static org.toilelibre.libe.athg2sms.business.sms.Sms.Part.PARSED_ADDRESS;
 public class Sms {
 
     public enum Part {
-        PARSED_ADDRESS, ADDRESS, DATE, ENCODING, CHARSET, BODY, FOLDER, UNKNOWN;
+        PARSED_ADDRESS, ADDRESS, DATE, LOCALTIMESTAMP, ENCODING, CHARSET, BODY, FOLDER, UNKNOWN;
 
         public static Part parse(String input) {
             if (input.startsWith ("date")) {
@@ -94,6 +96,15 @@ public class Sms {
         values.put (FOLDER, result.getFolder());
     }
 
+
+    private long fromMicrosoftTimestamp(long value) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(value / 10000);
+        calendar.add(Calendar.YEAR, -369);
+        //there are 369 years difference between unix timestamp and microsoft timestamp
+        return calendar.getTimeInMillis();
+    }
+
     private Map<Part, Object> fillInValues(Map<Part, IntermediateValue> intermediateValues) throws ParseException {
         final Map<Part, Object> result = new HashMap<Part, Object>();
         boolean quotedPrintable = "QUOTED-PRINTABLE".equalsIgnoreCase (
@@ -103,6 +114,9 @@ public class Sms {
             if (Arrays.asList(ENCODING, CHARSET).contains(entry.getKey())) continue;
 
             switch (entry.getKey()) {
+                case LOCALTIMESTAMP:
+                    result.put(DATE, fromMicrosoftTimestamp(Long.parseLong(entry.getValue().value)));
+                    break;
                 case DATE:
                     if (entry.getValue().additionalInfo.length() == 0)
                         result.put(DATE, Long.parseLong(entry.getValue().value));

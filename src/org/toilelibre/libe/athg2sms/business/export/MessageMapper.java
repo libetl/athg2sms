@@ -7,7 +7,9 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import static org.toilelibre.libe.athg2sms.business.sms.Folder.INBOX;
@@ -16,6 +18,13 @@ public class MessageMapper {
 
     public MessageMapper(){}
 
+    private long toMicrosoftTimestamp(long value) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(value);
+        calendar.add(Calendar.YEAR, 369);
+        //there are 369 years difference between unix timestamp and microsoft timestamp
+        return calendar.getTimeInMillis() * 10000;
+    }
     public String convert (Sms sms, String pattern) {
         final FormatRegexRepresentation theFormatRegexRepresentation = FormatSettings.getInstance().getFormats().get(pattern).getRegex();
         String result = INBOX == sms.getFolder() ?
@@ -29,17 +38,19 @@ public class MessageMapper {
         result = result.replace ("$(inbox:address)", "");
         result = result.replace ("$(sent:address)", "");
         result = replaceBody (result, sms, theFormatRegexRepresentation);
-        int startOfDate = result.indexOf ("$(date") + 6;
-        int endOfDate = result.indexOf (')', startOfDate);
-        String datePattern = result.substring (startOfDate, endOfDate);
+        int startOfDateVar = Math.max(result.indexOf ("$(date"), result.indexOf ("$(localtimestamp"));
+        int startOfDatePattern = Math.max(result.indexOf ("$(date") + 6, result.indexOf ("$(localtimestamp") + 16);
+        int endOfDate = result.indexOf (')', startOfDatePattern);
+        boolean localtimestamp = result.contains("$(localtimestamp)");
+        String datePattern = result.substring (startOfDatePattern, endOfDate);
         
         if ("".equals(datePattern)) {
-            result = result.substring (0, startOfDate - 6) +
-                    sms.getDate() +
+            result = result.substring (0, startOfDateVar) +
+                    (localtimestamp ? toMicrosoftTimestamp(sms.getDate()) : sms.getDate()) +
                     result.substring (endOfDate + 1);
         }else{
             DateFormat df = new SimpleDateFormat (datePattern, Locale.getDefault());
-            result = result.substring (0, startOfDate - 6) +
+            result = result.substring (0, startOfDateVar) +
                     df.format (new Date (sms.getDate())) +
                     result.substring (endOfDate + 1);
         }

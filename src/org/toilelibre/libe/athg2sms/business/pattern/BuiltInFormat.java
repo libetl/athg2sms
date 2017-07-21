@@ -32,8 +32,8 @@ public enum BuiltInFormat {
             "\"sms\",\"$(folder)\",\"$(inbox:address)\",\"$(sent:address)\",\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "READ,RECEIVED", "SENT"),
     UnknownSmsFormat1 ("Unknown sms format 1", "[\\s]*\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"[\\s]+",
             "\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"\n", "0", "1"),
-    XmlMessage ("XmlMessage", "<Message>\\s*<Recepients(?:[\\s]*\\/>|>\\s*<string>$(sent:address)<\\/string>\\s*<\\/Recepients>)\\s*<Body(?:[\\s]*\\/>|>$(body)<\\/Body>)\\s*<IsIncoming>$(folder)<\\/IsIncoming>\\s*<IsRead>(?:[^<]+)<\\/IsRead>\\s*<Attachments(?:.*?\\/>)\\s*<LocalTimestamp>$(date)<\\/LocalTimestamp>\\s*<Sender(?:[\\s]*\\/>|>$(inbox:address)<\\/Sender>)\\s*<\\/Message>",
-            "<Message><Recepients[sent?]><string>$(sent:address)</string></Recepients>[:] />[;]<Body>$(body)</Body><IsIncoming>$(folder)</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>$(date)</LocalTimestamp><Sender[inbox?]>$(inbox:address)</Sender>[:] />[;]</Message>", "true", "false"),
+    XmlMessage ("XmlMessage", "<Message>\\s*<Recepients(?:[\\s]*\\/>|>\\s*<string>$(sent:address)<\\/string>\\s*<\\/Recepients>)\\s*<Body(?:[\\s]*\\/>|>$(body)<\\/Body>)\\s*<IsIncoming>$(folder)<\\/IsIncoming>\\s*<IsRead>(?:[^<]+)<\\/IsRead>\\s*<Attachments(?:.*?\\/>)\\s*<LocalTimestamp>$(localtimestamp)<\\/LocalTimestamp>\\s*<Sender(?:[\\s]*\\/>|>$(inbox:address)<\\/Sender>)\\s*<\\/Message>",
+            "<Message><Recepients[sent?]><string>$(sent:address)</string></Recepients>[:] />[;]<Body>$(body)</Body><IsIncoming>$(folder)</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>$(localtimestamp)</LocalTimestamp><Sender[inbox?]>$(inbox:address)</Sender>[:] />[;]</Message>", "true", "false"),
     WeirdVictorFormat("Weird Victor Format", "[\\s]*[^,]*,$(address),$(body),$(dated/M/yy HH:mm),$(folder),[^,]*,,[^\\n]*\\n",
             "1,$(address),$(body),$(dated/M/yy HH:mm),$(folder),1,,", "receive", "send");
 

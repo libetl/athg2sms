@@ -595,4 +595,28 @@ public class ImportTest {
 
         Assert.assertEquals (29, convertListener.getMessages().size());
     }
+
+
+    @Test
+    public void localTimestampIssue () throws URISyntaxException {
+        JunitConvertListener convertListener = importString(
+                "<ArrayOfMessage>" +
+                " <Message>" +
+                "  <Recepients>" +
+                "   <string>+33685280000</string>" +
+                "  </Recepients>" +
+                "  <Body>Ah cool! Au fait les crevettes vont très bien !</Body>" +
+                "  <IsIncoming>false</IsIncoming>" +
+                "  <IsRead>true</IsRead>" +
+                "  <Attachments/>" +
+                "  <LocalTimestamp>131450419779746184</LocalTimestamp>" +
+                "  <Sender/>" +
+                " </Message>" +
+                "</ArrayOfMessage>", BuiltInFormat.XmlMessage);
+        Assert.assertEquals (1, convertListener.getMessages().size());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(convertListener.getMessages().get(0).getDate());
+        Assert.assertTrue(calendar.get(GregorianCalendar.YEAR) == 2017);
+    }
 }
