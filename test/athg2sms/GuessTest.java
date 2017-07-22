@@ -5,9 +5,42 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import static org.junit.Assert.fail;
 
 public class GuessTest {
+
+    @Test
+    public void nokiaCsvGuess () throws IOException, URISyntaxException {
+        //given
+        String classpathFile = "athg2sms/nokia.csv";
+        final URL url = ImportTest.class.getClassLoader ().getResource (classpathFile);
+        String content;
+        try {
+            final File file = url == null ? new File (classpathFile) : new File (url.toURI ());
+            byte[] buffer = new byte[4096];
+            InputStream inputStream = new FileInputStream(file);
+            if (inputStream.read(buffer) == 0) {
+                fail();
+            }
+            content = new String(buffer);
+        } catch (final IOException e) {
+            throw new RuntimeException (e);
+        }
+
+        //when
+        String patternName = new Actions().guessNow(content);
+
+        //then
+        Assert.assertNotNull(patternName);
+    }
 
     @Test
     public void victorInputShouldBeGuessed () throws FileNotFoundException {
