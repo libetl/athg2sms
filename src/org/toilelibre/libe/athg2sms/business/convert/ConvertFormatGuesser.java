@@ -2,7 +2,6 @@ package org.toilelibre.libe.athg2sms.business.convert;
 
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
-import org.toilelibre.libe.athg2sms.business.pattern.PreparedPattern;
 import org.toilelibre.libe.athg2sms.business.sms.RawMatcherResult;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
@@ -26,10 +25,11 @@ public class ConvertFormatGuesser {
             if (matcher != null && matcher.find()) {
                 boolean readOne = false;
 
-                while (!readOne && matcher.find()) {
+                int counter = 0;
+                while (!readOne && matcher.find() && counter++ < 10) {
                     final String smsAsText = matcher.group ();
-                    try {
-                        new Sms(varNames, new RawMatcherResult(matcher, regex, smsAsText));
+                       try {
+                         new Sms(varNames, new RawMatcherResult(matcher, regex, smsAsText));
                         readOne = true;
                     } catch (ParseException e) {
                     }
