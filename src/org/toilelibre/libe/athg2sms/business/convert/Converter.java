@@ -13,9 +13,11 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.locks.Condition;
 import java.util.regex.Matcher;
 
@@ -200,17 +202,18 @@ public class Converter {
             this.dispatchAnotherSmsFoundEvent (matchedSms.size (), convertListener, contextHolder, holder);
         }
 
-        this.dispatchNumberOfSmsRowsKnownEvent (matchedSms.size (), convertListener, holder);
+        List<RawMatcherResult> duplicatesRemovedSms = new LinkedList<RawMatcherResult>(new HashSet<RawMatcherResult>(matchedSms));
+        this.dispatchNumberOfSmsRowsKnownEvent (duplicatesRemovedSms.size (), convertListener, holder);
 
-        ConversionResult result = new ConversionResult(matchedSms.size (), 0, 0, 0);
-        for (int i = 0 ; i < matchedSms.size () ; i++) {
+        ConversionResult result = new ConversionResult(duplicatesRemovedSms.size (), 0, 0, 0);
+        for (int i = 0 ; i < duplicatesRemovedSms.size () ; i++) {
             this.dispatchNewSmsInsertionEvent (result, i,
                     contextHolder, convertListener, holder);
 
             if (weAreAskedToStopNowBecauseOfThe(stopMonitor)) {
                 return result;
             }
-            result = result.with(this.proceedToInsertion (format, matchedSms.get (i),
+            result = result.with(this.proceedToInsertion (format, duplicatesRemovedSms.get (i),
                     convertListener, contextHolder, inserter, deleter));
         }
 

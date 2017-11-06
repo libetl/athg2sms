@@ -8,6 +8,7 @@ import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
 import org.toilelibre.libe.athg2sms.business.convert.Converter;
 import org.toilelibre.libe.athg2sms.business.export.Exporter;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
+import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
@@ -109,22 +110,30 @@ class Athg2SmsJUnitTester {
         return stringBuilder.toString();
     }
 
+    static JunitConvertListener importString(final String content, final Format conversionSet) throws URISyntaxException {
+        return importString(content, conversionSet, false);
+    }
     static JunitConvertListener importString(final String content, final BuiltInFormat conversionSet) throws URISyntaxException {
         return importString(content, conversionSet, false);
     }
 
+    static JunitConvertListener importString(final String content, final Format conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
+        return importNow(conversionSet, shouldBeEmpty, content);
+    }
     static JunitConvertListener importString(final String content, final BuiltInFormat conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         return importNow(conversionSet, shouldBeEmpty, content);
     }
 
     private static JunitConvertListener importNow(BuiltInFormat conversionSet, boolean shouldBeEmpty, String content) {
+        return importNow(FormatSettings.getInstance().getFormats().get(conversionSet.getCompleteName()), shouldBeEmpty, content);
+    }
+    private static JunitConvertListener importNow(Format conversionSet, boolean shouldBeEmpty, String content) {
         // Given
         final Converter converter = new Converter();
         final JunitConvertListener junitConvertListener = new JunitConvertListener();
 
         // When
-        converter.convertNow(FormatSettings.getInstance().getFormats().get(conversionSet.getCompleteName()),
-                content, junitConvertListener, null, new ContextHolder<Object>(null),
+        converter.convertNow(conversionSet, content, junitConvertListener, null, new ContextHolder<Object>(null),
                 null, null, null);
 
         // then

@@ -2,15 +2,19 @@ package athg2sms;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
 
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import athg2sms.Athg2SmsJUnitTester.JunitConvertListener;
+import org.toilelibre.libe.athg2sms.business.pattern.Format;
+import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 
 import static athg2sms.Athg2SmsJUnitTester.importFile;
 import static athg2sms.Athg2SmsJUnitTester.importString;
@@ -593,7 +597,7 @@ public class ImportTest {
                 "<Sender>+6208765216644</Sender>\n" +
                 "</Message>", BuiltInFormat.XmlMessage);
 
-        Assert.assertEquals (29, convertListener.getMessages().size());
+        Assert.assertEquals (27, convertListener.getMessages().size());
     }
 
 
@@ -601,22 +605,42 @@ public class ImportTest {
     public void localTimestampIssue () throws URISyntaxException {
         JunitConvertListener convertListener = importString(
                 "<ArrayOfMessage>" +
-                " <Message>" +
-                "  <Recepients>" +
-                "   <string>+33685280000</string>" +
-                "  </Recepients>" +
-                "  <Body>Ah cool! Au fait les crevettes vont très bien !</Body>" +
-                "  <IsIncoming>false</IsIncoming>" +
-                "  <IsRead>true</IsRead>" +
-                "  <Attachments/>" +
-                "  <LocalTimestamp>131450419779746184</LocalTimestamp>" +
-                "  <Sender/>" +
-                " </Message>" +
-                "</ArrayOfMessage>", BuiltInFormat.XmlMessage);
-        Assert.assertEquals (1, convertListener.getMessages().size());
+                        " <Message>" +
+                        "  <Recepients>" +
+                        "   <string>+33685280000</string>" +
+                        "  </Recepients>" +
+                        "  <Body>Ah cool! Au fait les crevettes vont très bien !</Body>" +
+                        "  <IsIncoming>false</IsIncoming>" +
+                        "  <IsRead>true</IsRead>" +
+                        "  <Attachments/>" +
+                        "  <LocalTimestamp>131450419779746184</LocalTimestamp>" +
+                        "  <Sender/>" +
+                        " </Message>" +
+                        "</ArrayOfMessage>", BuiltInFormat.XmlMessage);
+        Assert.assertEquals(1, convertListener.getMessages().size());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(convertListener.getMessages().get(0).getDate());
         Assert.assertTrue(calendar.get(GregorianCalendar.YEAR) == 2017);
+    }
+
+    @Test
+    public void guessThenImport () throws FileNotFoundException, URISyntaxException {
+        String text = "sms,deliver,\"XX\",\"\";\"\";\"2017.04.21 23:48\",\"\",\"Ierland geloof ik\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.21 23:48\",\"\",\"Ierland geloof ik\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.21 23:46\",\"\",\"Krijg m volgende week pas\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.21 23:46\",\"\",\"Krijg m volgende week pas\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.20 17:45\",\"\",\"Doet je whatsapp het nog steeds niet?\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.20 17:45\",\"\",\"Doet je whatsapp het nog steeds niet?\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.20 14:22\",\"\",\"Zal vanavond zoeken.\"\n" +
+                "sms,deliver,\"XX\",\"\";\"\";\"2017.04.20 14:22\",\"\",\"Zal vanavond zoeken.\"\n" +
+                "sms;\"submit\";\"\";\"XX\";\"\";\"2017.05.18 12:56\";\"\";\"Jammer\"\n" +
+                "sms;\"submit\";\"\";\"XX\";\"\";\"2017.05.18 12:56\";\"\";\"Jammer\"\n";
+
+        String patternName = new Actions().guessNow(text);
+        Format format = FormatSettings.getInstance().getFormats().get(patternName);
+
+        JunitConvertListener convertListener = importString(text, BuiltInFormat.MixedNokiaCsv);
+        Assert.assertEquals (4, convertListener.getMessages().size());
     }
 }
