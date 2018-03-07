@@ -85,7 +85,7 @@ public class Screen extends AppCompatActivity {
                 if (screen == 0) {
                     FloatingActionButton startButton = (FloatingActionButton) Screen.this.findViewById(R.id.start);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        startButton.setX(viewPager.getWidth() + viewPager.getScrollX() - 140);
+                        startButton.setX(viewPager.getScrollX() + 200);
                     }
                 }
                 if (screen == 1) {

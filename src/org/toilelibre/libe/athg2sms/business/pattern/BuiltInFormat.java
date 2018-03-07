@@ -16,8 +16,8 @@ public enum BuiltInFormat {
             "\"sms\";\"$(folder)\";\"$(inbox:address)\";\"$(sent:address)\";\"\";\"$(dateyyyy.MM.dd HH:mm)\";\"\";\"$(body)\"\n", "deliver", "submit"),
     NokiaCsvWithCommas ("Nokia Csv with commas", "[\\s]*sms,$(folder),(?:\"\",)?\"$(address)\",\"\",(?:\"\",)?\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"[\\s]+",
             "sms,$(folder),\"$(inbox:address)\",\"$(sent:address)\";\"\";\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "deliver", "submit"),
-    MixedNokiaCsv ("Mixed Nokia Csv", "[\\s]*sms,$(folder),(?:\"\",)?\"$(address)\",\"\";(?:\"\";)?\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"[\\s]+",
-            "sms,$(folder),\"$(inbox:address)\",\"$(sent:address)\";\"\";\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "deliver", "submit"),
+    MixedNokiaCsv ("Mixed Nokia Csv", "[\\s]*sms[,;]$(folder..[,;])[,;](?:\"\"[,;])?\"$(address)\"[,;]\"\"[,;](?:\"\"[,;])?\"$(dateyyyy.MM.dd HH:mm..)\"[,;]\"\"[,;]\"$(body)\"[\\s]+",
+            "sms,$(folder),\"$(inbox:address)\",\"$(sent:address)\";\"\";\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "deliver", "\"submit\""),
     IPhoneCsv ("iPhone Csv", "[\\s]*\"$(folder)\",\"$(dateM/d/yy)\",\"$(dateH:mm a)\",\"$(address)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"$(body)\",\"[^\"]*\"[\\s]+",
             "\"$(folder)\",\"$(dateM/d/yy)\",\"$(dateH:mm a)\",\"$(address)\",\"\",\"\",\"\",\"$(body)\",\"\"\n", "Received", "Sent"),
     BlackberryCsv ("Blackberry Csv", "[\\s]*[^,]*,(?:,)?$(dateEEE MMM d HH:mm:ss zzz yyyy),(?:,)?$(folder),$(address),\"$(body)\"[\\s]+",
@@ -30,14 +30,27 @@ public enum BuiltInFormat {
             "sms;$(folder);\"$(inbox:address)\";\"$(sent:address)\";\"\";\"$(dateyyyy.MM.dd HH:mm)\";\"\";\"$(body)\"\n", "deliver", "submit"),
     NokiaCsvWithoutQuotes ("Nokia Csv Without Quotes", "[\\s]*sms,\"$(folder)\",$(address),,,$(date),,\"$(body)\"[\\s]+",
             "sms,\"$(folder)\",$(address),,,$(date),,\"$(body)\"\n", "", "?"),
-    NokiaSuite ("Nokia Suite 3.8", "[\\s]*\"sms\",\"$(folder)\",(?:\"\",)?\"$(address)\",(?:\"\",)?\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"[\\s]+",
+    NokiaSuite ("Nokia Suite 3.8", "[\\s]*\"sms\",\"$(folder)\",(?:\"\",)?\"$(address)\",(?:[^,]*,)?(?:\"\",)?\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"[\\s]+",
             "\"sms\",\"$(folder)\",\"$(inbox:address)\",\"$(sent:address)\",\"\",\"$(dateyyyy.MM.dd HH:mm)\",\"\",\"$(body)\"\n", "READ,RECEIVED", "SENT"),
     UnknownSmsFormat1 ("Unknown sms format 1", "[\\s]*\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"[\\s]+",
             "\"$(address)\",\"$(dateyyyy-MM-dd HH:mm)\",\"SMS\",\"$(folder)\",\"$(body)\"\n", "0", "1"),
     XmlMessage ("XmlMessage", "<Message>\\s*<Recepients(?:[\\s]*\\/>|>\\s*<string>$(sent:address)<\\/string>\\s*<\\/Recepients>)\\s*<Body(?:[\\s]*\\/>|>$(body)<\\/Body>)\\s*<IsIncoming>$(folder)<\\/IsIncoming>\\s*<IsRead>(?:[^<]+)<\\/IsRead>\\s*<Attachments(?:.*?\\/>)\\s*<LocalTimestamp>$(localtimestamp)<\\/LocalTimestamp>\\s*<Sender(?:[\\s]*\\/>|>$(inbox:address)<\\/Sender>)\\s*<\\/Message>",
             "<Message><Recepients[sent?]><string>$(sent:address)</string></Recepients>[:] />[;]<Body>$(body)</Body><IsIncoming>$(folder)</IsIncoming><IsRead>true</IsRead><Attachments /><LocalTimestamp>$(localtimestamp)</LocalTimestamp><Sender[inbox?]>$(inbox:address)</Sender>[:] />[;]</Message>", "true", "false"),
+    SonyEricsson ("SonyEricsson",
+            "(?:\n|^)$(dateYYYY-MM-DD HH:mm:ss),$(address),[^,]+,$(folder),\"$(body)\",[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,(?:[^,]+,)?[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,[^\\s]+",
+            "", "Received", "Sent"),
+    Vmg2018 ("Vmg2018",
+            "\\s*BEGIN:\\s*VMSG\\s+VERSION:\\s*1.1\\s+X-IRMC-STATUS:\\s*[^\\s]*?\\s+X-IRMC-BOX:\\s*$(folder..\\s+X-NOK-DT)\\s+X-NOK-DT:\\s*[^\\s]*?\\s+X-MESSAGE-TYPE:\\s*[^\\s]*\\s+BEGIN:\\s*VCARD\\s+VERSION:\\s*3.0\\s+N:\\s*[^\\s]*?\\s+TEL:$(address..\\s+END:VCARD)\\s+END:VCARD\\s+BEGIN:VENV\\s+BEGIN:VBODY\\s+Date:\\s*$(dateDD.MM.YYYY HH:mm:ss..[\r\n]+)[\r\n]+$(body..\\s+END:VBODY)\\s+END:VBODY\\s+END:VENV\\s+END:VMSG\\s+",
+            "BEGIN:VMSG\nVERSION:1.1\nX-IRMC-STATUS:READ\nX-IRMC-BOX:$(folder)\nX-NOK-DT:20091022T064825Z\nX-MESSAGE-TYPE:DELIVER\nBEGIN:VCARD\nVERSION:3.0\nN:\nTEL:$(address)\nEND:VCARD\nBEGIN:VENV\nBEGIN:VBODY\nDate:$(dateDD.MM.YYYY HH:mm:ss)\n$(body)\nEND:VBODY\nEND:VENV\nEND:VMSG\n", "INBOX", "DELIVER"),
     WeirdVictorFormat("Weird Victor Format", "[\\s]*[^,]*,$(address),$(body),$(dated/M/yy HH:mm),$(folder),[^,]*,,[^\\n]*\\n",
-            "1,$(address),$(body),$(dated/M/yy HH:mm),$(folder),1,,", "receive", "send");
+            "1,$(address),$(body),$(dated/M/yy HH:mm),$(folder),1,,", "receive", "send"),
+    Nikilesh("Nikilesh VMG", "\\s*BEGIN:\\s*VMSG\\s+VERSION:\\s*1.1\\s+X-IRMC-STATUS:\\s*[^\\s]*?\\s+X-IRMC-BOX:\\s*$(folder..\\s+X-NOK-DT)\\s+X-NOK-DT:\\s*[^\\s]*?\\s+X-MESSAGE-TYPE:\\s*[^\\s]*?\\s+BEGIN:\\s*VCARD\\s+VERSION:\\s*3.0\\s+N:\\s*[^\\s]*?\\s+TEL:$(address..\\s+END:VCARD)\\s+END:VCARD\\s+BEGIN:VENV\\s+BEGIN:VBODY\\s+Date:\\s*$(dateDD.MM.YYYY HH:mm:ss..[\\r\\n]+)[\\r\\n]+$(body..\\s+END:VBODY)\\s+END:VBODY\\s+END:VENV\\s+END:VMSG\\s+",
+            "", "INBOX", "SENT"),
+    Jayne("Jayne", "\\s*$(dateM/d/yyyy h:mm:ss a..[from|to])\\s*$(folder)\\s*$(address):[\\r\\n]+$(body..[\\n]{2,})[\\n]{2,}","", "from", "to"),
+    Homemade1("Homemade1", "\"$(folder)\",\"$(address)\",\"$(dateyyyy-MM-dd HH:mm:ss)\",\"$(body)\"\n", "\"$(folder)\",\"$(address)\",\"$(dateyyyy-MM-dd HH:mm:ss)\",\"$(body)\"\n", "read", "sent"),
+    AbdulCsv1("Abdul Csv1", "$(dateyyyy-MM-dd HH:mm:ss),$(address),[^,]*,$(folder),$(body),[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\r\n]*[\r\n]+", "", "Received", "Sent"),
+    AbdulCsv2("Abdul Csv2", "$(dateyyyy-MM-dd HH:mm:ss),$(address),[^,]*,$(folder),\"$(body)\",[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\r\n]*[\r\n]+", "", "Received", "Sent")
+            ;
 
     private final String completeName;
     private final String format;

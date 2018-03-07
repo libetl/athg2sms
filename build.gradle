@@ -32,9 +32,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // Add other library dependencies here (see the next step)
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:design:23.0.1'
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.mifmif:generex:1.0.2'
 }
 
@@ -44,8 +44,8 @@ dependencies {
  * compilation target.
  */
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
     /**
      * This nested sourceSets block points the source code directories to the
      * existing folders in the project, instead of using the default new
@@ -82,9 +82,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_6
     }
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 25
-        compileSdkVersion 25
+        minSdkVersion 9
+        targetSdkVersion 27
+        compileSdkVersion 27
     }
 
     productFlavors {

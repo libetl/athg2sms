@@ -14,17 +14,23 @@
     </ImageView>
 
     <TextView
+            android:shadowColor="@color/black"
+            android:textColor="@color/black"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/failed_retry"
         android:textSize="30sp" />
 
     <TextView
+            android:shadowColor="@color/black"
+            android:textColor="@color/black"
         android:id="@+id/exception"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+            android:shadowColor="@color/black"
+            android:textColor="@color/black"
         android:id="@+id/exception2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />

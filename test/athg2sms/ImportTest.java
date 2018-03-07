@@ -1,20 +1,19 @@
 package athg2sms;
 
+import athg2sms.Athg2SmsJUnitTester.JunitConvertListener;
 import org.junit.Assert;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.actions.Actions;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
+import org.toilelibre.libe.athg2sms.business.pattern.Format;
+import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import athg2sms.Athg2SmsJUnitTester.JunitConvertListener;
-import org.toilelibre.libe.athg2sms.business.pattern.Format;
-import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
 
 import static athg2sms.Athg2SmsJUnitTester.importFile;
 import static athg2sms.Athg2SmsJUnitTester.importString;
@@ -297,15 +296,15 @@ public class ImportTest {
     @Test
     public void regexTest () {
         Assert.assertTrue (java.util.regex.Pattern.compile("[\r\n\t]*((?:[^;])*);((?:[^;])*);((?:[^;])*);\"\";\"((?:[^\"]|\"\")*)\"[\r\n\t]+").matcher (
-                "12/26/2015 6:22:03 AM;from;+654631231157;\"\";\"na go SONA kno problem hbe na ar oke phn krba go\"\n" +
-                        "12/26/2015 6:17:58 AM;from;+654631231157;\"\";\"blchi j tmr sottie kno problem hbe na to go JAAN? ar sei phn gulo deini go ar ki blche go SONAAA?\"\n" +
-                        "12/26/2015 6:14:29 AM;from;+654631231157;\"\";\"thik hai\"\n" +
-                        "12/26/2015 6:10:48 AM;from;+654631231157;\"\";\"toainaki ha ha ha ha ha\"\n" +
-                        "12/26/2015 5:25:57 AM;from;+654631231157;\"\";\"thikache go JAAN tale mongolbarei jabo go\"\n" +
-                        "12/26/2015 4:27:18 AM;from;+654631231157;\"\";\"na go SONATA mongolbare hbe na go karn maa ager dn mane mongolbare fanudr bari jabe go tale?\"\n" +
-                        "12/26/2015 4:18:23 AM;from;+654631231157;\"\";\"ami blle nebi na krbe na go jabei tale porer sombare jabe go school theke?\"\n" +
-                        "12/26/2015 4:11:36 AM;from;+654631231157;\"\";\"kintu mayer operation krar por ki ar jaua hbe go? karn tkhn to amke sb kaj krte hbe abr jdi fanu ase ta o to jaua late uthie dibe go JAAN ki je kri chhai\"\n" +
-                        "12/26/2015 4:01:11 AM;from;+654631231157;\"\";\"tau ktodner mddhe eta blen go\"\n" +
+                "12/26/2015 6:22:03 AM;from;+230983208932;\"\";\"na go SONA kno problem hbe na ar oke phn krba go\"\n" +
+                        "12/26/2015 6:17:58 AM;from;+230983208932;\"\";\"blchi j tmr sottie kno problem hbe na to go JAAN? ar sei phn gulo deini go ar ki blche go SONAAA?\"\n" +
+                        "12/26/2015 6:14:29 AM;from;+230983208932;\"\";\"thik hai\"\n" +
+                        "12/26/2015 6:10:48 AM;from;+230983208932;\"\";\"toainaki ha ha ha ha ha\"\n" +
+                        "12/26/2015 5:25:57 AM;from;+230983208932;\"\";\"thikache go JAAN tale mongolbarei jabo go\"\n" +
+                        "12/26/2015 4:27:18 AM;from;+230983208932;\"\";\"na go SONATA mongolbare hbe na go karn maa ager dn mane mongolbare fanudr bari jabe go tale?\"\n" +
+                        "12/26/2015 4:18:23 AM;from;+230983208932;\"\";\"ami blle nebi na krbe na go jabei tale porer sombare jabe go school theke?\"\n" +
+                        "12/26/2015 4:11:36 AM;from;+230983208932;\"\";\"kintu mayer operation krar por ki ar jaua hbe go? karn tkhn to amke sb kaj krte hbe abr jdi fanu ase ta o to jaua late uthie dibe go JAAN ki je kri chhai\"\n" +
+                        "12/26/2015 4:01:11 AM;from;+230983208932;\"\";\"tau ktodner mddhe eta blen go\"\n" +
                         "12/").find ());
     }
 
@@ -409,7 +408,7 @@ public class ImportTest {
                 "<IsRead>true</IsRead>\n" +
                 "<Attachments />\n" +
                 "<LocalTimestamp>131249602209415890</LocalTimestamp>\n" +
-                "<Sender>+6208765216644</Sender>\n" +
+                "<Sender>+230983208932</Sender>\n" +
                 "</Message>\n" +
                 "<Message>\n" +
                 "<Recepients />\n" +
@@ -422,7 +421,7 @@ public class ImportTest {
                 "</Message>\n" +
                 "<Message>\n" +
                 "<Recepients>\n" +
-                "<string>+6208765216644</string>\n" +
+                "<string>+230983208932</string>\n" +
                 "</Recepients>\n" +
                 "<Body>sdh dibayarkah oleh paung? kpn dibayarnya? bgm sy bs ksh uangnya ke pak santo?</Body>\n" +
                 "<IsIncoming>false</IsIncoming>\n" +
@@ -433,7 +432,7 @@ public class ImportTest {
                 "</Message>\n" +
                 "<Message>\n" +
                 "<Recepients />\n" +
-                "<Body>The message you sent to 6208765216644 was delivered.</Body>\n" +
+                "<Body>The message you sent to 230983208932 was delivered.</Body>\n" +
                 "<IsIncoming>true</IsIncoming>\n" +
                 "<IsRead>true</IsRead>\n" +
                 "<Attachments />\n" +
@@ -462,7 +461,7 @@ public class ImportTest {
                 "</Message>\n" +
                 "<Message>\n" +
                 "<Recepients>\n" +
-                "<string>+6208765216644</string>\n" +
+                "<string>+230983208932</string>\n" +
                 "</Recepients>\n" +
                 "<Body>pak santo, sy mau menarik dana hasil penjualan buku saya minggu ini, berapa pun jumlahnya. terima kasih</Body>\n" +
                 "<IsIncoming>false</IsIncoming>\n" +
@@ -478,7 +477,7 @@ public class ImportTest {
                 "<IsRead>true</IsRead>\n" +
                 "<Attachments />\n" +
                 "<LocalTimestamp>131158028228770000</LocalTimestamp>\n" +
-                "<Sender>+6208765216644</Sender>\n" +
+                "<Sender>+230983208932</Sender>\n" +
                 "</Message>\n" +
                 "<Message>\n" +
                 "<Recepients />\n" +
@@ -491,7 +490,7 @@ public class ImportTest {
                 "</Message>\n" +
                 "<Message>\n" +
                 "<Recepients>\n" +
-                "<string>+6208765216644</string>\n" +
+                "<string>+230983208932</string>\n" +
                 "</Recepients>\n" +
                 "<Body>sdh 4 bulan buku saya ada di paung. bgm kabar penjualan buku saya? terima kasih sebelumnya.</Body>\n" +
                 "<IsIncoming>false</IsIncoming>\n" +
@@ -625,6 +624,78 @@ public class ImportTest {
     }
 
     @Test
+    public void nokiaDecember2017 () throws URISyntaxException {
+        JunitConvertListener convertListener = importString(
+                "2017-11-11 18:49:00,DM-SBIUPI,DM-SBIUPI,Received,\"Your One time password is 586099 for Setting MPIN to your account, It is valid for next 10 mins, Do not disclose OTP to anyone, State Bank of India.\",1708,null,1.51036E+12,0,0,1,-1,1,0,null,9.19768E+11,0,4,0,com.sonyericsson.conversations,0,-1,null,null,null,null,1.51036E+12,0,1.51036E+12,1\n" +
+                        "2017-11-11 18:49:00,BZ-SBIUPI,BZ-SBIUPI,Received,\"Your One time password is 003725 for Setting MPIN to your account, It is valid for next 10 mins, Do not disclose OTP to anyone, State Bank of India.\",1707,null,1.51036E+12,0,0,1,-1,1,0,null,9.19423E+11,0,4,0,com.sonyericsson.conversations,0,-1,null,null,null,null,1.51036E+12,0,1.51036E+12,1\n" +
+                        "2017-11-11 18:49:00,9740797407,9740797407,Sent,\"UPI sft5dtp76kmsv6scxibdvlfr9tcyftudl71so35osfm=\",1706,null,1.51036E+12,0,null,1,0,2,null,null,null,0,4,0,net.one97.paytm,1,-1,null,null,null,null,1.51036E+12,0,null,1\n" +
+                        "2017-11-11 18:49:00,BH-CDSLTX,BH-CDSLTX,Received,\"CDSL: Debit in a/c *13126071 for 1000-VIJI FINANCE-EQTY on 10NOV\",1705,null,1.51032E+12,0,0,1,-1,1,0,null,9.19418E+11,0,4,0,com.sonyericsson.conversations,0,-1,null,null,null,null,1.51032E+12,0,1.51032E+12,1",
+                BuiltInFormat.SonyEricsson);
+        Assert.assertEquals (4, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void vmgBis() throws URISyntaxException, FileNotFoundException {
+        String text = "BEGIN:VMSG\n" +
+                "VERSION:1.1\n" +
+                "X-IRMC-STATUS:\n" +
+                "X-IRMC-BOX:INBOX\n" +
+                "X-NOK-DT:20091022T064825Z\n" +
+                "X-MESSAGE-TYPE:DELIVER\n" +
+                "BEGIN:VCARD\n" +
+                "VERSION:3.0\n" +
+                "N:\n" +
+                "TEL:+990123456789\n" +
+                "END:VCARD\n" +
+                "BEGIN:VENV\n" +
+                "BEGIN:VBODY\n" +
+                "Date:22.10.2007 06:48:25\n" +
+                "<Text Body 0-140+ chars>\n" +
+                "END:VBODY\n" +
+                "END:VENV\n" +
+                "END:VMSG\n" +
+                "BEGIN:VMSG\n" +
+                "\n" +
+                "VERSION:1.1\n" +
+                "\n" +
+                "X-IRMC-STATUS:\n" +
+                "READ\n" +
+                "X-IRMC-BOX:INBOX\n" +
+                "\n" +
+                "X-NOK-DT:20101006T015058Z\n" +
+                "\n" +
+                "X-MESSAGE-TYPE:DELIVER\n" +
+                "BEGIN:VCARD\n" +
+                "\n" +
+                "VERSION:3.0\n" +
+                "\n" +
+                "N:\n" +
+                "\n" +
+                "TEL:+990123456789\n" +
+                "\n" +
+                "END:VCARD\n" +
+                "\n" +
+                "BEGIN:VENV\n" +
+                "\n" +
+                "BEGIN:VBODY\n" +
+                "\n" +
+                "Date:06.10.2009 01:50:58\n" +
+                "\n" +
+                "<Text Body 140+ chars>\n" +
+                "\n" +
+                "END:VBODY\n" +
+                "\n" +
+                "END:VENV\n" +
+                "\n" +
+                "END:VMSG";
+
+        String patternName = new Actions().guessNow(text);
+        Format format = FormatSettings.getInstance().getFormats().get(patternName);
+        JunitConvertListener convertListener = importString(text, BuiltInFormat.Vmg2018);
+        Assert.assertEquals (2, convertListener.getMessages().size());
+    }
+
+    @Test
     public void guessThenImport () throws FileNotFoundException, URISyntaxException {
         String text = "sms,deliver,\"XX\",\"\";\"\";\"2017.04.21 23:48\",\"\",\"Ierland geloof ik\"\n" +
                 "sms,deliver,\"XX\",\"\";\"\";\"2017.04.21 23:48\",\"\",\"Ierland geloof ik\"\n" +
@@ -637,10 +708,131 @@ public class ImportTest {
                 "sms;\"submit\";\"\";\"XX\";\"\";\"2017.05.18 12:56\";\"\";\"Jammer\"\n" +
                 "sms;\"submit\";\"\";\"XX\";\"\";\"2017.05.18 12:56\";\"\";\"Jammer\"\n";
 
+        JunitConvertListener convertListener = importString(text, BuiltInFormat.MixedNokiaCsv);
+        Assert.assertEquals (6, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void testGreekNokia() throws URISyntaxException, FileNotFoundException {
+        String text = "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.12.04 12:06\",\"\",\"Τζένη καλημέρα,  η Παυλίνα είμαι.Ελπίζω να είστε όλοι καλά. Όταν μπορέσεις πάρε με.(Δεν ηξερα αν σχόλασες γι'αυτο πήρα).Βρήκα λογοθεραπευτρια.Φιλιά!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.11.29 00:05\",\"\",\"AΓAΠH MOY TI KANEIΣ; EΓΩ TΩPA ΠAΩ ΓIA YΠNO. M' EXEIΣ KANEI NYXTOΠOYΛI ΣAN EΣENA;-) MOY ΛEIΠOYN ΠOΛY TA MHNYMATA ΠOY ΣTEΛNAME O ENAΣ ΣTON AΛΛO ΠAΛIA. ΓI'AYTO OTAN EXEIΣ YΠHPEΣIA, XAMOΓEΛAΩ OTAN XTYΠAEI O HXOΣ OTI EXΩ MHNYMA ΓIATI ΞEPΩ OTI EIΣAI EΣY. Σ'AΓAΠAΩ KAI M'EXEIΣ TPEΛANEI ME TA ΦIΛIA ΣOY AYTEΣ TIΣ MEPEΣ...\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.11.28 23:06\",\"\",\"MΩPAKI MOY ΔEN ΞEPΩ ΠΩΣ ΘA ΠEPAΣOYN AΛΛEΣ 4 EBΔOMAΔEΣ XΩPIΣ NA MΠOPΩ NA ΣE AΓΓIΞΩ KAI NA ΣE XAIΔEΨΩ OΠΩΣ AKPIBΩΣ ΘEΛΩ.NOMIZΩ OTI EINAI ΠOΛY MAKPIA AKOMA.KAΘE XPONOΣ ΠOY ΠEPNAEI NIΩΘΩ OTI EXΩ ΛIΓOTEPH YΠOMONH AYTHN THN ΠEPIOΔO.Σ'AΓAΠΩ!ΣE ΘEΛΩ.ΦIΛAKIA!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.11.09 06:43\",\"\",\"230983208932\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.11.03 18:08\",\"\",\"MΩPO ΘA ΠAΣ NA ΠAPEIΣ TON ΔHMHTPH; O ΠAΠA ΘANAΣHΣ ΔEN EINAI ΣHMEPA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.10.31 13:48\",\"\",\"EIXATE 2 KΛHΣEIΣ:\n" +
+                "+230983208932\n" +
+                "(2) 31/10 14:46\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.10.27 20:17\",\"\",\"EIXATE 1 KΛHΣH:\n" +
+                "+230983208932\n" +
+                "(1) 27/10 20:17\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.10.18 00:14\",\"\",\"MΩPO MOY ΘEΛΩ NA ΣOY ΠΩ NA EIΣAI XAΛAPH KAI NA MHN AΓXΩNEΣAI ME OΣA EXEIΣ NA KANEIΣ.BEBAIA ME OΛH AYTH THN ENTAΣH ΠOY EXEIΣ ME KAΠOIO TPOΠO ME KANEI NA ΘEΛΩ NA ΓINOMAΣTE ENA ΣYNEXEIA.HPEMHΣE KAI ΣKEΨOY OTI ΦETOΣ ΔEN TAΛAIΠΩPEIΣAI ΣTOYΣ ΔPOMOYΣ KAI ΠPAΓMATIKA AYTO ME EXEI ANAKOYΦIΣEI.Σ'AΓAΠΩ!ΦIΛAKIA! \"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.10.01 00:24\",\"\",\"AΓAΠOYΛA ΠΩΣ ΠAEI H ΔOYΛEIA; APXIΣEΣ NA NYΣTAZEIΣ MHΠΩΣ; HΘEΛA NA ΣOY ΠΩ OTI ΣE ΘAYMAZΩ ΠOΛY ΓIA TIΣ ΔYNATOTHTEΣ ΣOY, ΓIATI EINAI ΠOΛYΠΛEYPEΣ KAI OTI Σ'EYXAPIΣTΩ ΓIATI ME BOHΘAΣ ΠANTA ΣE O,TI XPEIAΣTΩ. Σ' AΓAΠΩ, Σ'AΓAΠΩ, Σ'AΓAΠΩ KAI TΩPA ΠAΩ ΓIA NANI... :-*\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.09.11 23:03\",\"\",\"AΘHNA ΣOPPY ΓIA THN ENOXΛHΣH, TΩPA BΛEΠΩ TA mail. HPΘE ENA KAI ΛEEI NA ΣTEIΛOYME ΣTH ΔIEYΘYNΣH THN ΠPΩTOTYΠH ANAΦOPA ANAΛHΨHΣ YΠHPEΣIAΣ OΛOI OI NEOI ΠPOIΣTAMENOI. TH ΔIKH MOY THN EIXEΣ ΠAEI THN ΠAPAΣKEYH; \"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.08.27 12:12\",\"\",\"EΛA KOPITΣI ΦATE EΣEIΣ  KAI EMEIΣ ΘA EPΘOYME AΠO EKEI TO AΠOΓEYMATAKI ΓIA MΠANIO. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.08.11 17:33\",\"\",\"EΛA KOPITΣI ΓΛYKO TI KANEIΣ; ΔEN ΘEΛΩ NA ΠAPΩ THΛ NA MHN ENOXΛHΣΩ. TA ΠAIΔIA KAΛA; ΦIΛAKIA ΠOΛΛA Σ'OΛOYΣ, AN BOΛEΨEI ΘA XAPOYME NA ΣAΣ ΔOYME AΠO KONTA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.06.29 01:03\",\"\",\"8 XPONIA AΠO THN HMEPA ΠOYΓINAM ENA,8 XPONIA ΠOY ΣE ZΩ KAΘE MEPA KAI EIMAI EYΓNΩMΩN ΓIA AYTO,8 XPONIA ΠOY ANEXEΣAI TO EΓΩ MOY KAI KAΠOIEΣ ΦOPEΣ THN MOYPMOYPA MOY,8 XPONIA TPIA YΠEPOXA ΠΛAΣMATA,  8 XPONIA ΓEMATA ΠAΘOΣ   \"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.06.24 17:39\",\"\",\"EΛA KOPITΣI TI KANEIΣ; OΠOTE ΘEΛEIΣ KAI EXEIΣ XPONO ΠAPE ME THΛ NA ΣYNENNOHΘOYME. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"+230983208932\",\"\",\"2017.06.23 22:17\",\"\",\"EΛA EΛENA ΔEN ΘA EPΘEI O XPIΣTOΦOPOΣ; EIMAI ΣTON ΠAΠAΘANAΣH KAI EXEI ΠOΛY KOΣMO AKOMA. EXEIΣ KANENA ΓIAOYPTI NA KATEBAΣEIΣ ΣTON ΘOΔΩPH ΓIATI ΘEΛΩ NA TO ΠAPΩ ME THN ANTIBIΩΣH. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.06.23 22:06\",\"\",\"TEO ΦAE TO MEΣHMEPIANO EΣY ΓIATI MAΛΛON ΘA APΓHΣΩ. TA ΦAΣOΛAKIA EINAI TOY MΠAMΠA ΣOY\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.06.22 23:51\",\"\",\"KAI EΣY MAΣ EΛEIΨEΣ KAPΔOYΛA MOY! EΛΠIZΩ NA ΠEPAΣEΣ OMOPΦA, NA ΠPOΣEYXHΘHKEΣ ΓIA THN OIKOΓENEIA MAΣ KAI ΓIA OΛOYΣ, KAI NA ΓEMIΣEΣ TIΣ MΠATAPIEΣ ΣOY! ΦIΛAKIA, KAΛO BPAΔY!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.06.22 23:37\",\"\",\"EΛA MΩPAKI MOY EΛΠIZΩ NA XAΛAPΩNEIΣ KI EΣY TΩPA.MOY EXETE ΛEIΨEI ΠAPA ΠOΛY OΛOI KAI ANYΠOMONΩ NA ΣAΣ ΔΩ AYPIO.Σ'AΓAΠΩ!ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.06.15 19:06\",\"\",\"KOPITΣI TI KANEIΣ; ΞEPEIΣ ΠOΣEΣ MEPEΣ ΘEΛΩ NA ΣE ΠAPΩ THΛ; EIMAI ΘEΣNIKH, MOΛIΣ ΠAΩ ΣΠITI, ΘA ΣE ΠAPΩ. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.06.06 22:29\",\"\",\"EΛA KOPITΣI TI KANEIΣ; EYXOMAI AΠO KAPΔIAΣ KAΛH APXH AYPIO ΓIA TH XPYΣH KAI TON ANHΨIO ΣOY. NA ΠANE OΛA KAΛA KAI EIΘE O ΘEOΣ NA ANTAMEIΨEI OΛOYΣ TOYΣ KOΠOYΣ TOYΣ. ΦIΛAKIA ΠOΛΛA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.06.01 12:22\",\"\",\"EΛA EXΩ TEΛEIΩΣEI. OΠOTE MΠOPEΣEIΣ ΠEΣ MOY. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.06.01 00:09\",\"\",\"MΩPO MOY MOΛIΣ ΞYPIΣTHKA KIOΛAΣ.MOY APEΣE ΠOΛY ΠOY ME ΦIΛHΣEΣ TO ΠPΩI ΠPIN ΦYΓEIΣ KAI EIΠEΣ OTI ΘA ΣOY ΛEIΨΩ.Σ'AΓAΠΩ KAI MOY ΛEIΠEIΣ ΠOΛY.EΛΠIZΩ NA ΓINEIΣ ΓPHΓOPA KAΛA.ΠANE TA ΠAIΔIA ΣTHN TOYAΛETA.ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.05.17 00:26\",\"\",\"ΣE ΛATPEYΩ ΓI AYTA TA MHNYMATA ΣOY! TΩPA ΠHΓA TA ΠAIΔIA ΣTO MΠANIO. ΠAΩ ΓIA NANI, KAΛHNYXTA MΩPO MOY. Σ'AΓAΠAΩ!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.05.17 00:08\",\"\",\"MΩPO MOY ΣE ΘEΛΩ ΠOΛY OΛEΣ AYTEΣ TIΣ MEPEΣ,ΓIATI AΠO TO ΠAΣXA AKOMH ΔEN ΣE EXΩ XOPTAΣEI.EΛΠIZΩ ΣE ΛIΓO KAIPO NA NIΩΣΩ KAΘE ΣΠIΘAMH ΣOY ΠANΩ MOY.Σ'AΓAΠΩ!ΦIΛAKIA!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.04.28 01:23\",\"\",\"MΩPO MOY ΘEΛΩ NA ΣOY ΠΩ OTI EIMAI ΠOΛY EYTYXIΣMENOΣ ΠOY ΣE EXΩ ΓIATI EIΣAI ΠPAΓMATIKA TO ΣTHPIΓMA MOY KAI TO AΛΛO MOY MIΣO.TAYTOXPONA ME KANEIΣ NA ΘEΛΩ ΣAN TPEΛOΣ NA ΓINOMAΣTE ENA KAI NA ΣE EXΩ ΣΦIXTA ΣTHN AΓKAΛIA MOY.ΔEN YΠAPXEI KATI ΠOY NA MOY ΛEIΠEI ΣTHN ΣXEΣH MAΣ.Σ'AΓAΠΩ!ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.04.14 22:22\",\"\",\"TEO OTAN ΞANAΠEPAΣEI AΠO MΠPOΣTA O EΠITAΦIOΣ ΠEΣ NA BΓOYME\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.03.31 21:17\",\"\",\"ΦEPE ΛIΓH ΦETA AΠO TO ΣOYΠEP MAPKET ΓIA TA ΠAIΔIA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.03.24 00:21\",\"\",\"MΩPO MOY OΣO ΠEPNAEI O KAIPOΣ MOY ΛEIΠEIΣ ΠIO ΠOΛY.EINAI ΠIO ΔYΣKΛOΛO ΓIA MENA NA KPATIEMAI.ΩΣTOΣO EIMAI ΠOΛY EYTYXIΣMENOΣ ΠOY EIΣAI ΓYNAIKA MOY KAI EXOYME MIA YΠEPOXH OIKOΓENEIA.EIΣAI TO AΛΛO MOY MIΣO KAI ΔE ΘA ΣTAMATHΣΩ NA TO ΛEΩ ΠOTE AYTO.Σ'AΓAΠΩ!ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"+230983208932\",\"\",\"2017.03.10 07:28\",\"\",\"EΛA EΛENA EIΠA ΣTH MIPEΛΛA NA MOY ΠAPEI ΛIΓO ΨΩMI KAI KOYΛOYPIA ΓIA TA ΠAIΔIA KAΘΩΣ ΘA PXETAI. ΔΩΣE THΣ 2 EYPΩ, ΠOΣO KANOYN KAI EΓΩ ΘA ΣTA ΔΩΣΩ META. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.03.08 07:07\",\"\",\"MΩPO MOY KAΛHMEPA! ΦTAΣATE KAΛA ΓIATI EPIΞE ΠOΛY BPOXH\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.03.06 21:28\",\"\",\"KYPIE ΔHMHTPH AYTH H ΓAΣTENTEPITIΔA M'EXEI ΘEPIΣEI. OYTE O ΠYPETOΣ, OYTE TO ENTEPO MOY ΠEPAΣAN. KAI EΠEIΔH EINAI IOΓENHΣ ΦOBAMAI MHN KOΛΛHΣOYN KAI TA ΠAIΔIA. EYXOMAI NA MOY ΠEPAΣEI KAI NA EΠIΣTPEΨΩ THN TETAPTH. ΣYΓΓNΩMH, KAΛO BPAΔY!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"+230983208932\",\"\",\"2017.03.06 19:30\",\"\",\"NA ΣAΣ ZHΣEI! NA EINAI ΓEPOΣ KAI EYΛOΓHMENOΣ! EYXEΣ AΠO OΛOYΣ MAΣ, ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.03.06 19:26\",\"\",\"EΛA KOPITΣI ΓΛYKO ΓENNHΣATE; OΛA KAΛA; O ΘOΔΩPHΣ MOY EIΠE OTI ΣHMEPA ΘA MΠAINATE...\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.02.21 15:21\",\"\",\"EΦAΓEΣ; ΠPOΛABEΣ; HΔH MOY ΛEIΠEIΣ...\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.02.21 13:23\",\"\",\"TEΛEIΩΣA KAI ΣE ΠEPIMENΩ\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.02.17 13:04\",\"\",\"ΞEXAΣA NA ΣOY ΠΩ. BΓHKAN KAI OI AITHΣEIΣ ΓIA METAΘEΣH, AN ΘEΛEIΣ NA KANEIΣ TA XAPTIA ΣOY. EINAI MEXPI TIΣ 28 ΦEBPOYAPIOY. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.02.15 08:09\",\"\",\"EΛA ΠOΠH KAΛHMEPA! EIMAI H MAMA THΣ IOYΛIAΣ THΣ ΣAMAΛH. H IOYΛIA ΘA EPΘEI ΣXOΛEIO META AΠO ΠOΛΛEΣ MEPEΣ KAI ΦOBATAI. AN MΠOPEIΣ, BOHΘHΣE THN NA ΞEKINHΣEI NA ΠAIZEI ME TA ΠAIΔAKIA ΓIA NA ΞANAΠPOΣAPMOΣTEI. THANK YOU\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"+230983208932\",\"\",\"2017.01.30 19:44\",\"\",\"EIMAI ΣTH MAMA,OTAN TEΛEIΩΣEIΣ ΠEΣ MOY\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.01.28 17:33\",\"\",\"KAI 1 ZAXAPH\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.01.28 17:32\",\"\",\"ENA ΠOYMAPO BAZO, ΓAΛATA, ΓAΛA ΓIA THN ANNA-MAPIA, ΓAΛOΠOYΛA KAI ΓKOYNTA ΓIA TOΣT, BOYTYPO ΦΛOPA, 4 AYΓA, ΓIAOYPTAKIA ΓIA TA ΠAIΔIA, ΣOKOΦPETEΣ, ΛEMONAΔEΣ, XYMOYΣ ΓIA ΣXOΛEIO, ΠATATAKIA lays ΣTO ΦOYPNO,  ΨΩMI ΓIA TOΣT\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.01.27 06:44\",\"\",\"KAΛHMEPA AΓAΠH MOY! OΛA KAΛA TO BPAΔY, ΔEN ΞANAEKANE EMETO AΠΛA EBΛEΠE EΦIAΛTEΣ ME TIΣ EPΓAΣIEΣ. ΘA MEINEI ΣTO ΣΠITI ΣHMEPA. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.01.26 23:31\",\"\",\"MΩPO MOY EXΩ ΠOΛY KAIPO NA MEINΩ MAKPIA ΣOY ΛOΓΩ YΠHPEΣIAΣ.MOY ΛEIΠEIΣ AΠIΣTEYTA KAI ΘEΛΩ MIA AΓKAΛITΣA ΣOY TΩPA.EYTYXΩΣ EPXETAI KAI ΣAB/KO.AN ΞANAΞYΠNHΣEI H IOYΛIA ΠAPE ME THΛ. OTI ΩPA.Σ'AΓAΠΩ.ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.12.29 20:51\",\"\",\"ΦΛOPA, ΓIAOYPTIA, MANITAPOΣOYΠA, ΦYΛΛA ZEΛATINHΣ, KOYBEPTOYPA MAΓIONEZA XAPTI YΓEIAΣ KAΛAMΠOKI ΣKΛHPO TYPI KITPINO, MEΓAΛH KPEMA ΓAΛAKTOΣ ΓIA ΓΛYKA 500MΛ\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.12.16 15:41\",\"\",\"ΠATEP KAΛHΣΠEPA! ΠOTE MΠOPΩ NA EPΘΩ ΣTON NAO NA ΔIABAΣOYME MIA ΦANOYPOΠITA ΠOY EΦTIAΞA;\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.12.05 19:44\",\"\",\"ΠEPNA AΠO TH MAMA OTAN TEΛEIΩΣEIΣ. ΣE ΘEΛEI ΓIA ΛIΓO\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.11.30 00:31\",\"\",\"EΛA BPE ΣEBH XIΛIA ΣYΓΓNΩMH ΠOY ΔEN EXΩ ΠPOΛABEI NA ΣE ΠAPΩ ΠIΣΩ. EIXA KAI TA MΩPA APPΩΣTA ΣHMEPA, O ΘOΔΩPHΣ EIXE EΦHMEPIA, OΠOTE KATAΛABAINEIΣ... ΘA ΣE ΠAPΩ. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.11.30 00:19\",\"\",\"ANNOYΛA TI YΠEPOXA ΔΩPA EINAI AYTA ΠOY MAΣ EΣTEIΛEΣ! Σ'EYXAPIΣTOYME ΠOΛY ΠOΛY. ΦIΛAKIA KAΛHNYXTA! \"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"+230983208932\",\"\",\"2016.11.16 11:37\",\"\",\"BAΣIΛEIAΔOY EYΓENIA TOY ΔHMHTPIOY (ΔAΣKAΛA). ΠAPOYΣIAZOMAI ΣTH ΛAPIΣA 1 ΔEKEMBPIOY\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2016.11.16 06:52\",\"\",\"KAΛHMEPA MΩPO MOY.EXΩ XAΛAΣTEI ΓIATI XΘEΣ KAI ΠPOXΘEΣ ΔEN ΣOY ΠPOΣΦEPA THN AΠOΛAYΣH ΠOY ΘEΛΩ.EIΣAI OΠΩΣ EIΠEΣ KAI EΣY ΠPOXΘEΣ TO AΛΛO MOY MIΣO KAI ΘEΛΩ KAΘE TETOIA ΣTIΓMH NA ΣOY MENEI AΞEXAΣTH.AΠO TΩPA ΣKEΦTOMAI ΠΩΣ ΘA ΠEPAΣOYN OI 40 MEPEΣ.Σ'AΓAΠΩ!ΦIΛAKIA!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2016.10.18 19:56\",\"\",\"MΩPO MOY TO BPAΔY ΘEΛΩ NA EΞEPEYNHΣΩ KAΘE ΣΠIΘAMH ΣOY.TOΣEΣ MEPEΣ ΠOY EΛEIΨEΣ TA EXΩ ΞEXAΣEI.ΦIΛAKIA\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2016.10.17 00:22\",\"\",\"ΜΩΡΑΚΙ ΜΟΥ ΑΥΤΕΣ ΤΙΣ ΜΕΡΕΣ ΤΑ ΒΡΑΔΙΑ ΠΟΥ ΧΑΛΑΡΩΝΩ ΚΑΠΩΣ ΝΙΩΘΩ ΟΤΙ ΚΑΤΙ ΔΕΝ ΜΟΥ ΠΑΕΙ ΚΑΛΑ:ΔΕΝ ΕΙΣΑΙ ΔΙΠΛΑ ΜΟΥ.ΕΙΣΑΙ ΟΝΤΩΣ ΑΥΤΟ ΠΟΥ ΛΕΝΕ Η ΚΟΛΟΝΑ ΤΟΥ ΣΠΙΤΙΟΥ.ΕΧΩ ΜΙΑ ΑΝΑΣΦΑΛΕΙΑ ΤΩΡΑ ΠΟΥ ΛΕΙΠΕΙΣ.ΟΣΟ ΓΙΑ ΤΟ ΜΑΣΑΖ ΣΥΜΦΩΝΟΙ ΑΛΛΑ ΜΕ ΕΝΑΝ ΟΡΟ.ΘΑ ΒΑΛΕΙΣ ΑΠΟ...ΚΑΤΩ ΚΑΤΙ ΠΟΥ ΣΟΥ ΕΧΩ ΑΓΟΡΑΣΕΙ ΕΓΩ\uD83D\uDE09.Σ'ΑΓΑΠΩ!ΦΙΛΑΚΙΑ!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.10.16 00:50\",\"\",\"TI KANEI O ANTPOYΛHΣ MOY; KAΘE ΦOPA ΠOY EIMAI MAKPIA ΣYNEIΔHTOΠOIΩ ΠOΣO ΠOΛY MOY ΛEIΠEIΣ... ΘA HΘEΛA NA EBΛEΠA TΩPA TA MHNYMATA ΠOY MOY EΣTEΛNEΣ OΣO ZOYΣAME XΩPIΣTA AΛΛA ENA MIKPO XEPAKI TA ΣBHΣE KATA ΛAΘOΣ... ΓI' AYTO MIA EINAI H ΛYΣH: NA APXIΣEIΣ NA MOY ΣTEΛNEIΣ ΞANA. EYXOMAI NA EINAI TO IΔIO H KAI ΠEPIΣΣOTEPO AΓAΠHΣIAPIKA ME TA ΠAΛIA! ONEIPA ΓΛYKA, ΦIΛAKIA\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.10.14 00:29\",\"\",\"AΓAΠH MOY TI KANEIΣ; OΛA KAΛA; TA MΩPA KOIMHΘHKAN; ΠΩΣ EINAI H IOYΛITΣA; TEΛIKA ΞANAΓYPIΣA ΣTH ΣIBA ΓIATI ΠHΓA ΣTO NOΣOKOMEIO KAI MOY EIΠAN NA MHN MEINΩ. ΘA TA ΠOYME AYPIO TOTE. MAKIA ΠOΛΛA!\"\n" +
+                "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2016.10.13 23:40\",\"\",\"EΛA MΩPO MOY TI KANEIΣ;ΣKEΦTOMAI ΠΩΣ ΘA BOΛEYTEIΣ EKEI ΣHMEPA ΓIATI EXEIΣ KAI THN MEΣH ΣOY.EΛΠIZΩ NA MHN KOYPAΣTEIΣ ΠOΛY.MOY ΛEIΠEIΣ AΠIΣTEYTA.Σ'AΓAΠΩ!ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.10.13 13:22\",\"\",\"EΛA ANNOYΛA MOY Σ'EYXAPIΣTOYME ΠOΛY. TΩPA EINAI ΣTO ΔΩMATIO KAI KOIMATAI ΛOΓΩ THΣ ANAIΣΘHΣIAΣ.  ΘA ΣE ΠAPΩ KAI THΛ NA TA ΠOYME ANAΛYTIKA. ΦIΛAKIA!\"\n" +
+                "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2016.10.12 22:44\",\"\",\"MΩPO MOY TO THΛ TOY ΞENOΔOXEIOY EINAI 230983208932 KAI TO ΔΩMATIO MOY EINAI TO 11 11. ΠAPE ME OΠOTE ΘEΛEIΣ, ΦIΛAKIA!\"\n";
         String patternName = new Actions().guessNow(text);
         Format format = FormatSettings.getInstance().getFormats().get(patternName);
 
-        JunitConvertListener convertListener = importString(text, BuiltInFormat.MixedNokiaCsv);
+        JunitConvertListener convertListener = importString(text, format);
+        Assert.assertEquals (56, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void testGreekCsv() throws URISyntaxException {
+        JunitConvertListener convertListener = importFile("athg2sms/greekSMS.csv", BuiltInFormat.NokiaSuite);
+        Assert.assertEquals (56, convertListener.getMessages().size());
+    }
+
+    //@Test
+    public void testNikilesh() throws URISyntaxException {
+        JunitConvertListener convertListener = importFile("athg2sms/sampleNikilesh.txt", BuiltInFormat.Nikilesh);
+        Assert.assertEquals (2, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void jayne() throws URISyntaxException {
+        JunitConvertListener convertListener = importString(
+                "5/17/2017 11:33:55 PM to +230983208932:\n" +
+                        "Hi pip hope that you are alright and  you get some sleep tonight ahead of your big day tomorrow. Fingers crossed. Xxx\n" +
+                        "\n" +
+                        "5/17/2017 10:41:48 PM from +230983208932:\n" +
+                        "Thanks a love you night xx\n" +
+                        "\n" +
+                        "12/9/2017 1:30:19 PM to +230983208932:\n" +
+                        "Good! Enjoy yourself and take some photos. Xxx\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        "12/9/2017 1:31:11 PM from +230983208932:\n" +
+                        "Awe will do thanks mum Xxx\n\n", BuiltInFormat.Jayne);
         Assert.assertEquals (4, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void homemade1() throws URISyntaxException {
+        JunitConvertListener convertListener = importString(
+                "\"read\",\"230983208932\",\"2012-06-15 13:29:27\",\"Test message 1\"\n" +
+                        "\"sent\",\"230983208932\",\"2012-06-16 03:32:19\",\"Test message 2\"\n" +
+                        "\"read\",\"230983208932\",\"2012-06-15 20:17:22\",\"Test message 3\"\n" +
+                        "\"sent\",\"230983208932\",\"2012-06-16 04:18:02\",\"Test message 4\"\n" +
+                        "\"read\",\"230983208932\",\"2012-06-15 20:20:46\",\"Test message 5\"\n" +
+                        "\"sent\",\"230983208932\",\"2012-06-16 04:21:49\",\"Test message 6\"\n" +
+                        "\"read\",\"230983208932\",\"2012-06-15 20:26:27\",\"Test message 7\"\n" +
+                        "\"read\",\"230983208932\",\"2012-06-15 20:27:13\",\"Test message 8\"\n" +
+                        "\"sent\",\"230983208932\",\"2012-06-16 04:27:24\",\"Test message 9\"\n" +
+                        "\"read\",\"230983208932\",\"2012-06-15 20:32:30\",\"終わりました。\"", BuiltInFormat.Homemade1);
+        Assert.assertEquals (10, convertListener.getMessages().size());
+    }
+
+    //@Test
+    public void abdul() throws URISyntaxException {
+        JunitConvertListener convertListener = importFile("athg2sms/Abdul.csv", BuiltInFormat.AbdulCsv1);
+        Assert.assertEquals (5921, convertListener.getMessages().size());
     }
 }

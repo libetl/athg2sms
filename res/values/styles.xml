@@ -1,7 +1,13 @@
 <resources>
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">#2172aa</item>
+        <item name="colorPrimaryDark">#3535be</item>
+        <item name="colorAccent">#3535be</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <!--   your app branding color for the app bar -->
         <item name="colorPrimary">#775683</item>
         <!--   darker variant for the status bar and contextual app bars -->
