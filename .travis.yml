@@ -40,6 +40,24 @@ before_install:
 - mkdir -p $HOME/.m2/repository/com/android/support/recyclerview-v7/25.3.1
 - cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/recyclerview-v7/25.3.1/*
   $HOME/.m2/repository/com/android/support/recyclerview-v7/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/support-compat/25.3.1
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-compat/25.3.1/*
+  $HOME/.m2/repository/com/android/support/support-compat/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/support-media-compat/25.3.1
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-media-compat/25.3.1/*
+  $HOME/.m2/repository/com/android/support/support-media-compat/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/support-core-utils/25.3.1
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-core-utils/25.3.1/*
+  $HOME/.m2/repository/com/android/support/support-core-utils/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/support-core-ui/25.3.1
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-core-ui/25.3.1/*
+  $HOME/.m2/repository/com/android/support/support-core-ui/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/support-fragment/25.3.1
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-fragment/25.3.1/*
+  $HOME/.m2/repository/com/android/support/support-fragment/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/transition/25.3.1
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/transition/25.3.1/*
+  $HOME/.m2/repository/com/android/support/transition/25.3.1
 script:
 - mvn -B
   android:manifest-merger
