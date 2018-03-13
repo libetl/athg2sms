@@ -187,7 +187,7 @@
 			<artifactId>android</artifactId>
 			<version>4.1.1.4</version>
 			<scope>system</scope>
-			<systemPath>${ANDROID_HOME}/platforms/android-23/android.jar</systemPath>
+			<systemPath>${ANDROID_HOME}/platforms/android-27/android.jar</systemPath>
 		</dependency>
 	</dependencies>
 	<properties>
