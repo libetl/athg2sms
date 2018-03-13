@@ -31,13 +31,13 @@
 				<version>4.4.3</version>
 				<configuration>
 					<sdk>
-						<platform>25</platform>
+						<platform>27</platform>
 					</sdk>
 					<sign>
 						<debug>false</debug>
 					</sign>
 					<emulator>
-						<avd>25</avd>
+						<avd>27</avd>
 						<wait>10000</wait>
 					</emulator>
 					<run>
