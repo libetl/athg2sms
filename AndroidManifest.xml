@@ -14,7 +14,7 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="26" />
+        android:targetSdkVersion="28" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +22,7 @@
         android:label="@string/app_name" >
         <receiver
             android:name=".androidstuff.sms.SmsReceiver"
-            android:permission="android.permission.BROADCAST_SMS" 
+            android:permission="android.permission.BROADCAST_SMS"
     		android:enabled="true"
     		android:exported="true" >
             <intent-filter>
