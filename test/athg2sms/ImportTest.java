@@ -4,19 +4,28 @@ import athg2sms.Athg2SmsJUnitTester.JunitConvertListener;
 import org.junit.Assert;
 import org.junit.Test;
 import org.toilelibre.libe.athg2sms.actions.Actions;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
+import org.toilelibre.libe.athg2sms.androidstuff.sms.SmsFinder;
 import org.toilelibre.libe.athg2sms.business.convert.ConvertException;
+import org.toilelibre.libe.athg2sms.business.convert.ConvertListener;
+import org.toilelibre.libe.athg2sms.business.export.Exporter;
 import org.toilelibre.libe.athg2sms.business.pattern.BuiltInFormat;
 import org.toilelibre.libe.athg2sms.business.pattern.Format;
 import org.toilelibre.libe.athg2sms.business.pattern.FormatSettings;
+import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.concurrent.locks.Condition;
 
 import static athg2sms.Athg2SmsJUnitTester.importFile;
 import static athg2sms.Athg2SmsJUnitTester.importString;
+import static athg2sms.Athg2SmsJUnitTester.readFile;
 
 public class ImportTest {
 
@@ -713,6 +722,74 @@ public class ImportTest {
     }
 
     @Test
+    public void importDaddy () throws FileNotFoundException, URISyntaxException {
+        String text = "2016-11-02,17:24:12,out,09067970806,Aa Daddy,Dy 6:25 ang out namin\n" +
+                "2016-11-02,17:36:23,in,+639067970806,Aa Daddy,okay mommy.. ingat ka jan.. i love you\n" +
+                "2016-11-02,17:40:00,out,09067970806,Aa Daddy,Okay dy..i love you too \uD83D\uDE18\n" +
+                "2016-11-03,12:37:55,out,09067970806,Aa Daddy,Daddy i love you.. Kumain knb?\n" +
+                "2016-11-03,13:37:08,in,+639067970806,Aa Daddy,\"i love you too mommy.. yup, nagkain na ako\"\n" +
+                "2016-11-04,09:49:53,out,09067970806,Aa Daddy,Dy i love you...nasa tugbok pa kami now.gising knba?\n" +
+                "2016-11-04,17:04:39,out,0906 797 0806,Aa Daddy,\"Dy otw na ako jan\n" +
+                "..iiwan ko lng yung saging tsaka kamatis na dala ko\"\n" +
+                "2016-11-04,17:04:45,out,0906 797 0806,Aa Daddy,\"Dy otw na ako sa bhaus\n" +
+                "..iiwan ko lng yung saging tsaka kamatis na dala ko\"\n" +
+                "2016-11-04,17:06:32,out,0906 797 0806,Aa Daddy,Iiwanan ko lng sa labas ng pinto ha..\n" +
+                "2016-11-04,17:14:08,out,0906 797 0806,Aa Daddy,Malagos na kami\n" +
+                "2016-11-04,17:14:32,out,0906 797 0806,Aa Daddy,\"Or rather,ako lng.tska yung driver.\n" +
+                "Haha..\"\n" +
+                "2016-11-09,17:20:50,out,09067970806,Aa Daddy,Dy ot kami..may isang site pa kaming hindi napupuntahan.otw pa kami ngayon dun\n" +
+                "2016-11-09,18:41:11,out,09067970806,Aa Daddy,Otw pa kmi to davao dy\n" +
+                "2016-11-09,18:41:13,out,09067970806,Aa Daddy,Calinan pa mi\n" +
+                "2016-11-10,18:29:20,out,09067970806,Aa Daddy,Dy im on my way.hungry\n" +
+                "2016-11-11,06:14:42,in,+639067970806,Aa Daddy,\"ingat my, i love you..\"\n" +
+                "2016-11-11,06:18:28,out,0906 797 0806,Aa Daddy,I love you too daddy..good morning.. \uD83D\uDE02\uD83D\uDE02\n" +
+                "2016-11-11,06:19:18,in,+639067970806,Aa Daddy,haha .. anjan na sila?\n" +
+                "2016-11-11,06:19:56,out,0906 797 0806,Aa Daddy,Wala paa..\n" +
+                "2016-11-11,06:21:03,in,+639067970806,Aa Daddy,ikaw nlng punta dun.. sakay ka lang. hehe\n" +
+                "2016-11-11,06:21:40,out,0906 797 0806,Aa Daddy,Sus..sbgay.wala man akong lalagyan ng water\n" +
+                "2016-11-11,06:22:21,in,+639067970806,Aa Daddy,okay lang yan.. kunin mo dito\n" +
+                "2016-11-11,06:22:55,out,0906 797 0806,Aa Daddy,Wag na.hindi na ako pupunta dun.\n" +
+                "2016-11-11,06:27:29,out,0906 797 0806,Aa Daddy,Hehe..\n" +
+                "2016-11-11,06:27:46,out,0906 797 0806,Aa Daddy,Sorry for disturbing you daddy \n" +
+                "2016-11-11,06:35:10,in,+639067970806,Aa Daddy,\"okay lang, sanah na ako.. hahaha.. nakaalis ka na?\"\n" +
+                "2016-11-11,06:36:48,out,0906 797 0806,Aa Daddy,Hindi pa rin\n" +
+                "2016-11-11,06:36:57,out,0906 797 0806,Aa Daddy,Ayan na\n" +
+                "2016-11-11,06:46:26,in,+639067970806,Aa Daddy,ingat mommy.. i love you so much..\n" +
+                "2016-11-11,06:47:19,out,09067970806,Aa Daddy,Ingat ka din jan daddy..sleep ka muna.i love you so much too \uD83D\uDE18\n" +
+                "2016-11-11,18:46:19,in,+639067970806,Aa Daddy,\"my, saan na kayo?\"\n" +
+                "2016-11-11,20:04:02,out,09067970806,Aa Daddy,Dy nasa office na kami.\n" +
+                "2016-11-12,15:53:06,in,+639067970806,Aa Daddy,mtcn: 525-445-3680\n" +
+                "2016-11-14,18:20:03,out,09067970806,Aa Daddy,Dy mejo malate ko..\n" +
+                "2016-11-15,16:55:21,out,09067970806,Aa Daddy,Daddy papasahan kita ng 20.bka manakaw eh.\n" +
+                "2016-11-18,10:15:56,out,0906 797 0806,Aa Daddy,Dy sorry for dsturbing your sleep. May mga bago kc kaming schedule.sa sunday pupunta kami ng sibulan.tapos sa 21-25 sa bukidnon.tapos sa 28 dun sa talomo tas 29-30 sa bukidnon ulit\n" +
+                "2016-11-18,11:58:48,out,09067970806,Aa Daddy,Dy naay bligya zenfone3max tag 7.5k. Paliton nko..\n" +
+                "2016-11-18,11:59:34,out,09067970806,Aa Daddy,Asa ang better meetup place? Sa gmall o sm ecoland lang?\n" +
+                "2016-11-26,10:27:35,in,+639067970806,Aa Daddy,\"mommy, san ka na? di kita matawagan...\"\n" +
+                "2016-11-26,10:27:38,in,+639067970806,Aa Daddy,\"mag ingat ka jan ha, tawag tawagan kita.. i love you mommy..\"\n" +
+                "2016-11-28,05:17:31,in,+639067970806,Aa Daddy,\"mommy, bhaus na ako.. nag jogging ako papunta dito.. haha\"\n" +
+                "2016-11-28,05:17:48,in,+639067970806,Aa Daddy,kamusta ka jan?\n" +
+                "2016-11-28,05:18:52,out,+639067970806,Aa Daddy,hi dy..nagpeprepare ako ng gamit..\n" +
+                "2016-11-28,05:19:54,in,+639067970806,Aa Daddy,\"okay my.. ingat ka jan, tsaka sa byhae nyo mamaya.. text me kung paalis na kayo, tsaka galingan mo.. i love you..\"\n" +
+                "2016-11-28,05:20:50,out,+639067970806,Aa Daddy,opo daddy.i'll do my best..hehe.i love you!\n" +
+                "2016-11-28,05:41:01,out,+639067970806,Aa Daddy,otw na kami dy\n" +
+                "2016-11-28,05:44:08,in,+639067970806,Aa Daddy,natapos mo yung dapat mong tapusin?\n" +
+                "2016-11-28,05:44:43,in,+639067970806,Aa Daddy,\"okay mommy, ingat.. ang breakfast mo ha? kain ka ng  marami..\"\n";
+
+        JunitConvertListener convertListener1 = importString(text, BuiltInFormat.DaddyCsv1);
+        JunitConvertListener convertListener2 = importString(text, BuiltInFormat.DaddyCsv2);
+        Assert.assertEquals (48, convertListener1.getMessages().size());
+        Assert.assertEquals (12, convertListener2.getMessages().size());
+    }
+
+    @Test
+    public void importBenCohen () throws FileNotFoundException, URISyntaxException {
+        String text = "Jul 19, 2018 4:51:48 PM,+17736784994,\"+17736784994\",0,\"Hey\",1,0,mobile carrier,Sent\n";
+
+        JunitConvertListener convertListener1 = importString(text, BuiltInFormat.BenCohen);
+        Assert.assertEquals (1, convertListener1.getMessages().size());
+    }
+
+    @Test
     public void testGreekNokia() throws URISyntaxException, FileNotFoundException {
         String text = "\"sms\",\"READ,RECEIVED\",\"+230983208932\",\"\",\"\",\"2017.12.04 12:06\",\"\",\"Τζένη καλημέρα,  η Παυλίνα είμαι.Ελπίζω να είστε όλοι καλά. Όταν μπορέσεις πάρε με.(Δεν ηξερα αν σχόλασες γι'αυτο πήρα).Βρήκα λογοθεραπευτρια.Φιλιά!\"\n" +
                 "\"sms\",\"SENT\",\"+230983208932\",\"230983208932\",\"\",\"2017.11.29 00:05\",\"\",\"AΓAΠH MOY TI KANEIΣ; EΓΩ TΩPA ΠAΩ ΓIA YΠNO. M' EXEIΣ KANEI NYXTOΠOYΛI ΣAN EΣENA;-) MOY ΛEIΠOYN ΠOΛY TA MHNYMATA ΠOY ΣTEΛNAME O ENAΣ ΣTON AΛΛO ΠAΛIA. ΓI'AYTO OTAN EXEIΣ YΠHPEΣIA, XAMOΓEΛAΩ OTAN XTYΠAEI O HXOΣ OTI EXΩ MHNYMA ΓIATI ΞEPΩ OTI EIΣAI EΣY. Σ'AΓAΠAΩ KAI M'EXEIΣ TPEΛANEI ME TA ΦIΛIA ΣOY AYTEΣ TIΣ MEPEΣ...\"\n" +
@@ -781,6 +858,32 @@ public class ImportTest {
         Assert.assertEquals (56, convertListener.getMessages().size());
     }
 
+    @Test
+    public void guessThenImportCsv() throws URISyntaxException, FileNotFoundException {
+
+        final JunitConvertListener importResult1 = importFile("athg2sms/sms.csv", BuiltInFormat.Momin1);
+        final JunitConvertListener importResult2 = importFile("athg2sms/sms.csv", BuiltInFormat.Momin2);
+
+        final SmsFinder smsFinder1 = new SmsFinder() {
+            @Override
+            public <T> List<Sms> pickThemAll(ContextHolder<T> contextHolder, HandlerHolder<?> handler, ConvertListener<T> convertListener, Condition stopMonitor) {
+                return importResult1.getMessages();
+            }
+        };
+        final SmsFinder smsFinder2 = new SmsFinder() {
+            @Override
+            public <T> List<Sms> pickThemAll(ContextHolder<T> contextHolder, HandlerHolder<?> handler, ConvertListener<T> convertListener, Condition stopMonitor) {
+                return importResult2.getMessages();
+            }
+        };
+        HandlerHolder<?> handlerHolder = new HandlerHolder(null){@Override public void postForHandler(Runnable runnable) {}};
+        String exported1 = new Exporter().export(smsFinder1, null, handlerHolder,
+                BuiltInFormat.NokiaCsvWithCommas.getCompleteName(), null, null);
+        String exported2 = new Exporter().export(smsFinder2, null, handlerHolder,
+                BuiltInFormat.NokiaCsvWithCommas.getCompleteName(), null, null);
+        System.out.println(exported1+exported2);
+    }
+
     //@Test
     public void testGreekCsv() throws URISyntaxException {
         JunitConvertListener convertListener = importFile("athg2sms/greekSMS.csv", BuiltInFormat.NokiaSuite);
@@ -792,7 +895,7 @@ public class ImportTest {
         JunitConvertListener convertListener = importFile("athg2sms/sampleNikilesh.txt", BuiltInFormat.Nikilesh);
         Assert.assertEquals (2, convertListener.getMessages().size());
     }
-
+/*
     @Test
     public void jayne() throws URISyntaxException {
         JunitConvertListener convertListener = importString(
@@ -812,7 +915,7 @@ public class ImportTest {
                         "12/9/2017 1:31:11 PM from +230983208932:\n" +
                         "Awe will do thanks mum Xxx\n\n", BuiltInFormat.Jayne);
         Assert.assertEquals (4, convertListener.getMessages().size());
-    }
+    }*/
 
     @Test
     public void homemade1() throws URISyntaxException {

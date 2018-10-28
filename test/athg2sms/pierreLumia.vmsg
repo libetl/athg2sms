@@ -1,0 +1,383 @@
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/15 10:25:46
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Date: Mon, 15 May 2017 10:25:46 +0200=0D=0AFrom: Aaaa Mmmmmmmm <+3312345677=
+9>;=0D=0ATo: Aaaa Mmmmmmmm <01 23 45 67 89>;=0D=0A=0D=0A<part-0>
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/15 10:17:51
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Date: Mon, 15 May 2017 10:17:51 +0200=0D=0AFrom: Aaaa Mmmmmmmm <+3312345678=
+9>;=0D=0ATo: Aaaa Mmmmmmmm <01 23 45 67 89>;=0D=0A=0D=0A<part-0>
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:0123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/14 20:59:34
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaa aaaaaa =0A aaa aaaaa aaa aaaaaa aaaa =C3=A0 aaaa aa  =0Aaaaaaaaa aaa =
+aa a=C3=A8aa aaa aaaaaa  =0Aaa aaaa aaa aaaa aa aaaaa aaa aaaa aaaaaaaaaaaa=
+aaa =0Aaaa aaaa aaaa aaaaa aaa aaaaaaaa aa aaaa=C3=A8aa aai aaaaaaaaa aa aa=
+aa =0Aaaaaa aa aaaaa =0Aaa aaaaa aa aa aaaaaaaaa aaaaaa aaa =0Aaaaaa =C3=A0=
+ aaaaa=C3=B4a
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:01 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/14 20:49:52
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaa aaa aaaaaaaaaaaa=0Aaaaa aa aaaa =0Aaa aa aaaaaa aa aaa aaaaaaaaaaaaa aa=
+a aaaa=C3=A9  
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:01 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/14 19:39:49
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaa aaaa aaaa=0Aaa aaaaaaaa aaaaaaa aa =C3=AAaaa aa=C3=A9a=C3=A9 aaaaa aa=
+aaaaa aa aaa aa aaaa a=C3=A9aaaaaaa=C3=A9a aa aaaaaaa aaaaaa a aaa aa=C3=A9=
+aaaaaa aaaa a=C3=BBaa aaa aaar aaaaaaaa aa aaaaaaaaa =C3=A9aaaa aaaaaaa=0AL=
+a aa=C3=A9aaaaaa aa aaaaa aaa aa a=C3=A9aaa aaaa aaaaaaaaaaa=0Aaa aaaaaaaa =
+aaa aa aa=C3=A8aa aa aaaaaaaaa aaaa aaaa =C3=A0 aa aaaaa=0Aaa aa aaaaaa aaa=
+ aa aaaaaaa aaaaaaa aa aaaaa aaaa aa aaa aaaa aa aaaaaaa aaaa =C3=AAaaa aaa=
+a aa aaaaa  =0Aaaaaa =C3=A0 aaaa aaa aaaaa aa aaaaa aa aaaa aaaaaaa aa aaa =
+aaa a=C3=A9aaaa=C3=A9a=C3=A9 ,  
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:0123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/14 18:47:10
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaa aaaa aaaaa =0Aaaaaa=C3=A8aa aaa aa aaaaa aa aaaaa aaaaaaaaa aa aa aaa=
+aa aa a=C3=A9aaa =0Aaaaaaa aaa aaaa aa aaaaa aa =0Aaa aaaa aaaaaaa =0Aaa aa=
+ =0Aaa aa =C3=AAaaa aaaa aa aaaaaaaaaaaaaa aa aan =C3=A9aaaaaaaaa ?=0Aaaaaa=
+=C3=A8aa aaa aa aaaa aa aaaaaa aaaaa aaa aaaa =0Aaa aa aa aaaa aa aaaa =0AA=
+ aaaaa=C3=B4a
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/12 18:51:01
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaa aaaaaa=0Aaa aaa=C3=A8aaa aaaa aaaaa=C3=A9 aa aaaa aaaaaa aaaa aaaa =
+aaaa aaaaa aaa aa aaa=C3=88aaa aaaa aaaaaaaaaaa aaaaa aaaaaaa aa aaaaaaaa a=
+aaa =C3=A0 aaaaaa aaaaaaaaaaaaaa aa aa aaa aa aaaaaaa aaaa aaaaa=C3=A9 aa a=
+aaaa aa aaaa aaaa aaaa=C3=A8a.=0A=C3=80 aaaaaaaaaaa aaaa aaaaaaa aaaaaa=E2=
+=80=8B aa aaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33 1 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/08 11:53:59
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaa =0Aaaaaa aaaa aaaa aa aaaa.=0A=0Aaaa aaaaaaaaa aaa aa aaaaaaaaa aa =
+aaaaa aaaaa aaaaaaaaa =C3=A0 aa aaaaa   
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/08 11:49:19
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaa aaaaaaaaaaaa=0Aaa aa aaaaaa aaa aa aa aaaaa aaaaaaa aaaaaaaa  
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:38688
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/06 08:42:00
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaa a=C3=A9aaaaaaa aaaaaaaaaa aa aa/aa/aa aaaa aaaaaaaaaaa a aaaaa aaa aaaa=
+aaaa (aaaa aaaaaaaaaaa aaa aaaaa)a aaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:Sosh 
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/04 17:54:54
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Orange Bank, la banque 100% mobile, arrive prochainement ! Soyez parmi les =
+premiers inform=C3=A9s. En savoir plus sur 
+0fYG8cY- (clic gratuit)
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33 1 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/04 10:00:10
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaa=0Aaa aa aaaaaaa=0Aa aaa aaaaaaa aaaaaaaae=0Aaaaaa aaaaaaaaaa=0A=0AA=
+cc=C3=A8s a=C3=A9aaaaaaa aaaaa =0Aaaaaaaaaaa aaaa aaaaa aaaaa=0A=0Aaaa aaaa=
+aaaaaaaaaaaaaaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/04 09:55:39
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaa aa aaaa aaaaaaaa aaa aaaaaaa aaa=C3=A8a aaaa aa aaaaa aa=0Aaaaaa =0Aaa=
+aaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:01 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/02 15:12:20
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaa aaaaa aaa=0Aaaaaaaaaaa aa=C3=AAaaa aaaaaaa aaaa aa aaaaaa aaa aa aa aaa=
+a aaaa=C3=A9=0A    
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:0123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/05/02 15:08:03
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaaaa aaaaa aaa aaa faaa aaa aaaaa aaaaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/30 18:43:16
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aa aaaa aa aaaa a aaaaaaa aaaa =C3=A7a aaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33 1 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/30 18:40:38
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaa=0Aaa aaa aa aaaaa aaaa =0Aaa aaaa aa aa aaa aaa aa aa aaaa aaaaaaaa=
+a aa aaaa  a   
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/30 18:38:35
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaa aaaa aa aaaa aaa aa aaaa aa aa aa aaaaaaaaaaaa aa aa aaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33 1 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/30 18:29:59
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:   =0Aaaaaaaaaa aaa aa aaaaaaaaa aaaaa aa aaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33123456789
+END:VCARD
+BEGIN:VBODY
+X-BOX:INBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/30 18:28:05
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaa aa aaaa aaaaa aaa aa aaaa aaaaa=C3=A9 =C3=A0 aa aaaaaaa aaaaaaaaaaaaa =
+aaaa aaaaa=C3=A9 aa aaaaaaaaaa aa aaaa aa aaaa aaaaaaaa aaaaaaaaaa aaaa aaa=
+ a aa aaaaaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33 1 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/30 18:12:11
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aa aaaaa aaa aa aa aaaa aaa=C3=A9 aaaa aaaaaa aaaaa aa aaaa aa aaaaaa aaaaa=
+ aa aaaaa aa aaaaa aaaaaa aaaaaaaaaaaa aaaa aaaa =C3=A0 aaaaaaa aa aaaaaa  
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33 1 23 45 67 89
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2017/04/28 15:02:30
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:aaaaaaa=0Aaaaa aaaaaaa=C3=A9 aaaaaa aa aaaaa aaaa aaaaa aaa aaaaa aaaaa=C3=
+=A9aaaaaaaaa=0Aaa aaaa aaaaa=C3=A9 aaa =C3=A9aaaaaaa aaa aaaaa aa aaaa aa a=
+aaaaaaaaaaaaa aaa aaaaaa=C3=A9a aaaa aaaa aaaa aa aaaaaa=0Aaaaaa
+END:VBODY
+END:VMSG
+BEGIN:VMSG
+VERSION: 1.1
+BEGIN:VCARD
+TEL:+33600000000
+END:VCARD
+BEGIN:VBODY
+X-BOX:SENDBOX
+X-READ:READ
+X-SIMID:0
+X-LOCKED:UNLOCKED
+X-TYPE:SMS
+Date:2012/10/04 13:06:52
+Subject;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:pascale, d=C3=A9sol=C3=A9 mais je ne vais avoir le temps de d=C3=A9jeuner j=
+e dois repasser chez moi pour aller =C3=A0 un rv et le d=C3=A9lai va =C3=AA=
+tre trop court=0A=C3=A0 une autre fois=0Abises Pierre
+END:VBODY
+END:VMSG

@@ -4,60 +4,60 @@ android:
   components:
   - platform-tools
   - tools
-  - build-tools-27.0.3
-  - android-27
+  - build-tools-28.0.3
+  - android-28
   - extra-android-m2repository
 cache:
   directories:
   - /usr/local/android-sdk
   - "$HOME/.m2/repository"
 git:
-  depth: 65536 
+  depth: 65536
 jdk:
 - oraclejdk8
 before_install:
 - openssl aes-256-cbc -K $encrypted_d067e69b362a_key -iv $encrypted_d067e69b362a_iv -in libe.b64.enc -out ../libe.b64 -d
 - cat ../libe.b64 | sed -e '/==/q' | base64 -d > ../libe.p12
 - cat ../libe.b64 | sed -e '1,/==/d' | base64 -d > ../libe.keystore
-- mkdir -p $HOME/.m2/repository/com/android/support/support-v4/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-v4/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-v4/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/appcompat-v7/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/appcompat-v7/25.3.1/*
-  $HOME/.m2/repository/com/android/support/appcompat-v7/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-annotations/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-annotations/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-vector-drawable/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-vector-drawable/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-vector-drawable/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/animated-vector-drawable/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/25.3.1/*
-  $HOME/.m2/repository/com/android/support/animated-vector-drawable/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/design/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/design/25.3.1/*
-  $HOME/.m2/repository/com/android/support/design/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/recyclerview-v7/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/recyclerview-v7/25.3.1/*
-  $HOME/.m2/repository/com/android/support/recyclerview-v7/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-compat/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-compat/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-compat/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-media-compat/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-media-compat/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-media-compat/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-core-utils/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-core-utils/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-core-utils/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-core-ui/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-core-ui/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-core-ui/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/support-fragment/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-fragment/25.3.1/*
-  $HOME/.m2/repository/com/android/support/support-fragment/25.3.1
-- mkdir -p $HOME/.m2/repository/com/android/support/transition/25.3.1
-- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/transition/25.3.1/*
-  $HOME/.m2/repository/com/android/support/transition/25.3.1
+- mkdir -p $HOME/.m2/repository/com/android/support/support-v4/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-v4/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-v4/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/appcompat-v7/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/appcompat-v7/28.0.0/*
+  $HOME/.m2/repository/com/android/support/appcompat-v7/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-annotations/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-annotations/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-annotations/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-vector-drawable/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-vector-drawable/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-vector-drawable/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/animated-vector-drawable/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/28.0.0/*
+  $HOME/.m2/repository/com/android/support/animated-vector-drawable/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/design/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/design/28.0.0/*
+  $HOME/.m2/repository/com/android/support/design/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/recyclerview-v7/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/recyclerview-v7/28.0.0/*
+  $HOME/.m2/repository/com/android/support/recyclerview-v7/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-compat/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-compat/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-compat/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-media-compat/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-media-compat/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-media-compat/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-core-utils/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-core-utils/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-core-utils/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-core-ui/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-core-ui/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-core-ui/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/support-fragment/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/support-fragment/28.0.0/*
+  $HOME/.m2/repository/com/android/support/support-fragment/28.0.0
+- mkdir -p $HOME/.m2/repository/com/android/support/transition/28.0.0
+- cp /usr/local/android-sdk/extras/android/m2repository/com/android/support/transition/28.0.0/*
+  $HOME/.m2/repository/com/android/support/transition/28.0.0
 script:
 - mvn -B
   android:manifest-merger

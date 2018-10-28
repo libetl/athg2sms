@@ -46,11 +46,18 @@ public enum BuiltInFormat {
             "1,$(address),$(body),$(dated/M/yy HH:mm),$(folder),1,,", "receive", "send"),
     Nikilesh("Nikilesh VMG", "\\s*BEGIN:\\s*VMSG\\s+VERSION:\\s*1.1\\s+X-IRMC-STATUS:\\s*[^\\s]*?\\s+X-IRMC-BOX:\\s*$(folder..\\s+X-NOK-DT)\\s+X-NOK-DT:\\s*[^\\s]*?\\s+X-MESSAGE-TYPE:\\s*[^\\s]*?\\s+BEGIN:\\s*VCARD\\s+VERSION:\\s*3.0\\s+N:\\s*[^\\s]*?\\s+TEL:$(address..\\s+END:VCARD)\\s+END:VCARD\\s+BEGIN:VENV\\s+BEGIN:VBODY\\s+Date:\\s*$(dateDD.MM.YYYY HH:mm:ss..[\\r\\n]+)[\\r\\n]+$(body..\\s+END:VBODY)\\s+END:VBODY\\s+END:VENV\\s+END:VMSG\\s+",
             "", "INBOX", "SENT"),
-    Jayne("Jayne", "\\s*$(dateM/d/yyyy h:mm:ss a..[from|to])\\s*$(folder)\\s*$(address):[\\r\\n]+$(body..[\\n]{2,})[\\n]{2,}","", "from", "to"),
+    //Jayne("Jayne", "\\s*$(dateM/d/yyyy h:mm:ss a..[from|to])\\s*$(folder)\\s*$(address):[\\r\\n]+$(body..[\\n]{2,})[\\n]{2,}","", "from", "to"),
     Homemade1("Homemade1", "\"$(folder)\",\"$(address)\",\"$(dateyyyy-MM-dd HH:mm:ss)\",\"$(body)\"\n", "\"$(folder)\",\"$(address)\",\"$(dateyyyy-MM-dd HH:mm:ss)\",\"$(body)\"\n", "read", "sent"),
     AbdulCsv1("Abdul Csv1", "$(dateyyyy-MM-dd HH:mm:ss),$(address),[^,]*,$(folder),$(body),[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\r\n]*[\r\n]+", "", "Received", "Sent"),
-    AbdulCsv2("Abdul Csv2", "$(dateyyyy-MM-dd HH:mm:ss),$(address),[^,]*,$(folder),\"$(body)\",[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\r\n]*[\r\n]+", "", "Received", "Sent")
-            ;
+    AbdulCsv2("Abdul Csv2", "$(dateyyyy-MM-dd HH:mm:ss),$(address),[^,]*,$(folder),\"$(body)\",[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\r\n]*[\r\n]+", "", "Received", "Sent"),
+    Momin1("Momin1", "[0-9]+,$(address),$(folder),$(dateyyyy-MM-dd'T'HH:mm:ss.SSSX),(?!\")$(body),[^\r\n]*[\r\n]+", "", "RECEIVED", "SENT"),
+    Momin2("Momin2", "[0-9]+,$(address),$(folder),$(dateyyyy-MM-dd'T'HH:mm:ss.SSSX),\"$(body)\",[^\r\n]*[\r\n]+", "", "RECEIVED", "SENT"),
+    DaddyCsv1("DaddyCsv1", "$(dateyyyy-MM-dd),$(dateHH:mm:ss),$(folder),$(address),[^,]*,$(body)\n", "", "in", "out"),
+    DaddyCsv2("DaddyCsv2", "$(dateyyyy-MM-dd),$(dateHH:mm:ss),$(folder),$(address),[^,]*,\"$(body..\")\"\n", "", "in", "out"),
+    BenCohen("BenCohen", "$(dateMMM dd), $(dateyyyy h:mm:ss aaa),$(address),\"[^\"]*\",[^,]*,\"$(body)\",[^,]*,[^,]*,[^,]*,$(folder)\n", "", "Received", "Sent"),
+    MySms("MySms", "$(dated.M.yyyy HH:mm:ss);$(address);[^;]*;$(folder);\"$(body)\";[^;]*;[^;]*;[^;]*;[^\\n]*\\n", "1", "0",
+            "$(dated.M.yyyyHH:mm:ss);$(address);\"\";$(folder);\"$(body)\";1;0;mobile carrier;Complete\\n")
+    ;
 
     private final String completeName;
     private final String format;

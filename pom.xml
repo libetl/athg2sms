@@ -28,16 +28,16 @@
 				<groupId>com.simpligility.maven.plugins</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 				<extensions>true</extensions>
-				<version>4.4.3</version>
+				<version>4.5.0</version>
 				<configuration>
 					<sdk>
-						<platform>25</platform>
+						<platform>28</platform>
 					</sdk>
 					<sign>
 						<debug>false</debug>
 					</sign>
 					<emulator>
-						<avd>25</avd>
+						<avd>28</avd>
 						<wait>10000</wait>
 					</emulator>
 					<run>
@@ -50,6 +50,7 @@
 					<genDirectoryAidl>${basedir}/gen</genDirectoryAidl>
 					<nativeLibrariesDirectory>${basedir}/libs</nativeLibrariesDirectory>
 					<unpackedLibsFolder>${basedir}/bin/unpacked-libs</unpackedLibsFolder>
+                    <failOnDuplicatePackages>false</failOnDuplicatePackages>
 					<excludeJarResources>
 						<excludeJarResource>.*\.jar$</excludeJarResource>
 					</excludeJarResources>
@@ -120,61 +121,61 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-compat</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-media-compat</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-core-utils</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-core-ui</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-fragment</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>transition</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>appcompat-v7</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>design</artifactId>
-			<version>25.3.1</version>
+			<version>28.0.0</version>
 			<type>aar</type>
 		</dependency>
 		<dependency>
@@ -187,9 +188,16 @@
 			<artifactId>android</artifactId>
 			<version>4.1.1.4</version>
 			<scope>system</scope>
-			<systemPath>${ANDROID_HOME}/platforms/android-25/android.jar</systemPath>
+			<systemPath>${ANDROID_HOME}/platforms/android-28/android.jar</systemPath>
 		</dependency>
-	</dependencies>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>google-releases</id>
+            <name>Google Maven Repository</name>
+            <url>https://maven.google.com</url>
+        </repository>
+    </repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

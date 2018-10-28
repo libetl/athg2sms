@@ -2,7 +2,6 @@ package org.toilelibre.libe.athg2sms.androidstuff.api.activities;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.test.mock.MockContentResolver;
 
 public class ContextHolder<T> {
 

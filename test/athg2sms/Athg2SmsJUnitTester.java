@@ -88,6 +88,12 @@ class Athg2SmsJUnitTester {
 
     static JunitConvertListener importFile(final String classpathFile, final BuiltInFormat conversionSet, final boolean shouldBeEmpty) throws URISyntaxException {
         // Given
+        String content = readFile(classpathFile);
+
+        return importNow(conversionSet, shouldBeEmpty, content);
+    }
+
+    static String readFile(String classpathFile) throws URISyntaxException {
         final URL url = ImportTest.class.getClassLoader ().getResource (classpathFile);
         String content;
         try {
@@ -96,8 +102,7 @@ class Athg2SmsJUnitTester {
         } catch (final IOException e) {
             throw new RuntimeException (e);
         }
-
-        return importNow(conversionSet, shouldBeEmpty, content);
+        return content;
     }
 
     private static String read(File file) throws IOException {
