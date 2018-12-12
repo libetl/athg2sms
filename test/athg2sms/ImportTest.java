@@ -17,10 +17,7 @@ import org.toilelibre.libe.athg2sms.business.sms.Sms;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.locks.Condition;
 
 import static athg2sms.Athg2SmsJUnitTester.importFile;
@@ -937,5 +934,21 @@ public class ImportTest {
     public void abdul() throws URISyntaxException {
         JunitConvertListener convertListener = importFile("athg2sms/Abdul.csv", BuiltInFormat.AbdulCsv1);
         Assert.assertEquals (5921, convertListener.getMessages().size());
+    }
+
+    //@Test
+    public void miSuite() throws URISyntaxException {
+        JunitConvertListener convertListener = importFile("athg2sms/MessagesFromSarad.csv", BuiltInFormat.MiSuite);
+        Assert.assertEquals (556, convertListener.getMessages().size());
+    }
+
+    @Test
+    public void kamen () throws URISyntaxException {
+        JunitConvertListener receivedListener = importFile("athg2sms/kamen.txt", BuiltInFormat.KamenReceived);
+        JunitConvertListener sentListener = importFile("athg2sms/kamen.txt", BuiltInFormat.KamenSent);
+
+        List<Sms> results = new ArrayList<Sms>(receivedListener.getMessages());
+        results.addAll(sentListener.getMessages());
+        Assert.assertEquals (4, results.size());
     }
 }

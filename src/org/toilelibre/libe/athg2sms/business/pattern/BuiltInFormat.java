@@ -56,7 +56,13 @@ public enum BuiltInFormat {
     DaddyCsv2("DaddyCsv2", "$(dateyyyy-MM-dd),$(dateHH:mm:ss),$(folder),$(address),[^,]*,\"$(body..\")\"\n", "", "in", "out"),
     BenCohen("BenCohen", "$(dateMMM dd), $(dateyyyy h:mm:ss aaa),$(address),\"[^\"]*\",[^,]*,\"$(body)\",[^,]*,[^,]*,[^,]*,$(folder)\n", "", "Received", "Sent"),
     MySms("MySms", "$(dated.M.yyyy HH:mm:ss);$(address);[^;]*;$(folder);\"$(body)\";[^;]*;[^;]*;[^;]*;[^\\n]*\\n", "1", "0",
-            "$(dated.M.yyyyHH:mm:ss);$(address);\"\";$(folder);\"$(body)\";1;0;mobile carrier;Complete\\n")
+            "$(dated.M.yyyyHH:mm:ss);$(address);\"\";$(folder);\"$(body)\";1;0;mobile carrier;Complete\\n"),
+    MiSuite("MiSuite", "$(folder),$(address),$(dateyyyy-MM-dd HH:mm:ss),\"$(body..\",)\",[^,]*,[^,]*,[^\\n]*\\n",
+            "$(folder),$(address),$(dateyyyy-MM-dd HH:mm:ss),\"$(body)\",??,??,NONE\\n", "RECEIVED", "SENT"),
+    KamenSent("KamenSent", "[^,]*,$(folder),$(address),[^,]*,[^,]*,$(body),[^,]*,[^,]*,$(date),[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\\n]*\\n",
+            "", "SELF", "..."),
+    KamenReceived("KamenReceived", "[^,]*,$(folder),[^,]*,$(address),[^,]*,$(body),[^,]*,[^,]*,$(date),[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^\\n]*\\n",
+            "", "SELF", "...")
     ;
 
     private final String completeName;

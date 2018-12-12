@@ -105,7 +105,15 @@ public class Sms {
                     break;
                 case DATE:
                     if (entry.getValue().additionalInfo.length() == 0)
-                        result.put(DATE, Long.parseLong(entry.getValue().value));
+                        try {
+                            result.put(DATE, Long.parseLong(entry.getValue().value));
+                        }catch (NumberFormatException nfe) {
+                            try {
+                                result.put(DATE, Double.valueOf(entry.getValue().value).longValue());
+                            } catch (NumberFormatException nfe2) {
+                                throw new ParseException("Could not parse a date", 0);
+                            }
+                        }
                     else {
                         final SimpleDateFormat dateFormat = new SimpleDateFormat(entry.getValue().additionalInfo, Locale.US);
                         result.put (DATE, dateFormat.parse (entry.getValue().value).getTime ());
