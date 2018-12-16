@@ -944,11 +944,11 @@ public class ImportTest {
 
     @Test
     public void kamen () throws URISyntaxException {
-        JunitConvertListener receivedListener = importFile("athg2sms/kamen.txt", BuiltInFormat.KamenReceived);
-        JunitConvertListener sentListener = importFile("athg2sms/kamen.txt", BuiltInFormat.KamenSent);
+        JunitConvertListener receivedListener = importFile("athg2sms/17207357357_1544655550-1.csv", BuiltInFormat.KamenReceived);
+        JunitConvertListener sentListener = importFile("athg2sms/17207357357_1544655550-1.csv", BuiltInFormat.KamenSent);
 
         List<Sms> results = new ArrayList<Sms>(receivedListener.getMessages());
         results.addAll(sentListener.getMessages());
-        Assert.assertEquals (4, results.size());
+        Assert.assertEquals (78, results.size());
     }
 }
