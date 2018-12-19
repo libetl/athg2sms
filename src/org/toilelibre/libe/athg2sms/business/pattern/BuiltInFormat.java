@@ -59,10 +59,15 @@ public enum BuiltInFormat {
             "$(dated.M.yyyyHH:mm:ss);$(address);\"\";$(folder);\"$(body)\";1;0;mobile carrier;Complete\\n"),
     MiSuite("MiSuite", "$(folder),$(address),$(dateyyyy-MM-dd HH:mm:ss),\"$(body..\",)\",[^,]*,[^,]*,[^\\n]*\\n",
             "$(folder),$(address),$(dateyyyy-MM-dd HH:mm:ss),\"$(body)\",??,??,NONE\\n", "RECEIVED", "SENT"),
-    KamenSent("KamenSend", "\"[^\"]*\",\"[^\"]*\",\"SELF$(folder)\",\"$(address)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
+
+    KamenSent("KamenSent", "\"[^\"]*\",\"[^\"]*\",\"SELF$(folder)\",\"$(address)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
             "", "", "-1"),
-    KamenReceived("KamenReceived",         "\"[^\"]*\",\"[^\"]*\",\"$(address)\",\"SELF$(folder)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
+    KamenReceived("KamenReceived", "\"[^\"]*\",\"[^\"]*\",\"$(address)\",\"SELF$(folder)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
+            "", "-1", ""),
+    KamenDaughterSent("KamenDaughterSent", "\"[^\"]*\",\"SELF$(folder)\",\"$(address)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
             "", "", "-1"),
+    KamenDaughterReceived("KamenDaughterReceived", "\"[^\"]*\",\"$(address)\",\"SELF$(folder)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
+            "", "-1", ""),
     ;
 
     private final String completeName;
