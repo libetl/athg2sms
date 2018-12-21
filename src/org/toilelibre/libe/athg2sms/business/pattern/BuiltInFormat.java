@@ -61,13 +61,13 @@ public enum BuiltInFormat {
             "$(folder),$(address),$(dateyyyy-MM-dd HH:mm:ss),\"$(body)\",??,??,NONE\\n", "RECEIVED", "SENT"),
 
     KamenSent("KamenSent", "\"[^\"]*\",\"[^\"]*\",\"SELF$(folder)\",\"$(address)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
-            "", "", "-1"),
+            "", "-1", ""),
     KamenReceived("KamenReceived", "\"[^\"]*\",\"[^\"]*\",\"$(address)\",\"SELF$(folder)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
-            "", "-1", ""),
-    KamenDaughterSent("KamenDaughterSent", "\"[^\"]*\",\"SELF$(folder)\",\"$(address)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
             "", "", "-1"),
-    KamenDaughterReceived("KamenDaughterReceived", "\"[^\"]*\",\"$(address)\",\"SELF$(folder)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
+    KamenDaughterSent("KamenDaughterSent", "\"[^\"]*\",\"SELF$(folder)\",\"$(address)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
             "", "-1", ""),
+    KamenDaughterReceived("KamenDaughterReceived", "\"[^\"]*\",\"$(address)\",\"SELF$(folder)\",\"[^\"]*\",\"$(body)\",\"text/plain\",\"[^\"]*\",\"$(date)\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\",\"[^\"]*\"\n",
+            "", "", "-1"),
     ;
 
     private final String completeName;
