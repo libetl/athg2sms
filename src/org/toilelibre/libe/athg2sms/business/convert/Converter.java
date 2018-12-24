@@ -1,5 +1,6 @@
 package org.toilelibre.libe.athg2sms.business.convert;
 
+import android.database.sqlite.SQLiteException;
 import org.toilelibre.libe.athg2sms.R;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.ContextHolder;
 import org.toilelibre.libe.athg2sms.androidstuff.api.activities.HandlerHolder;
@@ -174,8 +175,10 @@ public class Converter {
             final Sms sms = new Sms(varNames, result);
             if (sms.isEmpty ()) return ConversionResult.BAD_ONE;
             final String where = this.getWhere (sms);
-            convertListener.delete (uriDelete, where, new String [0]);
-            if (deleter != null)nbDuplicate += deleter.delete(uriDelete, where, new String [0], contextHolder);
+            try {
+                convertListener.delete(uriDelete, where, new String[0]);
+                if (deleter != null)nbDuplicate += deleter.delete(uriDelete, where, new String [0], contextHolder);
+            }catch (SQLiteException sqe){/*Just ignore it*/}
             convertListener.insert (uri, sms);
             if(inserter != null)inserter.insert (uri, sms.getValues(), contextHolder);
         } catch (final IllegalStateException ise) {
